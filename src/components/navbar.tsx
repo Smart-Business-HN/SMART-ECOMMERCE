@@ -7,7 +7,8 @@ import { Fragment } from "react";
 import { ChevronDownIcon,  } from "@heroicons/react/20/solid";
 import { UserCircleIcon } from "@heroicons/react/24/outline";
 import { ShoppingCartIcon } from "@heroicons/react/24/solid";
-import SmartBusinessLogo from "../../public/assets/images/corporate/smart.webp"
+import { SmartLogoNavbar } from "../../public/assets/images";
+
 
 const Navbar = () => {
     const categories = [
@@ -18,7 +19,7 @@ const Navbar = () => {
     return (
         <nav className="border-b sticky top-0 shadow-sm shadow-gray-400 flex gap-4 justify-between bg-[#F6F6F8]">
             <div className="">
-                <Image src={SmartBusinessLogo} height="50" alt="smart business logo">
+                <Image src={SmartLogoNavbar} height="50" alt="smart business logo">
 
                 </Image>
 
