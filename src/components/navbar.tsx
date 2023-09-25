@@ -19,14 +19,14 @@ const Navbar = () => {
     return (
         <nav className="border-b sticky top-0 shadow-sm shadow-gray-400 flex gap-4 justify-between bg-[#F6F6F8]">
             <div className="">
-                <Image src={SmartLogoNavbar} height="50" alt="smart business logo">
-
-                </Image>
-
-
+                <Image src={SmartLogoNavbar} height="50" alt="smart business logo"/>
             </div>
-            <div className="mx-auto my-2 basis-1/4">
-                <input type="text" className="border w-full bg-[#F6F6F8] border-gray-200 focus:border-blue-600 rounded-full px-4" placeholder="Buscar..."/>
+            <div className="grow flex gap-4  items-center justify-end">
+                <div className="text-gray-500 hover:text-blue-500 font-medium"><Link href="/">Inicio</Link></div>
+                <div className="text-gray-500 hover:text-blue-500 font-medium"><Link href="/shop">Tienda</Link></div>
+                <div className="text-gray-500 hover:text-blue-500 font-medium"><Link href="/services">Servicios</Link></div>
+                <div className="text-gray-500 hover:text-blue-500 font-medium"><Link href="/about-us">Quienes Somos</Link></div>
+                <div className="text-gray-500 hover:text-blue-500 font-medium"><Link href="/contact">Contacto</Link></div> 
             </div>
             <div className="flex justify-end">
                 <div className="my-auto">
