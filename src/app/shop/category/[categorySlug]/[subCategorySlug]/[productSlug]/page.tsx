@@ -21,7 +21,7 @@ export default function ProductDetailPage() {
   const [product, setProduct] = useState<Product | null>(null);
   const [quantity, setQuantity]= useState<number>(1);
   const [productImages, setProductImages] = useState<any[]>([]);
-  const noImage: string = "https://smarterpstorage.blob.core.windows.net/produccion/no-image-available-smart-business.jpg";
+  const noImage: string = "https://smarterpstorage.blob.core.windows.net/produccion/no-image-available-icon-vector.jpg";
   const params = useParams();
   const itIsLogged: boolean = true;
   const whatsappContact: string = 'https://api.whatsapp.com/send?phone=50488187765&text=Hola%20me%20interesa%20saber%20mas%20sobre%20este%20producto...';
@@ -62,7 +62,7 @@ export default function ProductDetailPage() {
       <div className='w-full'>
         <div className='mx-auto container max-w-7xl  items-center  py-5'>
           <div className='container justify-between'>
-            <div className='flex items-center text-sm text-gray-500'>
+            <div className='flex gap-1 items-center text-sm text-gray-500'>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
               </svg>
