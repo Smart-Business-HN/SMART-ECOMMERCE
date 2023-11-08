@@ -17,7 +17,7 @@ const Navbar = () => {
         }
     ];
     return (
-        <nav className="border-b sticky top-0 shadow-sm shadow-gray-400 flex gap-4 justify-between bg-[#F6F6F8]">
+        <nav className="border-b z-50 sticky top-0 shadow-sm shadow-gray-400 flex gap-4 justify-between bg-[#F6F6F8]">
             <div className="">
                 <Image src={SmartLogoNavbar} height="50" alt="smart business logo"/>
             </div>

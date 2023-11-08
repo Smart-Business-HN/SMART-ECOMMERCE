@@ -1,8 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "~react-image-gallery/styles/css/image-gallery.css";
 
 main {
-  height: 100vh;
+  /* height: 100vh; */
   background-color: #ffffff;
 }

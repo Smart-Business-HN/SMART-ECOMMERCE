@@ -11,8 +11,8 @@ const Footer = () => {
     };
   return (
     <div className="border-t py-5  shadow-sm shadow-gray-400 w-full gap-4 justify-between bg-[#F6F6F8]">
-         <div className='container py-4 mx-auto'>
-            <div className='flex justify-between gap-10 mx-4 '>
+         <div className='container py-4 max-w-7xl mx-auto'>
+            <div className='flex justify-between gap-10'>
                 <div className='grid items-center'>
                     <Image  src={SmartBusinessLogo} width={250}  alt='Smart Business Logo'/>
                 </div>
@@ -38,7 +38,7 @@ const Footer = () => {
                 </div>
             </div>
             
-            <div className='border-t-2 mt-5 pt-2 flex justify-between mx-4'>
+            <div className='border-t-2 mt-5 pt-2 flex justify-between'>
                 <div>
                     <p className='text-gray-400 text-sm'>© {year} Smart Business S. de R.L. Todos los derechos reservados.</p>
                 </div>

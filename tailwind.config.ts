@@ -15,6 +15,11 @@ const config: Config = {
       },
     },
   },
+  variants: {
+    extend: {
+      visibility: ["group-hover"],
+    },
+  },
   plugins: [],
 }
 export default config

@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: ["m.media-amazon.com"]
+        domains: ["m.media-amazon.com","grupoplatino.blob.core.windows.net","smarterpstorage.blob.core.windows.net"]
     }
 }
 
