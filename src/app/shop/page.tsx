@@ -1,20 +1,29 @@
 'use client'
 import React, { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
-import CategoryTree from '@/components/shop/category-tree-menu'
+import CategoryTree from '@/components/shop/layout/category-tree-menu'
 import { Listbox } from '@headlessui/react'
 import { ListBulletIcon, Squares2X2Icon } from '@heroicons/react/24/outline'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
+import { GetAllNavCategory } from '@/services/category/category.service'
+import { NavCategory } from '@/interfaces/category/nav-category.interface'
+import { GetAllProducts } from '@/services/product/product.service'
+import { NextRequest } from "next/server";
+import { Product } from '@/interfaces/product/product.interface'
+import ProductsGrid from '@/components/shop/layout/products-grid'
+import ProductsList from '@/components/shop/layout/products-list'
 
 const pageSizes = [
-  { size: 25 },
-  { size: 50 },
-  { size: 100 }
+  { size: 20 },
+  { size: 40 },
+  { size: 60 }
 ];
 
 export default function Shop() {
   const [selectedPageSize, setSelectedPageSize] = useState(pageSizes[0]);
+  const [navCategories, setNavCategories] = useState<NavCategory[]|null>(null);
   const [showInGrid, setShowInGrid] = useState(true);
+  const [products, setProducts] = useState<Product[]|null>(null);
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -50,9 +59,24 @@ export default function Shop() {
       router.push(pathname + '?' + createQueryString('PageNumber', "2"))
     }
   }
+  const loadProducts = async () => {
+    let params = {
+      pageSize:selectedPageSize.size,
+      pageNumber:1,
+      parameter:''
+    }
+    const producsResponse: any = await GetAllProducts(params);
+    setProducts(producsResponse.data);
+  }
+  const loadCategories = async () => {
+    const nav: any = await GetAllNavCategory();
+    setNavCategories(nav);
+  }
+
   useEffect(() => {
     router.push(pathname + '?' + createQueryString('PageSize', selectedPageSize.size.toString()))
   }, [selectedPageSize])
+
   useEffect(()=>{
     if(!searchParams.has('PageNumber'))
     {
@@ -63,7 +87,8 @@ export default function Shop() {
       let pageSize = pageSizes.find(x=>x.size.toString() == searchParams.get('PageSize'));
       setSelectedPageSize(pageSize!)
     }
-
+    loadCategories();
+    loadProducts();
   },[])
 
   return (
@@ -80,11 +105,13 @@ export default function Shop() {
       </div>
       <div className='w-full grid gap-5 pt-5 grid-cols-4'>
         <div className='col-span-1  '>
-          <CategoryTree />
+          {
+            navCategories != null ? <CategoryTree categories={navCategories} />:null
+          }
         </div>
         <div className='col-span-3 '>
           <div className='flex justify-between'>
-            <h1 className='text-gray-400 text-2xl'>Tienda</h1>
+            <h1 className='text-gray-400 font-semibold text-3xl'>Tienda</h1>
             <div className='flex gap-2 items-center'>
               <button className='p-[6px] rounded-md border border-gray-300 hover:shadow-sm' onClick={() => { setShowInGrid(true) }}>
                 <Squares2X2Icon height={20} width={20} className={showInGrid ? 'text-[#0068E1]' : 'text-gray-400'} />
@@ -114,6 +141,7 @@ export default function Shop() {
               </div>
             </div>
           </div>
+           { products!=null && showInGrid ? <ProductsGrid products={products} /> : products!=null && !showInGrid ? <ProductsList products={products}/> : null }
           <div className='flex justify-end mt-5'>
             <div className='flex gap-5 items-center'>
               <button onClick={()=>{GoPreviousPage()}} className='text-gray-400 rounded-md hover:bg-gray-100 hover:text-[#0068E1]'>

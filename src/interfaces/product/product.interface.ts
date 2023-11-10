@@ -25,7 +25,7 @@ export interface Product {
     unitOfMeasurementId: number,
     unitOfMeasurement: UnitOfMeasurement,
     subcategoryId: number,
-    subcategory: subCategory,
+    subCategory: subCategory,
     statusId: number,
     status: status,
     providerId: number,
