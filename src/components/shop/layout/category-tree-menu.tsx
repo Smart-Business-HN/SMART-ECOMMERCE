@@ -41,8 +41,6 @@ export default function CategoryTree(props: any) {
                                 )
                             })
                         }
-                 
-               
         </>
     );
 }

@@ -13,14 +13,14 @@ export default function ProductsGrid(props: any) {
             {
                 products.map((item: Product, key: number) => {
                     return (
-                        <Link key={key} href={`/shop/category/${item.subCategory.category.slug}/${item.subCategory.slug}/${item.slug}`}>
-                            <div className='w-full mt-2 border group hover:shadow-2xl relative'>
-                                <button className="invisible hastooltip p-1 rounded-md absolute top-10 right-2 bg-gray-200 hover:bg-blue-200 group-hover:visible transition-all">
-                                    <ShoppingBagIcon height={20} width={20}/>
+                        <Link className="h-full" key={key} href={`/shop/category/${item.subCategory.category.slug}/${item.subCategory.slug}/${item.slug}`}>
+                            <div className='h-full w-full mt-2 border group hover:shadow-2xl relative'>
+                                <button className="invisible hastooltip p-1 z-50 rounded-md absolute top-10 right-2 bg-gray-100 hover:bg-gray-300 group-hover:visible transition-all">
+                                    <ShoppingBagIcon className="text-gray-500" height={20} width={20}/>
                                 </button>
-                                <Link className=""  rel="noopener noreferrer" target="_blank" href={`/shop/category/${item.subCategory.category.slug}/${item.subCategory.slug}/${item.slug}`}>
-                                <button className="invisible hastooltip p-1 rounded-md absolute top-20 right-2 bg-gray-200 hover:bg-blue-200 group-hover:visible transition-all">
-                                    <ShareIcon className="text-gray-400" height={20} width={20}/>
+                                <Link className="z-50"  rel="noopener noreferrer" target="_blank" href={`/shop/category/${item.subCategory.category.slug}/${item.subCategory.slug}/${item.slug}`}>
+                                <button className="invisible hastooltip p-1 z-50 rounded-md absolute top-20 right-2 bg-gray-100 hover:bg-gray-300 group-hover:visible transition-all">
+                                    <ShareIcon className="text-gray-500" height={20} width={20}/>
                                 </button>
                                 </Link>
                                 <span className="absolute right-2 top-2 rounded-md text-xs text-white bg-green-500 py-1 px-2">{item.status.name}</span>
@@ -29,7 +29,7 @@ export default function ProductsGrid(props: any) {
                                 </div>
                                 <div className='col-span-2 px-2'>
                                     <h6 className=' font-medium  line-clamp-2 text-center text-ellipsis text-sm text-[#2e2e2e]'>{item.name}</h6>
-                                    <div className='w-full border-b border-gray-200 mt-1'></div>
+                                    <div className='w-[90%] mx-auto absolute bottom-9 border-b border-gray-200 mt-1'></div>
                                 </div>
                                 <div className='h-8'></div>
                                 <div className=' bg-[#0068E1] px-1 py-2 absolute bottom-[10px] rounded-r-full'></div>
