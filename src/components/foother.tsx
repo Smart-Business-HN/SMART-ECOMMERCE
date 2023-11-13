@@ -27,11 +27,11 @@ const Footer = () => {
                 </div>
                 <div className='py-15'>
                     <h6 className='text-gray-500 font-bold text-md'>Compañia</h6>
-                    <p className='pt-1 text-xs text-gray-400 hover:cursor-pointer hover:text-blue-500'>Historia</p>
+                    <Link href='/about-us'><p className='pt-1 text-xs text-gray-400 hover:cursor-pointer hover:text-blue-500'>Historia</p></Link>
                     <p className='pt-1 text-xs text-gray-400 hover:cursor-pointer hover:text-blue-500'>Nuestras Marcas</p>
                     <p className='pt-1 text-xs text-gray-400 hover:cursor-pointer hover:text-blue-500'>Oportunidad de empleo</p>
                     <Link href='/contact'><p className='pt-1 text-xs text-gray-400 hover:cursor-pointer hover:text-blue-500'>Contacto</p></Link>
-                    <p className='pt-1 text-xs text-gray-400 hover:cursor-pointer hover:text-blue-500'>Terminos y Condiciones</p>
+                    <Link href='/terms-and-conditions'><p className='pt-1 text-xs text-gray-400 hover:cursor-pointer hover:text-blue-500'>Terminos y Condiciones</p></Link>
                 </div>
                 <div className='py-4 grow bg-white'>
                     <a href='https://checkout.baccredomatic.com/ZC5lZTliNTgyNDc5OTlmNjJiNWQzMzAxNjkzNjI5OTY2'>Boton de pago</a>
