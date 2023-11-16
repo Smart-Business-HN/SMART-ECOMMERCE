@@ -60,7 +60,7 @@ export default function ProductDetailPage() {
     <>
       <Toaster />
       <div className='w-full'>
-        <div className='mx-auto container max-w-7xl  items-center  py-5'>
+        <div className='mx-auto container max-w-screen-2xl  items-center  py-5'>
           <div className='container justify-between'>
             <div className='flex gap-1 items-center text-sm text-gray-500'>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">

@@ -11,7 +11,7 @@ const Footer = () => {
     };
   return (
     <div className="border-t py-5  shadow-sm shadow-gray-400 w-full gap-4 justify-between bg-[#F6F6F8]">
-         <div className='container py-4 max-w-7xl mx-auto'>
+         <div className='container py-4 max-w-screen-2xl mx-auto'>
             <div className='flex justify-between gap-10'>
                 <div className='grid items-center'>
                     <Image  src={SmartBusinessLogo} width={250}  alt='Smart Business Logo'/>

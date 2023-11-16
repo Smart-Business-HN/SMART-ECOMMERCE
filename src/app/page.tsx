@@ -7,7 +7,7 @@ import { UbiquitiWispSection } from '@/components/home/ubiquiti-wisp-section';
 export default async function Home() {
   
   return (
-    <main className="w-full max-w-7xl mx-auto">
+    <main className="w-full max-w-screen-2xl mx-auto">
         <HeroComponent/>
         <ProductsByCategory/>
         <UbiquitiSection/>
