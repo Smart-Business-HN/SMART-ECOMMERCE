@@ -160,9 +160,9 @@ export default function ProductDetailPage() {
                     <Image height={150} width={150} src='/assets/images/products/u6-pro-smartbusiness-box.png' alt='u6 pro en caja' />
                   </div>
                   <div className='w-full mx-auto text-center absolute bottom-4'>
-                    <button className='bg-blue-600 text-white text-sm p-2 rounded-br-xl hover:shadow-md rounded-tl-xl'>
+                    <Link href='/be-a-partner' className='bg-blue-600 text-white text-sm p-2 rounded-br-xl hover:shadow-md rounded-tl-xl'>
                       Hazte Smart
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>

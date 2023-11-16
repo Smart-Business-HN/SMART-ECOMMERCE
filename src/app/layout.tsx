@@ -1,8 +1,8 @@
-import Navbar from '@/components/navbar'
+import Navbar from '@/components/main-layout/navbar'
 import './globals.css'
 import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
-import Footer from '@/components/foother'
+import Footer from '@/components/main-layout/foother'
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -32,6 +32,7 @@ export default function RootLayout({
                     })(window, document, "clarity", "script", "imw8vbk3te");`,
             }}
         />
+        <meta name="google-site-verification" content="S-MABBGjddcLo8_kNkNfuqVi7etsoBNnLSR-OpHJBeg" />
       </head>
       <body className={poppins.className}>
         <Navbar />
