@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function Hikvision() {
     return(
-    <div className="my-5 relative h-96 rounded-lg " style={{backgroundImage: `url('/assets/images/backgrounds/hikvision-background-hikpartner-pro.png')`, objectFit: 'cover' }}>
+    <div className="my-5 relative h-96 rounded-lg w-full mx-auto container" style={{backgroundImage: `url('/assets/images/backgrounds/hikvision-background-hikpartner-pro.png')`, objectFit: 'cover' }}>
        <div className="rounded-md px-10 w-96 top-10 left-10 py-5 bg-white absolute bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-50 ">
             <h3 className="font-bold text-gray-700 text-2xl text-center">¿Necesitas seguridad?</h3>
             <p className="text-gray-500 leading-tight my-2">En Smart Business encontraras todo lo necesario para proteger tu casa y negocio ante todos los visitantes indeseables.</p>

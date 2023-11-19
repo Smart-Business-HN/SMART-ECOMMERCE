@@ -15,6 +15,9 @@ const nextConfig = {
                 hostname: "smarterpstorage.blob.core.windows.net",
             },
           ],
-    }
+    },
+    env: {
+        baseApi: 'https://localhost:7211/api/v2',
+    },
 }
 module.exports = nextConfig

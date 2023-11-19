@@ -5,7 +5,7 @@ import React, { Fragment } from 'react';
 export function UbiquitiSection() {
     return (
         <Fragment>
-            <div className='container relative'>
+            <div className='w-full mx-auto container relative'>
                 <video className='w-full rounded-xl' autoPlay muted loop>
                     <source src="/assets/videos/u6-pro-smart-business.mp4" type="video/mp4" />
                 </video>
@@ -25,7 +25,7 @@ export function UbiquitiSection() {
                     <Image src="/assets/images/corporate/smart_business_logo_white_letters.png" width={170} height={50} alt="unifi icon" />
                 </div>
             </div>
-            <div className='container mb-5 mt-10'>
+            <div className='w-full mx-auto container mb-5 mt-10'>
                 <div className='mb-5'>
                     <h3 className='text-3xl font-semibold text-gray-900'>WiFi líder en la industria</h3>
                 </div>

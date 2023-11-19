@@ -4,7 +4,7 @@ import axios from "axios";
 
 export const GetAllNavCategory = async () => {
     try {
-      const response: any = await axios.get('https://localhost:7211/api/v2/Category/GetAllNavCategory');
+      const response: any = await axios.get(`${process.env.baseApi}/Category/GetAllNavCategory`);
       const serializeResponse: NavCategory[] = response.data.data;
       return serializeResponse;
     } catch(error : any)

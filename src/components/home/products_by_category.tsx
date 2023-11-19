@@ -27,7 +27,7 @@ export default function ProductsByCategory() {
         }
     }
     return (
-        <div className='my-5'>
+        <div className='my-5 w-full mx-auto'>
             {
                 heroSliders.length > 0 ?
                     <Tab.Group>
@@ -51,7 +51,7 @@ export default function ProductsByCategory() {
                             {
                                 heroSliders!.map(function (item: HeroSliderResponse, index: number) {
                                     return (
-                                        <Tab.Panel key={index} className="w-full">
+                                        <Tab.Panel key={index} className="w-full mx-auto">
                                             <div className='flex gap-10 justify-center'>
                                                 {
                                                     item.heroSliders.map(function (product: HeroSlider, index: number) {

@@ -12,6 +12,7 @@ import { NextRequest } from "next/server";
 import { Product } from '@/interfaces/product/product.interface'
 import ProductsGrid from '@/components/shop/layout/products-grid'
 import ProductsList from '@/components/shop/layout/products-list'
+import { ProductsResponse } from '@/interfaces/http-responses/http-responses.interface'
 
 const pageSizes = [
   { size: 20 },
@@ -24,6 +25,8 @@ export default function Shop() {
   const [navCategories, setNavCategories] = useState<NavCategory[]|null>(null);
   const [showInGrid, setShowInGrid] = useState(true);
   const [products, setProducts] = useState<Product[]|null>(null);
+  const [totalItems, setTotalItems] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -60,18 +63,29 @@ export default function Shop() {
     }
   }
   const loadProducts = async () => {
-    let params = {
+    let params : any = {
       pageSize:selectedPageSize.size,
       pageNumber:1,
       parameter:''
     }
-    const producsResponse: any = await GetAllProducts(params);
-    setProducts(producsResponse.data);
+    try {
+      const producsResponse: any = await GetAllProducts(params);
+      let serializeResponse : ProductsResponse = producsResponse;
+      setProducts(serializeResponse.data);
+      setTotalItems(serializeResponse.totalItems);
+    } catch (error : any) {
+      console.log(error)
+    }
+   
   }
   const loadCategories = async () => {
     const nav: any = await GetAllNavCategory();
     setNavCategories(nav);
   }
+  useEffect(()=>{
+    let pages : number = Math.round(totalItems / selectedPageSize.size);
+    setTotalPages(pages);
+  },[totalItems])
 
   useEffect(() => {
     router.push(pathname + '?' + createQueryString('PageSize', selectedPageSize.size.toString()))

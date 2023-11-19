@@ -3,7 +3,7 @@ import React from 'react'
 
 export function UbiquitiWispSection() {
   return (
-    <div className='container mt-5 relative'>
+    <div className='w-full mx-auto container mt-5 relative'>
             <video className='w-full rounded-xl' autoPlay muted loop>
                 <source src="/assets/videos/wired.mp4" type="video/mp4" />
             </video>
