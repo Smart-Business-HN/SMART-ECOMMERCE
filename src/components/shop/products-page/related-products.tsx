@@ -15,7 +15,6 @@ export default function RelatedProducts(props:any) {
         const productFromApi: any = await getProductBySameSubCategorySlug(subCategorySlug,productSlug);
         if (productFromApi.succeeded) {
           setProducts(productFromApi.data)
-          console.log(productFromApi)
         }
         else {
           toast.error(productFromApi.Message, {

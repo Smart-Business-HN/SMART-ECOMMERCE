@@ -5,11 +5,11 @@ import React, { Fragment } from 'react';
 export function UbiquitiSection() {
     return (
         <Fragment>
-            <div className='w-full mx-auto container relative'>
-                <video className='w-full rounded-xl' autoPlay muted loop>
+            <div className='w-full mx-auto container relative px-2 md:px-0'>
+                <video className='w-full rounded-xl mb-2 md:mb-0' autoPlay muted loop>
                     <source src="/assets/videos/u6-pro-smart-business.mp4" type="video/mp4" />
                 </video>
-                <div className='absolute left-10 p-10 top-10 w-[400px] bg-gray-600 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 '>
+                <div className='md:absolute md:left-10 md:p-10 md:top-10 p-4 md:w-[400px] md:bg-gray-600 bg-gray-900 rounded-md bg-clip-padding md:backdrop-filter md:backdrop-blur-md md:bg-opacity-30 '>
                     <p className=' text-xl font-semibold text-gray-200'>Todo lo necesario para redes empresariales de primer nivel</p>
                     <p className='text-gray-300 '>
                         Contamos con lo necesario para una red empresarial exigente.
@@ -19,18 +19,22 @@ export function UbiquitiSection() {
                         <li>-Access Points</li>
                         <li>-Cable UTP Certificados</li>
                     </ol>
+                    <div className='md:absolute md:hidden mt-4 right-10 p-2 bottom-10  bg-gray-600 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 flex gap-2'>
+                    <Image src="/assets/images/corporate/unifi-icon-smart-business.png" width={50} height={50} alt="unifi icon" />
+                    <Image src="/assets/images/corporate/smart_business_logo_white_letters.png" width={170} height={50} alt="unifi icon" />
                 </div>
-                <div className='absolute right-10 p-2 bottom-10  bg-gray-600 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 flex gap-2'>
+                </div>
+                <div className='absolute hidden right-10 p-2 bottom-10  bg-gray-600 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 md:flex gap-2'>
                     <Image src="/assets/images/corporate/unifi-icon-smart-business.png" width={50} height={50} alt="unifi icon" />
                     <Image src="/assets/images/corporate/smart_business_logo_white_letters.png" width={170} height={50} alt="unifi icon" />
                 </div>
             </div>
-            <div className='w-full mx-auto container mb-5 mt-10'>
+            <div className='w-full mx-auto container mb-5 mt-10 px-4 md:px-0'>
                 <div className='mb-5'>
                     <h3 className='text-3xl font-semibold text-gray-900'>WiFi líder en la industria</h3>
                 </div>
-                <div className='flex gap-5 justify-between'>
-                    <div className='grow bg-[#F9F9F9] p-7 rounded-md'>
+                <div className='flex flex-col md:flex-row gap-5 justify-between'>
+                    <div className='grow animate-fade-right animate-ease-in bg-[#F9F9F9] p-7 rounded-md shadow-sm transition-all hover:shadow-lg'>
                         <h5 className='font-semibold text-gray-700 mb-2'>El original</h5>
                         <p className='font-bold text-gray-950 text-3xl'>Buque insignia</p>
                         <p className='font-semibold text-gray-600'>Wifi Perfecto</p>
@@ -44,7 +48,7 @@ export function UbiquitiSection() {
                             <Image src="/assets/images/products/U6-Pro-smart-business.png" width={270} height={270} alt="unifi icon" />
                         </div>
                     </div>
-                    <div className='grow bg-[#F9F9F9] p-7 rounded-md'>
+                    <div className='grow bg-[#F9F9F9] p-7 animate-fade-right animate-ease-in rounded-md mt-4 md:mt-0 shadow-sm transition-all hover:shadow-lg'>
                         <h5 className='font-semibold text-gray-700 mb-2'>Indoor / Outdoor</h5>
                         <p className='font-bold text-gray-950 text-3xl'>Mesh</p>
                         <p className='font-semibold text-gray-600'>Plug-and-play PoE mesh</p>
@@ -58,7 +62,7 @@ export function UbiquitiSection() {
                             <Image src="/assets/images/products/U6-Mesh-smart-business.png" width={270} height={270} alt="unifi icon" />
                         </div>
                     </div>
-                    <div className='grow bg-[#F9F9F9] p-7 rounded-md'>
+                    <div className='grow bg-[#F9F9F9] p-7 animate-fade-right animate-ease-in rounded-md mt-4 md:mt-0 shadow-sm transition-all hover:shadow-lg'>
                         <h5 className='font-semibold text-gray-700 mb-2'>Compacto</h5>
                         <p className='font-bold text-gray-950 text-3xl'>In-Wall</p>
                         <p className='font-semibold text-gray-600'>Amplíe la cobertura WiFi sin problemas</p>
@@ -73,11 +77,11 @@ export function UbiquitiSection() {
                         </div>
                     </div>
                 </div>
-                <div className='container flex mt-5 items-center rounded-md bg-[#F9F9F9] p-5'>
+                <div className='flex flex-col md:flex-row mt-5 items-center rounded-md bg-[#F9F9F9] p-5 animate-fade-up'>
                     <div className='grow'>
                         <Image className='rounded-md' src='/assets/images/products/project-ubiquiti.png' width={600} height={600} alt='Proyectos cableado' />
                     </div>
-                    <div className='p-14 grow flex-col justify-center items-center'>
+                    <div className='mt-4 md:mt-0 md:p-14 order-1 grow flex-col justify-center items-center'>
                         <div className='text-center'>
                             <p className='text-center font-semibold text-2xl'>¿Tienes un proyecto en mente?</p>
                             <p className='text-center'>Si tienes un proyecto de cableado estructurado podemos ayudarte en todo lo que necesites y nos ajustamos a tu presupuesto.</p>

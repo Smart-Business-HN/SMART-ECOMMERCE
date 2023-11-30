@@ -1,17 +1,17 @@
 'use client'
 import React, { useEffect, useState } from 'react'
+import Link from 'next/link';
+import Image from 'next/image';
 import { useParams } from 'next/navigation'
+import ImageGallery from "react-image-gallery";
 import toast, { Toaster } from 'react-hot-toast';
 import { getProductBySlug } from '@/services/product/product.service';
-import ImageGallery from "react-image-gallery";
-import Link from 'next/link';
 import { Product } from '@/interfaces/product/product.interface';
 import { CalculateProductPrice } from '@/utils/product-price';
 import { FormatValues } from '@/utils/number-format';
 import ProductsWithSameCategory from '@/components/shop/products-page/products-with-same-category';
 import RelatedProducts from '@/components/shop/products-page/related-products';
 import InformationProductTabs from '@/components/shop/products-page/information-product-tabs';
-import Image from 'next/image';
 export interface ImageGalleryItem {
   original: string,
   thumbnail?: string
@@ -182,3 +182,4 @@ export default function ProductDetailPage() {
     </>
   )
 }
+

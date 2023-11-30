@@ -33,6 +33,7 @@ export default function RootLayout({
             }}
         />
         <meta name="google-site-verification" content="S-MABBGjddcLo8_kNkNfuqVi7etsoBNnLSR-OpHJBeg" />
+        <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
       </head>
       <body className={poppins.className}>
         <Navbar />

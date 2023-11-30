@@ -171,9 +171,7 @@ export default function Shop() {
                 </svg>
               </button>
             </div>
-
           </div>
-
         </div>
       </div>
     </div>

@@ -13,11 +13,21 @@ export const GetAllProducts = async (searchParams:any) => {
   }
 };
 
+export const GetAllProductsForNavbar = async () => {
+  try {
+    const response: any = await axios.get(`${process.env.baseApi}/Product/GetAll?All=True`);
+    const serializeResponse: ProductsResponse = response.data;
+    return serializeResponse;
+  } catch (error: any) {
+    const data : ApiResponse = error.response.data;
+    return data;
+  }
+};
+
 export const getProductBySlug = async (slug: string) => {
   try {
     const response: any = await axios.get(`${process.env.baseApi}/Product/GetBySlug/${slug}`)
     const serializeResponse: ProductDetailResponse = response.data;
-    console.log(serializeResponse)
     return serializeResponse;
   } catch (error: any) {
     const data : ApiResponse = error.response.data;
@@ -29,7 +39,6 @@ export const getProductBySameCategorySlug = async (categorySlug: string, product
   try {
     const response: any = await axios.get(`${process.env.baseApi}/Product/GetProductsBySameCategorySlug/${categorySlug}/${productSlug}`)
     const serializeResponse: ProductsResponse = response.data;
-    console.log(serializeResponse)
     return serializeResponse;
   } catch (error: any) {
     const data : ApiResponse = error.response.data;
@@ -41,7 +50,6 @@ export const getProductBySameSubCategorySlug = async (subCategorySlug: string, p
   try {
     const response: any = await axios.get(`${process.env.baseApi}/Product/GetProductsBySameSubCategorySlug/${subCategorySlug}/${productSlug}`)
     const serializeResponse: ProductsResponse = response.data;
-    console.log(serializeResponse)
     return serializeResponse;
   } catch (error: any) {
     const data : ApiResponse = error.response.data;
@@ -53,7 +61,6 @@ export const getProductBySubCategorySlug = async (subCategorySlug: string, searc
   try {
     const response: any = await axios.get(`${process.env.baseApi}/Product/GetProductsBySubCategorySlug/${subCategorySlug}`,{params:searchParams})
     const serializeResponse: ProductsResponse = response.data;
-    console.log(serializeResponse)
     return serializeResponse;
   } catch (error: any) {
     const data : ApiResponse = error.response.data;
@@ -65,7 +72,6 @@ export const getProductByCategorySlug = async (categorySlug: string, searchParam
   try {
     const response: any = await axios.get(`${process.env.baseApi}/Product/GetProducsByCategorySlug/${categorySlug}`,{params:searchParams})
     const serializeResponse: ProductsResponse = response.data;
-    console.log(serializeResponse)
     return serializeResponse;
   } catch (error: any) {
     const data : ApiResponse = error.response.data;

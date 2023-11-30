@@ -55,7 +55,6 @@ export default function ProductsByCategory() {
                                             <div className='flex gap-10 justify-center'>
                                                 {
                                                     item.heroSliders.map(function (product: HeroSlider, index: number) {
-                                                        console.log(product)
                                                         return (
                                                             <div className='flex relative' key={index}>
                                                                 <div className='border group w-[250px] h-[290px] inline-block border-gray-300 p-4 shadow-md hover:shadow-2xl justify-center  text-center'>

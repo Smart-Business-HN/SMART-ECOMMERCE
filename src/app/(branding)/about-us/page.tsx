@@ -2,7 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 
 const AboutUs: React.FC = () => (
-    <div className='container mx-auto max-w-7xl my-5'>
+    <div className='container mx-auto max-w-7xl my-5 scroll-smooth'>
         <div className='grid grid-cols-2 gap-4'>
             <div className='relative'>
                 <Image height={500} width={600} className='op opacity-40' alt='buildings backgrounds smart business' src='/assets/images/backgrounds/background-buildings.png' />
@@ -43,7 +43,7 @@ const AboutUs: React.FC = () => (
                     <hr className='w-[5%] -mb-1 border-[#1C68E1] border'></hr>
                     <hr className='mt-1'></hr>
                     <div className='flex gap-5 mt-5'>
-                        <div className='basis-1/4 border border-gray-300 p-5 rounded-md relative'>
+                        <div className='basis-1/4 border border-gray-300 p-5 rounded-md relative skew-y-6 -skew-x-6 hover:-skew-x-0 hover:skew-y-0 transition-all'>
                             <Image className='absolute left-0 -top-0 rounded-t-md right-0 object-cover w-full max-h-[150px]' src='/assets/images/backgrounds/public-security-smart-business.jpg' alt='Seguridad Publica' width={300} height={300} />
                             <div className='h-[150px]'></div>
                             <h5 className='text-left text-gray-700 font-bold text-md'>Seguridad Publica</h5>
@@ -51,7 +51,7 @@ const AboutUs: React.FC = () => (
                                 Ciudades inteligentes y soluciones de tráfico inteligente para la seguridad y la administración urbana.
                             </p>
                         </div>
-                        <div className='basis-1/4 border border-gray-300 p-5 rounded-md relative'>
+                        <div className='basis-1/4 border border-gray-300 p-5 rounded-md relative skew-y-6 -skew-x-6 hover:-skew-x-0 hover:skew-y-0 transition-all'>
                             <Image className='absolute left-0 -top-0 rounded-t-md right-0 object-cover w-full max-h-[150px]' src='/assets/images/backgrounds/business-smart-business.png' alt='Seguridad para empresas' width={300} height={300} />
                             <div className='h-[150px]'></div>
                             <h5 className='text-left text-gray-700 font-bold text-md'>Empresas</h5>
@@ -59,7 +59,7 @@ const AboutUs: React.FC = () => (
                                 Soluciones inteligentes para la seguridad y las operaciones comerciales que abarcan comercio minorista, logística, energía, educación y mucho más.
                             </p>
                         </div>
-                        <div className='basis-1/4 border border-gray-300 p-5 rounded-md relative'>
+                        <div className='basis-1/4 border border-gray-300 p-5 rounded-md relative skew-y-6 -skew-x-6 hover:-skew-x-0 hover:skew-y-0 transition-all'>
                             <Image className='absolute left-0 -top-0 rounded-t-md right-0 object-cover w-full max-h-[150px]' src='/assets/images/backgrounds/pymes-smart-business.png' alt='Seguridad para Pymes' width={300} height={300} />
                             <div className='h-[150px]'></div>
                             <h5 className='text-left text-gray-700 font-bold text-md'>PYMEs</h5>
@@ -67,7 +67,7 @@ const AboutUs: React.FC = () => (
                                 Una completa gama de productos de seguridad inteligente, desde seguridad por video, control de acceso e intercomunicación, hasta alarmas y LED, por nombrar algunos.
                             </p>
                         </div>
-                        <div className='basis-1/4 border border-gray-300 p-5 rounded-md relative'>
+                        <div className='basis-1/4 border border-gray-300 p-5 rounded-md relative skew-y-6 -skew-x-6 hover:-skew-x-0 hover:skew-y-0 transition-all'>
                             <Image className='absolute left-0 -top-0 rounded-t-md right-0 object-cover w-full max-h-[150px]' src='/assets/images/backgrounds/cliente-fina-smart-business.jpg' alt='Seguridad para clientes' width={300} height={300} />
                             <div className='h-[150px]'></div>
                             <h5 className='text-left text-gray-700 font-bold text-md'>Consumidores</h5>
@@ -132,49 +132,49 @@ const AboutUs: React.FC = () => (
             <div className='mt-5'>
                 <h3 className='text-3xl font-bold text-gray-700 text-center'>Nuestros Clientes</h3>
                 <div className='grid mt-5 grid-cols-5 gap-5'>
-                    <div className='flex justify-center p-2 rounded-md bg-gray-50'>  
+                    <div className='flex justify-center p-2 rounded-md bg-gray-50 hover:shadow-md transition-all hover:scale-110'>  
                         <Image src='/assets/images/clients/911.png' width={100} height={50} alt='911 logo' />
                     </div>
-                    <div className='flex justify-center p-10 rounded-md bg-gray-50'>
+                    <div className='flex justify-center p-10 rounded-md bg-gray-50 hover:shadow-md transition-all hover:scale-110'>
                         <Image className='h-16' src='/assets/images/clients/acosa-logo.png' width={180} height={40} alt='acosa' />
                     </div>
-                    <div className='flex justify-center p-10 rounded-md bg-gray-50'>
+                    <div className='flex justify-center p-10 rounded-md bg-gray-50 hover:shadow-md transition-all hover:scale-110'>
                         <Image className='h-16' src='/assets/images/clients/BAC_Credomatic_logo.svg.png' width={170} height={40} alt='bac credomatic' />
                     </div>
-                    <div className='flex justify-center p-10 rounded-md bg-gray-50'>
+                    <div className='flex justify-center p-10 rounded-md bg-gray-50 hover:shadow-md transition-all hover:scale-110'>
                         <Image src='/assets/images/clients/Grupo-Karims-smart-business.png' width={80} height={50} alt='grupo karims' />
                     </div>
-                    <div className='flex justify-center p-10 rounded-md bg-gray-50'>
+                    <div className='flex justify-center p-10 rounded-md bg-gray-50 hover:shadow-md transition-all hover:scale-110'>
                         <Image  className='h-16' src='/assets/images/clients/grupo-platino-smart-business.png' width={190} height={50} alt='Grupo Platino' />
                     </div>
-                    <div className='flex justify-center p-5 rounded-md bg-gray-50'>
+                    <div className='flex justify-center p-5 rounded-md bg-gray-50 hover:shadow-md transition-all hover:scale-110'>
                         <Image src='/assets/images/clients/logo_la_quinta_la_ceiba.jpg' width={100} height={50} alt='Hotel La Quinta' />
                     </div>
-                    <div className='flex justify-center p-5 rounded-mdt bg-gray-50'>
+                    <div className='flex justify-center p-5 rounded-mdt bg-gray-50 hover:shadow-md transition-all hover:scale-110'>
                         <Image className='h-16' src='/assets/images/clients/logo-banco-atlantida.png' width={190} height={40} alt='Banco Atlnatida' />
                     </div>
-                    <div className='flex justify-center items-center p-2 rounded-md bg-gray-50'>
+                    <div className='flex justify-center items-center p-2 rounded-md bg-gray-50 hover:shadow-md transition-all hover:scale-110'>
                         <Image  className='h-16' src='/assets/images/clients/logo-funda.png' width={200} height={50} alt='Grupo Comidas' />
                     </div>
-                    <div className='flex justify-center p-2 rounded-md  bg-gray-50'>
+                    <div className='flex justify-center p-2 rounded-md  bg-gray-50 hover:shadow-md transition-all hover:scale-110'>
                         <Image src='/assets/images/clients/municipalidad-de-san-pedro-sula-logo.png' width={100} height={50} alt='bac credomatic' />
                     </div>
-                    <div className='flex justify-center p-2 rounded-md bg-gray-50'>
+                    <div className='flex justify-center p-2 rounded-md bg-gray-50 hover:shadow-md transition-all hover:scale-110'>
                         <Image src='/assets/images/clients/net-laptech.jpeg' width={100} height={50} alt='Netlaptech' />
                     </div>
-                    <div className='flex justify-center p-5 rounded-md bg-gray-50'>
+                    <div className='flex justify-center p-5 rounded-md bg-gray-50 hover:shadow-md transition-all hover:scale-110'>
                         <Image src='/assets/images/clients/unnamed.png' width={200} height={50} alt='Unitec' />
                     </div>
-                    <div className='flex justify-center p-5 rounded-md bg-gray-50'>
+                    <div className='flex justify-center p-5 rounded-md bg-gray-50 hover:shadow-md transition-all hover:scale-110'>
                         <Image src='/assets/images/clients/inversiones_aliadas_smart_business.png' width={200} height={50} alt='Unitec' />
                     </div>
-                    <div className='flex justify-center p-10 rounded-md bg-gray-50'>
+                    <div className='flex justify-center p-10 rounded-md bg-gray-50 hover:shadow-md transition-all hover:scale-110'>
                         <Image src='/assets/images/clients/logo_de_claro.png' width={200} height={50} alt='Unitec' />
                     </div>
-                    <div className='col-span-2 flex justify-center items-center rounded-md bg-gray-50'>
+                    <div className='col-span-2 flex justify-center items-center rounded-md bg-gray-50 hover:shadow-md transition-all hover:scale-110'>
                     <h5 className='text-center font-bold text-2xl'>¡Muchos Mas!</h5>
                     </div>
-                    <div className='col-span-5 flex justify-center items-center p-5 rounded-md bg-gray-50'>
+                    <div className='col-span-5 flex justify-center items-center p-5 rounded-md bg-gray-50 hover:shadow-md transition-all hover:scale-110 animate-bounce'>
                         <h5 className='text-center font-bold text-2xl'>¡Proximamente Tu!</h5>
                     </div>
                 </div>
