@@ -82,9 +82,9 @@ function Services() {
             <div className='bg-gradient-to-bl from-sky-500 via-blue-500 to-blue-700 rounded-xl absolute left-[50%] -translate-x-[50%] -top-10 rotate-45 shadow-md shadow-gray-400'>
               <Image alt='paginas web' className='-rotate-45 brightness-0 invert' src="/assets/images/icons/voip.png" width={100} height={100} />
             </div>
-            <h5 className='mt-20 text-center text-xl font-bold'>Telefonia IP</h5>
+            <h5 className='mt-20 text-center text-xl font-bold'>Telefonía IP</h5>
             <p className='mt-2  text-center text-gray-500 text-lg'>
-              Traemos a la realidad tus sue;os, hoy en dia un negocio sin sitio web es incenvible.
+              Traemos a la realidad tus sueños, hoy en dia un negocio sin sitio web es inconcebible.
             </p>
           </div>
           <div className='shadow-xl p-4 rounded-tl-[100px] rounded-b-md rounded-tr-md relative bg-white'>
@@ -98,7 +98,7 @@ function Services() {
           </div>
         </div>
       </div>
-      <div className='mt-10 bg-gray-50 py-10 object-contain' style={{ backgroundImage: `url('/assets/images/backgrounds/pattern-waves.png')`, }}>
+      <div className={`pt-10  py-10 bg-opacity-10 bg-gray-300 bg-[url('/assets/images/backgrounds/white-abstract.jpg')] bg-cover`} >
         <h2 className='font-bold text-center text-3xl'>Si quieres triunfar tienes que ser<br /> <strong className='text-blue-500'>SMART</strong></h2>
         <div className='pt-1 flex border-t-2 border-blue-400 w-[5%] ml-[50%] -translate-x-[50%]'></div>
         <div className='container mx-auto'>
@@ -109,9 +109,9 @@ function Services() {
               <p>Sabemos que eres responsable con los tuyos y que quieres lo mejor para ellos</p>
               <p>Por eso te brindamos:</p>
               <ul className=' text-gray-700'>
-                <li>-Instalacion de sistemas de circuito cerrado CCTV.</li>
-                <li>-Instalacion de sistemas de control de acceso biometrico.</li>
-                <li>-Planificacion de sistemas de control termico para plantas quimicas.</li>
+                <li>-Instalación de sistemas de circuito cerrado CCTV.</li>
+                <li>-Instalación de sistemas de control de acceso biometrico.</li>
+                <li>-Planificación de sistemas de control térmico para plantas químicas.</li>
               </ul>
               <p className='font-bold mt-5 text-gray-700'>Con la mejor tecnologia al mejor precio</p>
               <div className='flex p-4'>
@@ -124,28 +124,67 @@ function Services() {
               <Image className='rounded-md shadow-sm' src='/assets/images/corporate/cctv-room.jpg' width={600} height={400} alt='cuerto cctv' />
             </div>
           </div>
-          <div className='grid grid-cols-2 mt-10 items-start justify-start'>
+          <div className='grid grid-cols-2 gap-10 mt-10 items-start justify-start'>
             <video className='w-full rounded-xl mb-2 md:mb-0' autoPlay muted loop>
                     <source src='/assets/videos/fast-network.mp4' type="video/mp4" />
-                </video>
-            <div className=''>
+            </video>
+            <div className=' container'>
               <div className=''>
-                <h4 className='flex text-xl font-semibold text-gray-900'>Tu red tiene que ser la mejor</h4>
+                <h4 className='flex text-2xl font-semibold text-gray-900'>Tu red debe ser la mejor</h4>
                 <div className='border-t-2 border-blue-500 w-[5%] mb-5'></div>
-                <p>No dejes que una mala red atrase tu negocio</p>
+                <p>No dejes que una mala red atrase a tus colaboradores y tu negocio</p>
                 <p>Lo que podemos hacer por ti:</p>
                 <ul className=' text-gray-700'>
-                  <li>-Certificacion de red.</li>
-                  <li>-Instalacion de puntos de red empresarial.</li>
-                  <li>-Reestructuracion de redes.</li>
+                  <li>-Certificación de red.</li>
+                  <li>-Instalación de puntos de red empresarial.</li>
+                  <li>-Reestructuración de redes.</li>
                 </ul>
-                <p className='font-bold mt-5 text-gray-700'>Con la mejor tecnologia al mejor precio</p>
-                <div className='flex p-4'>
+                <p className='font-bold mt-5 text-gray-700'>Solamente con materiales de calidad</p>
+                <div className='flex gap-5 items-center pt-4'>
                   <div>
-                    <Image src='/assets/images/corporate/hikvision_logo_smart_business.png' width={200} height={100} alt='hikvision' />
+                    <Image src='/assets/images/corporate/unifi-icon-smart-business.png' width={40} height={40} alt='ubiquiti log' />
+                  </div>
+                  <div>
+                    <Image src='/assets/images/corporate/mikrotik-logo.png' width={200} height={100} alt='mikrotik logo' />
+                  </div>
+                  
+                  <div>
+                    <Image src='/assets/images/corporate/belden_logo.png' width={120} height={40} alt='belden logo' />
+                  </div>
+                  <div>
+                    <Image src='/assets/images/corporate/legrand-logo.png' width={150} height={40} alt='legrand logo' />
+                  </div>
+                  <div>
+                    <Image src='/assets/images/corporate/tp-link.png' width={100} height={40} alt='tp-link logo' />
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+          <div className='container mt-10 mx-auto p-5'>
+            <h3 className='font-semibold text-3xl text-gray-700 text-center'>Te brindamos lo mas practico para tu red</h3>
+            <h4 className='font-semibold text-2xl text-gray-500 text-center'>Switches FULL-POE</h4>
+            <video className='container mx-auto rounded-xl mt-5 md:mb-0' autoPlay muted loop>
+                    <source src='/assets/videos/switch-poe.mp4' type="video/mp4" />
+            </video>
+          </div>
+          <div className='container mt-10 mx-auto p-5'>
+            <h3 className='font-semibold text-3xl text-gray-700 text-center'>Protege tu Equipo</h3>
+            <h4 className='font-semibold text-2xl text-gray-500 text-center'>Sistemas de Energía Ininterrumpida</h4>
+            <div className='grid grid-cols-2 gap-10'>
+              <div>
+              <h4 className='flex text-2xl font-semibold text-gray-900'>Sistemas de energía ininterrumpida</h4>
+                <div className='border-t-2 border-blue-500 w-[5%] mb-5'></div>
+                <p>Prevenir es mejor que lamentar cuida el equipo de tu hogar u empresa con marcas avaladas por años de experiencia.</p>
+                <p>Te brindamos soporte para:</p>
+                <ul className=' text-gray-700'>
+                  <li>-Equipo de oficina.</li>
+                  <li>-Data Centers de nivel corporativo.</li>
+                  <li>-Estudio de necesidades energeticas.</li>
+                </ul>
+              </div>
+
+
             </div>
           </div>
         </div>
