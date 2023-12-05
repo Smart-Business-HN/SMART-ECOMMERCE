@@ -1,44 +1,63 @@
-'use client'
-import React, { useEffect, useState } from 'react'
 import Link from 'next/link';
 import Image from 'next/image';
-import { useParams } from 'next/navigation'
-import ImageGallery from "react-image-gallery";
 import toast, { Toaster } from 'react-hot-toast';
-import { getProductBySlug } from '@/services/product/product.service';
+// import { getProductBySlug } from '@/services/product/product.service';
 import { Product } from '@/interfaces/product/product.interface';
 import { CalculateProductPrice } from '@/utils/product-price';
 import { FormatValues } from '@/utils/number-format';
 import ProductsWithSameCategory from '@/components/shop/products-page/products-with-same-category';
 import RelatedProducts from '@/components/shop/products-page/related-products';
 import InformationProductTabs from '@/components/shop/products-page/information-product-tabs';
+import { ProductDetailResponse } from '@/interfaces/http-responses/http-responses.interface';
+import ImageGalleryForProductDetailPage from '@/components/shop/products-page/image-gallery';
+import { getProductBySlug } from '@/services/product/product.service';
 export interface ImageGalleryItem {
   original: string,
   thumbnail?: string
 };
+export async function generateMetadata({ params }:{ params: { productSlug: string, categorySlug: string, subCategorySlug:string }}){
+  const responseFromApi : any = await getProductBySlug(params.productSlug);
+  const responseSerialize : ProductDetailResponse = responseFromApi;
+  const product = responseSerialize.data;
+  return {
+    title : `SB | ${product.name}`,
+    description: product.description,
+    openGraph: {
+      title: `SB | ${product.name}`,
+      description: product.description,
+      url: `https://www.smartbusiness.site/shop/category/${params.categorySlug}/${params.subCategorySlug}/${params.productSlug}`,
+      siteName: 'Smart Business',
+      images: [
+        {
+          url: product.productImages.length != 0 ? product.productImages[0].url : '/assets/images/corporate/smart-business-og-image.png',
+          width: 800,
+          height: 600,
+        }
+      ],
+      locale: 'es_ES',
+      type: 'website',
+    },
+  }
+}
 
-export default function ProductDetailPage() {
-  const [product, setProduct] = useState<Product | null>(null);
-  const [quantity, setQuantity]= useState<number>(1);
-  const [productImages, setProductImages] = useState<any[]>([]);
+export default async function ProductDetailPage({ params } : { params: { productSlug: string, categorySlug: string, subCategorySlug:string }}) {
+  let quantity =1;
+  let productImages : ImageGalleryItem[] = [];
   const noImage: string = "https://smarterpstorage.blob.core.windows.net/produccion/no-image-available-icon-vector.jpg";
-  const params = useParams();
   const itIsLogged: boolean = true;
   const whatsappContact: string = 'https://api.whatsapp.com/send?phone=50488187765&text=Hola%20me%20interesa%20saber%20mas%20sobre%20este%20producto...';
-  const loadProduct = async (slug: string) => {
-    const productFromApi: any = await getProductBySlug(slug);
-    if (productFromApi.succeeded) {
-      setProduct(productFromApi.data)
-      addImagesToGallery(productFromApi.data)
-    }
-    else {
-      toast.error(productFromApi.Message, {
+  const responseFromApi : any = await getProductBySlug(params.productSlug);
+  const responseSerialize : ProductDetailResponse = responseFromApi;
+  const product = responseSerialize.data;
+  if(responseSerialize.succeeded){
+    addImagesToGallery(product);
+  }
+  else {
+        toast.error(responseSerialize.message, {
         position: 'top-right',
         className: 'text-xs mt-10'
       })
-    }
   }
-
   function addImagesToGallery(product: Product) {
     let images: ImageGalleryItem[] = [];
     if (product.productImages.length > 0) {
@@ -49,13 +68,8 @@ export default function ProductDetailPage() {
     else {
       images.push({ original: noImage, thumbnail: noImage })
     }
-
-    setProductImages(images);
+    productImages = images;
   }
-
-  useEffect(() => {
-    loadProduct(params.productSlug.toString())
-  }, [])
   return (
     <>
       <Toaster />
@@ -92,14 +106,7 @@ export default function ProductDetailPage() {
               <div className='col-span-6'>
                 <div className='w-full gap-4 grid grid-cols-2'>
                   <div className='col-span-1 '>
-                    <ImageGallery
-                      items={productImages}
-                      infinite={true}
-                      showNav={false}
-                      thumbnailPosition='left'
-                      showFullscreenButton={true}
-                      showPlayButton={false}
-                    />
+                    <ImageGalleryForProductDetailPage images={productImages}/>
                   </div>
                   <div className='col-span-1 p-5'>
                     {

@@ -1,10 +1,9 @@
 import { NavCategory } from "@/interfaces/category/nav-category.interface";
-import { HeroSliderResponse } from "@/interfaces/hero-slider/hero-slider-response.interface";
-import axios from "axios";
+import { axiosCustom } from "@/utils/axios-helper";
 
 export const GetAllNavCategory = async () => {
     try {
-      const response: any = await axios.get(`${process.env.baseApi}/Category/GetAllNavCategory`);
+      const response: any = await axiosCustom.get(`${process.env.BASEAPI}/Category/GetAllNavCategory`);
       const serializeResponse: NavCategory[] = response.data.data;
       return serializeResponse;
     } catch(error : any)

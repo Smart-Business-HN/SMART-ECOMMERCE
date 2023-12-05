@@ -1,9 +1,7 @@
-import { DataSheet } from "@/interfaces/data-sheet/data-sheet.interface";
+'use client'
 import { ProductDataSheet } from "@/interfaces/product/product-data-sheet.interface";
 import { ProductFeature } from "@/interfaces/product/product-feature.interface";
-import { Product } from "@/interfaces/product/product.interface";
 import { Tab } from "@headlessui/react";
-import Link from "next/link";
 import { Fragment } from "react";
 
 export default function InformationProductTabs(props: any) {

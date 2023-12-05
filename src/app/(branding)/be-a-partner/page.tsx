@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { Disclosure } from "@headlessui/react";
 import { CreditCardIcon, EnvelopeIcon, GiftIcon, MapIcon, ReceiptRefundIcon } from "@heroicons/react/24/outline";
 import ReasonsToTrustInUs from "@/components/be-a-partner/accordion";
 

@@ -17,7 +17,7 @@ const nextConfig = {
           ],
     },
     env: {
-        baseApi: 'https://localhost:7211/api/v2',
+        BASEAPI: 'https://localhost:7211/api/v2',
     },
 }
 module.exports = nextConfig
