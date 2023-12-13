@@ -7,19 +7,19 @@ function Services() {
   return (
     <>
       <div className='container mx-auto'>
-        <div className='grid grid-cols-2 gap-4 my-5'>
-          <div className='p-24 bg-gray-200'>
+        <div className='grid md:grid-cols-2 gap-4 my-5'>
+          <div className='md:p-24 bg-gray-200'>
             {/* hacer algo en algun momento de la vida */}
           </div>
-          <div className='py-24'>
-            <h1 className='font-bold text-4xl'>Escoge a la <strong className='text-blue-500'>MEJOR</strong> <br /> empresa de Soluciones Informaticas<strong className='text-blue-500'>.</strong></h1>
-            <div className='border-l-2 border-blue-500 p-2 my-5 text-xl'>
+          <div className='flex flex-col justify-center md:py-24 px-5 md:px-0'>
+            <h1 className='font-bold text-2xl md:text-4xl'>Escoge a la <strong className='text-blue-500'>MEJOR</strong> <br /> empresa de Soluciones Informaticas<strong className='text-blue-500'>.</strong></h1>
+            <div className='border-l-2 border-blue-500 p-2 my-5 md:text-xl'>
               <p>No queremos venderte productos, no queremos venderte una instalacion.</p>
               <p>Queremos ser quien le de <strong className='font-bold text-blue-500'>solucion</strong> a tus problemas</p>
             </div>
             <div className='flex border-t'></div>
-            <div className='grid grid-cols-2 px-10 py-5'>
-              <div className='flex gap-4 items-center'>
+            <div className='grid md:grid-cols-2 md:px-10 py-5'>
+              <div className='flex gap-4 items-center mb-5 md:mb-0'>
                 <div className='p-10 bg-gray-300 rounded'></div>
                 <h3>Expertos Realizando</h3>
               </div>
@@ -46,11 +46,11 @@ function Services() {
           </div>
         </div>
       </div>
-      <div className='mt-10 bg-gray-50 py-10 object-fit' style={{ backgroundImage: `url('/assets/images/backgrounds/pattern-9.png')`, }}>
+      {/* <div className='mt-10 bg-gray-50 bg-opacity-60 py-10 object-fit' style={{ backgroundImage: `url('/assets/images/backgrounds/pattern-9.png')`, }}>
         <h2 className='font-bold text-center text-3xl'>Nuestros Servicios</h2>
         <div className='pt-1 flex border-t-2 border-blue-400 w-[5%] ml-[50%] -translate-x-[50%]'></div>
         <p className='text-center text-2xl'>Tenemos una variedad de servicios a tu disposicion</p>
-        <div className='grid grid-cols-5 gap-5 mt-28 px-4 container mx-auto'>
+        <div className='grid grid-cols-5 gap-5 mt-28 container mx-auto'>
           <div className='shadow-xl p-4 rounded-tl-[100px] rounded-b-md rounded-tr-md relative bg-white'>
             <div className='bg-gradient-to-bl from-sky-500 via-blue-500 to-blue-700 rounded-xl absolute left-[50%] -translate-x-[50%] -top-10 rotate-45 shadow-md shadow-gray-400'>
               <Image alt='paginas web' className='-rotate-45 brightness-0 invert' src="/assets/images/icons/web-pages.png" width={100} height={100} />
@@ -97,8 +97,8 @@ function Services() {
             </p>
           </div>
         </div>
-      </div>
-      <div className={`pt-10  py-10 bg-opacity-10 bg-gray-300 bg-[url('/assets/images/backgrounds/white-abstract.jpg')] bg-cover`} >
+      </div> */}
+      {/* <div className={`pt-10  py-10 bg-opacity-10 bg-gray-300 bg-[url('/assets/images/backgrounds/white-abstract.jpg')] bg-cover`} >
         <h2 className='font-bold text-center text-3xl'>Si quieres triunfar tienes que ser<br /> <strong className='text-blue-500'>SMART</strong></h2>
         <div className='pt-1 flex border-t-2 border-blue-400 w-[5%] ml-[50%] -translate-x-[50%]'></div>
         <div className='container mx-auto'>
@@ -120,7 +120,7 @@ function Services() {
                 </div>
               </div>
             </div>
-            <div className='flex items-center justify-center'>
+            <div className='flex items-center justify-center md:justify-end'>
               <Image className='rounded-md shadow-sm' src='/assets/images/corporate/cctv-room.jpg' width={600} height={400} alt='cuerto cctv' />
             </div>
           </div>
@@ -161,7 +161,7 @@ function Services() {
               </div>
             </div>
           </div>
-          <div className='container mt-10 mx-auto p-5'>
+          <div className='container mt-10 mx-auto py-5'>
             <h3 className='font-semibold text-3xl text-gray-700 text-center'>Te brindamos lo mas practico para tu red</h3>
             <h4 className='font-semibold text-2xl text-gray-500 text-center'>Switches FULL-POE</h4>
             <video className='container mx-auto rounded-xl mt-5 md:mb-0' autoPlay muted loop>
@@ -188,7 +188,7 @@ function Services() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   )
 }

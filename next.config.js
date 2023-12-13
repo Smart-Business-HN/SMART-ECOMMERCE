@@ -18,6 +18,7 @@ const nextConfig = {
     },
     env: {
         BASEAPI: 'https://localhost:7211/api/v2',
+        NEXTAUTH_SECRET: 'no.utilizar.en.produccion'
     },
 }
 module.exports = nextConfig

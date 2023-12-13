@@ -3,6 +3,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
 import Footer from '@/components/main-layout/foother'
+import SessionAuthProvider from '@/context/SessionProvider'
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -14,11 +15,7 @@ export const metadata: Metadata = {
   description: 'Tu tienda mayorista para tu negocio de redes y seguridad.',
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children, }: { children: React.ReactNode }) {
   return (
     <html lang="es">
       <head>
@@ -36,9 +33,11 @@ export default function RootLayout({
         <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
       </head>
       <body className={poppins.className}>
-        <Navbar />
-        {children}
-        <Footer />
+        <SessionAuthProvider>
+          <Navbar />
+            {children}
+          <Footer />
+        </SessionAuthProvider>
       </body>
     </html>
   );
