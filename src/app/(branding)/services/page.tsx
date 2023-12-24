@@ -7,9 +7,8 @@ function Services() {
   return (
     <>
       <div className='container mx-auto'>
-        <div className='grid md:grid-cols-2 gap-4 my-5'>
-          <div className='md:p-24 bg-gray-200'>
-            {/* hacer algo en algun momento de la vida */}
+        <div className='grid md:grid-cols-2 gap-10 my-5'>
+          <div className='bg-cover bg-center p-24 rounded-md mx-5' style={{ backgroundImage: `url('/assets/images/backgrounds/building-background.jpg')`, }}>
           </div>
           <div className='flex flex-col justify-center md:py-24 px-5 md:px-0'>
             <h1 className='font-bold text-2xl md:text-4xl'>Escoge a la <strong className='text-blue-500'>MEJOR</strong> <br /> empresa de Soluciones Informaticas<strong className='text-blue-500'>.</strong></h1>
@@ -18,7 +17,7 @@ function Services() {
               <p>Queremos ser quien le de <strong className='font-bold text-blue-500'>solucion</strong> a tus problemas</p>
             </div>
             <div className='flex border-t'></div>
-            <div className='grid md:grid-cols-2 md:px-10 py-5'>
+            <div className='grid md:grid-cols-2 lg:px-10 py-5'>
               <div className='flex gap-4 items-center mb-5 md:mb-0'>
                 <div className='p-10 bg-gray-300 rounded'></div>
                 <h3>Expertos Realizando</h3>
@@ -29,28 +28,28 @@ function Services() {
               </div>
             </div>
             <div className='flex border-t'></div>
-            <div className='flex mt-5 gap-10'>
-              <div className='flex justify-center items-center'>
-                <Link className='bg-blue-500 text-white rounded-md px-4 py-2 font-semibold text-lg' href="/contact">Contactar</Link>
+            <div className='flex flex-col sm:flex-row mt-5 gap-5'>
+              <div className='grow justify-center items-center'>
+                <Link className='bg-blue-500 h-full text-center py-5 md:py-0 px-5 text-white rounded-md flex justify-center items-center font-semibold text-lg' href="/contact">Contactar</Link>
               </div>
-              <div className='flex justify-center items-center gap-4'>
-                <div className=' rounded-full bg-gray-400 p-3'>
+              <Link href="tel:+50488187765" className='flex group hover:shadow-sm justify-center items-center gap-4 border-2 p-2 rounded-md'>
+                <div className=' rounded-full bg-gray-400 group-hover:bg-blue-500 p-3'>
                   <PhoneArrowUpRightIcon className='text-white' height={30} width={30} />
                 </div>
                 <div>
-                  <h6 className='text-gray-900 font-semibold'>Llama por ayuda</h6>
-                  <Link href="tel:+50488187765">+504 8818-7765</Link>
+                  <h6 className='text-gray-900 font-semibold'>Consulta por proyectos</h6>
+                  <p>+504 8818-7765</p>
                 </div>
-              </div>
+              </Link>
             </div>
           </div>
         </div>
       </div>
-      {/* <div className='mt-10 bg-gray-50 bg-opacity-60 py-10 object-fit' style={{ backgroundImage: `url('/assets/images/backgrounds/pattern-9.png')`, }}>
+      <div className='mt-10 px-5 md:px-0 bg-gray-50 bg-opacity-60 py-10 object-fit' style={{ backgroundImage: `url('/assets/images/backgrounds/pattern-9.png')`, }}>
         <h2 className='font-bold text-center text-3xl'>Nuestros Servicios</h2>
         <div className='pt-1 flex border-t-2 border-blue-400 w-[5%] ml-[50%] -translate-x-[50%]'></div>
-        <p className='text-center text-2xl'>Tenemos una variedad de servicios a tu disposicion</p>
-        <div className='grid grid-cols-5 gap-5 mt-28 container mx-auto'>
+        <p className='text-center text-2xl'>Tenemos una variedad de servicios a tu disposición</p>
+        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-16 lg:gap-5 mt-28 container mx-auto'>
           <div className='shadow-xl p-4 rounded-tl-[100px] rounded-b-md rounded-tr-md relative bg-white'>
             <div className='bg-gradient-to-bl from-sky-500 via-blue-500 to-blue-700 rounded-xl absolute left-[50%] -translate-x-[50%] -top-10 rotate-45 shadow-md shadow-gray-400'>
               <Image alt='paginas web' className='-rotate-45 brightness-0 invert' src="/assets/images/icons/web-pages.png" width={100} height={100} />
@@ -97,11 +96,13 @@ function Services() {
             </p>
           </div>
         </div>
-      </div> */}
-      {/* <div className={`pt-10  py-10 bg-opacity-10 bg-gray-300 bg-[url('/assets/images/backgrounds/white-abstract.jpg')] bg-cover`} >
+      </div>
+      <div className='pt-10 relative py-10 bg-opacity-10 bg-gray-50 bg-cover' >
+        <div className='absolute w-72 h-72 animate-blob rounded-full bg-blue-200 blur-xl top-[15%] left-24 mix-blend-multiply'></div>
+        <div className='absolute w-72 h-72 animate-blob rounded-full bg-blue-400 opacity-70 blur-xl top-[40%] -right-4 mix-blend-multiply'></div>
         <h2 className='font-bold text-center text-3xl'>Si quieres triunfar tienes que ser<br /> <strong className='text-blue-500'>SMART</strong></h2>
         <div className='pt-1 flex border-t-2 border-blue-400 w-[5%] ml-[50%] -translate-x-[50%]'></div>
-        <div className='container mx-auto'>
+        <div className='container relative mx-auto'>
           <div className='grid grid-cols-2 mt-10 items-start justify-start'>
             <div className=''>
               <h4 className='flex text-xl font-semibold text-gray-900'>Cuida a los tuyos</h4>
@@ -113,7 +114,7 @@ function Services() {
                 <li>-Instalación de sistemas de control de acceso biometrico.</li>
                 <li>-Planificación de sistemas de control térmico para plantas químicas.</li>
               </ul>
-              <p className='font-bold mt-5 text-gray-700'>Con la mejor tecnologia al mejor precio</p>
+              <p className='font-bold mt-5 text-gray-700'>Con la mejor tecnología al mejor precio</p>
               <div className='flex p-4'>
                 <div>
                   <Image src='/assets/images/corporate/hikvision_logo_smart_business.png' width={200} height={100} alt='hikvision' />
@@ -180,15 +181,13 @@ function Services() {
                 <ul className=' text-gray-700'>
                   <li>-Equipo de oficina.</li>
                   <li>-Data Centers de nivel corporativo.</li>
-                  <li>-Estudio de necesidades energeticas.</li>
+                  <li>-Estudio de necesidades energéticas.</li>
                 </ul>
               </div>
-
-
             </div>
           </div>
         </div>
-      </div> */}
+      </div>
     </>
   )
 }
