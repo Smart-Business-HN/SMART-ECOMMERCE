@@ -12,11 +12,11 @@ export default function ProductsList(props: any) {
             {
                 products.map((item: Product, key: number) => {
                     return (
-                        <Link key={key} href={`/shop/category/${item.subCategory.category.slug}/${item.subCategory.slug}/${item.slug}`}>
-                            <div className='mt-2 border hover:shadow-2xl grid grid-cols-3 gap-5 relative'>
+                        <Link prefetch={false} key={key} href={`/shop/category/${item.subCategory.category.slug}/${item.subCategory.slug}/${item.slug}`}>
+                            <div className='mt-2 border rounded-md hover:shadow-lg grid grid-cols-3 gap-5 relative'>
                                 <span className="absolute right-2 top-2 rounded-md text-xs text-white bg-green-500 py-1 px-2">{item.status.name}</span>
                                 <div className='p-4 col-span-1 overflow-hidden h-[200px] flex justify-center items-center object-contain'>
-                                    <Image src={item?.productImages.length == 0 ? noImage : item?.productImages[0].url} alt={item.name} width={160} height={160} />
+                                    <Image loading="lazy" src={item?.productImages.length == 0 ? noImage : item?.productImages[0].url} alt={item.name} width={160} height={160} />
                                 </div>
                                 <div className='col-span-2 mt-7 relative px-2'>
                                     <h6 className=' font-medium  line-clamp-2 text-ellipsis text-[#2e2e2e]'>{item.name}</h6>
@@ -26,7 +26,6 @@ export default function ProductsList(props: any) {
                                     <div className=' bg-[#0068E1] px-1 max-h-4 mt-1 rounded-r-full'></div>
                                         {FormatValues(CalculateProductPrice(item.costPrice))}
                                     </div>
-
                                 </div>
                             </div>
                         </Link>

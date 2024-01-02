@@ -3,22 +3,22 @@ import Image from 'next/image'
 
 const AboutUs: React.FC = () => (
     <div className='container mx-auto max-w-7xl my-5 scroll-smooth'>
-        <div className='grid md:grid-cols-2 gap-4'>
+        <div className='grid md:grid-cols-2 gap-4 bg-gray-200 rounded-md'>
             <div className='relative'>
-                <Image height={500} width={600} className='op opacity-40' alt='buildings backgrounds smart business' src='/assets/images/backgrounds/background-buildings.png' />
+                <Image height={500} width={600} className='opacity-80' alt='buildings backgrounds smart business' src='/assets/images/backgrounds/background-buildings.png' />
                 <div className='absolute top-0 bottom-0 flex w-full justify-center items-center'>
                     <Image src='/assets/images/corporate/logo-smart-business.png' width={350} height={250} alt='logo smart business' />
                 </div>
             </div>
             <div className='flex items-center flex-col justify-center'>
                 <h1 className='text-center text-gray-700 text-3xl font-bold '>Nuestra Historia</h1>
-                <p className='px-5 text-center md:text-left mt-2 text-gray-500 text-[14px] font-semibold'>
+                <p className='px-5 text-center md:text-left mt-2 text-gray-600 text-[15px] font-medium '>
                     Smart Business surge como una respuesta al mercado hondureño con la intencion de brindar precios accesibles a las pequeñas empresas que estan dando su primer salto en el mundo digital. Poco a poco nos hemos convertido en proveedores de medianas y grandes empresas por la confianza que hemos generado en nuestros clientes. <br />Con mas de 15 años de experiencia en el rubro informatico Smart Business es una empresa cuya unica razon de existir es brindar a nuestros clientes el mejor producto para satisfacer sus necesidades ya sea a integradores o clientes finales.
                 </p>
             </div>
         </div>
-        <div className='flex flex-col items-center md:px-4 md:flex-row px-5 justify-center gap-4 mt-10'>
-            <div className='hover:shadow-md border h-full bg-gradient-to-br from-blue-600 via-sky-600 to-sky-400 rounded-md p-[2px] max-w-md'>
+        <div className='md:px-4  px-5 grid grid-cols-1 md:grid-cols-2 gap-4 mt-10'>
+            <div className='hover:shadow-md border mx-auto h-full mt-0 bg-gradient-to-br from-blue-600 via-sky-600 to-sky-400 rounded-md p-[2px] max-w-md'>
                 <div className='flex  flex-col py-2 h-full justify-center w-full items-center bg-white rounded-md'>
                     <h3 className='text-gray-700 text-center font-bold text-xl'>Misión</h3>
                     <p className='text-center px-5 mt-2 text-gray-500 text-[14px] font-semibold'>
@@ -26,7 +26,7 @@ const AboutUs: React.FC = () => (
                     </p>
                 </div>
             </div>
-            <div className='hover:shadow-md border grow bg-gradient-to-br from-blue-600 via-sky-600 to-sky-400 rounded-md p-[2px] max-w-md'>
+            <div className='hover:shadow-md mx-auto border grow bg-gradient-to-br from-blue-600 via-sky-600 to-sky-400 rounded-md p-[2px] max-w-md'>
                 <div className='flex flex-col py-2 h-full justify-center w-full items-center bg-white rounded-md'>
                     <h3 className='text-gray-700 text-center font-bold text-xl'>Visión</h3>
                     <p className='text-center px-5 mt-2 text-gray-500 text-[14px] font-semibold'>
@@ -35,14 +35,14 @@ const AboutUs: React.FC = () => (
                 </div>
             </div>
         </div>
-        <div className='container w-full mt-10 px-5 md:px-0 mx-auto'>
+        <div className='container w-full mt-24 px-5 md:px-0 mx-auto'>
             <h3 className='text-3xl font-bold text-gray-700 text-center'>Nuestros Productos</h3>
             <div className='mt-5'>
                 <div className=''>
                     <h4 className='font-bold text-gray-700 text-xl'>Seguridad</h4>
                     <hr className='w-[5%] -mb-1 border-[#1C68E1] border'></hr>
                     <hr className='mt-1'></hr>
-                    <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 mt-5'>
+                    <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 mt-10'>
                         <div className='basis-1/4 border border-gray-300 p-5 rounded-md relative md:skew-y-6 md:-skew-x-6 md:hover:-skew-x-0 md:hover:skew-y-0 transition-all'>
                             <Image className='absolute left-0 -top-0 rounded-t-md right-0 object-cover w-full max-h-[150px]' src='/assets/images/backgrounds/public-security-smart-business.jpg' alt='Seguridad Publica' width={300} height={300} />
                             <div className='h-[150px]'></div>
@@ -78,7 +78,7 @@ const AboutUs: React.FC = () => (
                     </div>
                 </div>
             </div>
-            <div className='mt-5'>
+            <div className='mt-24'>
                 <div className=''>
                     <h4 className='font-bold text-gray-700 text-xl'>Redes</h4>
                     <hr className='w-[5%] -mb-1 border-[#1C68E1] border'></hr>
@@ -86,7 +86,7 @@ const AboutUs: React.FC = () => (
                     <div className='flex flex-col md:flex-row gap-10 mt-5'>
                         <div className='container mt-5 relative'>
                             <h6 className='text-left font-bold text-gray-700 mb-2 md:hidden'>Productos WISP</h6>
-                            <video className='w-full rounded-xl' autoPlay muted loop>
+                            <video className='w-full rounded-md' autoPlay muted loop>
                                 <source src="/assets/videos/uisp.mp4" type="video/mp4" />
                             </video>
                             <div className='hidden  absolute left-10 p-2 top-10  text-center  bg-gray-600 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 md:flex gap-2'>
@@ -98,7 +98,7 @@ const AboutUs: React.FC = () => (
                         </div>
                         <div className='container mt-5 relative'>
                         <h6 className='text-left font-bold text-gray-700 mb-2 md:hidden'>Redes Corporativas</h6>
-                            <video className='w-full rounded-xl' autoPlay muted loop>
+                            <video className='w-full rounded-md' autoPlay muted loop>
                                 <source src="/assets/videos/networking.mp4" type="video/mp4" />
                             </video>
                             <div className='hidden md:absolute left-10 p-2 top-10  text-center  bg-gray-600 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 md:flex gap-2'>
@@ -131,9 +131,9 @@ const AboutUs: React.FC = () => (
                     </div>
                 </div>
             </div>
-            <div className='mt-5'>
+            <div className='mt-24'>
                 <h3 className='text-3xl font-bold text-gray-700 text-center'>Nuestros Clientes</h3>
-                <div className='px-5 md:px-0 grid mt-5 grid-cols-2 md:grid-cols-5 gap-5'>
+                <div className='px-5 md:px-0 grid mt-10 grid-cols-2 md:grid-cols-5 gap-5'>
                     <div className='flex justify-center p-2 rounded-md bg-gray-50 hover:shadow-md transition-all hover:scale-110'>  
                         <Image src='/assets/images/clients/911.png' width={100} height={50} alt='911 logo' />
                     </div>

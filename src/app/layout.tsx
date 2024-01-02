@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
 import Footer from '@/components/main-layout/foother'
 import SessionAuthProvider from '@/context/SessionProvider'
+import Script from 'next/script'
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -19,7 +20,7 @@ export default function RootLayout({ children, }: { children: React.ReactNode })
   return (
     <html lang="es">
       <head>
-        <script
+        <Script
           dangerouslySetInnerHTML={
             {
               __html: `(function(c,l,a,r,i,t,y){
@@ -34,9 +35,7 @@ export default function RootLayout({ children, }: { children: React.ReactNode })
       </head>
       <body className={poppins.className}>
         <SessionAuthProvider>
-          <Navbar />
             {children}
-          <Footer />
         </SessionAuthProvider>
       </body>
     </html>

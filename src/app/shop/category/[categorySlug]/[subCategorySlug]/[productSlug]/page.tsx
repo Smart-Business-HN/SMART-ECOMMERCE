@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import toast, { Toaster } from 'react-hot-toast';
-// import { getProductBySlug } from '@/services/product/product.service';
 import { Product } from '@/interfaces/product/product.interface';
 import { CalculateProductPrice } from '@/utils/product-price';
 import { FormatValues } from '@/utils/number-format';
@@ -11,16 +10,18 @@ import InformationProductTabs from '@/components/shop/products-page/information-
 import { ProductDetailResponse } from '@/interfaces/http-responses/http-responses.interface';
 import ImageGalleryForProductDetailPage from '@/components/shop/products-page/image-gallery';
 import { getProductBySlug } from '@/services/product/product.service';
+import { ChatBubbleBottomCenterIcon, TagIcon } from '@heroicons/react/24/outline';
+import ShareButton from '@/components/shop/products-page/share-button';
 export interface ImageGalleryItem {
   original: string,
   thumbnail?: string
 };
-export async function generateMetadata({ params }:{ params: { productSlug: string, categorySlug: string, subCategorySlug:string }}){
-  const responseFromApi : any = await getProductBySlug(params.productSlug);
-  const responseSerialize : ProductDetailResponse = responseFromApi;
+export async function generateMetadata({ params }: { params: { productSlug: string, categorySlug: string, subCategorySlug: string } }) {
+  const responseFromApi: any = await getProductBySlug(params.productSlug);
+  const responseSerialize: ProductDetailResponse = responseFromApi;
   const product = responseSerialize.data;
   return {
-    title : `SB | ${product.name}`,
+    title: `SB | ${product.name}`,
     description: product.description,
     openGraph: {
       title: `SB | ${product.name}`,
@@ -40,23 +41,24 @@ export async function generateMetadata({ params }:{ params: { productSlug: strin
   }
 }
 
-export default async function ProductDetailPage({ params } : { params: { productSlug: string, categorySlug: string, subCategorySlug:string }}) {
-  let quantity =1;
-  let productImages : ImageGalleryItem[] = [];
+export default async function ProductDetailPage({ params }: { params: { productSlug: string, categorySlug: string, subCategorySlug: string } }) {
+  let quantity = 1;
+  let productImages: ImageGalleryItem[] = [];
+  const currentUrl: string = `https://www.smartbusiness.site/shop/category/${params.categorySlug}/${params.subCategorySlug}/${params.productSlug}`;
   const noImage: string = "https://smarterpstorage.blob.core.windows.net/produccion/no-image-available-icon-vector.jpg";
   const itIsLogged: boolean = true;
-  const whatsappContact: string = 'https://api.whatsapp.com/send?phone=50488187765&text=Hola%20me%20interesa%20saber%20mas%20sobre%20este%20producto...';
-  const responseFromApi : any = await getProductBySlug(params.productSlug);
-  const responseSerialize : ProductDetailResponse = responseFromApi;
+  const whatsappContact: string = `https://api.whatsapp.com/send?phone=50488187765&text=Hola%20me%20interesa%20saber%20mas%20sobre%20este%20producto%20${currentUrl}`;
+  const responseFromApi: any = await getProductBySlug(params.productSlug);
+  const responseSerialize: ProductDetailResponse = responseFromApi;
   const product = responseSerialize.data;
-  if(responseSerialize.succeeded){
+  if (responseSerialize.succeeded) {
     addImagesToGallery(product);
   }
   else {
-        toast.error(responseSerialize.message, {
-        position: 'top-right',
-        className: 'text-xs mt-10'
-      })
+    toast.error(responseSerialize.message, {
+      position: 'top-right',
+      className: 'text-xs mt-10'
+    })
   }
   function addImagesToGallery(product: Product) {
     let images: ImageGalleryItem[] = [];
@@ -102,11 +104,11 @@ export default async function ProductDetailPage({ params } : { params: { product
                 </> : null
               }
             </div>
-            <div className='grid mt-2 grid-cols-7 gap-4'>
-              <div className='col-span-6'>
+            <div className='grid mt-2 grid-cols-6 gap-4'>
+              <div className='col-span-5'>
                 <div className='w-full gap-4 grid grid-cols-2'>
                   <div className='col-span-1 '>
-                    <ImageGalleryForProductDetailPage images={productImages}/>
+                    <ImageGalleryForProductDetailPage images={productImages} />
                   </div>
                   <div className='col-span-1 p-5'>
                     {
@@ -135,6 +137,19 @@ export default async function ProductDetailPage({ params } : { params: { product
                             : null
                           }
                         </div>
+                        <div className='flex bg-gray-100 mt-2 rounded-md'>
+                          <Link href={whatsappContact} target='_blank' className='grow flex gap-2 rounded-l-md justify-center items-center cursor-pointer border-gray-500 hover:bg-gray-200'>
+                            <ChatBubbleBottomCenterIcon className='text-gray-600' height={20} width={20} />
+                            <p className='text-gray-600'>Consultar</p>
+                          </Link>
+                          <div className='w-[1px] bg-gray-500 my-2'></div>
+                          <div className='grow flex gap-2 justify-center items-center cursor-pointer border-gray-500 hover:bg-gray-200'>
+                            <TagIcon height={20} width={20} />
+                            <p>WishList</p>
+                          </div>
+                          <div className='w-[1px] bg-gray-500 my-2'></div>
+                          <ShareButton url={currentUrl} />
+                        </div>
                         <div className='border-t my-2 w-full'></div>
                         <div className='flex text-sm gap-2'>
                           <p className='font-semibold'>SKU:</p>
@@ -148,25 +163,19 @@ export default async function ProductDetailPage({ params } : { params: { product
                           <p className='font-semibold'>Marca:</p>
                           <p className='text-[#1D62E7]'>{product.brand.name}</p>
                         </div>
-                        <div className='flex text-sm gap-2'>
-                          <p className='font-semibold'>Compartir:</p>
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z" />
-                          </svg>
-                        </div>
                       </> : null
                     }
                   </div>
                 </div>
               </div>
-              <div className='bg-gradient-to-b from-blue-100 via-sky-100 to-blue-300 col-span-1 p-4 '>
-                <div className='relative h-full'>
-                  <h4 className='font-semibold text-gray-700 text-xl text-center'>¿Eres tecnico instalador?</h4>
-                  <p className='text-sm text-center mt-2'>Opta por descuentos exclusivos</p>
-                  <div className='flex justify-center mt-2'>
+              <div className=' col-span-1 bg-cover' style={{ backgroundImage: `url('/assets/images/backgrounds/banner-background.jpg')`, }}>
+                <div className=''>
+                  <h4 className=' text-gray-100 mt-14 text-xl text-center'>¿Eres tecnico instalador?</h4>
+                  <p className='text-sm text-gray-200 text-center mt-2'>Opta por descuentos exclusivos</p>
+                  <div className='flex justify-center mt-5'>
                     <Image height={150} width={150} src='/assets/images/products/u6-pro-smartbusiness-box.png' alt='u6 pro en caja' />
                   </div>
-                  <div className='w-full mx-auto text-center absolute bottom-4'>
+                  <div className='w-full mx-auto text-center mt-5'>
                     <Link href='/be-a-partner' className='bg-blue-600 text-white text-sm p-2 rounded-br-xl hover:shadow-md rounded-tl-xl'>
                       Hazte Smart
                     </Link>

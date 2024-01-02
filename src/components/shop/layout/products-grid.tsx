@@ -13,8 +13,8 @@ export default function ProductsGrid(props: any) {
             {
                 products.map((item: Product, key: number) => {
                     return (
-                        <Link className="h-full" key={key} href={`/shop/category/${item.subCategory.category.slug}/${item.subCategory.slug}/${item.slug}`}>
-                            <div className='h-full w-full mt-2 border group hover:shadow-2xl relative'>
+                        <Link prefetch={false} className="h-full" key={key} href={`/shop/category/${item.subCategory.category.slug}/${item.subCategory.slug}/${item.slug}`}>
+                            <div className='h-full w-full mt-2 border rounded-md group hover:shadow-lg relative'>
                                 <button className="invisible hastooltip p-1 z-50 rounded-md absolute top-10 right-2 bg-gray-100 hover:bg-gray-300 group-hover:visible transition-all">
                                     <ShoppingBagIcon className="text-gray-500" height={20} width={20}/>
                                 </button>
@@ -25,7 +25,7 @@ export default function ProductsGrid(props: any) {
                                 </Link>
                                 <span className="absolute right-2 top-2 rounded-md text-xs text-white bg-green-500 py-1 px-2">{item.status.name}</span>
                                 <div className='p-4 col-span-1 overflow-hidden h-[200px] flex justify-center items-center object-contain'>
-                                    <Image src={item?.productImages.length == 0 ? noImage : item?.productImages[0].url} alt={item.name} width={160} height={160} />
+                                    <Image loading="lazy" src={item?.productImages.length == 0 ? noImage : item?.productImages[0].url} alt={item.name} width={160} height={160} />
                                 </div>
                                 <div className='col-span-2 px-2'>
                                     <h6 className=' font-medium  line-clamp-2 text-center text-ellipsis text-sm text-[#2e2e2e]'>{item.name}</h6>

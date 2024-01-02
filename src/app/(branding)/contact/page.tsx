@@ -1,10 +1,11 @@
 import React from 'react';
-import { ChatBubbleLeftRightIcon, PhoneArrowUpRightIcon } from '@heroicons/react/24/outline';
+import { ChatBubbleLeftRightIcon, PhoneArrowUpRightIcon, ClockIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
+import Image from 'next/image';
 export default function ContactPage() {
   return (
     <div className='w-full'>
-      <div className='bg-center bg-cover mb-5 bg-slate-200 py-36' style={{ backgroundImage: `url('/assets/images/backgrounds/map_contact.png')`, }}>
+      <div className='bg-center bg-cover mb-5 bg-blue-950 bg-opacity-25 py-36' style={{ backgroundImage: `url('/assets/images/backgrounds/map_contact.png')`, }}>
         <div className='container mx-auto flex items-center'>
           <h1 className=' text-4xl mx-auto font-bold text-gray-700 text-left container'>Hablanos de tu nuevo proyecto</h1>
           <div className='text-blue-500 rotate-90'>
@@ -22,121 +23,218 @@ export default function ContactPage() {
         </div>
       </div>
       <div className='container mx-auto'>
-        <div className='grid grid-cols-5 gap-5 mb-5'>
-          <div className='col-span-4'>
-            <div className='border rounded-md h-full mb-2 shadow-xl border-gray-200 container grid grid-cols-2 p-10'>
-              <div>
-                <h3 className='text-center font-semibold text-2xl my-5'>Puedes contactarnos para...</h3>
-                <div className='flex gap-5 items-center rounded-lg border border-gray-200 p-2 shadow'>
-                  <div className='rounded-md p-5 bg-gray-500'></div>
-                  <h6 className='font-semibold text-lg'>Cotizar los materiales de tu proyecto</h6>
-                </div>
-                <div className='flex gap-5 items-center rounded-lg border mt-2 border-gray-200 p-2 shadow'>
-                  <div className='rounded-md p-5 bg-gray-500'></div>
-                  <h6 className='font-semibold text-lg'>Solicitar un proyecto</h6>
-                </div>
-                <div className='flex gap-5 items-center rounded-lg border mt-2 border-gray-200 p-2 shadow'>
-                  <div className='rounded-md p-5 bg-gray-500'></div>
-                  <h6 className='font-semibold text-lg'>Convertirte en un integrador SMART</h6>
-                </div>
-                <div className='flex gap-5 items-center rounded-lg border mt-2 border-gray-200 p-2 shadow'>
-                  <div className='rounded-md p-5 bg-gray-500'></div>
-                  <h6 className='font-semibold text-lg'>Solicitar una reunion</h6>
-                </div>
-                <div className='flex gap-5 items-center rounded-lg border mt-2 border-gray-200 p-2 shadow'>
-                  <div className='rounded-md p-5 bg-gray-500'></div>
-                  <h6 className='font-semibold text-lg'>Solicitar Apoyo en un proyecto</h6>
-                </div>
-                <div className='flex gap-5 items-center rounded-lg border mt-2 border-gray-200 p-2 shadow'>
-                  <div className='rounded-md p-5 bg-gray-500'></div>
-                  <h6 className='font-semibold text-lg'>Convertirte en Proveedor</h6>
-                </div>
+        <div className='grid grid-cols-2 mb-5 shadow-md rounded-md'>
+          <div className='col-span-1 rounded-l-md bg-cover px-10 bg-gray-100'>
+            <div className='flex flex-col items-center justify-center my-10'>
+              <h3 className='text-center text-4xl font-semibold text-gray-700'>Nuestras Soluciones</h3>
+              <div className='w-[10%] h-[2px] bg-blue-500'></div> 
+            </div>
+            <div className='grid grid-cols-5 mb-4 rounded-md bg-white p-5 gap-5'>
+              <div className='col-span-1 flex justify-center p-4 bg-[#061E36] rounded-md'>
+                <Image className='text-white brightness-0 invert' src="/assets/images/icons/cctv-icon.svg" alt="Phone Icon" width={70} height={70}/>
               </div>
-              <div className='px-5'>
+              <div className='col-span-4 relative'>
+                 <h4 className='text-gray-700 font-semibold'>CCTV</h4>
+                 <p className='text-gray-600 text-sm'>Productos y accesorios para tus proyectos CCTV y asegurar tu hogar o empresa.</p>
+                 <div className='absolute flex gap-1 bottom-0 left-0'>
+                  <div className='bg-blue-950 px-2 py-1 rounded-md text-white text-xs'>Camaras</div>
+                  <div className='bg-blue-950 px-2 py-1 rounded-md text-white text-xs'>Video Balun</div>
+                  <div className='bg-blue-950 px-2 py-1 rounded-md text-white text-xs'>NVR/DVR</div>
+                  <div className='bg-blue-950 px-2 py-1 rounded-md text-white text-xs'>Accesorios</div>
+                 </div>
+                </div>
+            </div>
+            <div className='grid grid-cols-5 mb-4 rounded-md bg-white p-5 gap-5'>
+              <div className='col-span-1 flex justify-center p-2 bg-[#061E36] rounded-md'>
+                <Image className='text-white brightness-0 invert' src="/assets/images/icons/cabling.png" alt="Phone Icon" width={90} height={90}/>
+              </div>
+              <div className='col-span-4 relative'>
+                 <h4 className='text-gray-700 font-semibold'>Cableado Estructurado</h4>
+                 <p className='text-gray-600 text-sm'>Somos proveedores de marcas lideres a nivel mundial para llevar tu red corporativa a niveles que nunca imaginaste.</p>
+                 <div className='absolute flex gap-1 bottom-0 left-0'>
+                  <div className='bg-blue-950 px-2 py-1 rounded-md text-white text-xs'>Cable UTP</div>
+                  <div className='bg-blue-950 px-2 py-1 rounded-md text-white text-xs'>Switches</div>
+                  <div className='bg-blue-950 px-2 py-1 rounded-md text-white text-xs'>APs</div>
+                  <div className='bg-blue-950 px-2 py-1 rounded-md text-white text-xs'>Proyectos</div>
+                 </div>
+                </div>
+            </div>
+            <div className='grid grid-cols-5 rounded-md bg-white p-5 gap-5'>
+              <div className='col-span-1 flex justify-center p-2 bg-[#061E36] rounded-md'>
+                <Image className='text-white brightness-0 invert' src="/assets/images/icons/servers.png" alt="Phone Icon" width={90} height={90}/>
+              </div>
+              <div className='col-span-4 relative'>
+                 <h4 className='text-gray-700 font-semibold'>Proveedores de quipo de oficina</h4>
+                 <p className='text-gray-600 text-sm'>Te brindamos lo ultimo en equipo ofimatico para la expancion de tu oficina a precios incomparables.</p>
+                 <div className='absolute flex gap-1 bottom-0 left-0'>
+                  <div className='bg-blue-950 px-2 py-1 rounded-md text-white text-xs'>UPS</div>
+                  <div className='bg-blue-950 px-2 py-1 rounded-md text-white text-xs'>Monitores</div>
+                  <div className='bg-blue-950 px-2 py-1 rounded-md text-white text-xs'>POS</div>
+                 </div>
+                </div>
+            </div>
+          </div>
+          <div className='col-span-1 bg-cover relative rounded-r-md' style={{ backgroundImage: `url('/assets/images/backgrounds/computadora-dell-y-plano.jpg')`, }}>
+            <div className='rounded-r-md bg-blue-950 bg-opacity-80 left-0 right-0 top-0 bottom-0'>
+              <div className='px-10'>
                 <div className='h-full flex flex-col justify-center'>
-                  <div className='flex justify-center my-5'>
-                    <h2 className='font-bold text-3xl text-gray-700'>Contactanos</h2>
+                  <div className='flex flex-col items-center justify-center my-10'>
+                    <h2 className='font-medium text-4xl text-white'>Contactanos</h2>
+                    <div className='w-[10%] h-[2px] bg-blue-500'></div>
                   </div>
-                  <form className='container'>
+                  <p className='text-gray-200'>Te responderemos lo mas pronto posible, sera un placer ayudarte.</p>
+                  <p className='text-gray-200 mb-2'>Si es una urgencia llamanos al: +504 8818-7765</p>
+                  <form className='pb-10' >
                     <div className='grid gap-5 grid-cols-2'>
                       <div className='col-span-1'>
-                        <label className='font-bold'>Nombre</label>
-                        <input type='text' className="w-full border p-2 rounded-md" />
+                        <label className='font-medium text-gray-200'>Nombre</label>
+                        <input type='text' className="w-full border bg-gray-500 border-none bg-opacity-50 focus:bg-opacity-75 p-2 rounded-md" />
                       </div>
                       <div className='col-span-1'>
-                        <label className='font-bold'>Apellido</label>
-                        <input type='text' className="w-full border p-2 rounded-md" />
+                        <label className='font-medium text-gray-200'>Apellido</label>
+                        <input type='text' className="w-full border bg-gray-500 border-none bg-opacity-50 focus:bg-opacity-75 p-2 rounded-md" />
                       </div>
                       <div className='col-span-1'>
-                        <label className='font-bold'>Correo Electronico</label>
-                        <input type='text' className="w-full border p-2 rounded-md" />
+                        <label className='font-medium text-gray-200'>Correo Electronico</label>
+                        <input type='text' className="w-full border bg-gray-500 border-none bg-opacity-50 focus:bg-opacity-75 p-2 rounded-md" />
                       </div>
                       <div className='col-span-1'>
-                        <label className='font-bold'>Asunto</label>
-                        <input type='text' className="w-full border p-2 rounded-md" />
+                        <label className='font-medium text-gray-200'>Asunto</label>
+                        <input type='text' className="w-full border bg-gray-500 border-none bg-opacity-50 focus:bg-opacity-75 p-2 rounded-md" />
                       </div>
                       <div className='col-span-2'>
-                        <label className='font-bold'>Asunto</label>
-                        <textarea className="w-full border p-2 h-[250px] rounded-md" />
+                        <label className='font-medium text-gray-200'>Asunto</label>
+                        <textarea className="w-full resize-none h-36 border bg-gray-500 border-none bg-opacity-50 focus:bg-opacity-75 p-2 rounded-md" />
                       </div>
                     </div>
-                    <div className='flex justify-center'>
-                      <button className='bg-blue-500 px-4 py-2 text-white font-semibold text-xl rounded-md hover:shadow-md'>Enviar</button>
+                    <div className='flex mt-5 justify-center'>
+                      <button className='bg-blue-500 px-10 py-4 text-white font-medium rounded-md hover:shadow-md'>Enviar</button>
                     </div>
                   </form>
                 </div>
               </div>
             </div>
           </div>
-          <div className='col-span-1'>
-            <div className="rounded border border-gray-400 p-5 items-center shadow-md hover:shadow-blue-200 hover:scale-105 transition-all">
-              <Link href='tel:+50488187765'>
-                <div className="flex justify-center relative">
-                  <div className="absolute -ml-3 mt-1   h-[67px] w-[67px] rounded-lg bg-blue-600"></div>
-                  <div className="z-40 p-2 text-white bg-slate-100 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-20">
-                    <PhoneArrowUpRightIcon width={50} height={50} />
-                  </div>
-                </div>
-                <h4 className="text-gray-600 text-center mt-2 font-semibold text-lg">Llamanos</h4>
-                <p className="text-gray-400 text-center text-xl">+504 8818-7765</p>
-              </Link>
-            </div>
-            <div className="rounded border border-gray-400 p-5 items-center shadow-md hover:shadow-blue-200 hover:scale-105 transition-all mt-4">
-              <Link href='https://api.whatsapp.com/send?phone=+50488187765&text=Deseo%20contactarme%20con%20un%20asesor%20de%20ventas'>
-                <div className="flex justify-center relative">
-                  <div className="absolute -ml-3 mt-1   h-[67px] w-[67px] rounded-lg bg-blue-600"></div>
-                  <div className="z-40 p-2 text-white bg-slate-100 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-20">
-                    <ChatBubbleLeftRightIcon width={50} height={50} />
-                  </div>
-                </div>
-                <h4 className="text-gray-600 text-center mt-2 font-semibold text-lg">Escribenos a nuestro Whatsapp</h4>
-              </Link>
-            </div>
-            <div className="rounded border border-gray-400 p-5 items-center shadow-md hover:shadow-blue-200 hover:scale-105 transition-all mt-4">
-              <Link href='https://www.facebook.com/SmartBusiness504'>
-                <div className="flex justify-center relative">
-                  <div className="absolute -ml-3 mt-1   h-[67px] w-[67px] rounded-lg bg-blue-600"></div>
-                  <div className="z-40 p-2 text-white bg-slate-100 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-20">
-                    <svg className='h-[50px] w-[50px]' xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0,0,256,256">
-                      <g fill="#ffffff" fillRule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" ><g transform="scale(8.53333,8.53333)"><path d="M24,4h-18c-1.105,0 -2,0.895 -2,2v18c0,1.105 0.895,2 2,2h10v-9h-3v-3h3v-1.611c0,-3.05 1.486,-4.389 4.021,-4.389c1.214,0 1.856,0.09 2.16,0.131v2.869h-1.729c-1.076,0 -1.452,0.568 -1.452,1.718v1.282h3.154l-0.428,3h-2.726v9h5c1.105,0 2,-0.895 2,-2v-18c0,-1.105 -0.896,-2 -2,-2z"></path></g></g>
-                    </svg>
-                  </div>
-                </div>
-                <h4 className="text-gray-600 text-center mt-2 font-semibold text-lg">Siguenos en Facebook</h4>
-              </Link>
-            </div>
+          
+
+          <div className='col-span-1 hidden'>
+            
+            
+           
             <div className="rounded border border-gray-400 p-5 items-center shadow-md hover:shadow-blue-200 hover:scale-105 transition-all mt-4">
               <Link href='tel:+50488187765'>
                 <div className="flex justify-center relative">
                   <div className="absolute -ml-3 mt-1   h-[67px] w-[67px] rounded-lg bg-blue-600"></div>
                   <div className="z-40 p-2 text-white bg-slate-100 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-20">
                     <svg className='h-[50px] w-[50px]' xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0,0,256,256">
-                      <g fill="#ffffff" fillRule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none"><g transform="scale(4,4)"><path d="M21.58008,7c-8.039,0 -14.58008,6.54494 -14.58008,14.58594v20.83203c0,8.04 6.54494,14.58203 14.58594,14.58203h20.83203c8.04,0 14.58203,-6.54494 14.58203,-14.58594v-20.83398c0,-8.039 -6.54494,-14.58008 -14.58594,-14.58008zM47,15c1.104,0 2,0.896 2,2c0,1.104 -0.896,2 -2,2c-1.104,0 -2,-0.896 -2,-2c0,-1.104 0.896,-2 2,-2zM32,19c7.17,0 13,5.83 13,13c0,7.17 -5.831,13 -13,13c-7.17,0 -13,-5.831 -13,-13c0,-7.169 5.83,-13 13,-13zM32,23c-4.971,0 -9,4.029 -9,9c0,4.971 4.029,9 9,9c4.971,0 9,-4.029 9,-9c0,-4.971 -4.029,-9 -9,-9z"></path></g></g>
+                      <g fill="#ffffff" fillRule="nonzero" stroke="none" strokeWidth="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none"><g transform="scale(4,4)"><path d="M21.58008,7c-8.039,0 -14.58008,6.54494 -14.58008,14.58594v20.83203c0,8.04 6.54494,14.58203 14.58594,14.58203h20.83203c8.04,0 14.58203,-6.54494 14.58203,-14.58594v-20.83398c0,-8.039 -6.54494,-14.58008 -14.58594,-14.58008zM47,15c1.104,0 2,0.896 2,2c0,1.104 -0.896,2 -2,2c-1.104,0 -2,-0.896 -2,-2c0,-1.104 0.896,-2 2,-2zM32,19c7.17,0 13,5.83 13,13c0,7.17 -5.831,13 -13,13c-7.17,0 -13,-5.831 -13,-13c0,-7.169 5.83,-13 13,-13zM32,23c-4.971,0 -9,4.029 -9,9c0,4.971 4.029,9 9,9c4.971,0 9,-4.029 9,-9c0,-4.971 -4.029,-9 -9,-9z"></path></g></g>
                     </svg>
                   </div>
                 </div>
                 <h4 className="text-gray-600 text-center mt-2 font-semibold text-lg">Siguenos en Intagram</h4>
               </Link>
+            </div>
+          </div>
+        </div>
+        <div className='rounded-md bg-gray-100 shadow-md p-10 mb-10'>
+          <div className='grid grid-cols-2'>
+            <div className='col-span-1'>
+              <h3 className='text-3xl text-center text-gray-700 font-semibold'>Nuestros Horarios</h3>
+              <div className='flex justify-center'>
+                <div className='grid mt-5 grid-cols-3'>
+                  <div className=''>
+                    <div className='text-left border-b-2 border-blue-950 font-medium text-lg px-10'>Dia</div>
+                    <div className='border-b border-blue-950 py-2 flex gap-2 items-center'><ClockIcon height={20} width={20} color='text-blue-950'/>Lunes</div>
+                    <div className='border-b border-blue-950 py-2 flex gap-2 items-center'><ClockIcon height={20} width={20} color='text-blue-950'/>Martes</div>
+                    <div className='border-b border-blue-950 py-2 flex gap-2 items-center'><ClockIcon height={20} width={20} color='text-blue-950'/>Miercoles</div>
+                    <div className='border-b border-blue-950 py-2 flex gap-2 items-center'><ClockIcon height={20} width={20} color='text-blue-950'/>Jueves</div>
+                    <div className='border-b border-blue-950 py-2 flex gap-2 items-center'><ClockIcon height={20} width={20} color='text-blue-950'/>Viernes</div>
+                    <div className='border-b border-blue-950 py-2 flex gap-2 items-center'><ClockIcon height={20} width={20} color='text-blue-950'/>Sabado</div>
+                    <div className='border-b border-blue-950 py-2 flex gap-2 items-center'><ClockIcon height={20} width={20} color='text-blue-950'/>Domingo</div>
+                  </div>
+                  <div className='text-center'>
+                    <div className='text-center border-b-2 border-blue-950 font-medium text-lg px-10'>Apertura</div>
+                    <div className='border-b border-blue-950 py-2'>08:00 AM</div>
+                    <div className='border-b border-blue-950 py-2'>08:00 AM</div>
+                    <div className='border-b border-blue-950 py-2'>08:00 AM</div>
+                    <div className='border-b border-blue-950 py-2'>08:00 AM</div>
+                    <div className='border-b border-blue-950 py-2'>08:00 AM</div>
+                    <div className='border-b border-blue-950 py-2'>08:00 AM</div>
+                    <div className='border-b border-blue-950 py-2'>--Cerrado--</div>
+                  </div>
+                  <div className='text-center'>
+                    <div className='text-center border-b-2 border-blue-950 font-medium text-lg px-10'>Cierre</div>
+                    <div className='border-b border-blue-950 py-2'>05:00 PM</div>
+                    <div className='border-b border-blue-950 py-2'>05:00 PM</div>
+                    <div className='border-b border-blue-950 py-2'>05:00 PM</div>
+                    <div className='border-b border-blue-950 py-2'>05:00 PM</div>
+                    <div className='border-b border-blue-950 py-2'>05:00 PM</div>
+                    <div className='border-b border-blue-950 py-2'>12:00 PM</div>
+                    <div className='border-b border-blue-950 py-2'>--Cerrado--</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className='col-span-1 px-10'>
+              <h3 className='text-3xl text-gray-700 text-center font-semibold'>Nuestros Contactos</h3>
+              <div className="rounded border mt-4 border-gray-200 items-center shadow-md hover:shadow-blue-200 hover:scale-105 transition-all">
+                <Link className='flex gap-4 m-2' href='tel:+50488187765'>
+                  <div className="col-span-1 ml-4 flex justify-center items-center relative">
+                    <div className="absolute -ml-3 mt-1   h-[50px] w-[50px] rounded-lg bg-blue-600"></div>
+                    <div className="z-40  h-[50px] flex items-center justify-center w-[50px] p-2 text-white bg-slate-100 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-20">
+                      <PhoneArrowUpRightIcon width={25} height={25} />
+                    </div>
+                  </div>
+                  <div className='col-span-4'>
+                    <h4 className="text-gray-600 text-left mt-2 font-semibold text-lg">Llamanos</h4>
+                    <p className="text-gray-400 text-left">+504 8818-7765</p>
+                  </div>
+                </Link>
+              </div>
+              <div className="rounded border mt-4 border-gray-200 items-center shadow-md hover:shadow-blue-200 hover:scale-105 transition-all">
+                <Link className='flex gap-4 m-2' href='https://api.whatsapp.com/send?phone=+50488187765&text=Deseo%20contactarme%20con%20un%20asesor%20de%20ventas'>
+                  <div className="col-span-1 ml-4 flex justify-center items-center relative">
+                    <div className="absolute -ml-3 mt-1   h-[50px] w-[50px] rounded-lg bg-blue-600"></div>
+                    <div className="z-40  h-[50px] flex items-center justify-center w-[50px] p-2 text-white bg-slate-100 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-20">
+                      <ChatBubbleLeftRightIcon width={25} height={25} />
+                    </div>
+                  </div>
+                  <div className='col-span-4'>
+                    <h4 className="text-gray-600 text-left mt-2 font-semibold text-lg">Whatsapp</h4>
+                    <p className="text-gray-400 text-left">+504 8818-7765</p>
+                  </div>
+                </Link>
+              </div>
+              <div className="rounded border mt-4 border-gray-200 items-center shadow-md hover:shadow-blue-200 hover:scale-105 transition-all">
+                <Link className='flex gap-4 m-2' href='https://www.facebook.com/SmartBusiness504'   >
+                  <div className="col-span-1 ml-4 flex justify-center items-center relative">
+                    <div className="absolute -ml-3 mt-1   h-[50px] w-[50px] rounded-lg bg-blue-600"></div>
+                    <div className="z-40  h-[50px] flex items-center justify-center w-[50px] p-2 text-white bg-slate-100 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-20">
+                    <svg className='h-[50px] w-[50px]' xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="50" height="50" viewBox="0,0,256,256">
+                      <g fill="#ffffff" fillRule="nonzero" stroke="none" strokeWidth="1" strokeLinecap="butt" strokeLinejoin="miter" strokeMiterlimit="10" strokeDasharray="" strokeDashoffset="0" fontFamily="none" fontWeight="none" fontSize="none" textAnchor="none" ><g transform="scale(8.53333,8.53333)"><path d="M24,4h-18c-1.105,0 -2,0.895 -2,2v18c0,1.105 0.895,2 2,2h10v-9h-3v-3h3v-1.611c0,-3.05 1.486,-4.389 4.021,-4.389c1.214,0 1.856,0.09 2.16,0.131v2.869h-1.729c-1.076,0 -1.452,0.568 -1.452,1.718v1.282h3.154l-0.428,3h-2.726v9h5c1.105,0 2,-0.895 2,-2v-18c0,-1.105 -0.896,-2 -2,-2z"></path></g></g>
+                    </svg>
+                    </div>
+                  </div>
+                  <div className='col-span-4'>
+                    <h4 className="text-gray-600 text-left mt-2 font-semibold text-lg">Siguenos en Facebook</h4>
+                  </div>
+                </Link>
+              </div>
+              <div className="rounded border mt-4 border-gray-200 items-center shadow-md hover:shadow-blue-200 hover:scale-105 transition-all">
+                <Link className='flex gap-4 m-2' href='https://www.instagram.com/smartbusiness504/'   >
+                  <div className="col-span-1 ml-4 flex justify-center items-center relative">
+                    <div className="absolute -ml-3 mt-1   h-[50px] w-[50px] rounded-lg bg-blue-600"></div>
+                    <div className="z-40  h-[50px] flex items-center justify-center w-[50px] p-2 text-white bg-slate-100 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-20">
+                    <svg className='h-[50px] w-[50px]' xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0,0,256,256">
+                      <g fill="#ffffff" fillRule="nonzero" stroke="none" strokeWidth="1" strokeLinecap="butt" strokeLinejoin="miter" strokeMiterlimit="10" strokeDasharray="" strokeDashoffset="0" fontFamily="none" fontWeight="none" fontSize="none" textAnchor="none"><g transform="scale(4,4)"><path d="M21.58008,7c-8.039,0 -14.58008,6.54494 -14.58008,14.58594v20.83203c0,8.04 6.54494,14.58203 14.58594,14.58203h20.83203c8.04,0 14.58203,-6.54494 14.58203,-14.58594v-20.83398c0,-8.039 -6.54494,-14.58008 -14.58594,-14.58008zM47,15c1.104,0 2,0.896 2,2c0,1.104 -0.896,2 -2,2c-1.104,0 -2,-0.896 -2,-2c0,-1.104 0.896,-2 2,-2zM32,19c7.17,0 13,5.83 13,13c0,7.17 -5.831,13 -13,13c-7.17,0 -13,-5.831 -13,-13c0,-7.169 5.83,-13 13,-13zM32,23c-4.971,0 -9,4.029 -9,9c0,4.971 4.029,9 9,9c4.971,0 9,-4.029 9,-9c0,-4.971 -4.029,-9 -9,-9z"></path></g></g>
+                    </svg>
+                    </div>
+                  </div>
+                  <div className='col-span-4'>
+                    <h4 className="text-gray-600 text-left mt-2 font-semibold text-lg">Siguenos en Instagram</h4>
+                  </div>
+                </Link>
+              </div>
             </div>
           </div>
         </div>

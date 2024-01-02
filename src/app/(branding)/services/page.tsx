@@ -97,15 +97,15 @@ function Services() {
           </div>
         </div>
       </div>
-      <div className='pt-10 relative py-10 bg-opacity-10 bg-gray-50 bg-cover' >
+      <div className='pt-48 relative pb-10 bg-opacity-10 bg-gray-50 bg-cover' >
         <div className='absolute w-72 h-72 animate-blob rounded-full bg-blue-200 blur-xl top-[15%] left-24 mix-blend-multiply'></div>
         <div className='absolute w-72 h-72 animate-blob rounded-full bg-blue-400 opacity-70 blur-xl top-[40%] -right-4 mix-blend-multiply'></div>
-        <h2 className='font-bold text-center text-3xl'>Si quieres triunfar tienes que ser<br /> <strong className='text-blue-500'>SMART</strong></h2>
+        <h2 className='font-bold text-center text-5xl'>Si quieres triunfar tienes que ser<br /> <strong className='text-blue-500'>SMART</strong></h2>
         <div className='pt-1 flex border-t-2 border-blue-400 w-[5%] ml-[50%] -translate-x-[50%]'></div>
         <div className='container relative mx-auto'>
           <div className='grid grid-cols-2 mt-10 items-start justify-start'>
             <div className=''>
-              <h4 className='flex text-xl font-semibold text-gray-900'>Cuida a los tuyos</h4>
+              <h4 className='flex text-3xl font-semibold text-gray-900'>Cuida a los tuyos</h4>
               <div className='border-t-2 border-blue-500 w-[5%] mb-5'></div>
               <p>Sabemos que eres responsable con los tuyos y que quieres lo mejor para ellos</p>
               <p>Por eso te brindamos:</p>
@@ -125,13 +125,13 @@ function Services() {
               <Image className='rounded-md shadow-sm' src='/assets/images/corporate/cctv-room.jpg' width={600} height={400} alt='cuerto cctv' />
             </div>
           </div>
-          <div className='grid grid-cols-2 gap-10 mt-10 items-start justify-start'>
+          <div className='grid grid-cols-2 gap-10 mt-48 items-start justify-start'>
             <video className='w-full rounded-xl mb-2 md:mb-0' autoPlay muted loop>
                     <source src='/assets/videos/fast-network.mp4' type="video/mp4" />
             </video>
             <div className=' container'>
               <div className=''>
-                <h4 className='flex text-2xl font-semibold text-gray-900'>Tu red debe ser la mejor</h4>
+                <h4 className='flex text-3xl font-semibold text-gray-900'>Tu red debe ser la mejor</h4>
                 <div className='border-t-2 border-blue-500 w-[5%] mb-5'></div>
                 <p>No dejes que una mala red atrase a tus colaboradores y tu negocio</p>
                 <p>Lo que podemos hacer por ti:</p>
@@ -162,27 +162,30 @@ function Services() {
               </div>
             </div>
           </div>
-          <div className='container mt-10 mx-auto py-5'>
-            <h3 className='font-semibold text-3xl text-gray-700 text-center'>Te brindamos lo mas practico para tu red</h3>
+          <div className='container mt-48 mx-auto py-5'>
+            <h3 className='font-semibold text-4xl text-gray-700 text-center'>Te brindamos lo mas practico para tu red</h3>
             <h4 className='font-semibold text-2xl text-gray-500 text-center'>Switches FULL-POE</h4>
-            <video className='container mx-auto rounded-xl mt-5 md:mb-0' autoPlay muted loop>
+            <video className='container mx-auto rounded-xl mt-24 md:mb-0' autoPlay muted loop>
                     <source src='/assets/videos/switch-poe.mp4' type="video/mp4" />
             </video>
           </div>
-          <div className='container mt-10 mx-auto p-5'>
+          <div className='container mt-24 mx-auto p-5'>
             <h3 className='font-semibold text-3xl text-gray-700 text-center'>Protege tu Equipo</h3>
             <h4 className='font-semibold text-2xl text-gray-500 text-center'>Sistemas de Energía Ininterrumpida</h4>
-            <div className='grid grid-cols-2 gap-10'>
-              <div>
-              <h4 className='flex text-2xl font-semibold text-gray-900'>Sistemas de energía ininterrumpida</h4>
-                <div className='border-t-2 border-blue-500 w-[5%] mb-5'></div>
-                <p>Prevenir es mejor que lamentar cuida el equipo de tu hogar u empresa con marcas avaladas por años de experiencia.</p>
-                <p>Te brindamos soporte para:</p>
-                <ul className=' text-gray-700'>
-                  <li>-Equipo de oficina.</li>
-                  <li>-Data Centers de nivel corporativo.</li>
-                  <li>-Estudio de necesidades energéticas.</li>
-                </ul>
+              <div className='grid grid-cols-2 mt-24 gap-10'>
+                <div>
+                  <h4 className='flex text-3xl font-semibold text-gray-900'>Sistemas de energía ininterrumpida</h4>
+                  <div className='border-t-2 border-blue-500 w-[5%] mb-5'></div>
+                  <p>Prevenir es mejor que lamentar cuida el equipo de tu hogar u empresa con marcas avaladas por años de experiencia.</p>
+                  <p>Te brindamos soporte para:</p>
+                  <ul className=' text-gray-700'>
+                    <li>-Equipo de oficina.</li>
+                    <li>-Data Centers de nivel corporativo.</li>
+                    <li>-Estudio de necesidades energéticas.</li>
+                  </ul>
+                </div>
+              <div className='flex items-center justify-center md:justify-end'>
+                <Image className='rounded-md shadow-sm' src='/assets/images/backgrounds/apc-background.jpg' width={600} height={400} alt='cuerto cctv' />
               </div>
             </div>
           </div>
