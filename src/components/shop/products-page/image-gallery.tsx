@@ -1,5 +1,5 @@
 'use client'
-import { ImageGalleryItem } from "@/app/shop/category/[categorySlug]/[subCategorySlug]/[productSlug]/page";
+import { ImageGalleryItem } from "@/app/(onlyProduct)/shop/[categorySlug]/[subCategorySlug]/[productSlug]/page";
 import ImageGallery from "react-image-gallery";
 interface IImageGalleryItems {
     images: ImageGalleryItem[],

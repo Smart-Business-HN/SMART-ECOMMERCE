@@ -37,7 +37,7 @@ function Searcher() {
                         if (key < 5) {
                             return (
                                 <Combobox.Option className='bg-white px-5 py-1 first:rounded-t-xl first:pt-4 last:rounded-b-xl last:pb-4' key={key} value={product}>
-                                    <Link href={`/shop/category/${product.subCategory.category.slug}/${product.subCategory.slug}/${product.slug}`} className='grid grid-cols-12'>
+                                    <Link href={`/shop/${product.subCategory.category.slug}/${product.subCategory.slug}/${product.slug}`} className='grid grid-cols-12'>
                                         <Image className='col-span-1' height={50} width={50} src={product?.productImages.length == 0 ? noImage : product?.productImages[0].url} alt={product.name} />
                                         <div className=' col-span-4'>
                                             <h6 className='font-semibold text-left text-sm'>{product.name}</h6>

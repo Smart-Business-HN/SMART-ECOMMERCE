@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 const AboutUs: React.FC = () => (
     <div className='container mx-auto max-w-7xl my-5 scroll-smooth'>
-        <div className='grid md:grid-cols-2 gap-4 bg-gray-200 rounded-md'>
+        <div className='grid md:grid-cols-2 gap-4 bg-gray-100 rounded-md'>
             <div className='relative'>
                 <Image height={500} width={600} className='opacity-80' alt='buildings backgrounds smart business' src='/assets/images/backgrounds/background-buildings.png' />
                 <div className='absolute top-0 bottom-0 flex w-full justify-center items-center'>
@@ -132,7 +132,7 @@ const AboutUs: React.FC = () => (
                 </div>
             </div>
             <div className='mt-24'>
-                <h3 className='text-3xl font-bold text-gray-700 text-center'>Nuestros Clientes</h3>
+                <h3 className='text-3xl font-bold text-gray-700 text-center'>Clientes que Confian en Nosotros</h3>
                 <div className='px-5 md:px-0 grid mt-10 grid-cols-2 md:grid-cols-5 gap-5'>
                     <div className='flex justify-center p-2 rounded-md bg-gray-50 hover:shadow-md transition-all hover:scale-110'>  
                         <Image src='/assets/images/clients/911.png' width={100} height={50} alt='911 logo' />

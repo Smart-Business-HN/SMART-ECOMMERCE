@@ -40,7 +40,7 @@ export default function ProductsWithSameCategory(props:any) {
                                 <Image className='contain' src={item?.productImages.length == 0 ? noImage :item?.productImages[0].url} alt={item.name} width={100} height={100} />
                             </div>
                             <div className='col-span-2 pt-2 pl-2'>
-                                <Link href={`/shop/category/${item.subcategory.category.slug}/${item.subcategory.slug}/${item.slug}`}>
+                                <Link href={`/shop/${item.subcategory.category.slug}/${item.subcategory.slug}/${item.slug}`}>
                                     <h6 className=' font-medium line-clamp-2 text-sm text-[#191919]'>{item.name}</h6>
                                 </Link>
                                 <div className='font-semibold my-2 text-[#1C68E1]'>

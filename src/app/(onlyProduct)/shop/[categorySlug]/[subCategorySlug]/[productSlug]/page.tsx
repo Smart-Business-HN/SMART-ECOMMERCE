@@ -12,6 +12,8 @@ import ImageGalleryForProductDetailPage from '@/components/shop/products-page/im
 import { getProductBySlug } from '@/services/product/product.service';
 import { ChatBubbleBottomCenterIcon, TagIcon } from '@heroicons/react/24/outline';
 import ShareButton from '@/components/shop/products-page/share-button';
+import Navbar from '@/components/main-layout/navbar';
+import Footer from '@/components/main-layout/foother';
 export interface ImageGalleryItem {
   original: string,
   thumbnail?: string
@@ -74,6 +76,7 @@ export default async function ProductDetailPage({ params }: { params: { productS
   }
   return (
     <>
+      <Navbar/>
       <Toaster />
       <div className='w-full'>
         <div className='mx-auto container max-w-screen-2xl  items-center  py-5'>
@@ -195,6 +198,7 @@ export default async function ProductDetailPage({ params }: { params: { productS
           </div>
         </div>
       </div>
+      <Footer/>
     </>
   )
 }

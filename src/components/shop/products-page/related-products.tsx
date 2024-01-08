@@ -40,7 +40,7 @@ export default function RelatedProducts(props:any) {
                                 <Image src={item?.productImages.length == 0 ? noImage :item?.productImages[0].url} alt={item.name} width={160} height={160} />
                             </div>
                             <div className='col-span-2 px-2'>
-                                <Link href={`/shop/category/${item.subcategory.category.slug}/${item.subcategory.slug}/${item.slug}`}>
+                                <Link href={`/shop/${item.subcategory.category.slug}/${item.subcategory.slug}/${item.slug}`}>
                                     <h6 className=' font-medium  line-clamp-2 text-center text-ellipsis text-sm text-[#2e2e2e]'>{item.name}</h6>
                                 </Link>
                                 <div className='w-full border-b border-gray-200 mt-1'></div>

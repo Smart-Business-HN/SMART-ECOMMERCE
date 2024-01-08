@@ -12,7 +12,7 @@ export default function ProductsList(props: any) {
             {
                 products.map((item: Product, key: number) => {
                     return (
-                        <Link prefetch={false} key={key} href={`/shop/category/${item.subCategory.category.slug}/${item.subCategory.slug}/${item.slug}`}>
+                        <Link prefetch={false} key={key} href={`/shop/${item.subCategory.category.slug}/${item.subCategory.slug}/${item.slug}`}>
                             <div className='mt-2 border rounded-md hover:shadow-lg grid grid-cols-3 gap-5 relative'>
                                 <span className="absolute right-2 top-2 rounded-md text-xs text-white bg-green-500 py-1 px-2">{item.status.name}</span>
                                 <div className='p-4 col-span-1 overflow-hidden h-[200px] flex justify-center items-center object-contain'>

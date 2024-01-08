@@ -13,12 +13,12 @@ export default function ProductsGrid(props: any) {
             {
                 products.map((item: Product, key: number) => {
                     return (
-                        <Link prefetch={false} className="h-full" key={key} href={`/shop/category/${item.subCategory.category.slug}/${item.subCategory.slug}/${item.slug}`}>
+                        <Link prefetch={false} className="h-full" key={key} href={`/shop/${item.subCategory.category.slug}/${item.subCategory.slug}/${item.slug}`}>
                             <div className='h-full w-full mt-2 border rounded-md group hover:shadow-lg relative'>
                                 <button className="invisible hastooltip p-1 z-50 rounded-md absolute top-10 right-2 bg-gray-100 hover:bg-gray-300 group-hover:visible transition-all">
                                     <ShoppingBagIcon className="text-gray-500" height={20} width={20}/>
                                 </button>
-                                <Link className="z-50"  rel="noopener noreferrer" target="_blank" href={`/shop/category/${item.subCategory.category.slug}/${item.subCategory.slug}/${item.slug}`}>
+                                <Link className="z-50"  rel="noopener noreferrer" target="_blank" href={`/shop/${item.subCategory.category.slug}/${item.subCategory.slug}/${item.slug}`}>
                                 <button className="invisible hastooltip p-1 z-50 rounded-md absolute top-20 right-2 bg-gray-100 hover:bg-gray-300 group-hover:visible transition-all">
                                     <ShareIcon className="text-gray-500" height={20} width={20}/>
                                 </button>
