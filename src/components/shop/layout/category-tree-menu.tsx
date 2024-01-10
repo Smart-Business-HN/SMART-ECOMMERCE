@@ -12,8 +12,12 @@ export default function CategoryTree(props:any) {
     // const hasCategory:boolean = params.categorySlug!.toString() != '';
     // const hasSubcategory:boolean = params.subCategorySlug!.toString() != '';
     return (
+        
+            
+        
         <>
             {
+                props.categories !== undefined && props.categories.lenght > 0 ? 
                 props.categories.map((category: NavCategory, key: number) => {
                     return (
                         <Disclosure key={key}>
@@ -40,7 +44,7 @@ export default function CategoryTree(props:any) {
                             )}
                         </Disclosure>
                     )
-                })
+                }) : null
             }
         </>
     );
