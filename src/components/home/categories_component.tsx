@@ -84,22 +84,22 @@ export default function CategoriesComponent() {
     }
 
   return (
-    <Fragment>
-        <div className='container flex space-x-3 justify-center   mx-auto'>
+    <div className='w-full mx-auto'>
+        <div className='container flex space-x-3 justify-center w-full   mx-auto'>
             {
                 elements.map((item:any,i:number)=>{
                     return(SingleCategoryButton(item,i))
                 })
             }
         </div>
-        <div className='container mt-4 flex space-x-3 justify-between   mx-auto'>
+        <div className='container mt-4 flex space-x-3 justify-between w-full  mx-auto'>
             {
                 elements[selectedCategory].childs.map((item:any,i:number)=>{
                     return(SingleProductCategory(item));
                 })
             }
         </div>
-    </Fragment>
+    </div>
   )
 }
 

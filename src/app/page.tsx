@@ -1,14 +1,30 @@
-import CategoriesComponent from '@/components/home/categories_component'
+import Branding from '@/components/home/branding_component';
+import CorporateResume from '@/components/home/corporate_resume_component';
 import HeroComponent from '@/components/home/hero_component'
-import Image from 'next/image'
-import Link from 'next/link'
+import Hikvision from '@/components/home/hikvision';
+import ProductsByCategory from '@/components/home/products_by_category';
+import { UbiquitiSection } from '@/components/home/ubiquiti-section';
+import { UbiquitiWispSection } from '@/components/home/ubiquiti-wisp-section';
+import Footer from '@/components/main-layout/foother';
+import Navbar from '@/components/main-layout/navbar';
 
+export default async function Home() {
 
-export default function Home() {
   return (
-    <main className="w-full justify-center  min-h-screen">
-        <HeroComponent/>
-        <CategoriesComponent/>
-    </main>
+    <>
+      <Navbar />
+      <main className="w-full max-w-7xl 3xl:max-w-screen-2xl mx-auto">
+        <HeroComponent />
+        <Branding />
+        <CorporateResume />
+        <UbiquitiSection />
+        <UbiquitiWispSection />
+        {/* <ProductsByCategory/> */}
+        <Hikvision />
+      </main>
+      <Footer />
+    </>
   )
 }
+
+
