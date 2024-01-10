@@ -21,6 +21,7 @@ export default function RootLayout({ children, }: { children: React.ReactNode })
     <html lang="es">
       <head>
         <Script
+          id='clarityScript'
           dangerouslySetInnerHTML={
             {
               __html: `(function(c,l,a,r,i,t,y){
@@ -34,9 +35,9 @@ export default function RootLayout({ children, }: { children: React.ReactNode })
         <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
       </head>
       <body className={poppins.className}>
-        <SessionAuthProvider>
+        {/* <SessionAuthProvider> */}
             {children}
-        </SessionAuthProvider>
+        {/* </SessionAuthProvider> */}
       </body>
     </html>
   );

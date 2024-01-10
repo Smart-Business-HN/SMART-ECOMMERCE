@@ -33,7 +33,7 @@ export default function RelatedProducts(props:any) {
         <hr className='mt-1'></hr>
         <div className='container flex gap-5'>
             {
-                products != null ? products.map((item:Product,key:number)=>{
+                products != null ? products.map((item:any,key:number)=>{
                     return(
                         <div key={key} className='w-full mt-2 border hover:shadow-2xl relative'>
                             <div className='p-4 col-span-1 overflow-hidden h-[200px] flex justify-center items-center object-contain'>

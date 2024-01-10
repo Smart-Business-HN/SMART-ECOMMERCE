@@ -33,7 +33,7 @@ export default function ProductsWithSameCategory(props:any) {
         <hr className='mt-1'></hr>
         <div className='container '>
             {
-                products != null ? products.map((item:Product,key:number)=>{
+                products != null ? products.map((item:any,key:number)=>{
                     return(
                         <div key={key} className='w-full grid grid-cols-3 mt-2 border '>
                             <div className='h-[100px] w-[100px] col-span-1 overflow-hidden flex justify-center items-center object-contain	'>

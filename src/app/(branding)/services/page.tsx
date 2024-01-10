@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { PhoneArrowUpRightIcon } from '@heroicons/react/24/outline'
 
-function Services() {
+export default function Services() {
   return (
     <>
       <div className='container mx-auto'>
@@ -194,5 +194,3 @@ function Services() {
     </>
   )
 }
-
-export default Services
