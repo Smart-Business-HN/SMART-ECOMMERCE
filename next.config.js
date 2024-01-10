@@ -17,7 +17,7 @@ const nextConfig = {
           ],
     },
     env: {
-        BASEAPI: 'https://localhost:7211/api/v2',
+        BASEAPI: 'https://sb8.azurewebsites.net/api/v2',
         NEXTAUTH_SECRET: 'no.utilizar.en.produccion'
     },
 }
