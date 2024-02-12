@@ -31,12 +31,21 @@ export default function RootLayout({ children, }: { children: React.ReactNode })
                     })(window, document, "clarity", "script", "imw8vbk3te");`,
             }}
         />
+        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-6R2P5JT4NX" />
+        <Script id='googleAnalitycs'
+          dangerouslySetInnerHTML={
+            {
+              __html: `window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-6R2P5JT4NX');`}}
+        />
         <meta name="google-site-verification" content="S-MABBGjddcLo8_kNkNfuqVi7etsoBNnLSR-OpHJBeg" />
         <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
       </head>
       <body className={poppins.className}>
         {/* <SessionAuthProvider> */}
-            {children}
+        {children}
         {/* </SessionAuthProvider> */}
       </body>
     </html>
