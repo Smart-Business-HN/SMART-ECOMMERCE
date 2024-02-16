@@ -35,8 +35,8 @@ export default function Login() {
               <label htmlFor='password' className='text-gray-600 mt-2'>Contrase;a *</label>
               <input id='password' required className='p-2 focus:border-blue-950 border border-gray-200 rounded-md' type="password" />
               <div className='flex justify-end mt-2 items-center'>
-                <input type='checkbox' />
-                <label className=' font-thin text-gray-500 text-xs'>Recordarme</label>
+                <input id="remember" type='checkbox' />
+                <label html-for="remember" className=' font-thin text-gray-500 text-xs'>Recordarme</label>
               </div>
               <button type='submit' className='bg-blue-400 mt-5 rounded-md text-white py-2'>Iniciar Sesion</button>
             </form>

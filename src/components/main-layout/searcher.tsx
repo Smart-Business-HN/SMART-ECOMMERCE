@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect, useState } from 'react'
 import { Combobox } from '@headlessui/react'
 import { Product } from '@/interfaces/product/product.interface'

@@ -9,15 +9,11 @@ import { useParams } from 'next/navigation';
 
 export default function CategoryTree(props:any) {
     const params = useParams();
-    // const hasCategory:boolean = params.categorySlug!.toString() != '';
-    // const hasSubcategory:boolean = params.subCategorySlug!.toString() != '';
+    let currentSubCategory = params.subCategorySlug;
     return (
-        
-            
-        
         <>
             {
-                props.categories !== undefined && props.categories.lenght > 0 ? 
+                props.categories !== undefined && props.categories.length > 0 ? 
                 props.categories.map((category: NavCategory, key: number) => {
                     return (
                         <Disclosure key={key}>
@@ -34,7 +30,7 @@ export default function CategoryTree(props:any) {
                                             category.subCategories.map((subCategory: ResumeSubcategory, key: number) => {
                                                 return (
                                                     <div className='pl-10' key={key}>
-                                                        <Link href={`/shop/category/${category.slug}/${subCategory.slug}`} className='text-gray-400 transition-colors hover:text-[#0068E1]'>{subCategory.name}</Link>
+                                                        <Link href={`/shop/category/${category.slug}/${subCategory.slug}`} className={`${currentSubCategory === subCategory.slug ? 'text-[#0068E1] transition-colors hover:text-[#0068E1]': 'text-gray-400   transition-colors'}`}>{subCategory.name}</Link>
                                                     </div>
                                                 );
                                             })

@@ -1,9 +1,6 @@
-import Navbar from '@/components/main-layout/navbar'
 import './globals.css'
 import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
-import Footer from '@/components/main-layout/foother'
-import SessionAuthProvider from '@/context/SessionProvider'
 import Script from 'next/script'
 
 const poppins = Poppins({

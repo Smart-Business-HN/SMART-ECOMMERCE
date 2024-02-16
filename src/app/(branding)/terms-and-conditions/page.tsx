@@ -2,10 +2,10 @@ import React from 'react'
 
 export default function TermsAndConditions() {
   return (
-    <div className='w-full max-w-5xl mx-auto'>
+    <div className='w-full max-w-5xl mx-auto px-5'>
       <div className='container my-24'>
         <h1 className='text-gray-700 font-bold text-3xl'>Terminos y condiciones</h1>
-        <h2 className='text-gray-700 font-semibold text-2xl'>Bienvenido al sitio de compras en Línea de SMART BUSINESS S. DE R.L.</h2>
+        <h2 className='text-gray-700 font-semibold text-md md:text-2xl'>Bienvenido al sitio de compras en Línea de SMART BUSINESS S. DE R.L.</h2>
         <p className='text-gray-500 text-md mb-5'>Última actualización y revisión: 11 de noviembre, 2023.</p>
         <p className='text-gray-500 text-md text-justify mb-2'>Smart Business Sociedad de Responsabilidad Limitada (en adelante “Smart Business”) te ofrece servicios de compra en línea de los productos que comercializa Smart Business (en adelante el “Producto” o los “Productos”) mediante el sitio: www.smartbusiness.site (en adelante el “Sitio”) y su uso está sujeto a los términos y condiciones establecidos en el presente documento (en adelante los “Términos y Condiciones”). Por favor lea cuidadosamente estos términos y condiciones antes de utilizar el Sitio. Al acceder o utilizar el Sitio, usted el Usuario (en adelante también podrá ser referido como el “Cliente”) expresamente acepta que quedará vinculado a estos Términos y Condiciones. Si no está de acuerdo con alguna parte de los términos y condiciones, favor no utilizar el Sitio. Estos términos y condiciones se aplican a todos los visitantes, usuarios y otras personas que acceden o utilizan el Sitio. Nos reservamos el derecho de cambiar cualquier información en el Sitio y de los presente Términos y Condiciones en cualquier momento. En el Sitio siempre se encontrará la versión actualizada de los Términos y Condiciones.</p>
         <h2 className='text-gray-700 font-bold text-2xl'>MÉTODOS DE PAGO</h2>

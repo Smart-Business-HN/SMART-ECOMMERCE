@@ -14,12 +14,17 @@ import { ChatBubbleBottomCenterIcon, TagIcon } from '@heroicons/react/24/outline
 import ShareButton from '@/components/shop/products-page/share-button';
 import Navbar from '@/components/main-layout/navbar';
 import Footer from '@/components/main-layout/foother';
+import { notFound } from 'next/navigation';
 export interface ImageGalleryItem {
   original: string,
   thumbnail?: string
 };
 export async function generateMetadata({ params }: { params: { productSlug: string, categorySlug: string, subCategorySlug: string } }) {
   const responseFromApi: any = await getProductBySlug(params.productSlug);
+  if(responseFromApi == null)
+  {
+    return notFound();
+  }
   const responseSerialize: ProductDetailResponse = responseFromApi;
   const product = responseSerialize.data;
   return {
@@ -48,7 +53,7 @@ export default async function ProductDetailPage({ params }: { params: { productS
   let productImages: ImageGalleryItem[] = [];
   const currentUrl: string = `https://www.smartbusiness.site/shop/category/${params.categorySlug}/${params.subCategorySlug}/${params.productSlug}`;
   const noImage: string = "https://smarterpstorage.blob.core.windows.net/produccion/no-image-available-icon-vector.jpg";
-  const itIsLogged: boolean = true;
+  const itIsLogged: boolean = false;
   const whatsappContact: string = `https://api.whatsapp.com/send?phone=50488187765&text=Hola%20me%20interesa%20saber%20mas%20sobre%20este%20producto%20${currentUrl}`;
   const responseFromApi: any = await getProductBySlug(params.productSlug);
   const responseSerialize: ProductDetailResponse = responseFromApi;
@@ -121,7 +126,7 @@ export default async function ProductDetailPage({ params }: { params: { productS
                         <p className='text-md text-gray-600 mt-4'>{product.description}</p>
                         <div className='border-t mt-2 mb-2 w-full'></div>
                         <div className='flex justify-between items-center'>
-                          <p className='text-xl font-semibold my-2 text-[#1C68E1]'>{FormatValues(CalculateProductPrice(product.costPrice))}</p>
+                          {/* <p className='text-xl font-semibold my-2 text-[#1C68E1]'>{FormatValues(CalculateProductPrice(product.costPrice))}</p> */}
                           {itIsLogged ?
                             <div className='flex gap-2 justify-items-center'>
                               <div className="h-8 w-24">

@@ -1,20 +1,18 @@
-'use client'
 import toast from 'react-hot-toast';
 import { Product } from "@/interfaces/product/product.interface";
-import { useEffect, useState } from "react";
 import Link from 'next/link';
 import { FormatValues } from '@/utils/number-format';
 import { CalculateProductPrice } from '@/utils/product-price';
 import { getProductBySameSubCategorySlug } from '@/services/product/product.service';
 import Image from 'next/image';
 
-export default function RelatedProducts(props:any) {
-    const [products, setProducts] = useState<Product[]|null>(null);
+export default async function RelatedProducts(props:any) {
+    let products: any[] = [];
     const noImage: string = "https://smarterpstorage.blob.core.windows.net/produccion/no-image-available-icon-vector.jpg";
-    const loadProducts = async (subCategorySlug: string,productSlug:string) => {
-        const productFromApi: any = await getProductBySameSubCategorySlug(subCategorySlug,productSlug);
+
+        const productFromApi: any = await getProductBySameSubCategorySlug(props.subCategorySlug,props.productSlug);
         if (productFromApi.succeeded) {
-          setProducts(productFromApi.data)
+         products = productFromApi.data;
         }
         else {
           toast.error(productFromApi.Message, {
@@ -22,10 +20,7 @@ export default function RelatedProducts(props:any) {
             className: 'text-xs mt-10'
           })
         }
-      }
-    useEffect(()=>{
-        loadProducts(props.subCategorySlug,props.productSlug)
-    },[]);
+      
     return (
         <>
         <h2 className='font-semibold text-gray-900 text-md'>Productos relacionados</h2>

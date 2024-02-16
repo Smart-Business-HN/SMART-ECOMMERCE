@@ -38,26 +38,31 @@ export function ProductsShop() {
         [searchParams]
     );
     function GoNextPage() {
-        if (searchParams.has('PageSize')) {
+        if (searchParams.has('PageNumber')) {
             let nextPage: string = (parseInt(searchParams.get('PageNumber')!) + 1).toString();
+            debugger
             router.push(pathname + '?' + createQueryString('PageNumber', nextPage))
+            loadProducts();
         }
         else {
             router.push(pathname + '?' + createQueryString('PageNumber', "2"))
+            loadProducts();
         }
-        loadProducts();
+        
     }
     function GoPreviousPage() {
-        if (searchParams.has('PageSize')) {
+        if (searchParams.has('PageNumber')) {
             if (parseInt(searchParams.get('PageNumber')!) > 1) {
                 let nextPage: string = (parseInt(searchParams.get('PageNumber')!) - 1).toString();
+                debugger
                 router.push(pathname + '?' + createQueryString('PageNumber', nextPage))
+                loadProducts();
             }
         }
         else {
             router.push(pathname + '?' + createQueryString('PageNumber', "2"))
+            loadProducts();
         }
-        loadProducts();
     }
     const loadProducts = async () => {
         let params: any = {
