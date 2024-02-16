@@ -2,6 +2,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
 import Script from 'next/script'
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -43,6 +44,7 @@ export default function RootLayout({ children, }: { children: React.ReactNode })
       <body className={poppins.className}>
         {/* <SessionAuthProvider> */}
         {children}
+        <SpeedInsights/>
         {/* </SessionAuthProvider> */}
       </body>
     </html>
