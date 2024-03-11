@@ -7,7 +7,9 @@ const Navbar = () => {
     // bg-red-400 sm:bg-green-300 md:bg-blue-500  lg:bg-amber-400 mx-auto xl:bg-red-300 2xl:bg-sky-500  z-50 sticky top-0 shadow-xs shadow-gray-300
     return (
         <nav className="border-b flex justify-between  bg-[#F6F6F8]">
+            <Link href='/'>
             <Image src='/assets/images/corporate/smart.webp' height={50} width={50} alt="smart business logo" /> 
+            </Link>
             <div className="border rounded grow mx-4 md:mx-12 my-1 hidden lg:block border-gray-400">
                 <Searcher/>
             </div>
