@@ -26,7 +26,7 @@ export default async function RelatedProducts(props:any) {
         <h2 className='font-semibold text-gray-900 text-md'>Productos relacionados</h2>
         <hr className='w-[10%] -mb-1 border-[#1C68E1] border'></hr>
         <hr className='mt-1'></hr>
-        <div className='container flex gap-5'>
+        <div className='container flex flex-col md:flex-row gap-5'>
             {
                 products != null ? products.map((item:any,key:number)=>{
                     return(

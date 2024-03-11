@@ -98,7 +98,7 @@ export function ProductsShop() {
         loadProducts();
     }, []);
     return (
-        <div className='col-span-3'>
+        <div className='col-span-4 md:col-span-3'>
             <div className='flex justify-between'>
                 <h1 className='text-gray-400 font-semibold text-3xl'>Tienda</h1>
                 <div className='flex gap-2 items-center'>

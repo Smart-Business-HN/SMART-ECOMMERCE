@@ -2,10 +2,18 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { PhoneArrowUpRightIcon } from '@heroicons/react/24/outline'
+import Head from 'next/head'
 
 export default function Services() {
   return (
     <>
+    <Head>
+    <meta
+          name="description"
+          content="Explora nuestros servicios integrales en cableado estructurado, productos ISP y CCTV. En Smart Business, ofrecemos instalación de equipos CCTV, soluciones de cableado estructurado y distribución de productos de marcas líderes como Hikvision, Ubiquiti, TP-Link, entre otras. Descubre cómo optimizamos tu red y seguridad con tecnología de vanguardia y experiencia especializada."
+          key="desc"
+        />
+    </Head>
       <div className='container mx-auto'>
         <div className='grid md:grid-cols-2 gap-10 my-5'>
           <div className='bg-cover bg-center p-24 rounded-md mx-5' style={{ backgroundImage: `url('/assets/images/backgrounds/building-background.jpg')`, }}>
@@ -97,7 +105,7 @@ export default function Services() {
           </div>
         </div>
       </div>
-      <div className='pt-48 relative pb-10 bg-opacity-10 bg-gray-50 bg-cover' >
+      <div className='hidden pt-48 relative pb-10 bg-opacity-10 bg-gray-50 bg-cover' >
         <div className='absolute w-72 h-72 animate-blob rounded-full bg-blue-200 blur-xl top-[15%] left-24 mix-blend-multiply'></div>
         <div className='absolute w-72 h-72 animate-blob rounded-full bg-blue-400 opacity-70 blur-xl top-[40%] -right-4 mix-blend-multiply'></div>
         <h2 className='font-bold text-center text-5xl'>Si quieres triunfar tienes que ser<br /> <strong className='text-blue-500'>SMART</strong></h2>
@@ -117,7 +125,7 @@ export default function Services() {
               <p className='font-bold mt-5 text-gray-700'>Con la mejor tecnología al mejor precio</p>
               <div className='flex p-4'>
                 <div>
-                  <Image src='/assets/images/corporate/hikvision_logo_smart_business.png' width={200} height={100} alt='hikvision' />
+                  <Image src='/assets/images/corporate/Hikvision_logo_smart_business.png' width={200} height={100} alt='hikvision' />
                 </div>
               </div>
             </div>

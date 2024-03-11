@@ -85,8 +85,8 @@ export default async function ProductDetailPage({ params }: { params: { productS
       <Toaster />
       <div className='w-full'>
         <div className='mx-auto container max-w-screen-2xl  items-center  py-5'>
-          <div className='container justify-between'>
-            <div className='flex gap-1 items-center text-sm text-gray-500'>
+          <div className='container px-4 md:px-0 justify-between'>
+            <div className='flex flex-wrap gap-1 items-center text-sm text-gray-500'>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
               </svg>
@@ -112,13 +112,13 @@ export default async function ProductDetailPage({ params }: { params: { productS
                 </> : null
               }
             </div>
-            <div className='grid mt-2 grid-cols-6 gap-4'>
-              <div className='col-span-5'>
-                <div className='w-full gap-4 grid grid-cols-2'>
+            <div className='grid mt-2 grid-cols-1 md:grid-cols-6 gap-4'>
+              <div className='col-span-1 md:col-span-5'>
+                <div className='w-full gap-4 grid grid-cols-1 md:grid-cols-2'>
                   <div className='col-span-1 '>
                     <ImageGalleryForProductDetailPage images={productImages} />
                   </div>
-                  <div className='col-span-1 p-5'>
+                  <div className='col-span-1 py-5 md:px-5'>
                     {
                       product != null ? <>
                         <h1 className='text-2xl text-black font-semibold'>{product.name}</h1>
@@ -145,7 +145,7 @@ export default async function ProductDetailPage({ params }: { params: { productS
                             : null
                           }
                         </div>
-                        <div className='flex bg-gray-100 mt-2 rounded-md'>
+                        <div className='flex bg-gray-100 mt-2 rounded-md px-2'>
                           <Link href={whatsappContact} target='_blank' className='grow flex gap-2 rounded-l-md justify-center items-center cursor-pointer border-gray-500 hover:bg-gray-200'>
                             <ChatBubbleBottomCenterIcon className='text-gray-600' height={20} width={20} />
                             <p className='text-gray-600'>Consultar</p>
@@ -176,8 +176,8 @@ export default async function ProductDetailPage({ params }: { params: { productS
                   </div>
                 </div>
               </div>
-              <div className=' col-span-1 bg-cover' style={{ backgroundImage: `url('/assets/images/backgrounds/banner-background.jpg')`, }}>
-                <div className=''>
+              <div className='col-span-1 rounded-md py-10 md:py-0 bg-cover' style={{ backgroundImage: `url('/assets/images/backgrounds/banner-background.jpg')`, }}>
+                <div>
                   <h4 className=' text-gray-100 mt-14 text-xl text-center'>¿Eres tecnico instalador?</h4>
                   <p className='text-sm text-gray-200 text-center mt-2'>Opta por descuentos exclusivos</p>
                   <div className='flex justify-center mt-5'>
@@ -191,11 +191,11 @@ export default async function ProductDetailPage({ params }: { params: { productS
                 </div>
               </div>
             </div>
-            <div className='grid grid-cols-8 mt-10 gap-10 '>
-              <div className='col-span-2'>
+            <div className='grid grid-cols-1 md:grid-cols-8 mt-10 gap-10 '>
+              <div className='col-span-1 md:col-span-2'>
                 <ProductsWithSameCategory categorySlug={params.categorySlug.toString()} productSlug={params.productSlug} />
               </div>
-              <div className='col-span-6 bg-white'>
+              <div className='col-span-1 md:col-span-6 bg-white'>
                 {product != null ? <InformationProductTabs productDataSheets={product.productDataSheets} productFeatures={product.productFeatures} /> : null}
                 <RelatedProducts subCategorySlug={params.subCategorySlug} productSlug={params.productSlug} />
               </div>

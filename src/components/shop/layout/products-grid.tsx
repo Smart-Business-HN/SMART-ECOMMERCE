@@ -9,7 +9,7 @@ export default function ProductsGrid(props: any) {
     const products: Product[] = props.products;
     const noImage: string = "https://smarterpstorage.blob.core.windows.net/produccion/no-image-available-icon-vector.jpg";
     return (
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             {
                 products.map((item: Product, key: number) => {
                     return (

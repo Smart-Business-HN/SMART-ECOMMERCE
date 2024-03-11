@@ -19,7 +19,7 @@ export default function CategoryTree(props:any) {
                         <Disclosure key={key}>
                             {({ open }) => (
                                 <>
-                                    <div     className='flex gap-2' key={key}>
+                                    <div className='flex gap-2' key={key}>
                                         <Disclosure.Button >
                                             <ChevronRightIcon height={20} width={20} className={open ? 'rotate-90 text-[#0068E1] transform transition-transform' : 'text-gray-400 '} />
                                         </Disclosure.Button>

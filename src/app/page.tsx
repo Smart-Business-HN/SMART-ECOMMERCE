@@ -7,11 +7,19 @@ import { UbiquitiSection } from '@/components/home/ubiquiti-section';
 import { UbiquitiWispSection } from '@/components/home/ubiquiti-wisp-section';
 import Footer from '@/components/main-layout/foother';
 import Navbar from '@/components/main-layout/navbar';
+import Head from 'next/head';
 
 export default async function Home() {
 
   return (
     <>
+      <Head>
+        <meta
+          name="description"
+          content="Expertos en soluciones de seguridad: Cámaras Hikvision, redes Ubiquiti y cableado estructurado. Transforma tu espacio con la mejor tecnología CCTV y de red."
+          key="desc"
+        />
+      </Head>
       <Navbar />
       <main className="w-full max-w-7xl 3xl:max-w-screen-2xl mx-auto">
         <HeroComponent />

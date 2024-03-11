@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { ChatBubbleLeftRightIcon, PhoneArrowUpRightIcon, ClockIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import Image from 'next/image';
+import Head from 'next/head';
 export default function ContactPage() {
   return (
+    <Fragment>
+    <Head>
+    <meta
+          name="description"
+          content="¿Listo para mejorar tu seguridad y redes? Contacta con nosotros para expertos en cámaras Hikvision, equipos Ubiquiti y soluciones de cableado estructurado. Tu socio confiable en tecnología y seguridad."
+          key="desc"
+    />
+    </Head>
     <div className='w-full'>
       <div className='bg-center bg-cover mb-5 bg-blue-950 bg-opacity-25 py-36' style={{ backgroundImage: `url('/assets/images/backgrounds/map_contact.png')`, }}>
         <div className='container mx-auto flex items-center px-10 sm:px-0'>
@@ -235,5 +244,6 @@ export default function ContactPage() {
         </div>
       </div>
     </div>
+    </Fragment>
   )
 }
