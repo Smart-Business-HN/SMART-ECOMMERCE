@@ -105,7 +105,7 @@ export default function Services() {
           </div>
         </div>
       </div>
-      <div className='hidden pt-48 relative pb-10 bg-opacity-10 bg-gray-50 bg-cover' >
+      <div className='pt-48 relative pb-10 bg-opacity-10 bg-gray-50 bg-cover' >
         <div className='absolute w-72 h-72 animate-blob rounded-full bg-blue-200 blur-xl top-[15%] left-24 mix-blend-multiply'></div>
         <div className='absolute w-72 h-72 animate-blob rounded-full bg-blue-400 opacity-70 blur-xl top-[40%] -right-4 mix-blend-multiply'></div>
         <h2 className='font-bold text-center text-5xl'>Si quieres triunfar tienes que ser<br /> <strong className='text-blue-500'>SMART</strong></h2>
