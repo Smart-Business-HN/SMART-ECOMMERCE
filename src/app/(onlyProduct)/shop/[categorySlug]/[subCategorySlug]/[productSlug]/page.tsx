@@ -45,13 +45,37 @@ export async function generateMetadata({ params }: { params: { productSlug: stri
       locale: 'es_ES',
       type: 'website',
     },
+    twitter: {
+      card: 'summary_large_image',
+      title: `SB | ${product.name}`,
+      description: product.description,
+      creator: 'Smart Business',
+      images: [{
+        url: product.productImages.length != 0 ? product.productImages[0].url : 'https://www.smartbusiness.site/assets/images/corporate/smart-business-og-image.png',
+        width: 800,
+        height: 600,
+      }],
+    },
+    robots: {
+      index: true,
+      follow: true,
+      nocache: true,
+      googleBot: {
+        index: true,
+        follow: false,
+        noimageindex: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
   }
 }
 
 export default async function ProductDetailPage({ params }: { params: { productSlug: string, categorySlug: string, subCategorySlug: string } }) {
   let quantity = 1;
   let productImages: ImageGalleryItem[] = [];
-  const currentUrl: string = `https://www.smartbusiness.site/shop/category/${params.categorySlug}/${params.subCategorySlug}/${params.productSlug}`;
+  const currentUrl: string = `https://www.smartbusiness.site/shop/${params.categorySlug}/${params.subCategorySlug}/${params.productSlug}`;
   const noImage: string = "https://smarterpstorage.blob.core.windows.net/produccion/no-image-available-icon-vector.jpg";
   const itIsLogged: boolean = false;
   const whatsappContact: string = `https://api.whatsapp.com/send?phone=50488187765&text=Hola%20me%20interesa%20saber%20mas%20sobre%20este%20producto%20${currentUrl}`;
