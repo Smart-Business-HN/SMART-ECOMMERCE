@@ -19,6 +19,14 @@ export default function RootLayout({ children, }: { children: React.ReactNode })
   return (
     <html lang="es">
       <head>
+        <Script id='tag-manager'
+        dangerouslySetInnerHTML={
+          { __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+          })(window,document,'script','dataLayer','GTM-W4PPLW2');`}
+        } />
         <Script
           id='clarityScript'
           dangerouslySetInnerHTML={
@@ -30,7 +38,6 @@ export default function RootLayout({ children, }: { children: React.ReactNode })
                     })(window, document, "clarity", "script", "imw8vbk3te");`,
             }}
         />
-        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-6R2P5JT4NX" />
         <Script id='googleAnalitycs'
           dangerouslySetInnerHTML={
             {
@@ -44,6 +51,7 @@ export default function RootLayout({ children, }: { children: React.ReactNode })
         <link rel="shortcut icon" href="assets/images/favicon.ico" />
       </head>
       <body className={poppins.className}>
+      <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W4PPLW2" height="0" width="0" className='hidden'></iframe></noscript>
         {/* <SessionAuthProvider> */}
         {children}
         <SpeedInsights/>
