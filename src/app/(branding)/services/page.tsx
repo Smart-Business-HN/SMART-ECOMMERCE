@@ -2,18 +2,16 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { PhoneArrowUpRightIcon } from '@heroicons/react/24/outline'
-import Head from 'next/head'
+import { Metadata } from 'next'
+export const metadata: Metadata = {
+  title: 'Servicios | Smart Business',
+  description: 'Explora nuestros servicios integrales en cableado estructurado, productos ISP y CCTV. En Smart Business, ofrecemos instalación de equipos CCTV, soluciones de cableado estructurado y distribución de productos de marcas líderes como Hikvision, Ubiquiti, TP-Link, entre otras. Descubre cómo optimizamos tu red y seguridad con tecnología de vanguardia y experiencia especializada.',
+  keywords: ['Ubiquiti','Camaras', 'Redes','Wifi Empresarial', 'Contratista CCTV']
+}
 
 export default function Services() {
   return (
     <>
-    <Head>
-    <meta
-          name="description"
-          content="Explora nuestros servicios integrales en cableado estructurado, productos ISP y CCTV. En Smart Business, ofrecemos instalación de equipos CCTV, soluciones de cableado estructurado y distribución de productos de marcas líderes como Hikvision, Ubiquiti, TP-Link, entre otras. Descubre cómo optimizamos tu red y seguridad con tecnología de vanguardia y experiencia especializada."
-          key="desc"
-        />
-    </Head>
       <div className='container mx-auto'>
         <div className='grid md:grid-cols-2 gap-10 my-5'>
           <div className='bg-cover bg-center p-24 rounded-md mx-5' style={{ backgroundImage: `url('/assets/images/backgrounds/building-background.jpg')`, }}>

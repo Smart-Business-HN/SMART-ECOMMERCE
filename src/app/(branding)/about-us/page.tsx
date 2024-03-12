@@ -1,16 +1,14 @@
 import React, { Fragment } from 'react'
 import Image from 'next/image'
 import Head from 'next/head';
+import { Metadata } from 'next';
+export const metadata: Metadata = {
+    title: 'Sobre Nosotros | Smart Business',
+    description: 'Descubre nuestra pasión por la excelencia en soluciones de cableado estructurado, productos ISP y CCTV. En Smart Business, nos dedicamos a proporcionar tecnología de vanguardia con marcas líderes como Hikvision, Ubiquiti, TP-Link y más. Conoce nuestro compromiso, experiencia y la gama completa de productos y servicios que ofrecemos para transformar tus necesidades de red y seguridad.',
+    keywords: ['Ubiquiti','Camaras', 'Redes','Wifi Empresarial', 'Contratista CCTV', 'Instalacion cctv']
+  }
 
 const AboutUs: React.FC = () => (
-    <Fragment>
-        <Head>
-            <meta
-                name="description"
-                content="Descubre nuestra pasión por la excelencia en soluciones de cableado estructurado, productos ISP y CCTV. En Smart Business, nos dedicamos a proporcionar tecnología de vanguardia con marcas líderes como Hikvision, Ubiquiti, TP-Link y más. Conoce nuestro compromiso, experiencia y la gama completa de productos y servicios que ofrecemos para transformar tus necesidades de red y seguridad."
-                key="desc"
-            />
-        </Head>
         <div className='container mx-auto max-w-7xl my-5 scroll-smooth'>
             <div className='grid md:grid-cols-2 gap-4 bg-gray-100 rounded-md'>
                 <div className='relative'>
@@ -192,6 +190,5 @@ const AboutUs: React.FC = () => (
                 </div>
             </div>
         </div>
-    </Fragment>
 )
 export default AboutUs;

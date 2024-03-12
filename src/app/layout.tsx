@@ -11,7 +11,8 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: 'Smart Business',
-  description: 'Tu tienda mayorista para tu negocio de redes y seguridad.',
+  description: 'Expertos en soluciones de seguridad: Cámaras Hikvision, redes Ubiquiti y cableado estructurado. Transforma tu espacio con la mejor tecnología CCTV y de red.',
+  keywords: ['Ubiquiti','Camaras', 'Redes','Wifi Empresarial', 'Contratista CCTV','Hikvision','IT','servidores NAS'],
 }
 
 export default function RootLayout({ children, }: { children: React.ReactNode }) {
@@ -40,6 +41,7 @@ export default function RootLayout({ children, }: { children: React.ReactNode })
         />
         <meta name="google-site-verification" content="S-MABBGjddcLo8_kNkNfuqVi7etsoBNnLSR-OpHJBeg" />
         <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+        <link rel="shortcut icon" href="assets/images/favicon.ico" />
       </head>
       <body className={poppins.className}>
         {/* <SessionAuthProvider> */}
