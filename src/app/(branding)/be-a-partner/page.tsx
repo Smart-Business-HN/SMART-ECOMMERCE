@@ -1,7 +1,27 @@
+import { Metadata } from "next";
 import Image from "next/image";
 import { CreditCardIcon, EnvelopeIcon, GiftIcon, MapIcon, ReceiptRefundIcon } from "@heroicons/react/24/outline";
 import ReasonsToTrustInUs from "@/components/be-a-partner/accordion";
-
+export const metadata: Metadata = {
+    title: 'Se un Integrador | Smart Business',
+    description: 'Descubre nuestra pasión por la excelencia en soluciones de cableado estructurado, productos ISP y CCTV. En Smart Business, nos dedicamos a proporcionar tecnología de vanguardia con marcas líderes como Hikvision, Ubiquiti, TP-Link y más. Conoce nuestro compromiso, experiencia y la gama completa de productos y servicios que ofrecemos para transformar tus necesidades de red y seguridad.',
+    keywords: ['Ubiquiti','Camaras', 'Redes','Wifi Empresarial', 'Contratista CCTV', 'Instalacion cctv'],
+    openGraph: {
+        title: `Se un Integrador | Smart Business`,
+        description: 'Descubre nuestra pasión por la excelencia en soluciones de cableado estructurado, productos ISP y CCTV. En Smart Business, nos dedicamos a proporcionar tecnología de vanguardia con marcas líderes como Hikvision, Ubiquiti, TP-Link y más. Conoce nuestro compromiso, experiencia y la gama completa de productos y servicios que ofrecemos para transformar tus necesidades de red y seguridad.',
+        url: 'https://www.smartbusiness.site/about-us',
+        siteName: 'Smart Business',
+        images: [
+          {
+            url: '/assets/images/corporate/smart-business-og-image.png',
+            width: 800,
+            height: 600,
+          }
+        ],
+        locale: 'es_ES',
+        type: 'website',
+      },
+}
 const BeAPartner: React.FC = () => (
     <div className="container mx-auto max-w-screen-2xl my-5">
         <div className='grid grid-cols-2 gap-4'>

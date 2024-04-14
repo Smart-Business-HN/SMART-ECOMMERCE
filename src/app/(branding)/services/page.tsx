@@ -6,7 +6,22 @@ import { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Servicios | Smart Business',
   description: 'Explora nuestros servicios integrales en cableado estructurado, productos ISP y CCTV. En Smart Business, ofrecemos instalación de equipos CCTV, soluciones de cableado estructurado y distribución de productos de marcas líderes como Hikvision, Ubiquiti, TP-Link, entre otras. Descubre cómo optimizamos tu red y seguridad con tecnología de vanguardia y experiencia especializada.',
-  keywords: ['Ubiquiti','Camaras', 'Redes','Wifi Empresarial', 'Contratista CCTV']
+  keywords: ['Ubiquiti','Camaras', 'Redes','Wifi Empresarial', 'Contratista CCTV',],
+  openGraph: {
+    title: `Servicios | Smart Business`,
+    description: 'Explora nuestros servicios integrales en cableado estructurado, productos ISP y CCTV. En Smart Business, ofrecemos instalación de equipos CCTV, soluciones de cableado estructurado y distribución de productos de marcas líderes como Hikvision, Ubiquiti, TP-Link, entre otras. Descubre cómo optimizamos tu red y seguridad con tecnología de vanguardia y experiencia especializada.',
+    url: 'https://www.smartbusiness.site/services',
+    siteName: 'Smart Business',
+    images: [
+      {
+        url: '/assets/images/corporate/smart-business-og-image.png',
+        width: 800,
+        height: 600,
+      }
+    ],
+    locale: 'es_ES',
+    type: 'website',
+  },
 }
 
 export default function Services() {

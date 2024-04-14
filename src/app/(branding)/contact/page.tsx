@@ -7,7 +7,22 @@ import { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Contacto | Smart Business',
   description: '¿Listo para mejorar tu seguridad y redes? Contacta con nosotros para expertos en cámaras Hikvision, equipos Ubiquiti y soluciones de cableado estructurado. Tu socio confiable en tecnología y seguridad.',
-  keywords: ['Ubiquiti','Camaras', 'Redes','Contacto', 'Contratista CCTV', 'Distribuidor Ubiquiti','Distribuidor Hikvision Honduras']
+  keywords: ['Ubiquiti','Camaras', 'Redes','Contacto', 'Contratista CCTV', 'Distribuidor Ubiquiti','Distribuidor Hikvision Honduras'],
+  openGraph: {
+    title: `Contacto | Smart Business`,
+    description: '¿Listo para mejorar tu seguridad y redes? Contacta con nosotros para expertos en cámaras Hikvision, equipos Ubiquiti y soluciones de cableado estructurado. Tu socio confiable en tecnología y seguridad.',
+    url: 'https://www.smartbusiness.site/contact',
+    siteName: 'Smart Business',
+    images: [
+      {
+        url: '/assets/images/corporate/smart-business-og-image.png',
+        width: 800,
+        height: 600,
+      }
+    ],
+    locale: 'es_ES',
+    type: 'website',
+  },
 }
 export default function ContactPage() {
   return (

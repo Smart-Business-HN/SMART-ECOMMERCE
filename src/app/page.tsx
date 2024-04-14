@@ -10,10 +10,25 @@ import { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Inicio | Smart Business',
   description: 'Expertos en soluciones de seguridad: Cámaras Hikvision, redes Ubiquiti y cableado estructurado. Transforma tu espacio con la mejor tecnología CCTV y de red.',
-  keywords: ['Ubiquiti','Camaras', 'Redes','Wifi Empresarial', 'Contratista CCTV','Hikvision','IT','servidores NAS'],
+  keywords: ['Ubiquiti','Camaras', 'Redes','Wifi Empresarial', 'Contratista CCTV','Hikvision','IT','servidores NAS','Proveedor IT'],
   icons: {
     icon: 'assets/images/favicon.ico'
-  }
+  },
+  openGraph: {
+    title: `Inicio | Smart Business`,
+    description: 'Expertos en soluciones de seguridad: Cámaras Hikvision, redes Ubiquiti y cableado estructurado. Transforma tu espacio con la mejor tecnología CCTV y de red.',
+    url: 'https://www.smartbusiness.site/',
+    siteName: 'Smart Business',
+    images: [
+      {
+        url: '/assets/images/corporate/smart-business-og-image.png',
+        width: 800,
+        height: 600,
+      }
+    ],
+    locale: 'es_ES',
+    type: 'website',
+  },
 }
 
 export default async function Home() {
