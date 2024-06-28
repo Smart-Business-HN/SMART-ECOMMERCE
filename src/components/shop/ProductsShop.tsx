@@ -8,6 +8,7 @@ import ProductsGrid from "./layout/products-grid";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Product } from "@/interfaces/product/product.interface";
 import ProductsList from "./layout/products-list";
+import { Pagination } from "@nextui-org/react";
 
 export function ProductsShop() {
     const pageSizes = [
@@ -18,17 +19,10 @@ export function ProductsShop() {
     const [selectedPageSize, setSelectedPageSize] = useState(pageSizes[0]);
     const [showInGrid, setShowInGrid] = useState(true);
     const [products, setProducts] = useState<Product[] | null>(null);
-    const [totalItems, setTotalItems] = useState(0);
     const [totalPages, setTotalPages] = useState(1);
-    const [arrayPages, setArrayPages] = useState([1]);
     const searchParams = useSearchParams();
     const router = useRouter();
     const pathname = usePathname();
-
-    const [pages, setPages] = useState<number[]>([1]);
-    useEffect(()=>{
-        setArrayPages(Array.from(Array(pages).keys()));
-    },[totalPages])
     const createQueryString = useCallback(
         (name: string, value: string) => {
             const params = new URLSearchParams(searchParams)
@@ -37,52 +31,25 @@ export function ProductsShop() {
         },
         [searchParams]
     );
-    function GoNextPage() {
-        if (searchParams.has('PageNumber')) {
-            let nextPage: string = (parseInt(searchParams.get('PageNumber')!) + 1).toString();
-            debugger
-            router.push(pathname + '?' + createQueryString('PageNumber', nextPage))
-            loadProducts();
-        }
-        else {
-            router.push(pathname + '?' + createQueryString('PageNumber', "2"))
-            loadProducts();
-        }
-        
-    }
-    function GoPreviousPage() {
-        if (searchParams.has('PageNumber')) {
-            if (parseInt(searchParams.get('PageNumber')!) > 1) {
-                let nextPage: string = (parseInt(searchParams.get('PageNumber')!) - 1).toString();
-                debugger
-                router.push(pathname + '?' + createQueryString('PageNumber', nextPage))
-                loadProducts();
-            }
-        }
-        else {
-            router.push(pathname + '?' + createQueryString('PageNumber', "2"))
-            loadProducts();
-        }
-    }
-    const loadProducts = async () => {
+    const loadProducts = async (page: number) => {
         let params: any = {
             pageSize: selectedPageSize.size,
-            pageNumber: searchParams.has('PageNumber') ? searchParams.get('PageNumber') : 1,
+            pageNumber: page,
             parameter: ''
         };
         try {
             const producsResponse: any = await GetAllProducts(params);
             let serializeResponse: ProductsResponse = producsResponse;
             setProducts(serializeResponse.data);
-            setTotalItems(serializeResponse.totalItems);
+            updatePageNumber(page)
+            setTotalPages(Math.round(serializeResponse.totalItems / selectedPageSize.size))
         } catch (error: any) {
             console.log(error);
         }
     }
-    useEffect(() => {
-        let pages: number = Math.round(totalItems / selectedPageSize.size);
-        setTotalPages(pages);
-    }, [totalItems])
+    function updatePageNumber(page: number) {
+        router.push(pathname + '?' + createQueryString('PageNumber', page.toString()))
+    }
     useEffect(() => {
         router.push(pathname + '?' + createQueryString('PageSize', selectedPageSize.size.toString()))
     }, [selectedPageSize]);
@@ -95,7 +62,7 @@ export function ProductsShop() {
             let pageSize = pageSizes.find(x => x.size.toString() == searchParams.get('PageSize'));
             setSelectedPageSize(pageSize!)
         }
-        loadProducts();
+        loadProducts(1);
     }, []);
     return (
         <div className='col-span-4 md:col-span-3'>
@@ -133,19 +100,7 @@ export function ProductsShop() {
             {products != null && showInGrid ? <ProductsGrid products={products} /> : products != null && !showInGrid ? <ProductsList products={products} /> : null}
             <div className='flex justify-end mt-5'>
                 <div className='flex gap-5 items-center'>
-                    <button onClick={() => { GoPreviousPage() }} className='text-gray-400 rounded-md hover:bg-gray-100 hover:text-[#0068E1]'>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-                        </svg>
-                    </button>
-                    {
-                    }
-                    <button className='text-gray-400 px-2 py-1 border flex items-center justify-center rounded-md hover:bg-gray-100 hover:text-[#0068E1]'>1</button>
-                    <button onClick={() => { GoNextPage() }} className='text-gray-400 rounded-md hover:bg-gray-100 hover:text-[#0068E1]'>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                        </svg>
-                    </button>
+                    <Pagination onChange={(page: number) => loadProducts(page)} isCompact showControls total={totalPages} page={parseInt(searchParams.get('PageNumber')!)} initialPage={1} />
                 </div>
             </div>
         </div>
