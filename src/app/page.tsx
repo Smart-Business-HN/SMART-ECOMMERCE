@@ -30,11 +30,10 @@ export const metadata: Metadata = {
     type: 'website',
   },
 }
-import {NextUIProvider} from "@nextui-org/react";
 export default async function Home() {
   return (
 
-    <NextUIProvider>
+    <>
       <Navbar />
       <main className="w-full max-w-7xl 3xl:max-w-screen-2xl mx-auto">
         <HeroComponent />
@@ -46,7 +45,7 @@ export default async function Home() {
         <Hikvision />
       </main>
       <Footer />
-      </NextUIProvider>
+      </>
   )
 }
 
