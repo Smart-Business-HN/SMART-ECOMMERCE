@@ -114,23 +114,8 @@ export default async function ProductDetailPage({ params }: { params: { productS
         <div className='mx-auto container max-w-screen-2xl  items-center  py-5'>
           <div className='container px-4 md:px-0 justify-between'>
             <div className='flex flex-wrap gap-1 items-center text-sm text-gray-500'>
-            <div className='w-full h-10 bg-slate-600'></div>
               <ProductBreadcrumbs product={product} />
-              <div className='w-full h-10 bg-slate-600'></div>
-              {/* {
-                product != null ? <>
-                  <Link href={`/shop/category/${product.subCategory.category.slug}`}><h6>{product.subCategory.category.name}</h6></Link>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-3">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                  </svg>
-                  <Link href={`/shop/category/${product.subCategory.category.slug}/${product.subCategory.slug}`}><h6>{product.subCategory.name}</h6></Link>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-3">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                  </svg>
-                  <h6 className='text-gray-300'>{product.name}</h6>
-                </> : null
-              } */}
-            </div>
+        </div>
             <div className='grid mt-2 grid-cols-1 md:grid-cols-6 gap-4'>
               <div className='col-span-1 md:col-span-5'>
                 <div className='w-full gap-4 grid grid-cols-1 md:grid-cols-2'>
@@ -226,4 +211,3 @@ export default async function ProductDetailPage({ params }: { params: { productS
     </Providers>
   )
 }
-
