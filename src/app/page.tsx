@@ -30,9 +30,9 @@ export const metadata: Metadata = {
     type: 'website',
   },
 }
-
 export default async function Home() {
   return (
+
     <>
       <Navbar />
       <main className="w-full max-w-7xl 3xl:max-w-screen-2xl mx-auto">
@@ -45,7 +45,7 @@ export default async function Home() {
         <Hikvision />
       </main>
       <Footer />
-    </>
+      </>
   )
 }
 

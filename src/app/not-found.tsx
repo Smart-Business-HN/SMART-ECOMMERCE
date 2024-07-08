@@ -16,7 +16,7 @@ export default function NotFound() {
           <Link className='text-blue-500 hover:underline' href="/">Inicio</Link>
           <Link className="text-blue-500 hover:underline" href="/shop">Tienda</Link>
           <Link className="text-blue-500 hover:underline" href="/contact">Contacto</Link>
-        </div>
+      </div>
     </div>
   )
 }

@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
 import Script from 'next/script'
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Providers } from './providers';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -47,15 +48,16 @@ export default function RootLayout({ children, }: { children: React.ReactNode })
             gtag('config', 'G-6R2P5JT4NX');`}}
         />
         <meta name="google-site-verification" content="S-MABBGjddcLo8_kNkNfuqVi7etsoBNnLSR-OpHJBeg" />
-        <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
         <link rel="shortcut icon" href="assets/images/favicon.ico" />
       </head>
       <body className={poppins.className}>
       <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W4PPLW2" height="0" width="0" className='hidden'></iframe></noscript>
+      <Providers>
         {/* <SessionAuthProvider> */}
         {children}
         <SpeedInsights/>
         {/* </SessionAuthProvider> */}
+      </Providers>
       </body>
     </html>
   );

@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { PhoneArrowUpRightIcon } from '@heroicons/react/24/outline'
 import { Metadata } from 'next'
+import { Button } from '@nextui-org/react'
 export const metadata: Metadata = {
   title: 'Servicios | Smart Business',
   description: 'Explora nuestros servicios integrales en cableado estructurado, productos ISP y CCTV. En Smart Business, ofrecemos instalación de equipos CCTV, soluciones de cableado estructurado y distribución de productos de marcas líderes como Hikvision, Ubiquiti, TP-Link, entre otras. Descubre cómo optimizamos tu red y seguridad con tecnología de vanguardia y experiencia especializada.',
@@ -51,7 +52,9 @@ export default function Services() {
             <div className='flex border-t'></div>
             <div className='flex flex-col sm:flex-row mt-5 gap-5'>
               <div className='grow justify-center items-center'>
-                <Link className='bg-blue-500 h-full text-center py-5 md:py-0 px-5 text-white rounded-md flex justify-center items-center font-semibold text-lg' href="/contact">Contactar</Link>
+              <Button color='primary' radius='sm' variant='shadow' className='w-full h-full'>
+                                <Link href='/contact' className=''>Contactar</Link>
+              </Button>
               </div>
               <Link href="tel:+50488187765" className='flex group hover:shadow-sm justify-center items-center gap-4 border-2 p-2 rounded-md'>
                 <div className=' rounded-full bg-gray-400 group-hover:bg-blue-500 p-3'>

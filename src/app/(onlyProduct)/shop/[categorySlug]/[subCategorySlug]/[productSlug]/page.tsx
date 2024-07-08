@@ -15,6 +15,9 @@ import ShareButton from '@/components/shop/products-page/share-button';
 import Navbar from '@/components/main-layout/navbar';
 import Footer from '@/components/main-layout/foother';
 import { notFound } from 'next/navigation';
+import { Providers } from '@/app/providers';
+import { BreadcrumbItem, Breadcrumbs } from '@nextui-org/breadcrumbs';
+import ProductBreadcrumbs from '@/components/shop/products-page/product-breadcrumbs';
 export interface ImageGalleryItem {
   original: string,
   thumbnail?: string
@@ -104,38 +107,15 @@ export default async function ProductDetailPage({ params }: { params: { productS
     productImages = images;
   }
   return (
-    <>
+    <Providers>
       <Navbar/>
       <Toaster />
       <div className='w-full'>
         <div className='mx-auto container max-w-screen-2xl  items-center  py-5'>
           <div className='container px-4 md:px-0 justify-between'>
             <div className='flex flex-wrap gap-1 items-center text-sm text-gray-500'>
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-              </svg>
-              <Link href='/'><h6>Home</h6></Link>
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-3">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-              </svg>
-              <Link href='/shop'><h6>Tienda</h6></Link>
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-3">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-              </svg>
-              {
-                product != null ? <>
-                  <Link href={`/shop/category/${product.subCategory.category.slug}`}><h6>{product.subCategory.category.name}</h6></Link>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-3">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                  </svg>
-                  <Link href={`/shop/category/${product.subCategory.category.slug}/${product.subCategory.slug}`}><h6>{product.subCategory.name}</h6></Link>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-3">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                  </svg>
-                  <h6 className='text-gray-300'>{product.name}</h6>
-                </> : null
-              }
-            </div>
+              <ProductBreadcrumbs product={product} />
+        </div>
             <div className='grid mt-2 grid-cols-1 md:grid-cols-6 gap-4'>
               <div className='col-span-1 md:col-span-5'>
                 <div className='w-full gap-4 grid grid-cols-1 md:grid-cols-2'>
@@ -228,7 +208,6 @@ export default async function ProductDetailPage({ params }: { params: { productS
         </div>
       </div>
       <Footer/>
-    </>
+    </Providers>
   )
 }
-

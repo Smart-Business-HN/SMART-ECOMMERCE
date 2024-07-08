@@ -1,3 +1,5 @@
+
+import { Button } from '@nextui-org/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { Fragment } from 'react';
@@ -120,7 +122,9 @@ export function UbiquitiSection() {
                             </ol>
                         </div>
                         <div className='flex items-center mt-8 justify-center'>
-                            <Link href='/contact' className='p-2 bg-blue-500 text-white rounded-md'>Contactar</Link>
+                            <Button color='primary' radius='sm' variant='shadow'>
+                                <Link href='/contact' className=''>Contactar</Link>
+                            </Button>
                         </div>
                     </div>
                 </div>
