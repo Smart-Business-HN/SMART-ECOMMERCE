@@ -34,7 +34,7 @@ export default function ProductsGrid(props: any) {
                                 <div className='h-8'></div>
                                 <div className=' bg-[#0068E1] px-1 py-2 absolute bottom-[10px] rounded-r-full'></div>
                                 <div className='font-semibold absolute bottom-2 left-4 text-center text-sm text-[#1C68E1]'>
-                                    {FormatValues(CalculateProductPrice(item.costPrice))}
+                                    {FormatValues(item.recomendedSalePrice)}
                                 </div>
                             </div>
                         </Link>

@@ -1,8 +1,6 @@
-import Link from 'next/link';
 import Image from 'next/image';
 import toast, { Toaster } from 'react-hot-toast';
 import { Product } from '@/interfaces/product/product.interface';
-import { CalculateProductPrice } from '@/utils/product-price';
 import { FormatValues } from '@/utils/number-format';
 import ProductsWithSameCategory from '@/components/shop/products-page/products-with-same-category';
 import RelatedProducts from '@/components/shop/products-page/related-products';
@@ -11,13 +9,12 @@ import { ProductDetailResponse } from '@/interfaces/http-responses/http-response
 import ImageGalleryForProductDetailPage from '@/components/shop/products-page/image-gallery';
 import { getProductBySlug } from '@/services/product/product.service';
 import { ChatBubbleBottomCenterIcon, TagIcon } from '@heroicons/react/24/outline';
-import ShareButton from '@/components/shop/products-page/share-button';
 import Navbar from '@/components/main-layout/navbar';
 import Footer from '@/components/main-layout/foother';
 import { notFound } from 'next/navigation';
 import { Providers } from '@/app/providers';
-import { BreadcrumbItem, Breadcrumbs } from '@nextui-org/breadcrumbs';
 import ProductBreadcrumbs from '@/components/shop/products-page/product-breadcrumbs';
+import { Button, ButtonGroup, Link, Snippet } from '@nextui-org/react';
 export interface ImageGalleryItem {
   original: string,
   thumbnail?: string
@@ -130,7 +127,7 @@ export default async function ProductDetailPage({ params }: { params: { productS
                         <p className='text-md text-gray-600 mt-4'>{product.description}</p>
                         <div className='border-t mt-2 mb-2 w-full'></div>
                         <div className='flex justify-between items-center'>
-                          {/* <p className='text-xl font-semibold my-2 text-[#1C68E1]'>{FormatValues(CalculateProductPrice(product.costPrice))}</p> */}
+                          <p className='text-xl font-semibold my-2 text-[#1C68E1]'>{FormatValues(product.recomendedSalePrice)}</p>
                           {itIsLogged ?
                             <div className='flex gap-2 justify-items-center'>
                               <div className="h-8 w-24">
@@ -149,19 +146,11 @@ export default async function ProductDetailPage({ params }: { params: { productS
                             : null
                           }
                         </div>
-                        <div className='flex bg-gray-100 mt-2 rounded-md px-2'>
-                          <Link href={whatsappContact} target='_blank' className='grow flex gap-2 rounded-l-md justify-center items-center cursor-pointer border-gray-500 hover:bg-gray-200'>
-                            <ChatBubbleBottomCenterIcon className='text-gray-600' height={20} width={20} />
-                            <p className='text-gray-600'>Consultar</p>
-                          </Link>
-                          <div className='w-[1px] bg-gray-500 my-2'></div>
-                          <div className='grow flex gap-2 justify-center items-center cursor-pointer border-gray-500 hover:bg-gray-200'>
-                            <TagIcon height={20} width={20} />
-                            <p>WishList</p>
-                          </div>
-                          <div className='w-[1px] bg-gray-500 my-2'></div>
-                          <ShareButton url={currentUrl} />
-                        </div>
+                        <ButtonGroup className='w-full mx-0'>
+                          <Button as={Link}   href={whatsappContact}><ChatBubbleBottomCenterIcon className='text-gray-600' height={20} width={20}/>Consultar</Button>
+                          <Button><TagIcon  className='text-gray-600' height={20} width={20} />Anadir al carrito</Button>
+                          <Button as={Snippet} codeString={currentUrl}  symbol={null} >Compartir</Button>
+                        </ButtonGroup>
                         <div className='border-t my-2 w-full'></div>
                         <div className='flex text-sm gap-2'>
                           <p className='font-semibold'>SKU:</p>

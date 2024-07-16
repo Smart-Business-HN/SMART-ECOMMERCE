@@ -24,7 +24,7 @@ export default function ProductsList(props: any) {
                                     <div className='w-full border-b border-gray-200 mt-1'></div>
                                     <div className='font-semibold text-left flex gap-2 text-[#1C68E1]'>
                                     <div className=' bg-[#0068E1] px-1 max-h-4 mt-1 rounded-r-full'></div>
-                                        {FormatValues(CalculateProductPrice(item.costPrice))}
+                                        {FormatValues(item.recomendedSalePrice)}
                                     </div>
                                 </div>
                             </div>
