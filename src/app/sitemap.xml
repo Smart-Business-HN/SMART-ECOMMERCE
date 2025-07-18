@@ -1,301 +1,45 @@
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+    <!-- Página Principal -->
     <url>
-        <loc>https://www.smartbusiness.site/</loc>
+        <loc>http://smartbusiness.site/</loc>
+        <lastmod>2024-03-19</lastmod>
+        <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>
+    
+    <!-- Quiénes Somos -->
     <url>
-        <loc>https://www.smartbusiness.site/about-us</loc>
+        <loc>http://smartbusiness.site/quienes-somos</loc>
+        <lastmod>2024-03-19</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- Servicios -->
+    <url>
+        <loc>http://smartbusiness.site/servicios</loc>
+        <lastmod>2024-03-19</lastmod>
+        <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
+    
+    <!-- Contacto -->
     <url>
-        <loc>https://www.smartbusiness.site/be-a-partner</loc>
+        <loc>http://smartbusiness.site/contacto</loc>
+        <lastmod>2024-03-19</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <!-- Términos y Condiciones -->
+    <url>
+        <loc>http://smartbusiness.site/terminos-y-condiciones</loc>
+        <lastmod>2024-03-19</lastmod>
+        <changefreq>yearly</changefreq>
         <priority>0.5</priority>
     </url>
-    <url>
-        <loc>https://www.smartbusiness.site/contact</loc>
-        <priority>0.9</priority>
-    </url>
-    <url>
-        <loc>https://www.smartbusiness.site/privacy-policy</loc>
-        <priority>0.5</priority>
-    </url>
-    <url>
-        <loc>https://www.smartbusiness.site/services</loc>
-        <priority>0.9</priority>
-    </url>
-    <url>
-        <loc>https://www.smartbusiness.site/shop</loc>
-        <priority>0.9</priority>
-    </url>
-    <url>
-        <loc>https://www.smartbusiness.site/shop/category/conectividad</loc>
-        <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://www.smartbusiness.site/shop/category/fttx</loc>
-        <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://www.smartbusiness.site/shop/category/cableado-estructurado</loc>
-        <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://www.smartbusiness.site/shop/category/nas</loc>
-        <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://www.smartbusiness.site/shop/category/impresoras</loc>
-        <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://www.smartbusiness.site/shop/category/videovigilancia</loc>
-        <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://www.smartbusiness.site/shop/category/telefonia</loc>
-        <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://www.smartbusiness.site/shop/category/energia</loc>
-        <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://www.smartbusiness.site/shop/category/protector-de-voltaje</loc>
-        <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://www.smartbusiness.site/shop/category/control-de-acceso</loc>
-        <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://www.smartbusiness.site/shop/category/mano-de-obra</loc>
-        <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://www.smartbusiness.site/shop/category/smart-home</loc>
-        <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-    <loc>https://www.smartbusiness.site/shop/category/conectividad/wifi-empresarial</loc>
-    <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-    <priority>0.7</priority>
-</url>
-<url>
-    <loc>https://www.smartbusiness.site/shop/category/conectividad/wifi-residencial</loc>
-    <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-    <priority>0.7</priority>
-</url>
-<url>
-    <loc>https://www.smartbusiness.site/shop/category/cableado-estructurado/metalmecanica</loc>
-    <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-    <priority>0.7</priority>
-</url>
-<url>
-    <loc>https://www.smartbusiness.site/shop/category/cableado-estructurado/cat6a</loc>
-    <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-    <priority>0.7</priority>
-</url>
-<url>
-    <loc>https://www.smartbusiness.site/shop/category/fttx/accesorios-fttx</loc>
-    <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-    <priority>0.7</priority>
-</url>
-<url>
-    <loc>https://www.smartbusiness.site/shop/category/cableado-estructurado/accesorios-cableado</loc>
-    <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-    <priority>0.7</priority>
-</url>
-<url>
-    <loc>https://www.smartbusiness.site/shop/category/cableado-estructurado/canalizacion</loc>
-    <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-    <priority>0.7</priority>
-</url>
-<url>
-    <loc>https://www.smartbusiness.site/shop/category/cableado-estructurado/cat5e</loc>
-    <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-    <priority>0.7</priority>
-</url>
-<url>
-    <loc>https://www.smartbusiness.site/shop/category/cableado-estructurado/cat6</loc>
-    <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-    <priority>0.7</priority>
-</url>
-<url>
-    <loc>https://www.smartbusiness.site/shop/category/conectividad/wisp</loc>
-    <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-    <priority>0.7</priority>
-</url>
-<url>
-    <loc>https://www.smartbusiness.site/shop/category/videovigilancia/ip</loc>
-    <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-    <priority>0.7</priority>
-</url>
-<url>
-    <loc>https://www.smartbusiness.site/shop/category/videovigilancia/analogo</loc>
-    <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-    <priority>0.7</priority>
-</url>
-<url>
-    <loc>https://www.smartbusiness.site/shop/category/energia/ups</loc>
-    <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-    <priority>0.7</priority>
-</url>
-<url>
-    <loc>https://www.smartbusiness.site/shop/category/energia/accesorios-energia</loc>
-    <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-    <priority>0.7</priority>
-</url>
-<url>
-    <loc>https://www.smartbusiness.site/shop/category/conectividad/accesorios-conectividad</loc>
-    <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-    <priority>0.7</priority>
-</url>
-<url>
-    <loc>https://www.smartbusiness.site/shop/category/conectividad/routers</loc>
-    <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-    <priority>0.7</priority>
-</url>
-<url>
-    <loc>https://www.smartbusiness.site/shop/category/conectividad/switches</loc>
-    <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-    <priority>0.7</priority>
-</url>
-<url>
-    <loc>https://www.smartbusiness.site/shop/category/control-de-acceso/acceso-peatonal</loc>
-    <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-    <priority>0.7</priority>
-</url>
-<url>
-    <loc>https://www.smartbusiness.site/shop/category/telefonia/telefonos</loc>
-    <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-    <priority>0.7</priority>
-</url>
-<url>
-    <loc>https://www.smartbusiness.site/shop/category/nas/nas-tipo-torre</loc>
-    <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-    <priority>0.7</priority>
-</url>
-<url>
-    <loc>https://www.smartbusiness.site/shop/category/cableado-estructurado/gabinetes</loc>
-    <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-    <priority>0.7</priority>
-</url>
-<url>
-    <loc>https://www.smartbusiness.site/shop/category/control-de-acceso/biometricos</loc>
-    <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-    <priority>0.7</priority>
-</url>
-<url>
-    <loc>https://www.smartbusiness.site/shop/category/telefonia/accesorios-telefonia</loc>
-    <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-    <priority>0.7</priority>
-</url>
-<url>
-    <loc>https://www.smartbusiness.site/shop/category/telefonia/plantas-telefonicas</loc>
-    <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-    <priority>0.7</priority>
-</url>
-<url>
-    <loc>https://www.smartbusiness.site/shop/category/mano-de-obra/instalacin-contratista</loc>
-    <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-    <priority>0.7</priority>
-</url>
-<url>
-    <loc>https://www.smartbusiness.site/shop/category/videovigilancia/accesorios-cctv</loc>
-    <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-    <priority>0.7</priority>
-</url>
-<url>
-    <loc>https://www.smartbusiness.site/shop/category/control-de-acceso/accesorios-control-de-acceso</loc>
-    <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-    <priority>0.7</priority>
-</url>
-<url>
-    <loc>https://www.smartbusiness.site/shop/category/control-de-acceso/asistencia</loc>
-    <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-    <priority>0.7</priority>
-</url>
-<url>
-    <loc>https://www.smartbusiness.site/shop/category/conectividad/barreras</loc>
-    <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-    <priority>0.7</priority>
-</url>
-<url>
-    <loc>https://www.smartbusiness.site/shop/category/control-de-acceso/cerraduras</loc>
-    <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-    <priority>0.7</priority>
-</url>
-<url>
-    <loc>https://www.smartbusiness.site/shop/category/control-de-acceso/lectores</loc>
-    <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-    <priority>0.7</priority>
-</url>
-<url>
-    <loc>https://www.smartbusiness.site/shop/category/control-de-acceso/paneles</loc>
-    <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-    <priority>0.7</priority>
-</url>
-<url>
-    <loc>https://www.smartbusiness.site/shop/category/control-de-acceso/video-portero</loc>
-    <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-    <priority>0.7</priority>
-</url>
-<url>
-    <loc>https://www.smartbusiness.site/shop/category/fttx/activos</loc>
-    <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-    <priority>0.7</priority>
-</url>
-<url>
-    <loc>https://www.smartbusiness.site/shop/category/fttx/conectores</loc>
-    <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-    <priority>0.7</priority>
-</url>
-<url>
-    <loc>https://www.smartbusiness.site/shop/category/fttx/equipo-de-medicion</loc>
-    <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-    <priority>0.7</priority>
-</url>
-<url>
-    <loc>https://www.smartbusiness.site/shop/category/fttx/fibra-optica</loc>
-    <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-    <priority>0.7</priority>
-</url>
-<url>
-    <loc>https://www.smartbusiness.site/shop/category/fttx/herrajes</loc>
-    <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-    <priority>0.7</priority>
-</url>
-<url>
-    <loc>https://www.smartbusiness.site/shop/category/fttx/herramientas</loc>
-    <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-    <priority>0.7</priority>
-</url>
-<url>
-    <loc>https://www.smartbusiness.site/shop/category/fttx/pasivos</loc>
-    <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-    <priority>0.7</priority>
-</url>
-<url>
-    <loc>https://www.smartbusiness.site/shop/category/smart-home/automatizacion</loc>
-    <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-    <priority>0.7</priority>
-</url>
-<url>
-    <loc>https://www.smartbusiness.site/shop/category/smart-home/camaras</loc>
-    <lastmod>2024-03-12T17:05:55+00:00</lastmod>
-    <priority>0.7</priority>
-</url>
-
-</urlset>
+</urlset> 

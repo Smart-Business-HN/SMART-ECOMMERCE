@@ -1,36 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import "~react-image-gallery/styles/css/image-gallery.css";
 
-main {
-  background-color: #ffffff;
-}
-@layer utilities {
-  .animation-delay-2000 {
-    animation-delay: 2s;
-  }
-  .animation-delay-4000 {
-    animation-delay: 4s;
-  }
-}
-.custom-shape-divider-bottom-1703443255 {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  overflow: hidden;
-  line-height: 0;
-  transform: rotate(180deg);
-}
-
-.custom-shape-divider-bottom-1703443255 svg {
-  position: relative;
-  display: block;
-  width: calc(100% + 1.3px);
-  height: 81px;
-}
-
-.custom-shape-divider-bottom-1703443255 .shape-fill {
-  fill: #FFFFFF;
+body {
+  font-family: Arial, Helvetica, sans-serif;
 }

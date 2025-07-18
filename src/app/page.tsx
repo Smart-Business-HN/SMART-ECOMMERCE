@@ -1,52 +1,73 @@
-import Branding from '@/components/home/branding_component';
-import CorporateResume from '@/components/home/corporate_resume_component';
-import HeroComponent from '@/components/home/hero_component'
-import Hikvision from '@/components/home/hikvision';
-import { UbiquitiSection } from '@/components/home/ubiquiti-section';
-import { UbiquitiWispSection } from '@/components/home/ubiquiti-wisp-section';
-import Footer from '@/components/main-layout/foother';
-import Navbar from '@/components/main-layout/navbar';
-import { Metadata } from 'next';
-export const metadata: Metadata = {
-  title: 'Inicio | Smart Business',
-  description: 'Expertos en soluciones de seguridad: Cámaras Hikvision, redes Ubiquiti y cableado estructurado. Transforma tu espacio con la mejor tecnología CCTV y de red.',
-  keywords: ['Ubiquiti','Camaras', 'Redes','Wifi Empresarial', 'Contratista CCTV','Hikvision','IT','servidores NAS','Proveedor IT'],
-  icons: {
-    icon: 'assets/images/favicon.ico'
+import HeroComponent from "@/components/home/hero.component";
+import BrandingComponent from "@/components/home/branding.component";
+import CorporateResumeComponent from "@/components/home/corporate-resume.component";
+import UbiquitiSectionComponent from "@/components/home/ubiquiti-section.component";
+import UbiquitiWispSectionComponent from "@/components/home/ubiquiti-wisp-section.component";
+import Hikvision from "@/components/home/hikvision.component";
+
+export default function Home() {
+  return (
+    <>
+    <HeroComponent />
+    <BrandingComponent />
+    <CorporateResumeComponent />
+    <UbiquitiSectionComponent />
+    <UbiquitiWispSectionComponent />
+    <Hikvision />
+    </>
+  );
+}
+
+export const metadata = {
+  title: "Smart Business | Soluciones Tecnológicas",
+  description: "Compra tecnología, redes, videovigilancia y más en Smart Business. Tienda online líder en Honduras. Productos originales, soporte experto y envíos a todo el país.",
+  keywords: [
+    "tienda online Honduras",
+    "tecnología Honduras",
+    "redes empresariales",
+    "videovigilancia",
+    "Ubiquiti Honduras",
+    "Hikvision Honduras",
+    "productos tecnológicos",
+    "Smart Business",
+    "comprar tecnología Honduras"
+  ],
+  alternates: {
+    canonical: "https://www.smartbusiness.site/"
   },
   openGraph: {
-    title: `Inicio | Smart Business`,
-    description: 'Expertos en soluciones de seguridad: Cámaras Hikvision, redes Ubiquiti y cableado estructurado. Transforma tu espacio con la mejor tecnología CCTV y de red.',
-    url: 'https://www.smartbusiness.site/',
-    siteName: 'Smart Business',
+    title: "Smart Business | Tienda Online de Tecnología en Honduras",
+    description: "Compra tecnología, redes, videovigilancia y más en Smart Business. Tienda online líder en Honduras.",
+    url: "https://www.smartbusiness.site/",
+    siteName: "Smart Business",
+    locale: "es_HN",
+    type: "website",
     images: [
       {
-        url: '/assets/images/corporate/smart-business-og-image.png',
-        width: 800,
-        height: 600,
+        url: "https://www.smartbusiness.site/images/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Smart Business - Tienda Online de Tecnología en Honduras"
       }
-    ],
-    locale: 'es_ES',
-    type: 'website',
+    ]
   },
-}
-export default async function Home() {
-  return (
-
-    <>
-      <Navbar />
-      <main className="w-full max-w-7xl 3xl:max-w-screen-2xl mx-auto">
-        <HeroComponent />
-        <Branding />
-        <CorporateResume />
-        <UbiquitiSection />
-        <UbiquitiWispSection />
-        {/* <ProductsByCategory/> */}
-        <Hikvision />
-      </main>
-      <Footer />
-      </>
-  )
-}
-
-
+  twitter: {
+    card: "summary_large_image",
+    title: "Smart Business | Tienda Online de Tecnología en Honduras",
+    description: "Compra tecnología, redes, videovigilancia y más en Smart Business. Tienda online líder en Honduras.",
+    site: "@smartbusinesshn",
+    images: [
+      {
+        url: "https://www.smartbusiness.site/images/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Smart Business - Tienda Online de Tecnología en Honduras"
+      }
+    ]
+  },
+  robots: {
+    index: true,
+    follow: true
+  },
+  language: "es"
+};
