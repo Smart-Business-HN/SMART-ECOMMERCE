@@ -10,10 +10,13 @@ export interface SessionUserDto {
   userName: string;
   email: string;
   photo?: string;
+  phoneNumber?: string;
   role: string;
   token: string;
-  branchOfficeId?: number;
+  departmentId?: number;
+  genderId?: number;
   expirationDate: string;
+  branchOfficeId?: number;
   mainBranchOfficeId: number;
 }
 

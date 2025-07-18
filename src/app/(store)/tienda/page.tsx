@@ -33,7 +33,6 @@ export default function Store() {
             );
 
             if (response.succeeded) {
-                console.log('Products response:', response);
                 setProducts(response.data);
                 // Calcular totalPages basado en totalItems y pageSize
                 const calculatedTotalPages = Math.ceil(response.totalItems / response.pageSize);

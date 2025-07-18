@@ -88,7 +88,6 @@ export async function getProductsEcommerce(
   }
 
   const data: ProductsEcommerceResponse = await res.json();
-  console.log(data);
   return data;
 }
 
@@ -144,7 +143,6 @@ export async function getProductsByCategorySlug(
   }
 
   const data: ProductsEcommerceResponse = await res.json();
-  console.log(data);
   return data;
 }
 
@@ -200,6 +198,5 @@ export async function getProductsBySubCategorySlug(
   }
 
   const data: ProductsEcommerceResponse = await res.json();
-  console.log(data);
   return data;
 }
