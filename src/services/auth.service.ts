@@ -1,3 +1,4 @@
+'use server';
 import { LoginUserCommand, LoginResponse } from '@/interfaces/auth/auth.interface';
 import { getApiUrl } from '@/utils/server-url';
 
