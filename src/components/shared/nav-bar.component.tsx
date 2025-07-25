@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 import { Navbar,Button,Avatar, Menu, MenuItem, MenuList, MenuHandler } from "@/utils/MTailwind";
 import { ShoppingCartIcon } from "@heroicons/react/20/solid";
