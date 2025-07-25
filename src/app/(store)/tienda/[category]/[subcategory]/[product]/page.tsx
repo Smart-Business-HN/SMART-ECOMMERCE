@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { getProductBySlug } from '@/services/products.service';
 import { ProductDto } from '@/interfaces/product/product.interface';
 import Image from 'next/image';

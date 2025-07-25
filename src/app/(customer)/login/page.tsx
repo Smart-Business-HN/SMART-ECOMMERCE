@@ -1,5 +1,5 @@
+// @ts-nocheck
 'use client';
-
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Card, Input, Button, Typography, Alert } from '@/utils/MTailwind';

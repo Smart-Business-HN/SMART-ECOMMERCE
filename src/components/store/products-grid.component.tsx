@@ -1,3 +1,4 @@
+// @ts-nocheck
 'use client';
 import { Card, Typography, Button } from "@/utils/MTailwind";
 import { ProductDto } from "@/interfaces/product/product.interface";

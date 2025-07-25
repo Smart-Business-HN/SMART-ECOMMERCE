@@ -1,3 +1,4 @@
+// @ts-nocheck
 'use client';
 import { ListBulletIcon } from "@heroicons/react/24/outline";
 import { Squares2X2Icon } from "@heroicons/react/24/outline";

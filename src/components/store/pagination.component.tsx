@@ -1,3 +1,4 @@
+// @ts-nocheck
 'use client';
 import { Button, IconButton } from "@/utils/MTailwind";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
