@@ -15,7 +15,6 @@ export default function Breadcrumb() {
     const categorySlug = pathSegments.includes('tienda') && pathSegments.length > 1 ? pathSegments[1] : undefined;
     const subcategorySlug = pathSegments.includes('tienda') && pathSegments.length > 2 ? pathSegments[2] : undefined;
     const productSlug = pathSegments.includes('tienda') && pathSegments.length > 3 ? pathSegments[3] : undefined;
-    console.log(categorySlug, subcategorySlug, productSlug);
     
     useEffect(() => {
         const fetchCategoryNames = async () => {
@@ -29,7 +28,6 @@ export default function Breadcrumb() {
 
             try {
                 const categoriesResponse = await getAllNavCategory();
-                console.log(categoriesResponse.data);
                 const category = categoriesResponse.data.find(cat => cat.slug === categorySlug);
                 if (category) {
                     setCategoryName(category.category);
@@ -70,7 +68,6 @@ export default function Breadcrumb() {
 
             try {
                 const productResponse = await getProductBySlug(productSlug, false, 0);
-                console.log('Product response for breadcrumb:', productResponse);
                 if (productResponse.succeeded && productResponse.data) {
                     setProductName(productResponse.data.name);
                 } else {

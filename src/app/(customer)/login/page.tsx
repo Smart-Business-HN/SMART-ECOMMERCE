@@ -1,5 +1,5 @@
+// @ts-nocheck
 'use client';
-
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Card, Input, Button, Typography, Alert } from '@/utils/MTailwind';
@@ -59,8 +59,8 @@ export default function LoginPage() {
         localStorage.setItem('user', JSON.stringify(response.data));
         localStorage.setItem('token', response.data.token);
         
-        // Redirigir al dashboard o página principal
-        router.push('/dashboard');
+        // Redirigir a la tienda o página principal
+        router.push('/tienda');
       } else {
         setError(response.message || 'Error en el inicio de sesión');
       }

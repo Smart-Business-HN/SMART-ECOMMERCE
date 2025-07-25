@@ -29,7 +29,7 @@ export default function ProductsList({ products }: ProductsListProps) {
             </div>
           </div>
           <div className="flex-shrink-0">
-            <Link href={`/producto/${product.slug}`}>
+            <Link href={`/tienda/${product.subCategory?.category?.slug}/${product.subCategory?.slug}/${product.slug}`}>
               <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors">
                 Ver Detalles
               </button>

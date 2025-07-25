@@ -1,22 +1,27 @@
+'use server';
 import { LoginUserCommand, LoginResponse } from '@/interfaces/auth/auth.interface';
-
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.smartbusiness.site/api/v2';
+import { getApiUrl } from '@/utils/server-url';
 
 export async function loginUser(credentials: LoginUserCommand): Promise<LoginResponse> {
   try {
-    const response = await fetch(`${API_BASE_URL}/User/Login`, {
+    // Construir URL absoluta para Server Components
+    const url = getApiUrl(`/api/auth/ecommerce-login`);
+
+    const response = await fetch(url, {
       method: 'POST',
       headers: {
+        'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(credentials),
     });
-
+    const data = await response.json();
+debugger;
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const data = await response.json();
+   
     return data;
   } catch (error) {
     console.error('Error during login:', error);

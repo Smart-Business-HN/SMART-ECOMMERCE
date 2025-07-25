@@ -1,19 +1,8 @@
+'use server';
 import { NavCategoryResponse } from "../interfaces/http/responses.interface";
+import { getApiUrl } from "@/utils/server-url";
 export async function getAllNavCategory(): Promise<NavCategoryResponse> {
-  // Determinar si estamos en el cliente o servidor
-  const isClient = typeof window !== 'undefined';
-  
-  let url: string;
-  if (isClient) {
-    // En el cliente, usar URL relativa
-    url = `/api/categories`;
-  } else {
-    // En el servidor, usar URL completa
-    const baseUrl = process.env.NODE_ENV === 'development' 
-      ? 'https://localhost:7211' 
-      : process.env.NEXT_PUBLIC_BASE_URL || '';
-    url = `${baseUrl}/api/categories`;
-  }
+  const url = getApiUrl(`/api/categories`);
   
   const res = await fetch(url, {
     method: 'GET',

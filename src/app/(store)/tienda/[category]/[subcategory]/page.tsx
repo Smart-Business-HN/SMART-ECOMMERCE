@@ -40,7 +40,6 @@ export default function SubCategoryPage({ params }: SubCategoryPageProps) {
             );
 
             if (response.succeeded) {
-                console.log('Products by subcategory response:', response);
                 setProducts(response.data);
                 // Calcular totalPages basado en totalItems y pageSize
                 const calculatedTotalPages = Math.ceil(response.totalItems / response.pageSize);

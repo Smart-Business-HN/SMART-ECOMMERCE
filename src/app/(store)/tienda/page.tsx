@@ -1,3 +1,4 @@
+// @ts-nocheck
 'use client';
 import { ListBulletIcon } from "@heroicons/react/24/outline";
 import { Squares2X2Icon } from "@heroicons/react/24/outline";
@@ -33,7 +34,6 @@ export default function Store() {
             );
 
             if (response.succeeded) {
-                console.log('Products response:', response);
                 setProducts(response.data);
                 // Calcular totalPages basado en totalItems y pageSize
                 const calculatedTotalPages = Math.ceil(response.totalItems / response.pageSize);
