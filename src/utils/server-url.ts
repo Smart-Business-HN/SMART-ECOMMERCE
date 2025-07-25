@@ -1,6 +1,3 @@
-// @ts-nocheck
-import { headers } from 'next/headers';
-
 /**
  * Obtiene la URL base de la aplicación de manera dinámica
  * Funciona en desarrollo, producción y previews de Vercel
@@ -12,26 +9,18 @@ export function getBaseUrl(): string {
   }
 
   // En desarrollo, usar localhost
-//   if (process.env.NODE_ENV === 'development') {
-//     return 'http://localhost:3000';
-//   }
-
-  // En producción/preview, intentar detectar automáticamente
-  try {
-    debugger;
-    const headersList = headers();
-    const host = headersList.get('host');
-    const protocol = headersList.get('x-forwarded-proto') || 'https';
-    
-    if (host) {
-      return `${protocol}://${host}`;
-    }
-  } catch (error) {
-    console.warn('Could not detect host from headers:', error);
+  if (process.env.NODE_ENV === 'development') {
+    return 'http://localhost:3000';
   }
 
-  // Fallback para casos donde no se puede detectar
-  throw new Error('NEXT_PUBLIC_APP_URL is not configured and could not detect host automatically');
+  // En Vercel, podemos usar VERCEL_URL si está disponible
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+
+  // Último fallback - usar un dominio genérico
+  console.warn('Using fallback URL. Please set NEXT_PUBLIC_APP_URL environment variable.');
+  return 'https://smartbusiness.site';
 }
 
 /**

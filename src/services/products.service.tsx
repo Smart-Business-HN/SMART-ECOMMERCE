@@ -134,7 +134,7 @@ export async function getProductsBySubCategorySlug(
   if (customerTypeId) params.append('customerTypeId', customerTypeId.toString());
 
   // Construir URL absoluta para Server Components
-  const url = getApiUrl(`/api/products/subcategory/${encodeURIComponent(subCategorySlug)}?${params.toString()}`);
+  const url = await getApiUrl(`/api/products/subcategory/${encodeURIComponent(subCategorySlug)}?${params.toString()}`);
 
   const res = await fetch(url, {
     method: 'GET',
