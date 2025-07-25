@@ -1,9 +1,10 @@
 import { LoginUserCommand, LoginResponse } from '@/interfaces/auth/auth.interface';
+import { getApiUrl } from '@/utils/server-url';
 
 export async function loginUser(credentials: LoginUserCommand): Promise<LoginResponse> {
   try {
-    // Usar URL relativa que Next.js resolverá automáticamente
-    const url = '/api/auth/ecommerce-login';
+    // Construir URL absoluta para Server Components
+    const url = getApiUrl(`/api/auth/ecommerce-login`);
 
     const response = await fetch(url, {
       method: 'POST',

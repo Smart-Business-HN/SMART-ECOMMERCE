@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
+    // URL del backend - cambiar esta URL por la de tu backend en producción
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
     const body = await request.json();
     

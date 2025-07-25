@@ -1,8 +1,10 @@
+'use server';
 import { ProductResponse, ProductsEcommerceResponse } from "../interfaces/http/responses.interface";
+import { getApiUrl } from "@/utils/server-url";
 
 export async function getProductBySlug(slug: string, isLogged: boolean, customerTypeId: number): Promise<ProductResponse> {
   // Usar URL relativa que Next.js resolverá automáticamente
-  const url = `/api/products/${encodeURIComponent(slug)}?isLogged=${isLogged}&customerTypeId=${customerTypeId}`;
+  const url = getApiUrl(`/api/products/${encodeURIComponent(slug)}?isLogged=${isLogged}&customerTypeId=${customerTypeId}`);
 
   const res = await fetch(url, {
     method: 'GET',
@@ -45,8 +47,8 @@ export async function getProductsEcommerce(
   if (column) params.append('column', column);
   if (customerTypeId) params.append('customerTypeId', customerTypeId.toString());
 
-  // Usar URL relativa que Next.js resolverá automáticamente
-  const url = `/api/products?${params.toString()}`;
+  // Construir URL absoluta para Server Components
+  const url = getApiUrl(`/api/products?${params.toString()}`);
 
   const res = await fetch(url, {
     method: 'GET',
@@ -88,8 +90,8 @@ export async function getProductsByCategorySlug(
   if (column) params.append('column', column);
   if (customerTypeId) params.append('customerTypeId', customerTypeId.toString());
 
-  // Usar URL relativa que Next.js resolverá automáticamente
-  const url = `/api/products/category/${encodeURIComponent(categorySlug)}?${params.toString()}`;
+  // Construir URL absoluta para Server Components
+  const url = getApiUrl(`/api/products/category/${encodeURIComponent(categorySlug)}?${params.toString()}`);
 
   const res = await fetch(url, {
     method: 'GET',
@@ -131,8 +133,8 @@ export async function getProductsBySubCategorySlug(
   if (column) params.append('column', column);
   if (customerTypeId) params.append('customerTypeId', customerTypeId.toString());
 
-  // Usar URL relativa que Next.js resolverá automáticamente
-  const url = `/api/products/subcategory/${encodeURIComponent(subCategorySlug)}?${params.toString()}`;
+  // Construir URL absoluta para Server Components
+  const url = getApiUrl(`/api/products/subcategory/${encodeURIComponent(subCategorySlug)}?${params.toString()}`);
 
   const res = await fetch(url, {
     method: 'GET',

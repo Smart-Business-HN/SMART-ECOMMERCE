@@ -6,6 +6,7 @@ export async function GET(
 ) {
   try {
     const { searchParams } = new URL(request.url);
+    // URL del backend
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
     const { slug: categorySlug } = await params;
     

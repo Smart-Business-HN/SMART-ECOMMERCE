@@ -2,7 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+    // URL del backend - cambiar esta URL por la de tu backend en producción
+    const baseUrl = "https://sb8.azurewebsites.net/api/v2";
+    
     const url = `${baseUrl}/Category/GetAllNavCategory`;
     
     console.log('Proxy request to:', url);

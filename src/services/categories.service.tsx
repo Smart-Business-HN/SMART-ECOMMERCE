@@ -1,7 +1,8 @@
+'use server';
 import { NavCategoryResponse } from "../interfaces/http/responses.interface";
+import { getApiUrl } from "@/utils/server-url";
 export async function getAllNavCategory(): Promise<NavCategoryResponse> {
-  // Usar URL relativa que Next.js resolverá automáticamente
-  const url = `/api/categories`;
+  const url = getApiUrl(`/api/categories`);
   
   const res = await fetch(url, {
     method: 'GET',

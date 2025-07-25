@@ -1,10 +1,11 @@
 import { NavCategoryResponse } from '@/interfaces/http/responses.interface';
 import CategoryTreeClient from './category-tree-client.component';
+import { getApiUrl } from '@/utils/server-url';
 
 // Server Component para obtener datos
 async function getCategories(): Promise<NavCategoryResponse> {
-    // En Server Components, usar URL relativa que Next.js resolverá automáticamente
-    const url = '/api/categories';
+    const url = getApiUrl('/api/categories');
+
     const res = await fetch(url, {
         method: 'GET',
         headers: {

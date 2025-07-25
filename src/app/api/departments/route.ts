@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
+    // URL del backend
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
     
     // Construir los parámetros de query

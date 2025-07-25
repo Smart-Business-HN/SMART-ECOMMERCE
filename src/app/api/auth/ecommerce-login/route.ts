@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
+    // URL del backend
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
     const body = await request.json();
     

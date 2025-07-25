@@ -1,3 +1,4 @@
+import { getApiUrl } from "@/utils/server-url";
 import { PagedDepartmentResponse } from "../interfaces/http/responses.interface";
 
 export async function getAllDepartments(
@@ -18,8 +19,7 @@ export async function getAllDepartments(
   if (order) params.append('order', order);
   if (column) params.append('column', column);
 
-  // Usar URL relativa que Next.js resolverá automáticamente
-  const url = `/api/departments?${params.toString()}`;
+  const url = getApiUrl(`/api/departments?${params.toString()}`);
 
   const res = await fetch(url, {
     method: 'GET',
