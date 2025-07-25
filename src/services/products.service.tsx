@@ -1,20 +1,8 @@
 import { ProductResponse, ProductsEcommerceResponse } from "../interfaces/http/responses.interface";
 
 export async function getProductBySlug(slug: string, isLogged: boolean, customerTypeId: number): Promise<ProductResponse> {
-  // Determinar si estamos en el cliente o servidor
-  const isClient = typeof window !== 'undefined';
-  
-  let url: string;
-  if (isClient) {
-    // En el cliente, usar URL relativa
-    url = `/api/products/${encodeURIComponent(slug)}?isLogged=${isLogged}&customerTypeId=${customerTypeId}`;
-  } else {
-    // En el servidor, usar URL completa
-    const baseUrl = process.env.NODE_ENV === 'development' 
-      ? 'https://localhost:3000' 
-      : process.env.NEXT_PUBLIC_BASE_URL || '';
-    url = `${baseUrl}/api/products/${encodeURIComponent(slug)}?isLogged=${isLogged}&customerTypeId=${customerTypeId}`;
-  }
+  // Usar URL relativa que Next.js resolverá automáticamente
+  const url = `/api/products/${encodeURIComponent(slug)}?isLogged=${isLogged}&customerTypeId=${customerTypeId}`;
 
   const res = await fetch(url, {
     method: 'GET',
@@ -57,20 +45,8 @@ export async function getProductsEcommerce(
   if (column) params.append('column', column);
   if (customerTypeId) params.append('customerTypeId', customerTypeId.toString());
 
-  // Determinar si estamos en el cliente o servidor
-  const isClient = typeof window !== 'undefined';
-  
-  let url: string;
-  if (isClient) {
-    // En el cliente, usar URL relativa
-    url = `/api/products?${params.toString()}`;
-  } else {
-    // En el servidor, usar URL completa
-    const baseUrl = process.env.NODE_ENV === 'development' 
-      ? 'https://localhost:7211' 
-      : process.env.NEXT_PUBLIC_BASE_URL || '';
-    url = `${baseUrl}/api/products?${params.toString()}`;
-  }
+  // Usar URL relativa que Next.js resolverá automáticamente
+  const url = `/api/products?${params.toString()}`;
 
   const res = await fetch(url, {
     method: 'GET',
@@ -112,20 +88,8 @@ export async function getProductsByCategorySlug(
   if (column) params.append('column', column);
   if (customerTypeId) params.append('customerTypeId', customerTypeId.toString());
 
-  // Determinar si estamos en el cliente o servidor
-  const isClient = typeof window !== 'undefined';
-  
-  let url: string;
-  if (isClient) {
-    // En el cliente, usar URL relativa
-    url = `/api/products/category/${encodeURIComponent(categorySlug)}?${params.toString()}`;
-  } else {
-    // En el servidor, usar URL completa
-    const baseUrl = process.env.NODE_ENV === 'development' 
-      ? 'https://localhost:7211' 
-      : process.env.NEXT_PUBLIC_BASE_URL || '';
-    url = `${baseUrl}/api/products/category/${encodeURIComponent(categorySlug)}?${params.toString()}`;
-  }
+  // Usar URL relativa que Next.js resolverá automáticamente
+  const url = `/api/products/category/${encodeURIComponent(categorySlug)}?${params.toString()}`;
 
   const res = await fetch(url, {
     method: 'GET',
@@ -167,20 +131,8 @@ export async function getProductsBySubCategorySlug(
   if (column) params.append('column', column);
   if (customerTypeId) params.append('customerTypeId', customerTypeId.toString());
 
-  // Determinar si estamos en el cliente o servidor
-  const isClient = typeof window !== 'undefined';
-  
-  let url: string;
-  if (isClient) {
-    // En el cliente, usar URL relativa
-    url = `/api/products/subcategory/${encodeURIComponent(subCategorySlug)}?${params.toString()}`;
-  } else {
-    // En el servidor, usar URL completa
-    const baseUrl = process.env.NODE_ENV === 'development' 
-      ? 'https://localhost:7211' 
-      : process.env.NEXT_PUBLIC_BASE_URL || '';
-    url = `${baseUrl}/api/products/subcategory/${encodeURIComponent(subCategorySlug)}?${params.toString()}`;
-  }
+  // Usar URL relativa que Next.js resolverá automáticamente
+  const url = `/api/products/subcategory/${encodeURIComponent(subCategorySlug)}?${params.toString()}`;
 
   const res = await fetch(url, {
     method: 'GET',

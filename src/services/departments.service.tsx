@@ -18,20 +18,8 @@ export async function getAllDepartments(
   if (order) params.append('order', order);
   if (column) params.append('column', column);
 
-  // Determinar si estamos en el cliente o servidor
-  const isClient = typeof window !== 'undefined';
-  
-  let url: string;
-  if (isClient) {
-    // En el cliente, usar URL relativa
-    url = `/api/departments?${params.toString()}`;
-  } else {
-    // En el servidor, usar URL completa
-    const baseUrl = process.env.NODE_ENV === 'development' 
-      ? 'https://localhost:3000' 
-      : process.env.NEXT_PUBLIC_BASE_URL || '';
-    url = `${baseUrl}/api/departments?${params.toString()}`;
-  }
+  // Usar URL relativa que Next.js resolverá automáticamente
+  const url = `/api/departments?${params.toString()}`;
 
   const res = await fetch(url, {
     method: 'GET',

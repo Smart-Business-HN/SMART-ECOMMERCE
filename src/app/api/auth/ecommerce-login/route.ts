@@ -5,7 +5,7 @@ export async function POST(request: NextRequest) {
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
     const body = await request.json();
     
-    const url = `${baseUrl}/v2/User/Login`;
+    const url = `${baseUrl}/User/Login`;
     
     const response = await fetch(url, {
       method: 'POST',
