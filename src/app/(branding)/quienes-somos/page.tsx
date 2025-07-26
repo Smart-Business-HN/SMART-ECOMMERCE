@@ -3,18 +3,47 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-    title: 'Quiénes Somos | Smart Business Honduras',
-    description: 'Conoce la historia de Smart Business, líder en soluciones informáticas en Honduras. Más de 15 años brindando tecnología de calidad a empresas y emprendedores.',
-    keywords: ['Smart Business Honduras', 'soluciones informáticas', 'tecnología Honduras', 'empresa tecnológica', 'distribuidor informático'],
+    title: 'Quiénes Somos | SMART Business Honduras - Líder en Soluciones Informáticas',
+    description: 'Conoce la historia de SMART Business, líder en soluciones informáticas en Honduras. Más de 15 años brindando tecnología de calidad a empresas y emprendedores. Distribuidor confiable de equipos informáticos.',
+    keywords: [
+        'SMART Business Honduras',
+        'soluciones informáticas',
+        'tecnología Honduras',
+        'empresa tecnológica',
+        'distribuidor informático',
+        'historia empresa',
+        'tecnología empresarial',
+        'equipos informáticos',
+        'proveedor tecnología',
+        'confianza empresarial',
+        '15 años experiencia',
+        'pequeñas empresas',
+        'medianas empresas',
+        'grandes empresas'
+    ],
+    authors: [{ name: "SMART BUSINESS S. DE R.L." }],
+    creator: "SMART BUSINESS S. DE R.L.",
+    publisher: "SMART BUSINESS S. DE R.L.",
+    formatDetection: {
+        email: false,
+        address: false,
+        telephone: false,
+    },
+    metadataBase: new URL('https://www.smartbusiness.site'),
+    alternates: {
+        canonical: '/quienes-somos',
+    },
     openGraph: {
-        title: 'Quiénes Somos | Smart Business Honduras',
-        description: 'Conoce la historia de Smart Business, líder en soluciones informáticas en Honduras. Más de 15 años brindando tecnología de calidad.',
+        title: 'Quiénes Somos | SMART Business Honduras',
+        description: 'Conoce la historia de SMART Business, líder en soluciones informáticas en Honduras. Más de 15 años brindando tecnología de calidad a empresas y emprendedores.',
+        url: 'https://www.smartbusiness.site/quienes-somos',
+        siteName: 'SMART Business',
         images: [
             {
-                url: '/images/corporate/logo-smart-business.png',
-                width: 800,
-                height: 600,
-                alt: 'Smart Business Honduras Logo',
+                url: 'https://www.smartbusiness.site/images/og-image.jpg',
+                width: 1200,
+                height: 630,
+                alt: 'SMART Business Honduras - Logo corporativo',
             }
         ],
         locale: 'es_HN',
@@ -22,9 +51,10 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'Quiénes Somos | Smart Business Honduras',
-        description: 'Conoce la historia de Smart Business, líder en soluciones informáticas en Honduras.',
-        images: ['/images/corporate/logo-smart-business.png'],
+        title: 'Quiénes Somos | SMART Business Honduras',
+        description: 'Conoce la historia de SMART Business, líder en soluciones informáticas en Honduras.',
+        images: ['https://www.smartbusiness.site/images/og-image.jpg'],
+        creator: 'SMART BUSINESS S. DE R.L.',
     },
     robots: {
         index: true,
@@ -37,16 +67,130 @@ export const metadata: Metadata = {
             'max-snippet': -1,
         },
     },
-    alternates: {
-        canonical: 'http://smartbusiness.site/quienes-somos',
+    category: 'technology',
+    classification: 'business',
+    other: {
+        'geo.region': 'HN',
+        'geo.placename': 'Honduras',
+        'DC.title': 'Quiénes Somos | SMART Business Honduras',
+        'DC.creator': 'SMART BUSINESS S. DE R.L.',
+        'DC.subject': 'Historia empresa, soluciones informáticas, tecnología Honduras',
+        'DC.description': 'Conoce la historia de SMART Business, líder en soluciones informáticas en Honduras',
+        'DC.publisher': 'SMART Business',
+        'DC.contributor': 'SMART Business',
+        'DC.date': new Date().toISOString(),
+        'DC.type': 'Organization',
+        'DC.format': 'text/html',
+        'DC.identifier': 'https://www.smartbusiness.site/quienes-somos',
+        'DC.language': 'es',
+        'DC.coverage': 'Honduras',
+        'DC.rights': '© 2024 SMART Business. Todos los derechos reservados.',
     },
 };
 
 export default function AboutUs(){
+    // Datos estructurados JSON-LD para SEO
+    const jsonLd = {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "SMART Business",
+      "alternateName": "SMART Business Honduras",
+      "description": "Líder en soluciones informáticas en Honduras. Más de 15 años brindando tecnología de calidad a empresas y emprendedores.",
+      "url": "https://www.smartbusiness.site",
+      "logo": "https://www.smartbusiness.site/images/corporate/logo-smart-business.png",
+      "image": "https://www.smartbusiness.site/images/corporate/logo-smart-business.png",
+      "foundingDate": "2009",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "HN",
+        "addressRegion": "Honduras"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+50488187765",
+        "contactType": "customer service",
+        "areaServed": "HN",
+        "availableLanguage": "Spanish"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Honduras"
+      },
+      "serviceArea": {
+        "@type": "Country",
+        "name": "Honduras"
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Catálogo de Productos y Servicios",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Soluciones de Seguridad Integral",
+              "description": "Sistemas de seguridad para diferentes sectores del mercado hondureño"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Soluciones de Redes y Conectividad",
+              "description": "Infraestructura de redes profesionales para empresas"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Cableado Estructurado",
+              "description": "Productos y proyectos de cableado estructurado profesional"
+            }
+          }
+        ]
+      },
+      "knowsAbout": [
+        "Soluciones informáticas",
+        "Tecnología empresarial",
+        "Equipos informáticos",
+        "Sistemas de seguridad",
+        "Redes empresariales",
+        "Cableado estructurado"
+      ],
+      "slogan": "Si quieres triunfar tienes que ser SMART",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.smartbusiness.site/quienes-somos"
+      }
+    };
+
     return(
+    <>
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+    />
+    
+    {/* Breadcrumb para SEO */}
+    <nav aria-label="Breadcrumb" className="container mx-auto px-5 py-2">
+      <ol className="flex items-center space-x-2 text-sm text-gray-600">
+        <li>
+          <Link href="/" className="hover:text-blue-500" aria-label="Ir al inicio">
+            Inicio
+          </Link>
+        </li>
+        <li>
+          <span className="mx-2">/</span>
+        </li>
+        <li aria-current="page">
+          <span className="text-blue-500 font-medium">Quiénes Somos</span>
+        </li>
+      </ol>
+    </nav>
+    
     <div className='container mx-auto max-w-7xl my-5 scroll-smooth'>
-        {/* Hero Section con estructura semántica mejorada */}
-        <section className='grid md:grid-cols-2 gap-4 bg-gray-100 rounded-md'>
+        <section className='grid md:grid-cols-2 gap-4 bg-gray-100 rounded-md' aria-labelledby="nuestra-historia">
             <div className='relative'>
                 <Image 
                     height={500} 
@@ -65,7 +209,7 @@ export default function AboutUs(){
                 </div>
             </div>
             <div className='flex items-center flex-col justify-center'>
-                <h1 className='text-center text-gray-700 text-3xl font-bold'>Nuestra Historia</h1>
+                <h1 className='text-center text-gray-700 text-3xl font-bold' id="nuestra-historia">Nuestra Historia</h1>
                 <p className='px-5 text-center md:text-left mt-2 text-gray-600 text-[15px] font-medium'>
                     Smart Business surge como una respuesta al mercado hondureño con la intención de brindar precios accesibles a las pequeñas empresas que están dando su primer salto en el mundo digital. Poco a poco nos hemos convertido en proveedores de medianas y grandes empresas por la confianza que hemos generado en nuestros clientes. <br /><br />
                     Con más de 15 años de experiencia en el rubro informático, Smart Business es una empresa cuya única razón de existir es brindar a nuestros clientes el mejor producto para satisfacer sus necesidades, ya sea a integradores o clientes finales. Somos el distribuidor de tecnología más confiable en Honduras.
@@ -74,7 +218,7 @@ export default function AboutUs(){
         </section>
 
         {/* Misión y Visión con estructura semántica */}
-        <section className='md:px-4 px-5 grid grid-cols-1 md:grid-cols-2 gap-4 mt-10'>
+        <section className='md:px-4 px-5 grid grid-cols-1 md:grid-cols-2 gap-4 mt-10' aria-labelledby="mision-vision">
             <article className='hover:shadow-md border mx-auto h-full mt-0 bg-gradient-to-br from-blue-600 via-sky-600 to-sky-400 rounded-md p-[2px] max-w-md'>
                 <div className='flex flex-col py-2 h-full justify-center w-full items-center bg-white rounded-md'>
                     <h2 className='text-gray-700 text-center font-bold text-xl'>Misión</h2>
@@ -94,8 +238,8 @@ export default function AboutUs(){
         </section>
 
         {/* Sección de Productos con estructura semántica mejorada */}
-        <section className='container w-full mt-24 px-5 md:px-0 mx-auto'>
-            <h2 className='text-3xl font-bold text-gray-700 text-center'>Nuestros Productos y Soluciones Tecnológicas</h2>
+        <section className='container w-full mt-24 px-5 md:px-0 mx-auto' aria-labelledby="productos-soluciones">
+            <h2 className='text-3xl font-bold text-gray-700 text-center' id="productos-soluciones">Nuestros Productos y Soluciones Tecnológicas</h2>
             
             {/* Seguridad */}
             <div className='mt-5'>
@@ -177,7 +321,13 @@ export default function AboutUs(){
                     <div className='flex flex-col md:flex-row gap-10 mt-5'>
                         <article className='container mt-5 relative'>
                             <h4 className='text-left font-bold text-gray-700 mb-2 md:hidden'>Productos WISP - Proveedores de Internet</h4>
-                            <video className='w-full rounded-md' autoPlay muted loop>
+                            <video 
+                                className='w-full rounded-md' 
+                                autoPlay 
+                                muted 
+                                loop
+                                aria-label="Video demostrativo de productos WISP para proveedores de internet"
+                            >
                                 <source src="/videos/uisp.mp4" type="video/mp4" />
                             </video>
                             <div className='hidden absolute left-10 p-2 top-10 text-center bg-gray-600 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 md:flex gap-2'>
@@ -189,7 +339,13 @@ export default function AboutUs(){
                         </article>
                         <article className='container mt-5 relative'>
                             <h4 className='text-left font-bold text-gray-700 mb-2 md:hidden'>Redes Corporativas Empresariales</h4>
-                            <video className='w-full rounded-md' autoPlay muted loop>
+                            <video 
+                                className='w-full rounded-md' 
+                                autoPlay 
+                                muted 
+                                loop
+                                aria-label="Video demostrativo de redes corporativas empresariales"
+                            >
                                 <source src="/videos/networking.mp4" type="video/mp4" />
                             </video>
                             <div className='hidden md:absolute left-10 p-2 top-10 text-center bg-gray-600 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 md:flex gap-2'>
@@ -210,7 +366,13 @@ export default function AboutUs(){
                                     Te brindamos todo lo que necesitas para ejecutar tu proyecto de cableado estructurado a precios altamente competitivos en Honduras. Y en caso de que no tengas quien lo desarrolle, podemos brindarte descuentos importantes al ejecutar el proyecto por ti con garantía de calidad.
                                 </p>
                                 <div className='flex justify-center mt-4'>
-                                    <Link href='/contacto' className='bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors'>Solicitar Cotización</Link>
+                                    <Link 
+                                        href='/contacto' 
+                                        className='bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors'
+                                        aria-label="Solicitar cotización para proyectos de cableado estructurado"
+                                    >
+                                        Solicitar Cotización
+                                    </Link>
                                 </div>
                             </div>
                             <div className='flex justify-center rounded-md'>
@@ -251,7 +413,7 @@ export default function AboutUs(){
                     <div className='flex justify-center p-5 rounded-md bg-gray-50 hover:shadow-md transition-all hover:scale-110'>
                         <Image src='/images/clients/logo_la_quinta_la_ceiba.jpg' width={100} height={50} alt='Hotel La Quinta La Ceiba - Cliente Smart Business Honduras' />
                     </div>
-                    <div className='flex justify-center p-5 rounded-mdt bg-gray-50 hover:shadow-md transition-all hover:scale-110'>
+                    <div className='flex justify-center p-5 rounded-md bg-gray-50 hover:shadow-md transition-all hover:scale-110'>
                         <Image className='h-16' src='/images/clients/logo-banco-atlantida.png' width={190} height={40} alt='Banco Atlántida - Cliente Smart Business Honduras' />
                     </div>
                     <div className='flex justify-center items-center p-2 rounded-md bg-gray-50 hover:shadow-md transition-all hover:scale-110'>
@@ -294,5 +456,6 @@ export default function AboutUs(){
             </section>
         </section>
     </div>
+    </>
     );
 }

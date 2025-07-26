@@ -57,7 +57,7 @@ export default function RootLayout({
             gtag('config', 'G-6R2P5JT4NX');`}}
         />
         <meta name="google-site-verification" content="S-MABBGjddcLo8_kNkNfuqVi7etsoBNnLSR-OpHJBeg" />
-        <link rel="shortcut icon" href="/images/favicon.ico" />
+        <link rel="shortcut icon" href="/images/corporate/smart.webp" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased w-full`}
