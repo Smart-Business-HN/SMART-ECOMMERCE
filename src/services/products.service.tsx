@@ -1,4 +1,5 @@
 'use server';
+import { isServer } from "@/utils/is-server";
 import { ProductResponse, ProductsEcommerceResponse } from "../interfaces/http/responses.interface";
 import { getApiUrl } from "@/utils/server-url";
 
@@ -48,7 +49,7 @@ export async function getProductsEcommerce(
   if (customerTypeId) params.append('customerTypeId', customerTypeId.toString());
 
   // Construir URL absoluta para Server Components
-  const url = getApiUrl(`/api/products?${params.toString()}`);
+  const url = isServer ? getApiUrl(`/api/products?${params.toString()}`) : `/api/products?${params.toString()}`;
 
   const res = await fetch(url, {
     method: 'GET',
@@ -91,7 +92,7 @@ export async function getProductsByCategorySlug(
   if (customerTypeId) params.append('customerTypeId', customerTypeId.toString());
 
   // Construir URL absoluta para Server Components
-  const url = getApiUrl(`/api/products/category/${encodeURIComponent(categorySlug)}?${params.toString()}`);
+  const url = isServer ? getApiUrl(`/api/products/category/${encodeURIComponent(categorySlug)}?${params.toString()}`) : `/api/products/category/${encodeURIComponent(categorySlug)}?${params.toString()}`;
 
   const res = await fetch(url, {
     method: 'GET',
@@ -134,7 +135,7 @@ export async function getProductsBySubCategorySlug(
   if (customerTypeId) params.append('customerTypeId', customerTypeId.toString());
 
   // Construir URL absoluta para Server Components
-  const url = await getApiUrl(`/api/products/subcategory/${encodeURIComponent(subCategorySlug)}?${params.toString()}`);
+    const url = isServer ? getApiUrl(`/api/products/subcategory/${encodeURIComponent(subCategorySlug)}?${params.toString()}`) : `/api/products/subcategory/${encodeURIComponent(subCategorySlug)}?${params.toString()}`;
 
   const res = await fetch(url, {
     method: 'GET',

@@ -1,3 +1,5 @@
+'use server';
+import { isServer } from "@/utils/is-server";
 import { getApiUrl } from "@/utils/server-url";
 import { PagedDepartmentResponse } from "../interfaces/http/responses.interface";
 
@@ -19,7 +21,7 @@ export async function getAllDepartments(
   if (order) params.append('order', order);
   if (column) params.append('column', column);
 
-  const url = getApiUrl(`/api/departments?${params.toString()}`);
+  const url = isServer ? getApiUrl(`/api/departments?${params.toString()}`) : `/api/departments?${params.toString()}`;
 
   const res = await fetch(url, {
     method: 'GET',

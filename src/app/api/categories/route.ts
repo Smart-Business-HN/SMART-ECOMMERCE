@@ -18,8 +18,7 @@ export async function GET(request: NextRequest) {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Origin': 'https://www.smartbusiness.site',
-        'User-Agent': 'SMART-Ecommerce/1.0',
+        'Origin': 'https://www.smartbusiness.site'
       },
     });
     

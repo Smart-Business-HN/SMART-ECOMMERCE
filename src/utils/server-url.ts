@@ -20,7 +20,7 @@ export function getBaseUrl(): string {
 
   // Último fallback - usar un dominio genérico
   console.warn('Using fallback URL. Please set NEXT_PUBLIC_APP_URL environment variable.');
-  return 'https://smartbusiness.site';
+  return 'https://www.smartbusiness.site';
 }
 
 /**
