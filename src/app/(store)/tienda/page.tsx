@@ -119,7 +119,7 @@ export default function Store() {
                                 {
                                     "@type": "Offer",
                                     "itemOffered": {
-                                        "@type": "Product",
+                                        "@type": "Offer",
                                         "name": "Cableado Estructurado",
                                         "description": "Soluciones de cableado estructurado para redes de datos"
                                     }
@@ -127,7 +127,7 @@ export default function Store() {
                                 {
                                     "@type": "Offer",
                                     "itemOffered": {
-                                        "@type": "Product",
+                                        "@type": "Offer",
                                         "name": "Sistemas CCTV",
                                         "description": "Sistemas de videovigilancia y seguridad"
                                     }
@@ -135,7 +135,7 @@ export default function Store() {
                                 {
                                     "@type": "Offer",
                                     "itemOffered": {
-                                        "@type": "Product",
+                                        "@type": "Offer",
                                         "name": "Fibra Óptica",
                                         "description": "Equipos y soluciones de fibra óptica"
                                     }

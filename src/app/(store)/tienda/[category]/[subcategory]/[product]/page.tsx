@@ -161,7 +161,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                     dangerouslySetInnerHTML={{
                         __html: JSON.stringify({
                             "@context": "https://schema.org",
-                            "@type": "Product",
+                            "@type": "offer",
                             "name": productData.name,
                             "description": productData.description || productData.ecommerceDescription?.replace(/<[^>]+>/g, '') || `Producto ${productData.name}`,
                             "sku": productData.code,

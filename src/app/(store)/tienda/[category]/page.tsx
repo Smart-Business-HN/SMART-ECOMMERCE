@@ -132,7 +132,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
                             "itemListElement": products.map((product, index) => ({
                                 "@type": "Offer",
                                 "itemOffered": {
-                                    "@type": "Product",
+                                    "@type": "offer",
                                     "name": product.name,
                                     "description": product.description || `Producto de ${categoryTitle.toLowerCase()}`,
                                     "url": `https://smartbusiness.site/tienda/${category}/${product.subCategory?.slug}/${product.slug}`,

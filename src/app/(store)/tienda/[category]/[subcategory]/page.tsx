@@ -139,7 +139,7 @@ export default function SubCategoryPage({ params }: SubCategoryPageProps) {
                             "itemListElement": products.map((product, index) => ({
                                 "@type": "Offer",
                                 "itemOffered": {
-                                    "@type": "Product",
+                                    "@type": "offer",
                                     "name": product.name,
                                     "description": product.description || `Producto de ${subcategoryTitle.toLowerCase()} en ${categoryTitle.toLowerCase()}`,
                                     "url": `https://smartbusiness.site/tienda/${category}/${subcategory}/${product.slug}`,
