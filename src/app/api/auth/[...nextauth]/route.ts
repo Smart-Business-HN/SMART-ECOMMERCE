@@ -83,7 +83,7 @@ const authOptions: NextAuthOptions = {
   },
   pages: {
     signIn: '/login',
-    error: '/login'
+    error: '/'
   },
   session: {
     strategy: 'jwt',
