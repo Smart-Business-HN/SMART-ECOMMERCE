@@ -4,14 +4,32 @@ import { Navbar,Button,Avatar, Menu, MenuItem, MenuList, MenuHandler } from "@/u
 import { ShoppingCartIcon } from "@heroicons/react/20/solid";
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-
+import { useSession, signOut } from "next-auth/react";
 interface MainNavbarProps {
-    isLogued: boolean;
-    avatarUrl?: string;
     cartItemsCount?: number;
     onCartClick?: () => void;
   }
-export default function NavBarComponent({ isLogued, avatarUrl, cartItemsCount = 0, onCartClick }: MainNavbarProps) {
+
+export default function NavBarComponent({ cartItemsCount = 0, onCartClick }: MainNavbarProps) {
+    const { data: session, status } = useSession();
+    const isLogued = status === 'authenticated';
+
+    const handleSignOut = async () => {
+        try {
+            await signOut({ 
+                redirect: false,
+                callbackUrl: '/' 
+            });
+            // Limpiar localStorage si es necesario
+            localStorage.removeItem('user');
+            localStorage.removeItem('token');
+            // Recargar la página para actualizar el estado
+            window.location.href = '/';
+        } catch (error) {
+            console.error('Error al cerrar sesión:', error);
+        }
+    };
+
     return (
         <div className="w-full flex justify-center px-2 md:px-0 max-w-screen-7xl shadow-md sticky top-0 z-50 bg-white bg-opacity-50 backdrop-blur-sm">
         <Navbar className="flex items-center justify-between px-4 py-2 w-full bg-white bg-opacity-50  rounded-none " placeholder="">
@@ -38,29 +56,39 @@ export default function NavBarComponent({ isLogued, avatarUrl, cartItemsCount = 
             </div>
           </div>
           {/* Right: Auth Buttons or Avatar */}
-          <div className="flex items-center gap-2 w-full md:w-auto">
+          <div className="flex justify-end md:items-center gap-2 w-full md:w-auto">
             {isLogued ? (
               <>
                 {/* Cart Icon with Badge */}
-                <div className="relative mr-2">
+                <div className="relative mr-2 flex items-center justify-center">
                   <button
                     type="button"
-                    className="focus:outline-none"
+                    className="focus:outline-none flex items-center justify-center"
                     onClick={onCartClick}
                   >
-                    <ShoppingCartIcon className="w-7 h-7 text-blue-gray-700" />
-                    <span className="absolute -top-4 -right-4 bg-red-500 text-white text-xs font-bold rounded-full px-1.5 py-0.8 min-w-[18px] text-center" style={{lineHeight: '1.1'}}>{cartItemsCount}</span>
+                    <ShoppingCartIcon className="w-6 h-6 text-blue-gray-700" />
+                    <span className="absolute -top-1 md:-top-2 -right-4 bg-red-500 text-white text-xs font-bold rounded-full px-1.5 py-[2px] text-center" style={{lineHeight: '1.1'}}>{cartItemsCount}</span>
                   </button>
                 </div>
                 {/* @ts-expect-error Material Tailwind Avatar type definitions are overly strict; props are correct per docs */}
-                <Avatar src={avatarUrl || "https://docs.material-tailwind.com/img/face-2.jpg"} alt="avatar" size="md" className="" onClick={() => {}} />
+                
+                <Menu>
+                  <MenuHandler>
+                    <Avatar src={session?.user?.image || "https://docs.material-tailwind.com/img/face-2.jpg"} alt="avatar" size="sm" className="cursor-pointer" onClick={() => {}} />
+                  </MenuHandler>
+                  <MenuList>
+                    <MenuItem>Perfil</MenuItem>
+                    <MenuItem>Mis Compras</MenuItem>
+                    <MenuItem className="text-danger hover:bg-red-500 hover:text-white" onClick={handleSignOut}>Cerrar Sesión</MenuItem>
+                  </MenuList>
+                </Menu>
               </>
             ) : (
               <>
                 {/* @ts-expect-error Material Tailwind Button type definitions are overly strict; props are correct per docs */}
                 <Link href='/login'><Button variant="outlined" size="sm" color="blue-gray" ripple={false}>Login</Button></Link>
                 {/* @ts-expect-error Material Tailwind Button type definitions are overly strict; props are correct per docs */}
-                <Link href='/register'><Button variant="filled" size="sm" color="blue" ripple={false}>Registrarme</Button></Link>
+                <Link href='/sign-up'><Button variant="filled" size="sm" color="blue" ripple={false}>Registrarme</Button></Link>
               </>
             )}
           </div>

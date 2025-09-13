@@ -1,28 +1,97 @@
-export interface LoginUserCommand {
+export interface LoginEcommerceUserCommand {
   userName?: string;
   email?: string;
   password: string;
 }
 
-export interface SessionUserDto {
+export interface CustomerType {
+  id: number;
+  name: string;
+  isActive: boolean;
+}
+
+export interface SessionEcommerceUserDto {
   id: string;
+  firstName: string;
+  lastName: string;
   fullName: string;
   userName: string;
   email: string;
   photo?: string;
-  phoneNumber?: string;
-  role: string;
   token: string;
-  departmentId?: number;
-  genderId?: number;
   expirationDate: string;
-  branchOfficeId?: number;
-  mainBranchOfficeId: number;
+  customerType?: CustomerType;
 }
 
 export interface LoginResponse {
   succeeded: boolean;
   message: string;
-  data?: SessionUserDto;
+  data?: SessionEcommerceUserDto;
   errors?: string[];
-} 
+}
+
+// Interfaces para registro de usuarios
+export interface CreateEcommerceUserCommand {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber?: string;
+  password: string;
+  genderId: number;
+  departmentId?: number;
+}
+
+export interface GenderDto {
+  id: number;
+  name: string;
+  isActive: boolean;
+}
+
+export interface EcommerceUserDto {
+  id: string;
+  email: string;
+  userName: string;
+  fullName: string;
+  firstName: string;
+  lastName: string;
+  photo?: string;
+  phoneNumber: string;
+  departmentId?: number;
+  department?: DepartmentDto;
+  genderId: number;
+  gender?: GenderDto;
+  creationDate: string;
+  isActive: boolean;
+  birthDay?: string;
+  lastPasswordChange?: string;
+  modificationDate?: string;
+  customerTypeId: number;
+  customerType?: CustomerType;
+}
+
+export interface DepartmentDto {
+  id: number;
+  name: string;
+  isActive: boolean;
+  regionId?: number;
+  countryId: number;
+  cities?: CityDto[];
+}
+
+export interface CityDto {
+  id: number;
+  name: string;
+  isActive: boolean;
+  departmentId: number;
+}
+
+export interface CreateUserResponse {
+  succeeded: boolean;
+  message: string;
+  data?: EcommerceUserDto;
+  errors?: string[];
+}
+
+// Mantener compatibilidad con el código existente
+export type LoginUserCommand = LoginEcommerceUserCommand;
+export type SessionUserDto = SessionEcommerceUserDto; 

@@ -1,0 +1,97 @@
+import NextAuth from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import { NextAuthOptions } from 'next-auth';
+import { loginUser } from '@/services/auth.service';
+import { LoginEcommerceUserCommand } from '@/interfaces/auth/auth.interface';
+
+const authOptions: NextAuthOptions = {
+  providers: [
+    CredentialsProvider({
+      name: 'credentials',
+      credentials: {
+        userName: { label: 'Usuario', type: 'text' },
+        email: { label: 'Email', type: 'email' },
+        password: { label: 'Contraseña', type: 'password' },
+        loginMethod: { label: 'Método de login', type: 'text' }
+      },
+      async authorize(credentials) {
+        if (!credentials?.password) {
+          return null;
+        }
+
+        const loginData: LoginEcommerceUserCommand = {
+          password: credentials.password,
+          ...(credentials.loginMethod === 'email' 
+            ? { email: credentials.email }
+            : { userName: credentials.userName }
+          )
+        };
+
+        try {
+          const response = await loginUser(loginData);
+          
+          if (response.succeeded && response.data) {
+            return {
+              id: response.data.id,
+              name: response.data.fullName,
+              email: response.data.email,
+              image: response.data.photo,
+              token: response.data.token,
+              expirationDate: response.data.expirationDate,
+              customerType: response.data.customerType,
+              firstName: response.data.firstName,
+              lastName: response.data.lastName,
+              userName: response.data.userName
+            };
+          }
+          
+          return null;
+        } catch (error) {
+          console.error('Error en autorización:', error);
+          return null;
+        }
+      }
+    })
+  ],
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.accessToken = user.token;
+        token.expirationDate = user.expirationDate;
+        token.customerType = user.customerType;
+        token.firstName = user.firstName;
+        token.lastName = user.lastName;
+        token.userName = user.userName;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (token && session.user) {
+        session.user.id = token.sub!;
+        session.user.name = token.name!;
+        session.user.email = token.email!;
+        session.user.image = token.picture;
+        session.accessToken = token.accessToken as string;
+        session.expirationDate = token.expirationDate as string;
+        session.customerType = token.customerType;
+        session.firstName = token.firstName as string;
+        session.lastName = token.lastName as string;
+        session.userName = token.userName as string;
+      }
+      return session;
+    }
+  },
+  pages: {
+    signIn: '/login',
+    error: '/login'
+  },
+  session: {
+    strategy: 'jwt',
+    maxAge: 30 * 24 * 60 * 60, // 30 días
+  },
+  secret: process.env.NEXTAUTH_SECRET,
+};
+
+const handler = NextAuth(authOptions);
+
+export { handler as GET, handler as POST };
