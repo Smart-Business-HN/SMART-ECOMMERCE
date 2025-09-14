@@ -39,7 +39,7 @@ export async function loginUser(credentials: LoginEcommerceUserCommand): Promise
 export async function createUser(userData: CreateEcommerceUserCommand): Promise<CreateUserResponse> {
   try {
     // Para el cliente, usar la ruta relativa de la API
-    const url = '/api/auth/ecommerce-register';
+    const url = isServer ? getApiUrl('/api/auth/ecommerce-register') : '/api/auth/ecommerce-register';
     
     const response = await fetch(url, {
       method: 'POST',

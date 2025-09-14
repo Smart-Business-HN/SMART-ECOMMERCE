@@ -74,7 +74,7 @@ export default function NavBarComponent({ cartItemsCount = 0, onCartClick }: Mai
                 
                 <Menu>
                   <MenuHandler>
-                    <Avatar src={session?.user?.image || "https://docs.material-tailwind.com/img/face-2.jpg"} alt="avatar" size="sm" className="cursor-pointer" onClick={() => {}} />
+                    <Avatar src={session?.user?.image || "/images/generic_avatar.jpg"} alt="avatar" size="sm" className="cursor-pointer object-cover border-2 border-blue-500" onClick={() => {}} />
                   </MenuHandler>
                   <MenuList>
                     <MenuItem>Perfil</MenuItem>

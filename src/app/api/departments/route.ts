@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    // URL del backend
+    // URL del backend - usar localhost en desarrollo, producción en otros casos
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
     
     // Construir los parámetros de query
@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
     if (order) params.append('order', order);
     if (column) params.append('column', column);
     
-    const url = `${baseUrl}/v2/Department/GetAll?${params.toString()}`;
+    const url = `${baseUrl}/Department/GetAll?All=true`;
     
     console.log('Proxy departments request to:', url);
     
@@ -35,8 +35,14 @@ export async function GET(request: NextRequest) {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
+      // En desarrollo, ignorar errores de certificado SSL auto-firmado
+      ...(process.env.NODE_ENV === 'development' && {
+        // @ts-ignore - Esta opción no está en los tipos de fetch pero es necesaria para Node.js
+        rejectUnauthorized: false
+      })
     });
-    
+    debugger;
+    console.log('Response:', response);
     if (!response.ok) {
       throw new Error(`Backend responded with status: ${response.status}`);
     }

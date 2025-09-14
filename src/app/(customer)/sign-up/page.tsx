@@ -1,14 +1,15 @@
 // @ts-nocheck
 'use client';
+import React, { Suspense } from 'react';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { Card, Input, Button, Typography, Alert, Select, Option } from '@/utils/MTailwind';
 import { createUser } from '@/services/auth.service';
-import { getAllDepartments } from '@/services/departments.service';
 import { CreateEcommerceUserCommand, DepartmentDto } from '@/interfaces/auth/auth.interface';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
-
+import { departments as departmentsSeed } from '@/utils/seeds/departments.seed';
+import { genders as gendersSeed } from '@/utils/seeds/genders.seed';
 export default function SignUpPage() {
   const router = useRouter();
   const [formData, setFormData] = useState<CreateEcommerceUserCommand>({
@@ -17,34 +18,18 @@ export default function SignUpPage() {
     email: '',
     phoneNumber: '',
     password: '',
-    genderId: 1, // Masculino por defecto
-    departmentId: undefined
+    genderId: 1,
+    departmentId: 0
   });
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string>('');
-  const [departments, setDepartments] = useState<DepartmentDto[]>([]);
-  const [loadingDepartments, setLoadingDepartments] = useState(true);
-
+  const departments = departmentsSeed;
+  const genders = gendersSeed;
   // Cargar departamentos al montar el componente
-  useEffect(() => {
-    const loadDepartments = async () => {
-      try {
-        const response = await getAllDepartments(0, 0, '', '', '', true);
-        if (response.succeeded) {
-          setDepartments(response.data);
-        }
-      } catch (error) {
-        console.error('Error loading departments:', error);
-      } finally {
-        setLoadingDepartments(false);
-      }
-    };
 
-    loadDepartments();
-  }, []);
 
   const handleInputChange = (field: keyof CreateEcommerceUserCommand, value: string | number) => {
     setFormData(prev => ({
@@ -229,30 +214,40 @@ export default function SignUpPage() {
 
             {/* Género */}
             <Select
+
               label="Género"
-              value={formData.genderId.toString()}
+              value={formData.genderId}
               onChange={(value) => handleInputChange('genderId', parseInt(value))}
               disabled={isLoading}
             >
-              <Option value="1">Masculino</Option>
-              <Option value="2">Femenino</Option>
-            </Select>
-
+                {genders.map((gender) => {
+                  return (
+                    <Option key={gender.id} value={gender.id}>
+                      {gender.name}
+                    </Option>
+                  );
+                })}
+              </Select>
             {/* Departamento */}
             <Select
-              label="Departamento (Opcional)"
-              value={formData.departmentId?.toString() || ''}
-              onChange={(value) => handleInputChange('departmentId', value ? parseInt(value) : undefined)}
-              disabled={isLoading || loadingDepartments}
-            >
-              <Option value="">Selecciona un departamento</Option>
-              {departments.map((dept) => (
-                <Option key={dept.id} value={dept.id.toString()}>
-                  {dept.name}
-                </Option>
-              ))}
-            </Select>
-
+                  label="Departamento (Opcional)"
+                  value={formData.departmentId}
+                  className='text-black'
+                  onChange={(value) => handleInputChange('departmentId', parseInt(value))}
+                  disabled={isLoading}
+                >
+                 {departments.map((dept) => {
+                   return (
+                     <Option key={dept.id} value={dept.id} className='text-black'>
+                       {dept.name}
+                     </Option>
+                   );
+                 })}
+              </Select>
+            
+            
+<div>{ typeof formData.departmentId}</div>
+            
             {/* Contraseña */}
             <div className="relative">
               <Input
@@ -318,7 +313,7 @@ export default function SignUpPage() {
               type="submit"
               className="w-full"
               size="lg"
-              disabled={isLoading || loadingDepartments}
+              disabled={isLoading}
               placeholder=""
             >
               {isLoading ? 'Creando cuenta...' : 'Crear Cuenta'}

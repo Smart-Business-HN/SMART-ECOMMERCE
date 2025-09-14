@@ -1,15 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { CreateEcommerceUserCommand } from '@/interfaces/auth/auth.interface';
-import { getApiUrl } from '@/utils/server-url';
 
 export async function POST(request: NextRequest) {
   try {
     const body: CreateEcommerceUserCommand = await request.json();
     
     // Construir URL del backend
-    const backendUrl = getApiUrl('/api/auth/ecommerce-register');
-    console.log(backendUrl)
-    const response = await fetch(backendUrl, {
+    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+    
+    const url = `${baseUrl}/User/Create`;
+    
+    const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
