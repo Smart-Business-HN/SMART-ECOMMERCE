@@ -29,8 +29,7 @@ export default function Store() {
                 undefined, // order
                 undefined, // column
                 false, // all
-                false, // isUserSignIn
-                undefined // customerTypeId
+                false // isUserSignIn
             );
 
             if (response.succeeded) {

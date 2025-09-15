@@ -22,8 +22,6 @@ export async function getAllDepartments(
   if (column) params.append('column', column);
 
   const url = getApiUrl(`api/departments?${params.toString()}`);
-  console.log('Fetching departments from:', url);
-  
   const res = await fetch(url, {
     method: 'GET',
     headers: {

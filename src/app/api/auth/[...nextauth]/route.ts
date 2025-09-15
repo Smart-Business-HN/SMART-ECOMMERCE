@@ -12,7 +12,8 @@ const authOptions: NextAuthOptions = {
         userName: { label: 'Usuario', type: 'text' },
         email: { label: 'Email', type: 'email' },
         password: { label: 'Contraseña', type: 'password' },
-        loginMethod: { label: 'Método de login', type: 'text' }
+        loginMethod: { label: 'Método de login', type: 'text' },
+        customerTypeId: { label: 'Tipo de cliente', type: 'number' }
       },
       async authorize(credentials) {
         if (!credentials?.password) {
@@ -24,7 +25,7 @@ const authOptions: NextAuthOptions = {
           ...(credentials.loginMethod === 'email' 
             ? { email: credentials.email }
             : { userName: credentials.userName }
-          )
+          ),
         };
 
         try {
@@ -45,6 +46,8 @@ const authOptions: NextAuthOptions = {
             };
           }
           
+          // Si no es exitoso, devolver null pero con un mensaje personalizado
+          console.error('Login failed:', response.message);
           return null;
         } catch (error) {
           console.error('Error en autorización:', error);
@@ -79,11 +82,15 @@ const authOptions: NextAuthOptions = {
         session.userName = token.userName as string;
       }
       return session;
+    },
+    async signIn({ user, account, profile, email, credentials }) {
+      // Permitir el inicio de sesión si hay un usuario válido
+      return !!user;
     }
   },
   pages: {
     signIn: '/login',
-    error: '/'
+    error: '/auth-error'
   },
   session: {
     strategy: 'jwt',
@@ -94,4 +101,4 @@ const authOptions: NextAuthOptions = {
 
 const handler = NextAuth(authOptions);
 
-export { handler as GET, handler as POST };
+export { handler as GET, handler as POST, authOptions };

@@ -32,9 +32,7 @@ export async function GET(request: NextRequest) {
     if (customerTypeId) params.append('customerTypeId', customerTypeId);
     
     const url = `${baseUrl}/Product/GetAll?${params.toString()}`;
-    
-    console.log('Proxy request to:', url);
-    
+      
     const response = await fetch(url, {
       method: 'GET',
       headers: {

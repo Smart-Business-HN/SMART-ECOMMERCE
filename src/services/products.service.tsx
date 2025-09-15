@@ -2,18 +2,18 @@
 import { isServer } from "@/utils/is-server";
 import { ProductResponse, ProductsEcommerceResponse } from "../interfaces/http/responses.interface";
 import { getApiUrl } from "@/utils/server-url";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export async function getProductBySlug(slug: string, isLogged: boolean, customerTypeId: number): Promise<ProductResponse> {
   // Usar URL relativa que Next.js resolverá automáticamente
   const url = getApiUrl(`/api/products/${encodeURIComponent(slug)}?isLogged=${isLogged}&customerTypeId=${customerTypeId}`);
-
   const res = await fetch(url, {
     method: 'GET',
     headers: {
       'Accept': 'application/json',
     }
   });
-
   if (!res.ok) {
     let errorResponse: ProductResponse | undefined = undefined;
     try {
@@ -36,17 +36,20 @@ export async function getProductsEcommerce(
   isUserSignIn: boolean = false,
   customerTypeId?: number
 ): Promise<ProductsEcommerceResponse> {
+  const session = await getServerSession(authOptions);
+  const isUserSignInFromSession = session?.user?.id ? true : false;
+  const customerTypeIdFromSession = session?.customerType?.id ? session?.customerType?.id : undefined;
   const params = new URLSearchParams({
     pageNumber: pageNumber.toString(),
     pageSize: pageSize.toString(),
     all: all.toString(),
-    isUserSignIn: isUserSignIn.toString(),
+    isUserSignIn: isUserSignInFromSession.toString(),
   });
 
   if (parameter) params.append('parameter', parameter);
   if (order) params.append('order', order);
   if (column) params.append('column', column);
-  if (customerTypeId) params.append('customerTypeId', customerTypeId.toString());
+  if (customerTypeId) params.append('customerTypeId', customerTypeIdFromSession!.toString());
 
   // Construir URL absoluta para Server Components
   const url = isServer ? getApiUrl(`/api/products?${params.toString()}`) : `/api/products?${params.toString()}`;
@@ -80,16 +83,19 @@ export async function getProductsByCategorySlug(
   isUserSignIn: boolean = false,
   customerTypeId?: number
 ): Promise<ProductsEcommerceResponse> {
+  const session = await getServerSession(authOptions);
+const isUserSignInFromSession = session?.user?.id ? true : false;
+const customerTypeIdFromSession = session?.customerType?.id ? session?.customerType?.id : undefined;
   const params = new URLSearchParams({
     pageNumber: pageNumber.toString(),
     pageSize: pageSize.toString(),
-    isUserSignIn: isUserSignIn.toString(),
+    isUserSignIn: isUserSignInFromSession.toString(),
   });
 
   if (parameter) params.append('parameter', parameter);
   if (order) params.append('order', order);
   if (column) params.append('column', column);
-  if (customerTypeId) params.append('customerTypeId', customerTypeId.toString());
+  if (customerTypeId) params.append('customerTypeId', customerTypeIdFromSession!.toString());
 
   // Construir URL absoluta para Server Components
   const url = isServer ? getApiUrl(`/api/products/category/${encodeURIComponent(categorySlug)}?${params.toString()}`) : `/api/products/category/${encodeURIComponent(categorySlug)}?${params.toString()}`;
@@ -123,16 +129,19 @@ export async function getProductsBySubCategorySlug(
   isUserSignIn: boolean = false,
   customerTypeId?: number
 ): Promise<ProductsEcommerceResponse> {
+  const session = await getServerSession(authOptions);
+const isUserSignInFromSession = session?.user?.id ? true : false;
+const customerTypeIdFromSession = session?.customerType?.id ? session?.customerType?.id : undefined;
   const params = new URLSearchParams({
     pageNumber: pageNumber.toString(),
     pageSize: pageSize.toString(),
-    isUserSignIn: isUserSignIn.toString(),
+    isUserSignIn: isUserSignInFromSession.toString(),
   });
 
   if (parameter) params.append('parameter', parameter);
   if (order) params.append('order', order);
   if (column) params.append('column', column);
-  if (customerTypeId) params.append('customerTypeId', customerTypeId.toString());
+  if (customerTypeId) params.append('customerTypeId', customerTypeIdFromSession!.toString());
 
   // Construir URL absoluta para Server Components
     const url = isServer ? getApiUrl(`/api/products/subcategory/${encodeURIComponent(subCategorySlug)}?${params.toString()}`) : `/api/products/subcategory/${encodeURIComponent(subCategorySlug)}?${params.toString()}`;

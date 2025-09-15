@@ -32,16 +32,17 @@ export async function GET(
     if (order) paramsQuery.append('order', order);
     if (column) paramsQuery.append('column', column);
     if (customerTypeId) paramsQuery.append('customerTypeId', customerTypeId);
+
+    const token = request.headers.get('Authorization')?.split(' ')[1];
     
     const url = `${baseUrl}/Product/GetProducsByCategorySlug/${encodeURIComponent(categorySlug)}?${paramsQuery.toString()}`;
-    
-    console.log('Proxy request to:', url);
     
     const response = await fetch(url, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
       },
     });
     

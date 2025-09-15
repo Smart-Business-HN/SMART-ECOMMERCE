@@ -16,9 +16,11 @@ export async function POST(request: NextRequest) {
       },
       body: JSON.stringify(body),
     });
-    
     if (!response.ok) {
-      throw new Error(`Backend responded with status: ${response.status}`);
+        const errorData = await response.json().catch(() => ({}));
+        return NextResponse.json(
+          { status: response.status, statusText: errorData.Message, succeeded: errorData.Succeeded }
+        );
     }
     
     const data = await response.json();

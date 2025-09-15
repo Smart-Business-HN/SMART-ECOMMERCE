@@ -27,8 +27,6 @@ export async function GET(request: NextRequest) {
     
     const url = `${baseUrl}/Department/GetAll?All=true`;
     
-    console.log('Proxy departments request to:', url);
-    
     const response = await fetch(url, {
       method: 'GET',
       headers: {
@@ -41,8 +39,6 @@ export async function GET(request: NextRequest) {
         rejectUnauthorized: false
       })
     });
-    debugger;
-    console.log('Response:', response);
     if (!response.ok) {
       throw new Error(`Backend responded with status: ${response.status}`);
     }

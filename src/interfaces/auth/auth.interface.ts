@@ -92,6 +92,39 @@ export interface CreateUserResponse {
   errors?: string[];
 }
 
+export interface UserProfileResponse {
+  succeeded: boolean;
+  message: string;
+  data?: EcommerceUserDto;
+  errors?: string[];
+}
+
+export interface UpdateUserCommand {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber?: string;
+  genderId: number;
+  departmentId?: number;
+  currentPassword?: string;
+  newPassword?: string;
+  confirmPassword?: string;
+}
+
+export interface UpdateUserResponse {
+  succeeded: boolean;
+  message: string;
+  data?: EcommerceUserDto;
+  errors?: string[];
+}
+
+export interface UpdateProfileImageResponse {
+  succeeded: boolean;
+  message: string;
+  data?: string; // URL de la nueva imagen
+  errors?: string[];
+}
+
 // Mantener compatibilidad con el código existente
 export type LoginUserCommand = LoginEcommerceUserCommand;
 export type SessionUserDto = SessionEcommerceUserDto; 

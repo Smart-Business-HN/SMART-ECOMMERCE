@@ -35,8 +35,6 @@ export async function GET(
     
     const url = `${baseUrl}/Product/GetProductsBySubCategorySlug/${encodeURIComponent(subCategorySlug)}?${paramsQuery.toString()}`;
     
-    console.log('Proxy request to:', url);
-    
     const response = await fetch(url, {
       method: 'GET',
       headers: {

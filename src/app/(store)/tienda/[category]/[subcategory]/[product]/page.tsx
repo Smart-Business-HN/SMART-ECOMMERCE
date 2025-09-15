@@ -6,6 +6,8 @@ import { Card, Typography, Button, Carousel, Tabs, TabsBody, TabPanel, TabsHeade
 import { notFound } from 'next/navigation';
 import { formatNumber } from '@/utils/number-format';
 import type { Metadata } from 'next';
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
 interface ProductPageProps {
     params: Promise<{ category: string; subcategory: string; product: string }>;
@@ -126,9 +128,13 @@ export async function generateMetadata({ params }: { params: Promise<{ category:
 export default async function ProductPage({ params }: ProductPageProps) {
     const { category, subcategory, product } = await params;
     
+    // Obtener la sesión del servidor
+    const session = await getServerSession(authOptions);
+    const isUserSignIn = session?.user?.id ? true : false;
+    const customerTypeId = session?.customerType?.id ? session?.customerType?.id : undefined;
+    
     try {
-        const response = await getProductBySlug(product, false, 0);
-        console.log('Product response:', response);
+        const response = await getProductBySlug(product, isUserSignIn, customerTypeId != undefined ? customerTypeId : 0);
         
         if (!response.succeeded || !response.data) {
             notFound();

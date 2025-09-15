@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { signIn, getSession } from 'next-auth/react';
 import { Card, Input, Button, Typography, Alert } from '@/utils/MTailwind';
 import { LoginEcommerceUserCommand } from '@/interfaces/auth/auth.interface';
+import { loginUser } from '@/services/auth.service';
 import Link from 'next/link';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 
@@ -47,6 +48,23 @@ export default function LoginPage() {
       return;
     }
     try {
+      // Primero validar con el backend para obtener el mensaje de error específico
+      const loginData: LoginEcommerceUserCommand = {
+        password: formData.password,
+        ...(loginMethod === 'email' 
+          ? { email: formData.email }
+          : { userName: formData.userName }
+        ),
+      };
+
+      const response = await loginUser(loginData);
+      if (!response.succeeded) {
+        // Mostrar el mensaje específico del backend
+        setError(response.statusText || 'Error de autenticación');
+        return;
+      }
+
+      // Si el backend valida correctamente, proceder con NextAuth
       const result = await signIn('credentials', {
         userName: formData.userName,
         email: formData.email,
@@ -54,9 +72,8 @@ export default function LoginPage() {
         loginMethod: loginMethod,
         redirect: false
       });
-      if (result?.error) {
-        setError(result.errors[0]);
-      } else if (result?.ok) {
+      
+      if (result?.ok) {
         // Verificar que la sesión se creó correctamente
         const session = await getSession();
         if (session) {
@@ -156,7 +173,7 @@ export default function LoginPage() {
             </div>
             {/* Mensaje de error */}
             {error && (
-              <Alert color="red" className="text-sm">
+              <Alert color="red" className="text-sm text-center p-2">
                 {error}
               </Alert>
             )}

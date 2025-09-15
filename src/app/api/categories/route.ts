@@ -6,13 +6,7 @@ export async function GET(request: NextRequest) {
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
     
     const url = `${baseUrl}/Category/GetAllNavCategory`;
-    
-    console.log('Proxy request to:', url);
-    console.log('Request headers:', {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    });
-    
+  
     const response = await fetch(url, {
       method: 'GET',
       headers: {
@@ -22,14 +16,8 @@ export async function GET(request: NextRequest) {
       },
     });
     
-    console.log('Response status:', response.status);
-    console.log('Response headers:', Object.fromEntries(response.headers.entries()));
-    
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('Error response body:', errorText);
-      
-      // Devolver el error 401 directamente para debuggear
       return NextResponse.json(
         { 
           error: 'Backend error', 

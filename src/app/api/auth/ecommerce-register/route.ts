@@ -23,8 +23,8 @@ export async function POST(request: NextRequest) {
       const errorData = await response.json().catch(() => ({}));
       return NextResponse.json(
         {
-          succeeded: false,
-          message: errorData.message || `Error del servidor: ${response.status}`,
+          succeeded: errorData.Succeeded,
+          message: errorData.Message || `Error del servidor: ${response.status}`,
           errors: errorData.errors || ['Error de conexión']
         },
         { status: response.status }

@@ -1,336 +1,159 @@
-// @ts-nocheck
-'use client';
-import React, { Suspense } from 'react';
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { signIn } from 'next-auth/react';
-import { Card, Input, Button, Typography, Alert, Select, Option } from '@/utils/MTailwind';
-import { createUser } from '@/services/auth.service';
-import { CreateEcommerceUserCommand, DepartmentDto } from '@/interfaces/auth/auth.interface';
-import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
+import React from 'react';
 import { departments as departmentsSeed } from '@/utils/seeds/departments.seed';
 import { genders as gendersSeed } from '@/utils/seeds/genders.seed';
+import type { Metadata } from 'next';
+import SignUpForm from '@/components/customer/sign-up-form.component';
+
+// Metadatos SEO para la página de registro
+export const metadata: Metadata = {
+  title: 'Crear Cuenta | Registro de Usuario | SMART BUSINESS',
+  description: 'Regístrate en SMART BUSINESS y accede a soluciones tecnológicas de cableado estructurado, CCTV, fibra óptica y equipos de red. Envío a todo Honduras.',
+  keywords: [
+    'registro',
+    'crear cuenta',
+    'usuario',
+    'SMART BUSINESS',
+    'cableado estructurado',
+    'CCTV',
+    'fibra óptica',
+    'equipos de red',
+    'tecnología Honduras',
+    'soluciones tecnológicas'
+  ],
+  authors: [{ name: 'SMART BUSINESS S. DE R.L.' }],
+  creator: 'SMART BUSINESS S. DE R.L.',
+  publisher: 'SMART BUSINESS S. DE R.L.',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  metadataBase: new URL('https://smartbusiness.site'),
+  alternates: {
+    canonical: 'https://smartbusiness.site/sign-up',
+  },
+  openGraph: {
+    title: 'Crear Cuenta | SMART BUSINESS',
+    description: 'Regístrate en SMART BUSINESS y accede a soluciones tecnológicas profesionales. Envío a todo Honduras.',
+    url: 'https://smartbusiness.site/sign-up',
+    siteName: 'SMART BUSINESS',
+    locale: 'es_HN',
+    type: 'website',
+    images: [
+      {
+        url: 'https://www.smartbusiness.site/images/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'SMART BUSINESS - Registro de Usuario',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Crear Cuenta | SMART BUSINESS',
+    description: 'Regístrate en SMART BUSINESS y accede a soluciones tecnológicas profesionales.',
+    images: ['https://www.smartbusiness.site/images/og-image.jpg'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  category: 'technology',
+  classification: 'registration page',
+  other: {
+    'geo.region': 'HN',
+    'geo.placename': 'Honduras',
+    'DC.title': 'Crear Cuenta - SMART BUSINESS',
+    'DC.creator': 'SMART BUSINESS S. DE R.L.',
+    'DC.subject': 'Registro, Usuario, Cableado Estructurado, CCTV, Fibra Óptica, Tecnología',
+    'DC.description': 'Regístrate en SMART BUSINESS y accede a soluciones tecnológicas profesionales',
+    'DC.publisher': 'SMART BUSINESS S. DE R.L.',
+    'DC.type': 'WebPage',
+    'DC.format': 'text/html',
+    'DC.identifier': 'https://smartbusiness.site/sign-up',
+    'DC.language': 'es',
+    'DC.coverage': 'Honduras',
+  },
+};
+
 export default function SignUpPage() {
-  const router = useRouter();
-  const [formData, setFormData] = useState<CreateEcommerceUserCommand>({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phoneNumber: '',
-    password: '',
-    genderId: 1,
-    departmentId: 0
-  });
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string>('');
   const departments = departmentsSeed;
   const genders = gendersSeed;
-  // Cargar departamentos al montar el componente
-
-
-  const handleInputChange = (field: keyof CreateEcommerceUserCommand, value: string | number) => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: value
-    }));
-    setError(''); // Limpiar error al escribir
-  };
-
-  const handlePhoneChange = (value: string) => {
-    // Formatear automáticamente el número de teléfono
-    let formattedValue = value.replace(/\D/g, ''); // Solo números
-    
-    if (formattedValue.length > 4) {
-      formattedValue = formattedValue.substring(0, 4) + '-' + formattedValue.substring(4, 8);
-    }
-    
-    handleInputChange('phoneNumber', formattedValue);
-  };
-
-  const validateForm = () => {
-    // Validación de Email
-    if (!formData.email.trim()) {
-      setError('El Email es requerido.');
-      return false;
-    }
-
-    // Validación de formato de email
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      setError('El Email no es valido.');
-      return false;
-    }
-
-    // Validación de Password
-    if (!formData.password) {
-      setError('La Contraseña es requerida.');
-      return false;
-    }
-
-    // Validación de contraseña: al menos 8 caracteres, una mayúscula y un número
-    const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
-    if (!passwordRegex.test(formData.password)) {
-      setError('La contraseña debe tener al menos 8 caracteres, una mayúscula y un número.');
-      return false;
-    }
-
-    // Validación de confirmación de contraseña
-    if (formData.password !== confirmPassword) {
-      setError('Las contraseñas no coinciden');
-      return false;
-    }
-
-    // Validación de FirstName
-    if (!formData.firstName.trim()) {
-      setError('Primer Nombre es requerido.');
-      return false;
-    }
-
-    // Validación de LastName
-    if (!formData.lastName.trim()) {
-      setError('El apellido es requerido');
-      return false;
-    }
-
-    // Validación de PhoneNumber (requerido según backend)
-    if (!formData.phoneNumber || !formData.phoneNumber.trim()) {
-      setError('El número telefónico es requerido.');
-      return false;
-    }
-
-    const phoneRegex = /^\d{4}-\d{4}$/;
-    if (!phoneRegex.test(formData.phoneNumber)) {
-      setError('El número telefónico debe tener el formato 0000-0000.');
-      return false;
-    }
-
-    // Validación de género
-    if (!formData.genderId) {
-      setError('El género es requerido');
-      return false;
-    }
-
-    return true;
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setError('');
-
-    // Aplicar validaciones del backend
-    if (!validateForm()) {
-      setIsLoading(false);
-      return;
-    }
-
-    try {
-      const response = await createUser(formData);
-      
-      if (response.succeeded && response.data) {
-        // Login automático después del registro exitoso
-        const loginResult = await signIn('credentials', {
-          email: formData.email,
-          password: formData.password,
-          loginMethod: 'email',
-          redirect: false
-        });
-
-        if (loginResult?.ok) {
-          router.push('/tienda');
-        } else {
-          // Si el login automático falla, redirigir al login
-          router.push('/login?message=Registro exitoso. Por favor, inicia sesión.');
-        }
-      } else {
-        setError(response.message || 'Error en el registro');
-      }
-    } catch (error) {
-      console.error('Error during registration:', error);
-      setError('Error de conexión. Por favor, intenta de nuevo.');
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   return (
-    <div className="flex items-center justify-center bg-gray-50 py-5 md:pt-10 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-      <Card className="p-6" placeholder="">
-        <div className="text-center pt-4">
-          <Typography variant="h2" color="blue-gray" className="" placeholder="">
-            Crear Cuenta
-          </Typography>
-          <Typography color="gray" className="font-normal" placeholder="">
-            Completa tus datos para registrarte
-          </Typography>
+    <>
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "Crear Cuenta - SMART BUSINESS",
+            "description": "Regístrate en SMART BUSINESS y accede a soluciones tecnológicas de cableado estructurado, CCTV, fibra óptica y equipos de red.",
+            "url": "https://smartbusiness.site/sign-up",
+            "mainEntity": {
+              "@type": "Organization",
+              "name": "SMART BUSINESS S. DE R.L.",
+              "url": "https://smartbusiness.site",
+              "logo": "https://www.smartbusiness.site/images/corporate/logo-smart-business.png",
+              "contactPoint": {
+                "@type": "ContactPoint",
+                "telephone": "+504-8818-7765",
+                "email": "consultas@smartbusiness.site",
+                "contactType": "customer service"
+              },
+              "address": {
+                "@type": "PostalAddress",
+                "addressCountry": "HN",
+                "addressRegion": "Cortés"
+              },
+              "sameAs": [
+                "https://www.facebook.com/smartbusinesshn",
+                "https://www.instagram.com/smartbusinesshn"
+              ]
+            },
+            "breadcrumb": {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Inicio",
+                  "item": "https://smartbusiness.site"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Crear Cuenta",
+                  "item": "https://smartbusiness.site/sign-up"
+                }
+              ]
+            },
+            "potentialAction": {
+              "@type": "RegisterAction",
+              "target": "https://smartbusiness.site/sign-up",
+              "object": {
+                "@type": "WebPage",
+                "name": "Formulario de Registro"
+              }
+            }
+          })
+        }}
+      />
+      
+      <div className="flex items-center justify-center bg-gray-50 py-5 md:pt-10 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-md w-full space-y-8">
+          <SignUpForm departments={departments} genders={genders} />
         </div>
-
-       
-          <form onSubmit={handleSubmit} className="space-y-6 mt-10">
-            {/* Nombre y Apellido */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Input
-                type="text"
-                label="Nombre"
-                value={formData.firstName}
-                onChange={(e) => handleInputChange('firstName', e.target.value)}
-                required
-                disabled={isLoading}
-              />
-              <Input
-                type="text"
-                label="Apellido"
-                value={formData.lastName}
-                onChange={(e) => handleInputChange('lastName', e.target.value)}
-                required
-                disabled={isLoading}
-              />
-            </div>
-
-            {/* Email */}
-            <Input
-              type="email"
-              label="Correo Electrónico"
-              value={formData.email}
-              onChange={(e) => handleInputChange('email', e.target.value)}
-              required
-              disabled={isLoading}
-            />
-
-            {/* Teléfono */}
-            <Input
-              type="tel"
-              label="Número de Teléfono"
-              placeholder="0000-0000"
-              value={formData.phoneNumber || ''}
-              onChange={(e) => handlePhoneChange(e.target.value)}
-              required
-              disabled={isLoading}
-            />
-
-            {/* Género */}
-            <Select
-
-              label="Género"
-              value={formData.genderId}
-              onChange={(value) => handleInputChange('genderId', parseInt(value))}
-              disabled={isLoading}
-            >
-                {genders.map((gender) => {
-                  return (
-                    <Option key={gender.id} value={gender.id}>
-                      {gender.name}
-                    </Option>
-                  );
-                })}
-              </Select>
-            {/* Departamento */}
-            <Select
-                  label="Departamento (Opcional)"
-                  value={formData.departmentId}
-                  className='text-black'
-                  onChange={(value) => handleInputChange('departmentId', parseInt(value))}
-                  disabled={isLoading}
-                >
-                 {departments.map((dept) => {
-                   return (
-                     <Option key={dept.id} value={dept.id} className='text-black'>
-                       {dept.name}
-                     </Option>
-                   );
-                 })}
-              </Select>
-            
-            
-<div>{ typeof formData.departmentId}</div>
-            
-            {/* Contraseña */}
-            <div className="relative">
-              <Input
-                type={showPassword ? 'text' : 'password'}
-                label="Contraseña"
-                value={formData.password}
-                onChange={(e) => handleInputChange('password', e.target.value)}
-                required
-                disabled={isLoading}
-                icon={
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2"
-                  >
-                    {showPassword ? (
-                      <EyeSlashIcon className="h-5 w-5 text-gray-400" />
-                    ) : (
-                      <EyeIcon className="h-5 w-5 text-gray-400" />
-                    )}
-                  </button>
-                }
-              />
-              <Typography variant="small" color="gray" className="mt-1" placeholder="">
-                Mínimo 8 caracteres, una mayúscula y un número
-              </Typography>
-            </div>
-
-            {/* Confirmar Contraseña */}
-            <div className="relative">
-              <Input
-                type={showConfirmPassword ? 'text' : 'password'}
-                label="Confirmar Contraseña"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                required
-                disabled={isLoading}
-                icon={
-                  <button
-                    type="button"
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2"
-                  >
-                    {showConfirmPassword ? (
-                      <EyeSlashIcon className="h-5 w-5 text-gray-400" />
-                    ) : (
-                      <EyeIcon className="h-5 w-5 text-gray-400" />
-                    )}
-                  </button>
-                }
-              />
-            </div>
-
-            {/* Mensaje de error */}
-            {error && (
-              <Alert color="red" className="text-sm">
-                {error}
-              </Alert>
-            )}
-
-            {/* Botón de envío */}
-            <Button
-              type="submit"
-              className="w-full"
-              size="lg"
-              disabled={isLoading}
-              placeholder=""
-            >
-              {isLoading ? 'Creando cuenta...' : 'Crear Cuenta'}
-            </Button>
-          </form>
-
-          {/* Enlaces adicionales */}
-          <div className="mt-6 text-center">
-            <Typography variant="small" color="gray" className="font-normal" placeholder="">
-              ¿Ya tienes una cuenta?{' '}
-              <a href="/login" className="font-medium text-blue-600 hover:text-blue-500">
-                Inicia sesión aquí
-              </a>
-            </Typography>
-          </div>
-        </Card>
       </div>
-    </div>
+    </>
   );
 }

@@ -13,7 +13,6 @@ interface MainNavbarProps {
 export default function NavBarComponent({ cartItemsCount = 0, onCartClick }: MainNavbarProps) {
     const { data: session, status } = useSession();
     const isLogued = status === 'authenticated';
-
     const handleSignOut = async () => {
         try {
             await signOut({ 
@@ -77,7 +76,7 @@ export default function NavBarComponent({ cartItemsCount = 0, onCartClick }: Mai
                     <Avatar src={session?.user?.image || "/images/generic_avatar.jpg"} alt="avatar" size="sm" className="cursor-pointer object-cover border-2 border-blue-500" onClick={() => {}} />
                   </MenuHandler>
                   <MenuList>
-                    <MenuItem>Perfil</MenuItem>
+                    <MenuItem onClick={() => {window.location.href = '/profile'}}>Perfil</MenuItem>
                     <MenuItem>Mis Compras</MenuItem>
                     <MenuItem className="text-danger hover:bg-red-500 hover:text-white" onClick={handleSignOut}>Cerrar Sesión</MenuItem>
                   </MenuList>

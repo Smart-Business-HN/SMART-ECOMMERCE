@@ -15,7 +15,6 @@ export async function GET(
     
     const url = `${baseUrl}/Product/GetBySlug/${slug}?isLogged=${isLogged}&customerTypeId=${customerTypeId}`;
     
-    console.log('Proxy request to:', url);
     
     const response = await fetch(url, {
       method: 'GET',
