@@ -3,8 +3,9 @@
 import { useSearchParams } from 'next/navigation';
 import { Card, Typography, Button, Alert } from '@/utils/MTailwind';
 import Link from 'next/link';
+import { Suspense } from 'react';
 
-export default function AuthErrorPage() {
+function AuthErrorContent() {
   const searchParams = useSearchParams();
   const error = searchParams.get('error');
   
@@ -71,5 +72,32 @@ export default function AuthErrorPage() {
         </Card>
       </div>
     </div>
+  );
+}
+
+function LoadingFallback() {
+  return (
+    <div className="flex items-center justify-center bg-gray-50 py-5 md:py-20 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8">
+        <Card className="p-6" placeholder="">
+          <div className="text-center pt-4">
+            <Typography variant="h2" color="red" className="" placeholder="">
+              Error de Autenticación
+            </Typography>
+            <Typography color="gray" className="font-normal mt-2" placeholder="">
+              Cargando...
+            </Typography>
+          </div>
+        </Card>
+      </div>
+    </div>
+  );
+}
+
+export default function AuthErrorPage() {
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <AuthErrorContent />
+    </Suspense>
   );
 }

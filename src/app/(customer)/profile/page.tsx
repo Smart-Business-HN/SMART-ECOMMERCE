@@ -1,12 +1,12 @@
 import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { config } from '@/app/api/auth/[...nextauth]/route';
 import { getUserById } from '@/services/auth.service';
 import ProfileLayout from '@/components/customer/profile-layout.component';
 
 export default async function ProfilePage() {
   // Verificar autenticación
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession(config);
   
   if (!session?.user?.id) {
     redirect('/login');

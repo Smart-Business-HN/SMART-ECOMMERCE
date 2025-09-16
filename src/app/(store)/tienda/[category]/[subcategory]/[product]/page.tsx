@@ -7,7 +7,7 @@ import { notFound } from 'next/navigation';
 import { formatNumber } from '@/utils/number-format';
 import type { Metadata } from 'next';
 import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { config } from '@/app/api/auth/[...nextauth]/route';
 
 interface ProductPageProps {
     params: Promise<{ category: string; subcategory: string; product: string }>;
@@ -129,7 +129,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
     const { category, subcategory, product } = await params;
     
     // Obtener la sesión del servidor
-    const session = await getServerSession(authOptions);
+    const session = await getServerSession(config);
     const isUserSignIn = session?.user?.id ? true : false;
     const customerTypeId = session?.customerType?.id ? session?.customerType?.id : undefined;
     
