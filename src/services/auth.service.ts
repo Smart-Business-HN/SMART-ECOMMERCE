@@ -2,7 +2,7 @@
 import { LoginEcommerceUserCommand, LoginResponse, CreateEcommerceUserCommand, CreateUserResponse, UserProfileResponse, UpdateUserCommand, UpdateUserResponse, UpdateProfileImageResponse } from '@/interfaces/auth/auth.interface';
 import { getApiUrl } from '@/utils/server-url';
 import { isServer } from '@/utils/is-server';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { config } from '@/app/api/auth/[...nextauth]/route';
 import { getServerSession } from 'next-auth';
 export async function loginUser(credentials: LoginEcommerceUserCommand): Promise<LoginResponse> {
   try {
@@ -76,7 +76,7 @@ export async function createUser(userData: CreateEcommerceUserCommand): Promise<
 export async function getUserById(userId: string): Promise<UserProfileResponse> {
   try {
     const url = isServer ? getApiUrl(`/api/auth/user/${userId}`) : `/api/auth/user/${userId}`;
-    const session = await getServerSession(authOptions);
+    const session = await getServerSession(config);
     const token  = session?.accessToken;
     const response = await fetch(url, {
       method: 'GET',
@@ -114,7 +114,7 @@ export async function updateUserProfileImage(userId: string, imageFile: File): P
     formData.append('image', imageFile);
     
     const url = isServer ? getApiUrl(`/api/auth/user/${userId}/profile-image`) : `/api/auth/user/${userId}/profile-image`;
-    const session = await getServerSession(authOptions);
+    const session = await getServerSession(config);
     const token = session?.accessToken;
     const response = await fetch(url, {
       method: 'PUT',
@@ -149,7 +149,7 @@ export async function updateUserProfileImage(userId: string, imageFile: File): P
 export async function updateUser(userId: string, userData: UpdateUserCommand): Promise<UpdateUserResponse> {
   try {
     const url = isServer ? getApiUrl(`/api/auth/user/${userId}`) : `/api/auth/user/${userId}`;
-    const session = await getServerSession(authOptions);
+    const session = await getServerSession(config);
     const token = session?.accessToken;
     
     const response = await fetch(url, {

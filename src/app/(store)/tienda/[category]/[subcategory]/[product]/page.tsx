@@ -7,8 +7,7 @@ import { notFound } from 'next/navigation';
 import { formatNumber } from '@/utils/number-format';
 import type { Metadata } from 'next';
 import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
-import WhatsAppButton from '@/components/store/whatsapp-button.component';
+import { config } from '@/app/api/auth/[...nextauth]/route';
 
 interface ProductPageProps {
     params: Promise<{ category: string; subcategory: string; product: string }>;
@@ -17,10 +16,7 @@ interface ProductPageProps {
 // SEO Metadata dinámico mejorado
 export async function generateMetadata({ params }: { params: Promise<{ category: string; subcategory: string; product: string }> }): Promise<Metadata> {
     const { product } = await params;
-    const session = await getServerSession(authOptions);
-    const isUserSignIn = session?.user?.id ? true : false;
-    const customerTypeId = session?.customerType?.id ? session?.customerType?.id : undefined;
-    const response = await getProductBySlug(product, isUserSignIn, customerTypeId != undefined ? customerTypeId : 0);
+    const response = await getProductBySlug(product, false, 0);
     if (!response.succeeded || !response.data) {
         return {
             title: 'Producto no encontrado | SMART BUSINESS',
@@ -133,7 +129,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
     const { category, subcategory, product } = await params;
     
     // Obtener la sesión del servidor
-    const session = await getServerSession(authOptions);
+    const session = await getServerSession(config);
     const isUserSignIn = session?.user?.id ? true : false;
     const customerTypeId = session?.customerType?.id ? session?.customerType?.id : undefined;
     
@@ -149,14 +145,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
         if(productData.ecommerceDescription || productData.productFeatures || productData.productDataSheets) {
             hasMoreInformation = true;
         }
-        const productUrl = `https://smartbusiness.site/tienda/${productData.subCategory?.category?.slug || ''}/${productData.subCategory?.slug || ''}/${productData.slug}`;
-        
-        // Generar mensaje para WhatsApp
-        const whatsappMessage = `¡Hola! Me interesa obtener más información sobre el producto: *${productData.name}* (SKU: ${productData.code})\n\nPrecio: L. ${formatNumber(productData.recomendedSalePrice)}\n\nPueden ver el producto aquí: ${productUrl}\n\n¿Podrían brindarme más detalles sobre disponibilidad, especificaciones técnicas y opciones de envío?`;
-        
-        // Número de WhatsApp de SMART BUSINESS
-        const whatsappNumber = '50488187765';
-        const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+
         // Determinar la tab inicial según la jerarquía y disponibilidad
         const initialTab = productData.ecommerceDescription
           ? 'ecommerceDescription'
@@ -187,7 +176,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                                 "name": brandName
                             },
                             "category": categoryTitle,
-                            "url": productUrl,
+                            "url": `https://smartbusiness.site/tienda/${productData.subCategory?.category?.slug || ''}/${productData.subCategory?.slug || ''}/${productData.slug}`,
                             "image": productData.productImages && productData.productImages.length > 0 
                                 ? productData.productImages.map(img => img.url)
                                 : ['https://www.smartbusiness.site/images/og-image.jpg'],
@@ -236,7 +225,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                                         "@type": "ListItem",
                                         "position": 5,
                                         "name": productData.name,
-                                        "item": productUrl
+                                        "item": `https://smartbusiness.site/tienda/${productData.subCategory?.category?.slug || ''}/${productData.subCategory?.slug || ''}/${productData.slug}`
                                     }
                                 ]
                             },
@@ -335,20 +324,19 @@ export default async function ProductPage({ params }: ProductPageProps) {
                                     size="lg" 
                                     color="blue" 
                                     className="flex-1"
-                                    disabled={!isUserSignIn}
+                                    disabled={productData.currentStock <= 0}
                                     aria-label={productData.currentStock > 0 ? 'Agregar al carrito' : 'Producto sin stock'}
                                 >
-                                    {isUserSignIn ? 'Agregar al Carrito' : 'Iniciar Sesión para Agregar al Carrito'}
+                                    {productData.currentStock > 0 ? 'Agregar al Carrito' : 'Sin Stock'}
                                 </Button>
-                                <WhatsAppButton 
-                                    whatsappUrl={whatsappUrl}
+                                <Button 
                                     size="lg" 
                                     variant="outlined" 
                                     color="blue"
                                     aria-label="Contactar sobre este producto"
                                 >
                                     Contactar
-                                </WhatsAppButton>
+                                </Button>
                             </div>
 
                             {/* Información Adicional */}

@@ -3,10 +3,10 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import { NextAuthOptions } from 'next-auth';
 import { loginUser } from '@/services/auth.service';
 import { LoginEcommerceUserCommand } from '@/interfaces/auth/auth.interface';
-
 const authOptions: NextAuthOptions = {
-  providers: [
+  providers : [
     CredentialsProvider({
+      id: 'credentials',
       name: 'credentials',
       credentials: {
         userName: { label: 'Usuario', type: 'text' },
@@ -25,7 +25,7 @@ const authOptions: NextAuthOptions = {
           ...(credentials.loginMethod === 'email' 
             ? { email: credentials.email }
             : { userName: credentials.userName }
-          ),
+          )
         };
 
         try {
@@ -101,4 +101,4 @@ const authOptions: NextAuthOptions = {
 
 const handler = NextAuth(authOptions);
 
-export { handler as GET, handler as POST, authOptions };
+export { handler as GET, handler as POST, authOptions as config };
