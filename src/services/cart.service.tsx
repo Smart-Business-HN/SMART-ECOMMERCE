@@ -1,14 +1,14 @@
 'use server';
 import { getApiUrl } from '@/utils/server-url';
 import { isServer } from '@/utils/is-server';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { config } from '@/app/api/auth/[...nextauth]/route';
 import { getServerSession } from 'next-auth';
 import { GetCartsResponse, CartDto } from '@/interfaces/cart/cart.interface';
 
 export async function getCartsByCustomerId(customerId: string): Promise<GetCartsResponse> {
   try {
     const url = isServer ? getApiUrl(`/api/cart/GetCarts/${customerId}`) : `/api/cart/GetCarts/${customerId}`;
-    const session = await getServerSession(authOptions);
+    const session = await getServerSession(config);
     const token = session?.accessToken;
     
     const response = await fetch(url, {
@@ -51,7 +51,7 @@ export interface GetCartByIdResponse {
 export async function getCartById(cartId: string): Promise<GetCartByIdResponse> {
   try {
     const url = isServer ? getApiUrl(`/api/cart/GetCartById/${cartId}`) : `/api/cart/GetCartById/${cartId}`;
-    const session = await getServerSession(authOptions);
+    const session = await getServerSession(config);
     const token = session?.accessToken;
     
     const response = await fetch(url, {
