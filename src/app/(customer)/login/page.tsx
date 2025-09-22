@@ -1,8 +1,8 @@
 // @ts-nocheck
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { signIn, getSession } from 'next-auth/react';
+import { signIn, getSession, useSession } from 'next-auth/react';
 import { Card, Input, Button, Typography, Alert } from '@/utils/MTailwind';
 import { LoginEcommerceUserCommand } from '@/interfaces/auth/auth.interface';
 import { loginUser } from '@/services/auth.service';
@@ -11,6 +11,7 @@ import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 
 export default function LoginPage() {
   const router = useRouter();
+  const { data: session, status } = useSession();
   const [formData, setFormData] = useState<LoginEcommerceUserCommand>({
     userName: '',
     email: '',
@@ -20,6 +21,35 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string>('');
   const [loginMethod, setLoginMethod] = useState<'username' | 'email'>('username');
+
+  // Redirigir si ya está logueado
+  useEffect(() => {
+    if (status === 'authenticated' && session?.user?.id) {
+      router.push('/profile');
+    }
+  }, [status, session, router]);
+
+  // Mostrar loading mientras se verifica la sesión
+  if (status === 'loading') {
+    return (
+      <div className="flex items-center justify-center bg-gray-50 py-5 md:py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-md w-full space-y-8">
+          <Card className="p-6" placeholder="">
+            <div className="text-center py-8">
+              <Typography color="gray" placeholder="">
+                Verificando sesión...
+              </Typography>
+            </div>
+          </Card>
+        </div>
+      </div>
+    );
+  }
+
+  // No mostrar el formulario si ya está autenticado
+  if (status === 'authenticated') {
+    return null;
+  }
   const handleInputChange = (field: keyof LoginEcommerceUserCommand, value: string) => {
     setFormData(prev => ({
       ...prev,

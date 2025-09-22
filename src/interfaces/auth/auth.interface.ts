@@ -100,15 +100,15 @@ export interface UserProfileResponse {
 }
 
 export interface UpdateUserCommand {
+  id: string;
   firstName: string;
   lastName: string;
   email: string;
-  phoneNumber?: string;
+  userName: string;
+  phoneNumber: string;
   genderId: number;
   departmentId?: number;
-  currentPassword?: string;
-  newPassword?: string;
-  confirmPassword?: string;
+  birthDay?: string;
 }
 
 export interface UpdateUserResponse {

@@ -3,6 +3,7 @@ import { departments as departmentsSeed } from '@/utils/seeds/departments.seed';
 import { genders as gendersSeed } from '@/utils/seeds/genders.seed';
 import type { Metadata } from 'next';
 import SignUpForm from '@/components/customer/sign-up-form.component';
+import SignUpRedirect from '@/components/customer/sign-up-redirect.component';
 
 // Metadatos SEO para la página de registro
 export const metadata: Metadata = {
@@ -55,15 +56,11 @@ export const metadata: Metadata = {
     images: ['https://www.smartbusiness.site/images/og-image.jpg'],
   },
   robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
+    index: false,
+    follow: false,
+    noarchive: true,
+    nosnippet: true,
+    noimageindex: true,
   },
   category: 'technology',
   classification: 'registration page',
@@ -149,11 +146,13 @@ export default function SignUpPage() {
         }}
       />
       
-      <div className="flex items-center justify-center bg-gray-50 py-5 md:pt-10 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-md w-full space-y-8">
-          <SignUpForm departments={departments} genders={genders} />
+      <SignUpRedirect>
+        <div className="flex items-center justify-center bg-gray-50 py-5 md:pt-10 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-md w-full space-y-8">
+            <SignUpForm departments={departments} genders={genders} />
+          </div>
         </div>
-      </div>
+      </SignUpRedirect>
     </>
   );
 }

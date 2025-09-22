@@ -145,7 +145,7 @@ export default function TermsAndConditions() {
             />
 
             {/* Breadcrumb Navigation */}
-            <nav aria-label="Breadcrumb" className="w-full max-w-5xl mx-auto px-5 py-4">
+            <nav aria-label="Breadcrumb" className="w-full max-w-7xl mx-auto px-5 py-4">
                 <ol className="flex items-center space-x-2 text-sm text-gray-600">
                     <li>
                         <Link href="/" className="hover:text-blue-600 transition-colors" aria-label="Ir al inicio">
