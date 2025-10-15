@@ -35,7 +35,8 @@ export default function ProductPageLayout() {
                 content.classList.remove('col-span-4');
                 content.classList.add('col-span-3');
                 container.classList.remove('grid-cols-1');
-                container.classList.add('grid-cols-4');
+                container.classList.add('md:grid-cols-4');
+                container.classList.add('grid-cols-1');
             }
         }
     }, [pathname]);

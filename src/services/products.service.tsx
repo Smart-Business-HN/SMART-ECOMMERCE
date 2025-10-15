@@ -46,6 +46,10 @@ export async function getProductsEcommerce(
     isUserSignIn: isUserSignInFromSession.toString(),
   });
 
+  if (customerTypeIdFromSession != undefined) {
+    params.append('customerTypeId', customerTypeIdFromSession.toString());
+  }
+
   if (parameter) params.append('parameter', parameter);
   if (order) params.append('order', order);
   if (column) params.append('column', column);
@@ -84,13 +88,17 @@ export async function getProductsByCategorySlug(
   customerTypeId?: number
 ): Promise<ProductsEcommerceResponse> {
   const session = await getServerSession(config);
-const isUserSignInFromSession = session?.user?.id ? true : false;
-const customerTypeIdFromSession = session?.customerType?.id ? session?.customerType?.id : undefined;
+  const isUserSignInFromSession = session?.user?.id ? true : false;
+  const customerTypeIdFromSession = session?.customerType?.id ? session?.customerType?.id : undefined;
   const params = new URLSearchParams({
     pageNumber: pageNumber.toString(),
     pageSize: pageSize.toString(),
     isUserSignIn: isUserSignInFromSession.toString(),
   });
+
+  if (customerTypeIdFromSession != undefined) {
+    params.append('customerTypeId', customerTypeIdFromSession.toString());
+  }
 
   if (parameter) params.append('parameter', parameter);
   if (order) params.append('order', order);
@@ -137,6 +145,10 @@ const customerTypeIdFromSession = session?.customerType?.id ? session?.customerT
     pageSize: pageSize.toString(),
     isUserSignIn: isUserSignInFromSession.toString(),
   });
+
+  if (customerTypeIdFromSession != undefined) {
+    params.append('customerTypeId', customerTypeIdFromSession.toString());
+  }
 
   if (parameter) params.append('parameter', parameter);
   if (order) params.append('order', order);

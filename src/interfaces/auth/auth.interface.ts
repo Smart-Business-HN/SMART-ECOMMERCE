@@ -21,6 +21,7 @@ export interface SessionEcommerceUserDto {
   token: string;
   expirationDate: string;
   customerType?: CustomerType;
+  activeCartId?: string;
 }
 
 export interface LoginResponse {

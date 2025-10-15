@@ -4,10 +4,10 @@ import { useState } from 'react';
 import { Card, Typography, Button, Alert, Input, IconButton } from '@/utils/MTailwind';
 import { CartDto, CartItemDto } from '@/interfaces/cart/cart.interface';
 import { formatNumber } from '@/utils/number-format';
-import { 
-  ShoppingCartIcon, 
-  TrashIcon, 
-  PlusIcon, 
+import {
+  ShoppingCartIcon,
+  TrashIcon,
+  PlusIcon,
   MinusIcon,
   ArrowLeftIcon,
   CreditCardIcon,
@@ -50,10 +50,10 @@ export default function CartPageClient({ cart }: CartPageClientProps) {
 
   const handleQuantityChange = (itemId: number, newQuantity: number) => {
     if (newQuantity < 1) return;
-    
-    setCartItems(prev => 
-      prev.map(item => 
-        item.id === itemId 
+
+    setCartItems(prev =>
+      prev.map(item =>
+        item.id === itemId
           ? { ...item, quantity: newQuantity, totalPrice: item.unitPrice * newQuantity }
           : item
       )
@@ -67,7 +67,7 @@ export default function CartPageClient({ cart }: CartPageClientProps) {
   const handleUpdateCart = async () => {
     setIsUpdating(true);
     setError('');
-    
+
     try {
       // Aquí iría la lógica para actualizar el carrito en el backend
       console.log('Actualizando carrito...', cartItems);
@@ -87,12 +87,12 @@ export default function CartPageClient({ cart }: CartPageClientProps) {
   };
 
   return (
-    <div className="bg-gray-50 py-8">
+    <div className="bg-gray-50 md:py-8">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="mb-8">
+        <div className="mb-8 p-4 md:p-0">
           <div className="flex items-center mb-4">
-            <Link 
+            <Link
               href="/profile?tab=carts"
               className="flex items-center text-blue-600 hover:text-blue-800 mr-4"
             >
@@ -100,17 +100,17 @@ export default function CartPageClient({ cart }: CartPageClientProps) {
               Volver a Mis Carritos
             </Link>
           </div>
-          
-          <div className="flex items-center justify-between">
+
+          <div className="flex md:flex-row flex-col items-center justify-between">
             <div>
               <Typography variant="h1" color="blue-gray" className="text-2xl md:text-3xl">
                 Mi Carrito
               </Typography>
               <Typography color="gray" className="mt-2">
-                Carrito #{cart.id.slice(-8)} • Creado el {formatDate(cart.creationDate)}
+                Carrito #{cart.id.slice(-8)} • <br className="md:hidden"/> Creado el {formatDate(cart.creationDate)}
               </Typography>
             </div>
-            
+
             <div className="flex items-center space-x-2">
               <ShoppingCartIcon className="h-8 w-8 text-blue-600" />
               <span className="text-sm text-gray-500">
@@ -165,9 +165,9 @@ export default function CartPageClient({ cart }: CartPageClientProps) {
                               <span className="text-gray-400 text-xs">Sin imagen</span>
                             </div>
                           )}
+                        
                         </div>
                       </div>
-
                       {/* Información del producto */}
                       <div className="flex-1 min-w-0">
                         <Typography variant="h6" color="blue-gray" className="mb-2" >
@@ -183,63 +183,63 @@ export default function CartPageClient({ cart }: CartPageClientProps) {
                           <Typography variant="h6" color="blue" >
                             L. {formatNumber(item.unitPrice)}
                           </Typography>
-                          {item.discount && item.discount > 0 && (
+                          {/* {item.discount && item.discount > 0 && (
                             <Typography variant="small" color="green" >
                               Descuento: L. {formatNumber(item.discount)}
                             </Typography>
-                          )}
+                          )} */}
                         </div>
                       </div>
 
                       {/* Controles de cantidad */}
-                      <div className="flex flex-col items-end space-y-4">
+                      <div className="md:flex flex-col items-end space-y-4 hidden">
                         <div className="flex items-center space-x-2">
-                        <div className="relative w-full">
-        <Input
-          type="number"
-          value={item.quantity}
-          onChange={(e) => handleQuantityChange(item.id, Number(e.target.value))}
-          className="!border-t-blue-gray-200 placeholder:text-blue-gray-300 placeholder:opacity-100  focus:!border-t-gray-900 appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-          labelProps={{
-            className: "before:content-none after:content-none",
-          }}
-          containerProps={{
-            className: "min-w-0",
-          }}
-        />
-        <div className="absolute right-1 top-1 flex gap-0.5">
-          <IconButton
-            size="sm"
-            variant="text"
-            className="rounded"
-            onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 16 16"
-              fill="currentColor"
-              className="h-4 w-4"
-            >
-              <path d="M3.75 7.25a.75.75 0 0 0 0 1.5h8.5a.75.75 0 0 0 0-1.5h-8.5Z" />
-            </svg>
-          </IconButton>
-          <IconButton
-            size="sm"
-            variant="text"
-            className="rounded"
-            onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 16 16"
-              fill="currentColor"
-              className="h-4 w-4"
-            >
-              <path d="M8.75 3.75a.75.75 0 0 0-1.5 0v3.5h-3.5a.75.75 0 0 0 0 1.5h3.5v3.5a.75.75 0 0 0 1.5 0v-3.5h3.5a.75.75 0 0 0 0-1.5h-3.5v-3.5Z" />
-            </svg>
-          </IconButton>
-        </div>
-      </div>
+                          <div className="relative w-full">
+                            <Input
+                              type="number"
+                              value={item.quantity}
+                              onChange={(e) => handleQuantityChange(item.id, Number(e.target.value))}
+                              className="!border-t-blue-gray-200 placeholder:text-blue-gray-300 placeholder:opacity-100  focus:!border-t-gray-900 appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                              labelProps={{
+                                className: "before:content-none after:content-none",
+                              }}
+                              containerProps={{
+                                className: "min-w-0",
+                              }}
+                            />
+                            <div className="absolute right-1 top-1 flex gap-0.5">
+                              <IconButton
+                                size="sm"
+                                variant="text"
+                                className="rounded"
+                                onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  viewBox="0 0 16 16"
+                                  fill="currentColor"
+                                  className="h-4 w-4"
+                                >
+                                  <path d="M3.75 7.25a.75.75 0 0 0 0 1.5h8.5a.75.75 0 0 0 0-1.5h-8.5Z" />
+                                </svg>
+                              </IconButton>
+                              <IconButton
+                                size="sm"
+                                variant="text"
+                                className="rounded"
+                                onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  viewBox="0 0 16 16"
+                                  fill="currentColor"
+                                  className="h-4 w-4"
+                                >
+                                  <path d="M8.75 3.75a.75.75 0 0 0-1.5 0v3.5h-3.5a.75.75 0 0 0 0 1.5h3.5v3.5a.75.75 0 0 0 1.5 0v-3.5h3.5a.75.75 0 0 0 0-1.5h-3.5v-3.5Z" />
+                                </svg>
+                              </IconButton>
+                            </div>
+                          </div>
                         </div>
 
                         <div className="text-right">
@@ -338,7 +338,6 @@ export default function CartPageClient({ cart }: CartPageClientProps) {
                   </Button>
                 </Link>
               </div>
-
               {/* Información adicional */}
               <div className="mt-6 pt-6 border-t">
                 <Typography variant="small" color="gray" className="text-center" >

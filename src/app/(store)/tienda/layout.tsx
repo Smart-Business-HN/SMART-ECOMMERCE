@@ -95,7 +95,7 @@ export default function StoreLayout({ children }: StoreLayoutProps) {
         <div className='w-full md:mx-auto max-w-screen-2xl py-5 container px-4'>
             <ProductPageLayout />
             <Breadcrumb />
-            <div className='w-full grid gap-5 pt-5 grid-cols-4' id='left-sidebar'>
+            <div className='w-full grid gap-5 pt-5 md:grid-cols-4 grid-cols-1' id='left-sidebar'>
                     <div className='hidden md:block col-span-1 product-page-sidebar'>
                         <div className='p-4 bg-fixed' style={{ backgroundImage: `url('/images/backgrounds/categories-bg.jpg')`, }}>
                             <h2 className='font-semibold text-gray-900 text-xl mb-3'>Categorias</h2>

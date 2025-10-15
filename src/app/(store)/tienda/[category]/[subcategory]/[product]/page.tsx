@@ -8,6 +8,8 @@ import { formatNumber } from '@/utils/number-format';
 import type { Metadata } from 'next';
 import { getServerSession } from 'next-auth/next';
 import { config } from '@/app/api/auth/[...nextauth]/route';
+import Link from 'next/link';
+import WhatsAppContactButton from '@/components/store/whatsapp-contact-button.component';
 
 interface ProductPageProps {
     params: Promise<{ category: string; subcategory: string; product: string }>;
@@ -295,9 +297,15 @@ export default async function ProductPage({ params }: ProductPageProps) {
                             {/* Precio */}
                             <div className="bg-blue-50 p-4 rounded-lg my-6">
                                 <p className="text-sm text-gray-600 mb-1">Precio</p>
+                                <div>
+
                                 <p className="text-3xl font-bold text-blue-600" aria-label={`Precio: Lempiras ${formatNumber(productData.recomendedSalePrice)}`}>
                                     L. {formatNumber(productData.recomendedSalePrice)}
                                 </p>
+                                {isUserSignIn && (
+                                    <div>Consigue hasta un <strong><span className="text-blue-600">10%</span> de descuento</strong> solo por <Link className="text-blue-600" href="/sign-up">registrarte.</Link></div>
+                                )}
+                                </div>
                             </div>
 
                             {/* Descripción */}
@@ -329,14 +337,13 @@ export default async function ProductPage({ params }: ProductPageProps) {
                                 >
                                     {productData.currentStock > 0 ? 'Agregar al Carrito' : 'Sin Stock'}
                                 </Button>
-                                <Button 
-                                    size="lg" 
-                                    variant="outlined" 
+                                <WhatsAppContactButton 
+                                    productUrl={`https://smartbusiness.site/tienda/${productData.subCategory?.category?.slug || ''}/${productData.subCategory?.slug || ''}/${productData.slug}`}
+                                    size="lg"
+                                    variant="outlined"
                                     color="blue"
                                     aria-label="Contactar sobre este producto"
-                                >
-                                    Contactar
-                                </Button>
+                                />
                             </div>
 
                             {/* Información Adicional */}

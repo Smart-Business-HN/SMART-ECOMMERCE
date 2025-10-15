@@ -65,7 +65,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
   if (totalPages <= 1) return null;
 
   return (
-    <div className="flex items-center justify-center gap-4 mt-8">
+    <div className=" items-center justify-center gap-4 mt-8 hidden md:flex">
       <Button
         variant="text"
         className="flex items-center gap-2 text-blue-600 hover:text-blue-700"

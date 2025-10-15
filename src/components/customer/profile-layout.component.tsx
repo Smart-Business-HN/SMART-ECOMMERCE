@@ -20,6 +20,7 @@ import {
   BuildingOfficeIcon,
 } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/navigation';
+import { formatNumber } from '@/utils/number-format';
 
 interface ProfileLayoutProps {
   user: EcommerceUserDto;
@@ -324,7 +325,7 @@ function CartSectionComponent({ user }: {
                 </div>
                 <div className="text-right">
                   <Typography variant="h6" color="green" placeholder="">
-                    ${calculateCartTotal(cart).toFixed(2)}
+                    L.{ formatNumber(calculateCartTotal(cart))}
                   </Typography>
                   <Typography variant="small" color="gray" placeholder="">
                     {cart.cartItems?.length || 0} productos
@@ -338,17 +339,17 @@ function CartSectionComponent({ user }: {
                     Productos:
                   </Typography>
                   {cart.cartItems.map((item) => (
-                    <div key={item.id} className="flex justify-between items-center py-2 border-b border-gray-100">
+                    <div key={item.id} className="flex flex-col md:flex-row justify-between items-center py-2 border-b border-gray-100">
                       <div className="flex-1">
                         <Typography variant="small" color="blue-gray" placeholder="">
                           {item.product?.name || 'Producto no disponible'}
                         </Typography>
                         <Typography variant="small" color="gray" placeholder="">
-                          Cantidad: {item.quantity} x ${item.unitPrice.toFixed(2)}
+                          <strong>Cantidad:</strong> {item.quantity} x L.{formatNumber(item.unitPrice)}
                         </Typography>
                       </div>
                       <Typography variant="small" color="blue-gray" className="font-medium" placeholder="">
-                        ${item.totalPrice.toFixed(2)}
+                        L.{formatNumber(item.totalPrice)}
                       </Typography>
                     </div>
                   ))}

@@ -163,11 +163,11 @@ export default function SubCategoryPage({ params }: SubCategoryPageProps) {
             />
 
             <main className='col-span-4 md:col-span-3' role="main" aria-labelledby="subcategoria-titulo">
-                <header className='flex justify-between items-center mb-6'>
-                    <h1 id="subcategoria-titulo" className='text-gray-400 font-semibold text-3xl grow'>
+                <header className='flex flex-col md:flex-row justify-between items-center mb-6'>
+                    <h1 id="subcategoria-titulo" className='text-gray-400 font-semibold text-4xl grow'>
                         {subcategoryTitle}
                     </h1>
-                    <div className='flex gap-2 items-center' role="group" aria-label="Controles de visualización y paginación">
+                    <div className='flex gap-2 items-center mt-2 md:mt-0' role="group" aria-label="Controles de visualización y paginación">
                         {/* @ts-expect-error Material Tailwind ButtonGroup type definitions are overly strict; props are correct per docs */}
                         <ButtonGroup color='gray' variant='outlined' size='sm' ripple={true}>
                             {/* @ts-expect-error Material Tailwind Button type definitions are overly strict; props are correct per docs */}

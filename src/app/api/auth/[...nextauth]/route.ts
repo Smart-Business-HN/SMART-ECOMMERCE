@@ -42,7 +42,8 @@ const authOptions: NextAuthOptions = {
               customerType: response.data.customerType,
               firstName: response.data.firstName,
               lastName: response.data.lastName,
-              userName: response.data.userName
+              userName: response.data.userName,
+              activeCartId: response.data.activeCartId
             };
           }
           
