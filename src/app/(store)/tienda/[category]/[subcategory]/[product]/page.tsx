@@ -302,7 +302,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                                 <p className="text-3xl font-bold text-blue-600" aria-label={`Precio: Lempiras ${formatNumber(productData.recomendedSalePrice)}`}>
                                     L. {formatNumber(productData.recomendedSalePrice)}
                                 </p>
-                                {isUserSignIn && (
+                                {!isUserSignIn && (
                                     <div>Consigue hasta un <strong><span className="text-blue-600">10%</span> de descuento</strong> solo por <Link className="text-blue-600" href="/sign-up">registrarte.</Link></div>
                                 )}
                                 </div>

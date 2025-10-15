@@ -6,24 +6,42 @@ import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 interface PaginationProps {
   currentPage: number;
   totalPages: number;
-  onPageChange: (page: number) => void;
+  onPageChange?: (page: number) => void;
+  baseUrl?: string;
 }
 
-export default function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) {
-  const getItemProps = (index: number) => ({
-    variant: currentPage === index ? "filled" : "text",
-    color: "blue",
-    onClick: () => onPageChange(index),
-  } as any);
+export default function Pagination({ currentPage, totalPages, onPageChange, baseUrl }: PaginationProps) {
+  const getItemProps = (index: number) => {
+    const props: any = {
+      variant: currentPage === index ? "filled" : "text",
+      color: "blue",
+    };
+
+    if (baseUrl) {
+      props.href = `${baseUrl}&page=${index}`;
+    } else if (onPageChange) {
+      props.onClick = () => onPageChange(index);
+    }
+
+    return props;
+  };
 
   const next = () => {
     if (currentPage === totalPages) return;
-    onPageChange(currentPage + 1);
+    if (baseUrl) {
+      window.location.href = `${baseUrl}&page=${currentPage + 1}`;
+    } else if (onPageChange) {
+      onPageChange(currentPage + 1);
+    }
   };
 
   const prev = () => {
     if (currentPage === 1) return;
-    onPageChange(currentPage - 1);
+    if (baseUrl) {
+      window.location.href = `${baseUrl}&page=${currentPage - 1}`;
+    } else if (onPageChange) {
+      onPageChange(currentPage - 1);
+    }
   };
 
   // Generar números de página a mostrar
@@ -79,6 +97,12 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
         {getPageNumbers().map((page, index) => (
           page === '...' ? (
             <span key={`ellipsis-${index}`} className="px-3 py-2 text-blue-600">...</span>
+          ) : baseUrl ? (
+            <a key={page} href={`${baseUrl}&page=${page}`}>
+              <IconButton className="" {...getItemProps(page as number)}>
+                {page}
+              </IconButton>
+            </a>
           ) : (
             <IconButton className="" key={page} {...getItemProps(page as number)}>
               {page}

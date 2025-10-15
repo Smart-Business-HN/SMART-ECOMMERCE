@@ -1,6 +1,7 @@
 import CategoryTree from "@/components/store/category-tree.component";
 import Breadcrumb from "@/components/store/breadcrumb.component";
 import ProductPageLayout from "@/components/store/product-page-layout.component";
+import SearchInput from "@/components/store/search-input.component";
 import { Metadata } from 'next';
 
 interface StoreLayoutProps {
@@ -94,7 +95,10 @@ export default function StoreLayout({ children }: StoreLayoutProps) {
     return (
         <div className='w-full md:mx-auto max-w-screen-2xl py-5 container px-4'>
             <ProductPageLayout />
-            <Breadcrumb />
+            <div className='w-full md:flex justify-between items-center'>
+              <Breadcrumb />
+              <SearchInput />
+            </div>
             <div className='w-full grid gap-5 pt-5 md:grid-cols-4 grid-cols-1' id='left-sidebar'>
                     <div className='hidden md:block col-span-1 product-page-sidebar'>
                         <div className='p-4 bg-fixed' style={{ backgroundImage: `url('/images/backgrounds/categories-bg.jpg')`, }}>
