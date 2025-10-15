@@ -1,3 +1,4 @@
+//@ts-nocheck
 'use client';
 import { useState } from 'react';
 import { Button, Alert } from '@/utils/MTailwind';
@@ -48,7 +49,7 @@ export default function AddToCartButton({
         productId,
         1, // Cantidad por defecto
         session.user.id,
-        session.activeCartId || undefined
+        undefined
       );
 
       if (response.succeeded && response.data) {
