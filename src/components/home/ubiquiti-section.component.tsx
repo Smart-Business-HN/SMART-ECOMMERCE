@@ -38,7 +38,7 @@ export default function UbiquitiSectionComponent() {
                         <h5 className='font-semibold text-gray-700 mb-2'>El original</h5>
                         <p className='font-bold text-gray-950 text-3xl'>Buque insignia</p>
                         <p className='font-semibold text-gray-600'>Wifi Perfecto</p>
-                        <Link className='flex gap-2 items-center mb-5 text-blue-600 hover:text-blue-500' href='/shop/conectividad/wifi-empresarial/unifi-u6-pro'>
+                        <Link className='flex gap-2 items-center mb-5 text-blue-600 hover:text-blue-500' href='/tienda/conectividad/wifi-empresarial/unifi-u6-pro'>
                             <p className=' font-semibold'>Comprar</p>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
@@ -52,7 +52,7 @@ export default function UbiquitiSectionComponent() {
                         <h5 className='font-semibold text-gray-700 mb-2'>Indoor / Outdoor</h5>
                         <p className='font-bold text-gray-950 text-3xl'>Mesh</p>
                         <p className='font-semibold text-gray-600'>Plug-and-play PoE mesh</p>
-                        <Link className='flex gap-2 items-center mb-5 text-blue-600 hover:text-blue-500' href='shop/conectividad/wifi-empresarial/ap-wifi6-de-malla-empresarial-ubiquiti'>
+                        <Link className='flex gap-2 items-center mb-5 text-blue-600 hover:text-blue-500' href='/tienda/conectividad/wifi-empresarial/ap-wifi6-de-malla-empresarial-ubiquiti'>
                             <p className=' font-semibold'>Comprar</p>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
@@ -66,7 +66,7 @@ export default function UbiquitiSectionComponent() {
                         <h5 className='font-semibold text-gray-700 mb-2'>Compacto</h5>
                         <p className='font-bold text-gray-950 text-3xl'>In-Wall</p>
                         <p className='font-semibold text-gray-600'>Amplíe la cobertura WiFi sin problemas</p>
-                        <Link className='flex gap-2 items-center mb-5 text-blue-600 hover:text-blue-500' href='/shop/conectividad/wifi-empresarial/ap-unifi-dual-band-180-mimo-2x2-ubiquiti'>
+                        <Link className='flex gap-2 items-center mb-5 text-blue-600 hover:text-blue-500' href='/tienda/conectividad/wifi-empresarial/ap-unifi-dual-band-180-mimo-2x2-ubiquiti'>
                             <p className=' font-semibold'>Comprar</p>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
@@ -123,7 +123,7 @@ export default function UbiquitiSectionComponent() {
                         <Button
                             variant="filled" size="sm" color="blue"
                         >
-                            <Link href='/contact' className=''>Contactar</Link>
+                            <Link href='/contacto' className=''>Contactar</Link>
                         </Button>
                         </div>
                     </div>
