@@ -124,20 +124,40 @@ TypeError: fetch failed
 [cause]: [Error: self-signed certificate] { code: 'DEPTH_ZERO_SELF_SIGNED_CERT' }
 ```
 
-**Solución**: 
+**Solución paso a paso**:
 
-1. **Si tu API usa Let's Encrypt** (recomendado): El Dockerfile ya está configurado para actualizar los certificados CA del sistema. Esto debería resolver el problema automáticamente. Si persiste, verifica:
-   - Que el dominio de la API sea correcto
-   - Que el certificado Let's Encrypt esté válido y no haya expirado
-   - Que los DNS estén configurados correctamente
+1. **Verificar las variables de entorno en Dokploy**:
+   - Ve a tu aplicación en Dokploy
+   - Click en "Environment Variables"
+   - Verifica que `ALLOW_SELF_SIGNED_CERT=true` esté configurada exactamente así (sin espacios, minúsculas)
+   - Guarda los cambios
 
-2. **Si tu API usa certificados auto-firmados** (solo en casos especiales): Agrega esta variable de entorno en Dokploy:
+2. **Revisar los logs de inicio**:
+   Después de hacer redeploy, busca en los logs las líneas que dicen:
+   ```
+   SSL Configuration Debug:
+   ALLOW_SELF_SIGNED_CERT: 'true'
+   ```
+   
+   Si dice `'not_set'`, la variable no se está pasando correctamente al contenedor.
 
-```env
-ALLOW_SELF_SIGNED_CERT=true
-```
+3. **Verificar que la variable se aplique**:
+   Los logs deberían mostrar:
+   ```
+   ⚠️  SSL certificate validation is DISABLED
+   ⚠️  NODE_TLS_REJECT_UNAUTHORIZED=0
+   ```
 
-**Nota**: El Dockerfile actualiza automáticamente los certificados CA del sistema, por lo que certificados válidos como Let's Encrypt deberían funcionar sin configuración adicional.
+4. **Si tu API usa Let's Encrypt y aún tienes problemas**:
+   - Verifica que el certificado Let's Encrypt esté válido (puedes probarlo en el navegador)
+   - Verifica que el dominio de la API sea correcto
+   - Verifica que los DNS estén configurados correctamente
+   - Si el problema persiste, temporalmente usa `ALLOW_SELF_SIGNED_CERT=true` mientras investigas
+
+5. **Si la variable no se está aplicando**:
+   - Asegúrate de hacer **redeploy** después de agregar la variable
+   - Verifica que no haya espacios adicionales en el valor de la variable
+   - Intenta usar también: `NODE_TLS_REJECT_UNAUTHORIZED=0` como variable adicional
 
 ### Errores de build
 
