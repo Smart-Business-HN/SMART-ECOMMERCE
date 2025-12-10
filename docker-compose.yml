@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: smart-business-ecommerce
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_BASE_URL=${NEXT_PUBLIC_API_BASE_URL:-https://api.smartbusiness.site/api/v2}
+      - NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL:-https://www.smartbusiness.site}
+      - NEXTAUTH_URL=${NEXTAUTH_URL:-https://www.smartbusiness.site}
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+    restart: unless-stopped
+    networks:
+      - smart-business-network
+
+networks:
+  smart-business-network:
+    driver: bridge
+
+
