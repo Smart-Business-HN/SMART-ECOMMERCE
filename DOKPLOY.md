@@ -16,7 +16,7 @@ Configura las siguientes variables de entorno en Dokploy:
 
 ```env
 NODE_ENV=production
-NEXT_PUBLIC_API_BASE_URL=https://sb8.azurewebsites.net/api/v2
+NEXT_PUBLIC_API_BASE_URL=https://api.smartbusiness.site/api/v2
 NEXT_PUBLIC_APP_URL=https://www.smartbusiness.site
 NEXTAUTH_URL=https://www.smartbusiness.site
 NEXTAUTH_SECRET=tu_secret_key_aqui_generar_una_nueva
@@ -29,6 +29,18 @@ PORT=3000
 HOSTNAME=0.0.0.0
 NEXT_TELEMETRY_DISABLED=1
 ```
+
+### Variables para Certificados SSL (Solo si es necesario)
+
+El Dockerfile ya actualiza automáticamente los certificados CA del sistema, por lo que certificados válidos como **Let's Encrypt deberían funcionar sin configuración adicional**.
+
+Si tu API backend usa certificados SSL auto-firmados (casos especiales), agrega:
+
+```env
+ALLOW_SELF_SIGNED_CERT=true
+```
+
+⚠️ **ADVERTENCIA**: Solo usar esta opción si tu API realmente usa certificados auto-firmados. Si tu API usa Let's Encrypt u otros certificados válidos, NO es necesario configurar esta variable.
 
 ## Pasos para Deployment en Dokploy
 
@@ -103,6 +115,29 @@ Después del deployment, verifica:
 - Verifica los logs en Dokploy: `Application → Logs`
 - Verifica que todas las variables de entorno estén configuradas
 - Verifica que el puerto 3000 esté expuesto
+
+### Error: "self-signed certificate" o "DEPTH_ZERO_SELF_SIGNED_CERT"
+
+Si ves este error en los logs:
+```
+TypeError: fetch failed
+[cause]: [Error: self-signed certificate] { code: 'DEPTH_ZERO_SELF_SIGNED_CERT' }
+```
+
+**Solución**: 
+
+1. **Si tu API usa Let's Encrypt** (recomendado): El Dockerfile ya está configurado para actualizar los certificados CA del sistema. Esto debería resolver el problema automáticamente. Si persiste, verifica:
+   - Que el dominio de la API sea correcto
+   - Que el certificado Let's Encrypt esté válido y no haya expirado
+   - Que los DNS estén configurados correctamente
+
+2. **Si tu API usa certificados auto-firmados** (solo en casos especiales): Agrega esta variable de entorno en Dokploy:
+
+```env
+ALLOW_SELF_SIGNED_CERT=true
+```
+
+**Nota**: El Dockerfile actualiza automáticamente los certificados CA del sistema, por lo que certificados válidos como Let's Encrypt deberían funcionar sin configuración adicional.
 
 ### Errores de build
 

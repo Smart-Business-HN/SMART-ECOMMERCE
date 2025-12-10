@@ -1,8 +1,11 @@
 import type { NextConfig } from "next";
 
-// Configurar Node.js para ignorar certificados SSL auto-firmados en desarrollo
-if (process.env.NODE_ENV === 'development' && process.env.NODE_TLS_REJECT_UNAUTHORIZED !== '1') {
+// Configurar Node.js para ignorar certificados SSL auto-firmados solo si es explícitamente necesario
+// Por defecto, se respetan los certificados válidos (como Let's Encrypt)
+// Solo deshabilitar si se requiere explícitamente con ALLOW_SELF_SIGNED_CERT=true
+if (process.env.ALLOW_SELF_SIGNED_CERT === 'true' || process.env.NODE_TLS_REJECT_UNAUTHORIZED === '0') {
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+  console.warn('⚠️  SSL certificate validation is disabled');
 }
 
 const nextConfig: NextConfig = {

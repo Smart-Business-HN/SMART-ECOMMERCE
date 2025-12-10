@@ -31,6 +31,10 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
+# Actualizar certificados CA para que Let's Encrypt funcione correctamente
+RUN apk add --no-cache ca-certificates && \
+    update-ca-certificates
+
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
@@ -39,6 +43,10 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 
+# Copiar script de inicio
+COPY --chown=nextjs:nodejs server-start.sh ./
+RUN chmod +x server-start.sh
+
 USER nextjs
 
 EXPOSE 3000
@@ -46,5 +54,6 @@ EXPOSE 3000
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
-CMD ["node", "server.js"]
+# Usar el script wrapper en lugar de ejecutar node directamente
+CMD ["./server-start.sh"]
 
