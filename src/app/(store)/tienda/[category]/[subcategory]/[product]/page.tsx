@@ -386,7 +386,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                                 {productData.ecommerceDescription && (
                                     <TabPanel key="ecommerceDescription" value="ecommerceDescription">
                                     <div
-                                        className="prose"
+                                        className="prose description"
                                         dangerouslySetInnerHTML={{ __html: productData.ecommerceDescription || '' }}
                                     />
                                 </TabPanel>

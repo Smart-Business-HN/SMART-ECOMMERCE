@@ -4,6 +4,8 @@ import CorporateResumeComponent from "@/components/home/corporate-resume.compone
 import UbiquitiSectionComponent from "@/components/home/ubiquiti-section.component";
 import UbiquitiWispSectionComponent from "@/components/home/ubiquiti-wisp-section.component";
 import Hikvision from "@/components/home/hikvision.component";
+import CertificatesComponent from "@/components/home/certificates.components";
+import HappyHolidaysComponent from "@/components/home/happy-holidays.component";
 
 export default function Home() {
   return (
@@ -231,8 +233,10 @@ export default function Home() {
         }}
       />
 
-      <HeroComponent />
+      {/* <HeroComponent /> */}
+      <HappyHolidaysComponent/>
       <BrandingComponent />
+      <CertificatesComponent />
       <CorporateResumeComponent />
       <UbiquitiSectionComponent />
       <UbiquitiWispSectionComponent />

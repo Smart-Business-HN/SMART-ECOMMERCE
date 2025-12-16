@@ -5,3 +5,30 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
+.description h1 {
+  @apply text-2xl font-bold text-gray-900 mb-3;
+}
+.description h2 {
+  @apply text-xl font-bold text-gray-900 mb-3;
+}
+.description h3 {
+  @apply font-bold text-gray-900 mb-3;
+}
+.description h4 {
+  @apply text-base font-bold text-gray-900 mb-3;
+}
+.description ul {
+  @apply list-disc list-inside ml-4;
+}
+.description ol {
+  @apply list-decimal list-inside ml-4;
+}
+.description p {
+  @apply text-gray-600 leading-relaxed;
+}
+.description a {
+  @apply text-blue-600 hover:text-blue-700;
+}
+.description strong {
+  @apply font-bold;
+}
