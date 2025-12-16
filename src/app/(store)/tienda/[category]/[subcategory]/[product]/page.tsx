@@ -423,6 +423,16 @@ export default async function ProductPage({ params }: ProductPageProps) {
         );
     } catch (error) {
         console.error('Error fetching product:', error);
+        console.error('Product slug:', product);
+        console.error('Category:', category);
+        console.error('Subcategory:', subcategory);
+        
+        // Si el error es específico de producto no encontrado, mostrar 404
+        if (error instanceof Error && error.message.includes('404')) {
+            notFound();
+        }
+        
+        // Para otros errores, también mostrar 404 pero loguear el error completo
         notFound();
     }
 }
