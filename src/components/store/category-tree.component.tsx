@@ -1,6 +1,7 @@
 import { NavCategoryResponse } from '@/interfaces/http/responses.interface';
 import CategoryTreeClient from './category-tree-client.component';
 import { getApiUrl } from '@/utils/server-url';
+import { NavCategoryDto } from '@/interfaces/nav-category/nav-category.interface';
 
 // Server Component para obtener datos
 async function getCategories(): Promise<NavCategoryResponse> {
@@ -19,7 +20,14 @@ async function getCategories(): Promise<NavCategoryResponse> {
     }
 
     const data = await res.json();
-    return data;
+    data.data = data.data.filter((category: NavCategoryDto) => 
+        category.category !== 'NAS' 
+        && category.category !== 'Mano de obra' 
+        && category.category !== 'Computadoras' 
+        && category.category !== 'Miscelaneos' 
+        && category.category !== 'Impresoras'
+        && category.category !== 'Servidores');
+        return data;
 }
 
 // Server Component principal

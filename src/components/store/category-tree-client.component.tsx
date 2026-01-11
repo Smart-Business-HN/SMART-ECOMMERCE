@@ -43,24 +43,24 @@ const CategoryTreeClient = ({ categories }: { categories: NavCategoryDto[] }) =>
                                     {/* <ListItemPrefix>
                                         <TagIcon className="h-5 w-5" />
                                     </ListItemPrefix> */}
-                                    <Typography color="blue-gray" className="mr-auto font-normal">
                                         <Link href={`/tienda/${category.slug}`} className="hover:text-blue-500">
-                                            {category.category}
+                                            <Typography color="blue-gray" className="mr-auto font-normal">
+                                                    {category.category}
+                                            </Typography>
                                         </Link>
-                                    </Typography>
                                 </AccordionHeader>
                             </ListItem>
                             <AccordionBody className="py-1">
                                 <List className="p-0">
                                     {category.subCategories.map((subcategory) => (
-                                        <ListItem key={subcategory.id}>
-                                            {/* <ListItemPrefix>
-                                                <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                                            </ListItemPrefix> */}
-                                            <Link href={`/tienda/${category.slug}/${subcategory.slug}`} className="hover:text-blue-500">
-                                                {subcategory.name}
+                                            <Link href={`/tienda/${category.slug}/${subcategory.slug}`} className="hover:text-blue-500" key={subcategory.id}>
+                                                <ListItem>
+                                                    {/* <ListItemPrefix>
+                                                        <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                                                    </ListItemPrefix> */}
+                                                        {subcategory.name}
+                                                </ListItem>
                                             </Link>
-                                        </ListItem>
                                     ))}
                                 </List>
                             </AccordionBody>
