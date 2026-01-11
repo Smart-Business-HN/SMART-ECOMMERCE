@@ -109,7 +109,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
+    <html lang="es" suppressHydrationWarning={true} data-lt-installed={true}>
       <head>
         <Script id='tag-manager'
         dangerouslySetInnerHTML={
