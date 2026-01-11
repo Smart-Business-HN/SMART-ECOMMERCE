@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth/next';
-import { config } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/auth.config';
 import { getCartById } from '@/services/cart.service';
 import CartPageClient from '@/components/customer/cart-page-client.component';
 
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
 
 export default async function CartPage({ params }: CartPageProps) {
   // Verificar autenticación
-  const session = await getServerSession(config);
+  const session = await getServerSession(authOptions);
   
   if (!session?.user?.id) {
     redirect('/login');

@@ -3,10 +3,10 @@ import { isServer } from "@/utils/is-server";
 import { ProductSearchResponse, ProductSearchParameter } from "../interfaces/product/product-search.interface";
 import { getApiUrl } from "@/utils/server-url";
 import { getServerSession } from "next-auth";
-import { config } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/auth.config";
 
 export async function searchProducts(searchParams: ProductSearchParameter): Promise<ProductSearchResponse> {
-  const session = await getServerSession(config);
+  const session = await getServerSession(authOptions);
   const isUserSignInFromSession = session?.user?.id ? true : false;
   const customerTypeIdFromSession = session?.customerType?.id ? session?.customerType?.id : undefined;
 

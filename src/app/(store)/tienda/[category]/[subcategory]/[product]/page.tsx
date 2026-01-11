@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { getProductBySlug } from '@/services/products.service';
 import { ProductDto } from '@/interfaces/product/product.interface';
 import Image from 'next/image';
@@ -7,7 +6,7 @@ import { notFound } from 'next/navigation';
 import { formatNumber } from '@/utils/number-format';
 import type { Metadata } from 'next';
 import { getServerSession } from 'next-auth/next';
-import { config } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/auth.config';
 import Link from 'next/link';
 import WhatsAppContactButton from '@/components/store/whatsapp-contact-button.component';
 
@@ -131,7 +130,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
     const { category, subcategory, product } = await params;
     
     // Obtener la sesión del servidor
-    const session = await getServerSession(config);
+    const session = await getServerSession(authOptions);
     const isUserSignIn = session?.user?.id ? true : false;
     const customerTypeId = session?.customerType?.id ? session?.customerType?.id : undefined;
     
@@ -143,7 +142,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
         }
         
         const productData: ProductDto = response.data;
-        var hasMoreInformation = false;
+        let hasMoreInformation = false;
         if(productData.ecommerceDescription || productData.productFeatures || productData.productDataSheets) {
             hasMoreInformation = true;
         }

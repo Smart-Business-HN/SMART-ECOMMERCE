@@ -3,7 +3,7 @@ import { isServer } from "@/utils/is-server";
 import { ProductResponse, ProductsEcommerceResponse } from "../interfaces/http/responses.interface";
 import { getApiUrl } from "@/utils/server-url";
 import { getServerSession } from "next-auth";
-import { config } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/auth.config";
 
 export async function getProductBySlug(slug: string, isLogged: boolean, customerTypeId: number): Promise<ProductResponse> {
   // Usar URL relativa que Next.js resolverá automáticamente
@@ -36,7 +36,7 @@ export async function getProductsEcommerce(
   isUserSignIn: boolean = false,
   customerTypeId?: number
 ): Promise<ProductsEcommerceResponse> {
-  const session = await getServerSession(config);
+  const session = await getServerSession(authOptions);
   const isUserSignInFromSession = session?.user?.id ? true : false;
   const customerTypeIdFromSession = session?.customerType?.id ? session?.customerType?.id : undefined;
   const params = new URLSearchParams({
@@ -87,7 +87,7 @@ export async function getProductsByCategorySlug(
   isUserSignIn: boolean = false,
   customerTypeId?: number
 ): Promise<ProductsEcommerceResponse> {
-  const session = await getServerSession(config);
+  const session = await getServerSession(authOptions);
   const isUserSignInFromSession = session?.user?.id ? true : false;
   const customerTypeIdFromSession = session?.customerType?.id ? session?.customerType?.id : undefined;
   const params = new URLSearchParams({
@@ -137,7 +137,7 @@ export async function getProductsBySubCategorySlug(
   isUserSignIn: boolean = false,
   customerTypeId?: number
 ): Promise<ProductsEcommerceResponse> {
-  const session = await getServerSession(config);
+  const session = await getServerSession(authOptions);
 const isUserSignInFromSession = session?.user?.id ? true : false;
 const customerTypeIdFromSession = session?.customerType?.id ? session?.customerType?.id : undefined;
   const params = new URLSearchParams({

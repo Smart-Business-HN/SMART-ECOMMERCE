@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth/next';
-import { config } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/auth.config';
 import { getUserById } from '@/services/auth.service';
 import ProfileLayout from '@/components/customer/profile-layout.component';
 import type { Metadata } from 'next';
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
 
 export default async function ProfilePage() {
   // Verificar autenticación
-  const session = await getServerSession(config);
+  const session = await getServerSession(authOptions);
   
   if (!session?.user?.id) {
     redirect('/login');

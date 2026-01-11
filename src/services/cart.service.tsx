@@ -1,7 +1,7 @@
 'use server';
 import { getApiUrl } from '@/utils/server-url';
 import { isServer } from '@/utils/is-server';
-import { config } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/auth.config';
 import { getServerSession } from 'next-auth';
 import { GetCartsResponse, CartDto } from '@/interfaces/cart/cart.interface';
 import { Response } from '@/interfaces/http/response.interface';
@@ -9,7 +9,7 @@ import { Response } from '@/interfaces/http/response.interface';
 export async function getCartsByCustomerId(customerId: string): Promise<GetCartsResponse> {
   try {
     const url = isServer ? getApiUrl(`/api/cart/GetCarts/${customerId}`) : `/api/cart/GetCarts/${customerId}`;
-    const session = await getServerSession(config);
+    const session = await getServerSession(authOptions);
     const token = session?.accessToken;
     
     const response = await fetch(url, {
@@ -52,7 +52,7 @@ export interface GetCartByIdResponse {
 export async function getCartById(cartId: string): Promise<GetCartByIdResponse> {
   try {
     const url = isServer ? getApiUrl(`/api/cart/GetCartById/${cartId}`) : `/api/cart/GetCartById/${cartId}`;
-    const session = await getServerSession(config);
+    const session = await getServerSession(authOptions);
     const token = session?.accessToken;
     
     const response = await fetch(url, {
@@ -97,7 +97,7 @@ export async function addProductToCart(
 ): Promise<AddProductToCartResponse> {
   try {
     const url = isServer ? getApiUrl(`/api/cart/AddProduct/${productId}`) : `/api/cart/AddProduct/${productId}`;
-    const session = await getServerSession(config);
+    const session = await getServerSession(authOptions);
     const token = session?.accessToken;
     
     // Construir query parameters

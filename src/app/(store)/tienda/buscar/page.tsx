@@ -4,7 +4,7 @@ import { ProductSearchParameter } from '@/interfaces/product/product-search.inte
 import ProductsGrid from '@/components/store/products-grid.component';
 import Pagination from '@/components/store/pagination.component';
 import { getServerSession } from 'next-auth/next';
-import { config } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/auth.config';
 import type { Metadata } from 'next';
 
 interface SearchPageProps {
@@ -31,7 +31,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   const pageSize = 20;
   
   // Obtener la sesión del servidor
-  const session = await getServerSession(config);
+  const session = await getServerSession(authOptions);
   const isUserSignIn = session?.user?.id ? true : false;
   const customerTypeId = session?.customerType?.id ? session?.customerType?.id : undefined;
 

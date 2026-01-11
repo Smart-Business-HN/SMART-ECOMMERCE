@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import { config } from '../[...nextauth]/route';
+import { authOptions } from '@/auth.config';
 
 export async function POST(request: NextRequest) {
   try {
-    const session = await getServerSession(config);
+    const session = await getServerSession(authOptions);
     
     if (!session?.user?.id) {
       return NextResponse.json(
