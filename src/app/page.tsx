@@ -233,8 +233,8 @@ export default function Home() {
         }}
       />
 
-      {/* <HeroComponent /> */}
-      <HappyHolidaysComponent/>
+      <HeroComponent />
+      {/* <HappyHolidaysComponent/> */}
       <BrandingComponent />
       <CertificatesComponent />
       <CorporateResumeComponent />
