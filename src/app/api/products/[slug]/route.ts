@@ -63,10 +63,14 @@ export async function GET(
     
     const data = await response.json();
     
-    return NextResponse.json(data);
+    return NextResponse.json(data, {
+      headers: {
+        'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600',
+      },
+    });
   } catch (error) {
     console.error('Proxy error:', error);
-    
+
     // Si el error incluye información sobre el slug, incluirla en la respuesta
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     

@@ -12,7 +12,8 @@ export async function getProductBySlug(slug: string, isLogged: boolean, customer
     method: 'GET',
     headers: {
       'Accept': 'application/json',
-    }
+    },
+    next: { revalidate: 300 }, // Cache 5 minutos
   });
   if (!res.ok) {
     let errorResponse: ProductResponse | undefined = undefined;
@@ -63,6 +64,7 @@ export async function getProductsEcommerce(
     headers: {
       'Accept': 'application/json',
     },
+    next: { revalidate: 300 }, // Cache 5 minutos
   });
 
   if (!res.ok) {
@@ -113,6 +115,7 @@ export async function getProductsByCategorySlug(
     headers: {
       'Accept': 'application/json',
     },
+    next: { revalidate: 300 }, // Cache 5 minutos
   });
 
   if (!res.ok) {
@@ -163,6 +166,7 @@ const customerTypeIdFromSession = session?.customerType?.id ? session?.customerT
     headers: {
       'Accept': 'application/json',
     },
+    next: { revalidate: 300 }, // Cache 5 minutos
   });
 
   if (!res.ok) {

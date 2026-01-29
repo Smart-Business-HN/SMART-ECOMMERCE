@@ -3,6 +3,7 @@
 import { Navbar,Button,Avatar, Menu, MenuItem, MenuList, MenuHandler } from "@/utils/MTailwind";
 import { ShoppingCartIcon } from "@heroicons/react/20/solid";
 import { Bars3Icon } from "@heroicons/react/24/outline";
+import Image from "next/image";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 interface MainNavbarProps {
@@ -34,7 +35,7 @@ export default function NavBarComponent({ cartItemsCount = 0, onCartClick }: Mai
         <Navbar className="flex items-center justify-between px-4 py-2 w-full bg-white bg-opacity-50  rounded-none " placeholder="">
           <div className="md:flex items-center gap-6 hidden">
             <div className="w-10 h-10 bg-gray-200 flex items-center justify-center">
-              <img src="/images/corporate/smart.webp" alt="logo" className="w-8 h-8 object-contain" />
+              <Image src="/images/corporate/smart.webp" alt="Smart Business logo" width={32} height={32} priority className="object-contain" />
             </div>
             <div className="flex gap-2">
               {/* @ts-expect-error Material Tailwind Button type definitions are overly strict; props are correct per docs */}
@@ -51,7 +52,7 @@ export default function NavBarComponent({ cartItemsCount = 0, onCartClick }: Mai
           </div>
           <div className="w-full flex md:hidden">
             <div className="w-10 h-10 flex items-center justify-center">
-              <img src="/images/corporate/smart.webp" alt="logo" className="w-8 h-8 object-contain" />
+              <Image src="/images/corporate/smart.webp" alt="Smart Business logo" width={32} height={32} priority className="object-contain" />
             </div>
           </div>
           {/* Right: Auth Buttons or Avatar */}

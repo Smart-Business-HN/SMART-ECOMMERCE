@@ -8,7 +8,8 @@ export async function getAllNavCategory(): Promise<NavCategoryResponse> {
     method: 'GET',
     headers: {
       'Accept': 'application/json',
-    }
+    },
+    next: { revalidate: 3600 }, // Cache 1 hora (categorías cambian raramente)
   });
   if (!res.ok) {
     let errorResponse: NavCategoryResponse | undefined = undefined;

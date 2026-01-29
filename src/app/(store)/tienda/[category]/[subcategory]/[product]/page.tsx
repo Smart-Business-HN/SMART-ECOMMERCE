@@ -266,12 +266,17 @@ export default async function ProductPage({ params }: ProductPageProps) {
                                 {productData.productImages && productData.productImages.length > 0 ? (
                                     <Carousel loop={true} autoplay={true} className="rounded-xl h-96">
                                         {productData.productImages.map((image, index) => (
-                                            <img
-                                                key={index}
-                                                src={image.url}
-                                                alt={`${productData.name} - Imagen ${index + 1}`}
-                                                className="h-full w-full object-cover object-center"
-                                            />
+                                            <div key={index} className="relative h-full w-full">
+                                                <Image
+                                                    src={image.url}
+                                                    alt={`${productData.name} - Imagen ${index + 1}`}
+                                                    fill
+                                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
+                                                    priority={index === 0}
+                                                    quality={85}
+                                                    className="object-cover object-center"
+                                                />
+                                            </div>
                                         ))}
                                     </Carousel>
                                 ) : (
