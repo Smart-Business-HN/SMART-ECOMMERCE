@@ -1,3 +1,5 @@
+export const revalidate = 300; // ISR: revalidar cada 5 minutos
+
 import { getProductsBySubCategorySlug } from "@/services/products.service";
 import { slugToTitle } from "@/utils/string.utils";
 import SubcategoryClient from "@/components/store/subcategory-client.component";

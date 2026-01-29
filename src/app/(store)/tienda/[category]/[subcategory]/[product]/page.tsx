@@ -1,4 +1,6 @@
 // @ts-nocheck
+export const revalidate = 3600; // ISR: revalidar cada 1 hora
+
 import { getProductBySlug } from '@/services/products.service';
 import { ProductDto } from '@/interfaces/product/product.interface';
 import Image from 'next/image';

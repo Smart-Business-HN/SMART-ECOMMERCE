@@ -1,3 +1,5 @@
+export const revalidate = 300; // ISR: revalidar cada 5 minutos
+
 import { Metadata } from "next";
 import { getProductsEcommerce } from "@/services/products.service";
 import StoreClient from "@/components/store/store-client.component";
