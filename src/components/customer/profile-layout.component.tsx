@@ -1078,6 +1078,21 @@ function CompaniesSection({ user }: {
     setFormError('');
   };
 
+  const handlePhoneChange = (value: string) => {
+    let formattedValue = value.replace(/\D/g, '');
+    if (formattedValue.length > 4) {
+      formattedValue = formattedValue.substring(0, 4) + '-' + formattedValue.substring(4, 8);
+    }
+    setFormData(prev => ({ ...prev, phoneNumber: formattedValue }));
+    setFormError('');
+  };
+
+  const handleRtnChange = (value: string) => {
+    const numericValue = value.replace(/\D/g, '').substring(0, 14);
+    setFormData(prev => ({ ...prev, rtn: numericValue }));
+    setFormError('');
+  };
+
   const validateForm = (): boolean => {
     if (!formData.name.trim()) {
       setFormError('El nombre es requerido');
@@ -1094,13 +1109,19 @@ function CompaniesSection({ user }: {
         return false;
       }
     }
-    if (formData.rtn && formData.rtn.length > 20) {
-      setFormError('El RTN no debe exceder 20 caracteres');
-      return false;
+    if (formData.rtn && formData.rtn.trim()) {
+      const rtnRegex = /^\d{14}$/;
+      if (!rtnRegex.test(formData.rtn)) {
+        setFormError('El RTN debe tener exactamente 14 dígitos numéricos');
+        return false;
+      }
     }
-    if (formData.phoneNumber && formData.phoneNumber.length > 20) {
-      setFormError('El teléfono no debe exceder 20 caracteres');
-      return false;
+    if (formData.phoneNumber && formData.phoneNumber.trim()) {
+      const phoneRegex = /^\d{4}-\d{4}$/;
+      if (!phoneRegex.test(formData.phoneNumber)) {
+        setFormError('El teléfono debe tener el formato 0000-0000');
+        return false;
+      }
     }
     if (formData.address && formData.address.length > 300) {
       setFormError('La dirección no debe exceder 300 caracteres');
@@ -1237,15 +1258,18 @@ function CompaniesSection({ user }: {
               <Input
                 type="text"
                 label="RTN"
+                placeholder="01019021333211"
+                maxLength={14}
                 value={formData.rtn || ''}
-                onChange={(e) => handleInputChange('rtn', e.target.value)}
+                onChange={(e) => handleRtnChange(e.target.value)}
                 disabled={isSubmitting}
               />
               <Input
-                type="text"
+                type="tel"
                 label="Teléfono"
+                placeholder="0000-0000"
                 value={formData.phoneNumber || ''}
-                onChange={(e) => handleInputChange('phoneNumber', e.target.value)}
+                onChange={(e) => handlePhoneChange(e.target.value)}
                 disabled={isSubmitting}
               />
             </div>

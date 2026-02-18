@@ -1,6 +1,24 @@
+//@ts-nocheck
 import { Metadata } from 'next';
 import Image from "next/image";
 import Link from "next/link";
+import { Card, Typography, Button, Tabs, TabsHeader, TabsBody, Tab, TabPanel } from '@/utils/MTailwind';
+import {
+  ShieldCheckIcon,
+  BuildingOfficeIcon,
+  HomeModernIcon,
+  GlobeAltIcon,
+  SignalIcon,
+  WifiIcon,
+  CheckBadgeIcon,
+  UserGroupIcon,
+  LightBulbIcon,
+  HeartIcon,
+  RocketLaunchIcon,
+  ChartBarIcon,
+  TrophyIcon,
+  ClockIcon
+} from '@heroicons/react/24/outline';
 
 export const metadata: Metadata = {
     title: 'Quiénes Somos | SMART Business Honduras - Líder en Soluciones Informáticas',
@@ -165,13 +183,59 @@ export default function AboutUs(){
       }
     };
 
+    const tabsData = [
+      {
+        label: "Seguridad",
+        value: "seguridad",
+        icon: ShieldCheckIcon,
+        content: [
+          {
+            title: "Seguridad Pública",
+            image: "/images/backgrounds/public-security-smart-business.jpg",
+            description: "Ciudades inteligentes y soluciones de tráfico inteligente para la seguridad y la administración urbana. Sistemas de videovigilancia y control de tráfico para municipalidades.",
+            icon: BuildingOfficeIcon
+          },
+          {
+            title: "Seguridad Empresarial",
+            image: "/images/backgrounds/business-smart-business.png",
+            description: "Soluciones inteligentes para la seguridad y las operaciones comerciales que abarcan comercio minorista, logística, energía, educación y mucho más. Protección integral para empresas.",
+            icon: BuildingOfficeIcon
+          },
+          {
+            title: "Seguridad para PYMES",
+            image: "/images/backgrounds/pymes-smart-business.png",
+            description: "Una completa gama de productos de seguridad inteligente, desde videovigilancia, control de acceso e intercomunicación, hasta alarmas y LED. Soluciones accesibles para pequeñas empresas.",
+            icon: UserGroupIcon
+          },
+          {
+            title: "Hogares Inteligentes",
+            image: "/images/backgrounds/cliente-fina-smart-business.jpg",
+            description: "Hogares inteligentes y electrónica avanzada para todos los consumidores. Domótica, seguridad residencial y entretenimiento inteligente para familias hondureñas.",
+            icon: HomeModernIcon
+          }
+        ]
+      },
+      {
+        label: "Redes",
+        value: "redes",
+        icon: GlobeAltIcon,
+        content: "redes"
+      },
+      {
+        label: "Cableado",
+        value: "cableado",
+        icon: SignalIcon,
+        content: "cableado"
+      }
+    ];
+
     return(
     <>
     <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
     />
-    
+
     {/* Breadcrumb para SEO */}
     <nav aria-label="Breadcrumb" className="container mx-auto px-5 py-2">
       <ol className="flex items-center space-x-2 text-sm text-gray-600">
@@ -188,273 +252,645 @@ export default function AboutUs(){
         </li>
       </ol>
     </nav>
-    
-    <div className='container mx-auto max-w-7xl my-5 scroll-smooth'>
-        <section className='grid md:grid-cols-2 gap-4 bg-gray-100 rounded-md' aria-labelledby="nuestra-historia">
-            <div className='relative'>
-                <Image 
-                    height={500} 
-                    width={600} 
-                    className='opacity-80' 
-                    alt='Edificios corporativos Smart Business Honduras - Fondo empresarial' 
-                    src='/images/backgrounds/background-buildings.png' 
+
+    {/* Hero Section Moderno */}
+    <div className="relative bg-gradient-to-br from-blue-600 via-blue-700 to-blue-900 py-20 overflow-hidden">
+      <div className="absolute inset-0 bg-[url('/images/backgrounds/background-buildings.png')]
+                      bg-center bg-cover opacity-10"></div>
+
+      <div className="container mx-auto px-5 relative z-10">
+        <div className="text-center animate-fade-in">
+          <Typography variant="h1" className="text-white text-5xl md:text-6xl font-bold mb-4"
+                      placeholder={undefined}>
+            SMART BUSINESS HONDURAS
+          </Typography>
+          <Typography variant="lead" className="text-blue-100 text-xl max-w-3xl mx-auto mb-8"
+                      placeholder={undefined}>
+            Más de 15 años brindando soluciones tecnológicas de calidad a empresas
+            y emprendedores en toda Honduras
+          </Typography>
+          <div className="flex justify-center">
+            <Image
+              src='/images/corporate/smart_business_logo_white_letters.png'
+              width={300}
+              height={200}
+              alt='Logo Smart Business Honduras - Distribuidor de tecnología'
+              className="animate-fade-up"
+            />
+          </div>
+        </div>
+
+        {/* Stats Cards Flotantes */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-12 max-w-5xl mx-auto">
+          <Card className="bg-white/10 backdrop-blur-lg border border-white/20 p-6
+                           hover:bg-white/20 transition-all animate-fade-up animate-delay-100">
+            <div className="text-center">
+              <ClockIcon className="h-10 w-10 text-white mx-auto mb-2" />
+              <Typography variant="h2" className="text-white text-4xl font-bold"
+                          placeholder={undefined}>15+</Typography>
+              <Typography className="text-blue-100 text-sm" placeholder={undefined}>Años de Experiencia</Typography>
+            </div>
+          </Card>
+
+          <Card className="bg-white/10 backdrop-blur-lg border border-white/20 p-6
+                           hover:bg-white/20 transition-all animate-fade-up animate-delay-200">
+            <div className="text-center">
+              <UserGroupIcon className="h-10 w-10 text-white mx-auto mb-2" />
+              <Typography variant="h2" className="text-white text-4xl font-bold"
+                          placeholder={undefined}>1000+</Typography>
+              <Typography className="text-blue-100 text-sm" placeholder={undefined}>Clientes Satisfechos</Typography>
+            </div>
+          </Card>
+
+          <Card className="bg-white/10 backdrop-blur-lg border border-white/20 p-6
+                           hover:bg-white/20 transition-all animate-fade-up animate-delay-300">
+            <div className="text-center">
+              <TrophyIcon className="h-10 w-10 text-white mx-auto mb-2" />
+              <Typography variant="h2" className="text-white text-4xl font-bold"
+                          placeholder={undefined}>400+</Typography>
+              <Typography className="text-blue-100 text-sm" placeholder={undefined}>Proyectos Completados</Typography>
+            </div>
+          </Card>
+
+          <Card className="bg-white/10 backdrop-blur-lg border border-white/20 p-6
+                           hover:bg-white/20 transition-all animate-fade-up animate-delay-400">
+            <div className="text-center">
+              <CheckBadgeIcon className="h-10 w-10 text-white mx-auto mb-2" />
+              <Typography variant="h2" className="text-white text-4xl font-bold"
+                          placeholder={undefined}>100%</Typography>
+              <Typography className="text-blue-100 text-sm" placeholder={undefined}>Compromiso y Calidad</Typography>
+            </div>
+          </Card>
+        </div>
+      </div>
+    </div>
+
+    {/* Nuestra Historia */}
+    <div className="container mx-auto px-5 py-16">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-12">
+          <Typography variant="h2" className="text-4xl font-bold text-gray-800 mb-4"
+                      placeholder={undefined} id="nuestra-historia">
+            Nuestra Historia
+          </Typography>
+          <div className="w-24 h-1 bg-blue-600 mx-auto mb-6"></div>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="animate-fade-right">
+            <Card className="shadow-2xl border-0 overflow-hidden">
+              <div className="relative h-96">
+                <Image
+                  src='/images/backgrounds/background-buildings.png'
+                  fill
+                  className="object-cover"
+                  alt='Edificios corporativos Smart Business Honduras - Fondo empresarial'
                 />
-                <div className='absolute top-0 bottom-0 flex w-full justify-center items-center'>
-                    <Image 
-                        src='/images/corporate/logo-smart-business.png' 
-                        width={350} 
-                        height={250} 
-                        alt='Logo Smart Business Honduras - Distribuidor de tecnología' 
-                    />
+                <div className="absolute inset-0 bg-gradient-to-t from-blue-900/80 to-transparent
+                                flex items-end justify-center p-8">
+                  <Typography variant="h3" className="text-white text-2xl font-bold text-center"
+                              placeholder={undefined}>
+                    Si quieres triunfar tienes que ser SMART
+                  </Typography>
                 </div>
-            </div>
-            <div className='flex items-center flex-col justify-center'>
-                <h1 className='text-center text-gray-700 text-3xl font-bold' id="nuestra-historia">Nuestra Historia</h1>
-                <p className='px-5 text-center md:text-left mt-2 text-gray-600 text-[15px] font-medium'>
-                    Smart Business surge como una respuesta al mercado hondureño con la intención de brindar precios accesibles a las pequeñas empresas que están dando su primer salto en el mundo digital. Poco a poco nos hemos convertido en proveedores de medianas y grandes empresas por la confianza que hemos generado en nuestros clientes. <br /><br />
-                    Con más de 15 años de experiencia en el rubro informático, Smart Business es una empresa cuya única razón de existir es brindar a nuestros clientes el mejor producto para satisfacer sus necesidades, ya sea a integradores o clientes finales. Somos el distribuidor de tecnología más confiable en Honduras.
-                </p>
-            </div>
-        </section>
+              </div>
+            </Card>
+          </div>
 
-        {/* Misión y Visión con estructura semántica */}
-        <section className='md:px-4 px-5 grid grid-cols-1 md:grid-cols-2 gap-4 mt-10' aria-labelledby="mision-vision">
-            <article className='hover:shadow-md border mx-auto h-full mt-0 bg-gradient-to-br from-blue-600 via-sky-600 to-sky-400 rounded-md p-[2px] max-w-md'>
-                <div className='flex flex-col py-2 h-full justify-center w-full items-center bg-white rounded-md'>
-                    <h2 className='text-gray-700 text-center font-bold text-xl'>Misión</h2>
-                    <p className='text-center px-5 mt-2 text-gray-500 text-[14px] font-semibold'>
-                        Ser la mayor empresa distribuidora de equipo informático para emprendedores que necesitan el consejo de una empresa de confianza en Honduras. Brindamos soluciones tecnológicas integrales para el crecimiento empresarial.
-                    </p>
-                </div>
-            </article>
-            <article className='hover:shadow-md mx-auto border grow bg-gradient-to-br from-blue-600 via-sky-600 to-sky-400 rounded-md p-[2px] max-w-md'>
-                <div className='flex flex-col py-2 h-full justify-center w-full items-center bg-white rounded-md'>
-                    <h2 className='text-gray-700 text-center font-bold text-xl'>Visión</h2>
-                    <p className='text-center px-5 mt-2 text-gray-500 text-[14px] font-semibold'>
-                        Nos especializamos en los pequeños y medianos empresarios porque son las personas que rara vez tienen apoyo de parte de otros. Nosotros somos parte de ellos, por lo tanto tenemos la obligación humana de apoyarlos en su camino hacia el éxito tecnológico.
-                    </p>
-                </div>
-            </article>
-        </section>
-
-        {/* Sección de Productos con estructura semántica mejorada */}
-        <section className='container w-full mt-24 px-5 md:px-0 mx-auto' aria-labelledby="productos-soluciones">
-            <h2 className='text-3xl font-bold text-gray-700 text-center' id="productos-soluciones">Nuestros Productos y Soluciones Tecnológicas</h2>
-            
-            {/* Seguridad */}
-            <div className='mt-5'>
-                <div>
-                    <h3 className='font-bold text-gray-700 text-xl'>Soluciones de Seguridad Integral</h3>
-                    <hr className='w-[5%] -mb-1 border-[#1C68E1] border'></hr>
-                    <hr className='mt-1'></hr>
-                    <p className='text-gray-600 mt-3 text-sm'>Ofrecemos sistemas de seguridad avanzados para diferentes sectores del mercado hondureño.</p>
-                    
-                    <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 mt-10'>
-                        <article className='basis-1/4 border border-gray-300 p-5 rounded-md relative hover:shadow-lg transition-shadow'>
-                            <Image 
-                                className='absolute left-0 -top-0 rounded-t-md right-0 object-cover w-full max-h-[150px]' 
-                                src='/images/backgrounds/public-security-smart-business.jpg' 
-                                alt='Sistemas de seguridad pública y ciudades inteligentes en Honduras' 
-                                width={300} 
-                                height={300} 
-                            />
-                            <div className='h-[150px]'></div>
-                            <h4 className='text-left text-gray-700 font-bold text-md'>Seguridad Pública</h4>
-                            <p className='text-left text-gray-500 text-sm'>
-                                Ciudades inteligentes y soluciones de tráfico inteligente para la seguridad y la administración urbana. Sistemas de videovigilancia y control de tráfico para municipalidades.
-                            </p>
-                        </article>
-                        <article className='basis-1/4 border border-gray-300 p-5 rounded-md relative hover:shadow-lg transition-shadow'>
-                            <Image 
-                                className='absolute left-0 -top-0 rounded-t-md right-0 object-cover w-full max-h-[150px]' 
-                                src='/images/backgrounds/business-smart-business.png' 
-                                alt='Soluciones de seguridad empresarial y corporativa en Honduras' 
-                                width={300} 
-                                height={300} 
-                            />
-                            <div className='h-[150px]'></div>
-                            <h4 className='text-left text-gray-700 font-bold text-md'>Seguridad Empresarial</h4>
-                            <p className='text-left text-gray-500 text-sm'>
-                                Soluciones inteligentes para la seguridad y las operaciones comerciales que abarcan comercio minorista, logística, energía, educación y mucho más. Protección integral para empresas.
-                            </p>
-                        </article>
-                        <article className='basis-1/4 border border-gray-300 p-5 rounded-md relative hover:shadow-lg transition-shadow'>
-                            <Image 
-                                className='absolute left-0 -top-0 rounded-t-md right-0 object-cover w-full max-h-[150px]' 
-                                src='/images/backgrounds/pymes-smart-business.png' 
-                                alt='Sistemas de seguridad para PYMES y pequeñas empresas en Honduras' 
-                                width={300} 
-                                height={300} 
-                            />
-                            <div className='h-[150px]'></div>
-                            <h4 className='text-left text-gray-700 font-bold text-md'>Seguridad para PYMES</h4>
-                            <p className='text-left text-gray-500 text-sm'>
-                                Una completa gama de productos de seguridad inteligente, desde videovigilancia, control de acceso e intercomunicación, hasta alarmas y LED. Soluciones accesibles para pequeñas empresas.
-                            </p>
-                        </article>
-                        <article className='basis-1/4 border border-gray-300 p-5 rounded-md relative hover:shadow-lg transition-shadow'>
-                            <Image 
-                                className='absolute left-0 -top-0 rounded-t-md right-0 object-cover w-full max-h-[150px]' 
-                                src='/images/backgrounds/cliente-fina-smart-business.jpg' 
-                                alt='Tecnología domótica y hogares inteligentes para consumidores en Honduras' 
-                                width={300} 
-                                height={300} 
-                            />
-                            <div className='h-[150px]'></div>
-                            <h4 className='text-left text-gray-700 font-bold text-md'>Hogares Inteligentes</h4>
-                            <p className='text-left text-gray-500 text-sm'>
-                                Hogares inteligentes y electrónica avanzada para todos los consumidores. Domótica, seguridad residencial y entretenimiento inteligente para familias hondureñas.
-                            </p>
-                        </article>
-                    </div>
-                </div>
+          <div className="animate-fade-left space-y-6">
+            <Typography className="text-gray-600 text-lg leading-relaxed" placeholder={undefined}>
+              Smart Business surge como una respuesta al mercado hondureño con la intención de
+              brindar <strong className="text-blue-600">precios accesibles</strong> a las pequeñas empresas que
+              están dando su primer salto en el mundo digital.
+            </Typography>
+            <Typography className="text-gray-600 text-lg leading-relaxed" placeholder={undefined}>
+              Poco a poco nos hemos convertido en proveedores de medianas y grandes empresas
+              por la <strong className="text-blue-600">confianza</strong> que hemos generado en nuestros clientes.
+            </Typography>
+            <Typography className="text-gray-600 text-lg leading-relaxed" placeholder={undefined}>
+              Con más de <strong className="text-blue-600">15 años de experiencia</strong> en el rubro informático,
+              nuestra única razón de existir es brindar a nuestros clientes el mejor producto para
+              satisfacer sus necesidades, ya sea a integradores o clientes finales.
+            </Typography>
+            <div className="bg-blue-50 border-l-4 border-blue-600 p-4 rounded">
+              <Typography className="text-gray-700 font-semibold" placeholder={undefined}>
+                Somos el distribuidor de tecnología más confiable en Honduras
+              </Typography>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-            {/* Redes */}
-            <div className='mt-24'>
-                <div>
-                    <h3 className='font-bold text-gray-700 text-xl'>Soluciones de Redes y Conectividad</h3>
-                    <hr className='w-[5%] -mb-1 border-[#1C68E1] border'></hr>
-                    <hr className='mt-1'></hr>
-                    <p className='text-gray-600 mt-3 text-sm'>Infraestructura de redes profesionales para empresas y proveedores de internet en Honduras.</p>
-                    
-                    <div className='flex flex-col md:flex-row gap-10 mt-5'>
-                        <article className='container mt-5 relative'>
-                            <h4 className='text-left font-bold text-gray-700 mb-2 md:hidden'>Productos WISP - Proveedores de Internet</h4>
-                            <video 
-                                className='w-full rounded-md' 
-                                autoPlay 
-                                muted 
-                                loop
-                                aria-label="Video demostrativo de productos WISP para proveedores de internet"
-                            >
-                                <source src="/videos/uisp.mp4" type="video/mp4" />
-                            </video>
-                            <div className='hidden absolute left-10 p-2 top-10 text-center bg-gray-600 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 md:flex gap-2'>
-                                <p className='text-white text-xl font-bold'>Productos WISP</p>
-                            </div>
-                            <div className='md:absolute right-10 p-2 md:bottom-10 left-10 md:text-center md:bg-gray-600 rounded-md bg-clip-padding backdrop-filter md:backdrop-blur-md md:bg-opacity-30 flex gap-2'>
-                                <p className='text-gray-700 md:text-white'>Contamos con todos los productos que necesitas para montar tu propia empresa WISP en Honduras</p>
-                            </div>
-                        </article>
-                        <article className='container mt-5 relative'>
-                            <h4 className='text-left font-bold text-gray-700 mb-2 md:hidden'>Redes Corporativas Empresariales</h4>
-                            <video 
-                                className='w-full rounded-md' 
-                                autoPlay 
-                                muted 
-                                loop
-                                aria-label="Video demostrativo de redes corporativas empresariales"
-                            >
-                                <source src="/videos/networking.mp4" type="video/mp4" />
-                            </video>
-                            <div className='hidden md:absolute left-10 p-2 top-10 text-center bg-gray-600 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 md:flex gap-2'>
-                                <p className='text-white text-xl font-bold'>Redes Corporativas</p>
-                            </div>
-                            <div className='md:absolute right-10 p-2 md:bottom-10 left-10 md:text-center md:bg-gray-600 rounded-md bg-clip-padding backdrop-filter md:backdrop-blur-md md:bg-opacity-30 flex gap-2'>
-                                <p className='text-gray-700 md:text-white'>Te brindamos todo lo necesario para escalar tu red corporativa al siguiente nivel con tecnología de punta</p>
-                            </div>
-                        </article>
-                    </div>
-                    
-                    {/* Cableado Estructurado */}
-                    <div className='rounded-md bg-gray-100 p-5 md:p-10 mt-10'>
-                        <div className='w-full grid md:grid-cols-2 gap-5'>
-                            <div className='order-2 md:order-1 flex flex-col justify-center'>
-                                <h4 className='leading-none text-center text-gray-700 font-bold text-2xl'>Productos y Proyectos de <br /><strong>Cableado Estructurado</strong></h4>
-                                <p className='text-gray-500 mt-5 font-normal md:font-semibold text-center'>
-                                    Te brindamos todo lo que necesitas para ejecutar tu proyecto de cableado estructurado a precios altamente competitivos en Honduras. Y en caso de que no tengas quien lo desarrolle, podemos brindarte descuentos importantes al ejecutar el proyecto por ti con garantía de calidad.
-                                </p>
-                                <div className='flex justify-center mt-4'>
-                                    <Link 
-                                        href='/contacto' 
-                                        className='bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors'
-                                        aria-label="Solicitar cotización para proyectos de cableado estructurado"
-                                    >
-                                        Solicitar Cotización
-                                    </Link>
-                                </div>
-                            </div>
-                            <div className='flex justify-center rounded-md'>
-                                <Image 
-                                    className='rounded-xl' 
-                                    alt='Proyectos de cableado estructurado profesional en Honduras - Smart Business' 
-                                    src='/images/backgrounds/cableado-estructurado-smart-business.jpg' 
-                                    width={500} 
-                                    height={500} 
-                                />
-                            </div>
+    {/* Misión y Visión Modernizadas */}
+    <div className="bg-gray-50 py-16">
+      <div className="container mx-auto px-5">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <Typography variant="h2" className="text-4xl font-bold text-gray-800 mb-4"
+                        placeholder={undefined} id="mision-vision">
+              Misión y Visión
+            </Typography>
+            <div className="w-24 h-1 bg-blue-600 mx-auto mb-6"></div>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            <Card className="shadow-xl border-0 overflow-hidden hover:shadow-2xl
+                             hover:-translate-y-2 transition-all duration-300
+                             animate-fade-up animate-delay-100">
+              <div className="bg-gradient-to-br from-blue-600 to-blue-800 p-6">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-16 h-16 bg-white/20 backdrop-blur-lg rounded-full
+                                  flex items-center justify-center">
+                    <RocketLaunchIcon className="h-8 w-8 text-white" />
+                  </div>
+                  <Typography variant="h3" className="text-white text-2xl font-bold"
+                              placeholder={undefined}>
+                    Misión
+                  </Typography>
+                </div>
+              </div>
+              <div className="p-6 bg-white">
+                <Typography className="text-gray-600 text-base leading-relaxed"
+                            placeholder={undefined}>
+                  Ser la mayor empresa distribuidora de equipo informático para emprendedores
+                  que necesitan el consejo de una empresa de confianza en Honduras. Brindamos
+                  soluciones tecnológicas integrales para el crecimiento empresarial.
+                </Typography>
+              </div>
+            </Card>
+
+            <Card className="shadow-xl border-0 overflow-hidden hover:shadow-2xl
+                             hover:-translate-y-2 transition-all duration-300
+                             animate-fade-up animate-delay-200">
+              <div className="bg-gradient-to-br from-blue-500 to-blue-700 p-6">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-16 h-16 bg-white/20 backdrop-blur-lg rounded-full
+                                  flex items-center justify-center">
+                    <ChartBarIcon className="h-8 w-8 text-white" />
+                  </div>
+                  <Typography variant="h3" className="text-white text-2xl font-bold"
+                              placeholder={undefined}>
+                    Visión
+                  </Typography>
+                </div>
+              </div>
+              <div className="p-6 bg-white">
+                <Typography className="text-gray-600 text-base leading-relaxed"
+                            placeholder={undefined}>
+                  Nos especializamos en los pequeños y medianos empresarios porque son las personas
+                  que rara vez tienen apoyo de parte de otros. Nosotros somos parte de ellos, por lo
+                  tanto tenemos la obligación humana de apoyarlos en su camino hacia el éxito tecnológico.
+                </Typography>
+              </div>
+            </Card>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* Valores Corporativos */}
+    <div className="container mx-auto px-5 py-16">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-12">
+          <Typography variant="h2" className="text-4xl font-bold text-gray-800 mb-4"
+                      placeholder={undefined}>
+            Nuestros Valores
+          </Typography>
+          <div className="w-24 h-1 bg-blue-600 mx-auto mb-6"></div>
+          <Typography className="text-gray-600 max-w-2xl mx-auto" placeholder={undefined}>
+            Los pilares que sostienen nuestro compromiso con la excelencia
+          </Typography>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <Card className="p-6 text-center border-2 border-gray-100 hover:border-blue-500
+                           hover:shadow-xl transition-all duration-300 group cursor-pointer
+                           animate-fade-up animate-delay-100">
+            <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-700 mx-auto
+                            rounded-full flex items-center justify-center mb-4
+                            group-hover:scale-110 transition-transform">
+              <HeartIcon className="h-8 w-8 text-white" />
+            </div>
+            <Typography variant="h5" className="font-bold text-gray-800 mb-2"
+                        placeholder={undefined}>
+              Confianza
+            </Typography>
+            <Typography className="text-gray-600 text-sm" placeholder={undefined}>
+              Generamos relaciones duraderas basadas en la transparencia y honestidad
+            </Typography>
+          </Card>
+
+          <Card className="p-6 text-center border-2 border-gray-100 hover:border-blue-500
+                           hover:shadow-xl transition-all duration-300 group cursor-pointer
+                           animate-fade-up animate-delay-200">
+            <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-green-700 mx-auto
+                            rounded-full flex items-center justify-center mb-4
+                            group-hover:scale-110 transition-transform">
+              <CheckBadgeIcon className="h-8 w-8 text-white" />
+            </div>
+            <Typography variant="h5" className="font-bold text-gray-800 mb-2"
+                        placeholder={undefined}>
+              Calidad
+            </Typography>
+            <Typography className="text-gray-600 text-sm" placeholder={undefined}>
+              Productos y servicios de primera línea para garantizar tu éxito
+            </Typography>
+          </Card>
+
+          <Card className="p-6 text-center border-2 border-gray-100 hover:border-blue-500
+                           hover:shadow-xl transition-all duration-300 group cursor-pointer
+                           animate-fade-up animate-delay-300">
+            <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-700 mx-auto
+                            rounded-full flex items-center justify-center mb-4
+                            group-hover:scale-110 transition-transform">
+              <LightBulbIcon className="h-8 w-8 text-white" />
+            </div>
+            <Typography variant="h5" className="font-bold text-gray-800 mb-2"
+                        placeholder={undefined}>
+              Innovación
+            </Typography>
+            <Typography className="text-gray-600 text-sm" placeholder={undefined}>
+              Tecnología de vanguardia para mantener tu negocio competitivo
+            </Typography>
+          </Card>
+
+          <Card className="p-6 text-center border-2 border-gray-100 hover:border-blue-500
+                           hover:shadow-xl transition-all duration-300 group cursor-pointer
+                           animate-fade-up animate-delay-400">
+            <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-700 mx-auto
+                            rounded-full flex items-center justify-center mb-4
+                            group-hover:scale-110 transition-transform">
+              <UserGroupIcon className="h-8 w-8 text-white" />
+            </div>
+            <Typography variant="h5" className="font-bold text-gray-800 mb-2"
+                        placeholder={undefined}>
+              Soporte
+            </Typography>
+            <Typography className="text-gray-600 text-sm" placeholder={undefined}>
+              Acompañamiento constante en cada etapa de tu proyecto
+            </Typography>
+          </Card>
+        </div>
+      </div>
+    </div>
+
+    {/* Productos y Soluciones con Tabs */}
+    <div className="bg-gray-50 py-16">
+      <div className="container mx-auto px-5">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <Typography variant="h2" className="text-4xl font-bold text-gray-800 mb-4"
+                        placeholder={undefined} id="productos-soluciones">
+              Nuestros Productos y Soluciones
+            </Typography>
+            <div className="w-24 h-1 bg-blue-600 mx-auto mb-6"></div>
+            <Typography className="text-gray-600 max-w-2xl mx-auto" placeholder={undefined}>
+              Tecnología integral para cada necesidad de tu negocio
+            </Typography>
+          </div>
+
+          <Tabs value="seguridad">
+            <TabsHeader className="bg-white shadow-md" placeholder={undefined}>
+              {tabsData.map(({ label, value, icon: Icon }) => (
+                <Tab key={value} value={value} className="text-base" placeholder={undefined}>
+                  <div className="flex items-center gap-2">
+                    <Icon className="h-5 w-5" />
+                    {label}
+                  </div>
+                </Tab>
+              ))}
+            </TabsHeader>
+
+            <TabsBody placeholder={undefined}>
+              {/* Tab Seguridad */}
+              <TabPanel value="seguridad" className="px-0">
+                <Typography className="text-gray-600 mb-8 text-center" placeholder={undefined}>
+                  Ofrecemos sistemas de seguridad avanzados para diferentes sectores del mercado hondureño
+                </Typography>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {tabsData[0].content.map((item, index) => (
+                    <Card key={index} className="overflow-hidden border-0 shadow-lg
+                                                  hover:shadow-xl hover:-translate-y-2
+                                                  transition-all duration-300">
+                      <div className="relative h-48">
+                        <Image
+                          src={item.image}
+                          fill
+                          className="object-cover"
+                          alt={item.title}
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <div className="absolute bottom-4 left-4">
+                          <div className="w-12 h-12 bg-white/20 backdrop-blur-lg rounded-full
+                                          flex items-center justify-center mb-2">
+                            <item.icon className="h-6 w-6 text-white" />
+                          </div>
                         </div>
-                    </div>
+                      </div>
+                      <div className="p-5">
+                        <Typography variant="h5" className="font-bold text-gray-800 mb-3"
+                                    placeholder={undefined}>
+                          {item.title}
+                        </Typography>
+                        <Typography className="text-gray-600 text-sm leading-relaxed"
+                                    placeholder={undefined}>
+                          {item.description}
+                        </Typography>
+                      </div>
+                    </Card>
+                  ))}
                 </div>
-            </div>
+              </TabPanel>
 
-            {/* Clientes */}
-            <section className='mt-24'>
-                <h3 className='text-3xl font-bold text-gray-700 text-center'>Clientes que Confían en Smart Business Honduras</h3>
-                <p className='text-gray-600 text-center mt-3 text-sm'>Más de 15 años sirviendo a empresas líderes en Honduras con soluciones tecnológicas de calidad.</p>
-                
-                <div className='px-5 md:px-0 grid mt-10 grid-cols-2 md:grid-cols-5 gap-5'>
-                    <div className='flex justify-center p-2 rounded-md bg-gray-50 hover:shadow-md transition-all hover:scale-110'>
-                        <Image src='/images/clients/911.png' width={100} height={50} alt='Sistema de Emergencias 911 Honduras - Cliente Smart Business' />
+              {/* Tab Redes */}
+              <TabPanel value="redes" className="px-0">
+                <Typography className="text-gray-600 mb-8 text-center" placeholder={undefined}>
+                  Infraestructura de redes profesionales para empresas y proveedores de internet en Honduras
+                </Typography>
+                <div className="grid md:grid-cols-2 gap-8">
+                  <Card className="overflow-hidden shadow-xl border-0">
+                    <div className="relative h-96">
+                      <video
+                        className='w-full h-full object-cover'
+                        autoPlay
+                        muted
+                        loop
+                        aria-label="Video demostrativo de productos WISP para proveedores de internet"
+                      >
+                        <source src="/videos/uisp.mp4" type="video/mp4" />
+                      </video>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                      <div className="absolute bottom-6 left-6 right-6">
+                        <div className="flex items-center gap-3 mb-3">
+                          <div className="w-12 h-12 bg-white/20 backdrop-blur-lg rounded-full
+                                          flex items-center justify-center">
+                            <WifiIcon className="h-6 w-6 text-white" />
+                          </div>
+                          <Typography variant="h4" className="text-white font-bold"
+                                      placeholder={undefined}>
+                            Productos WISP
+                          </Typography>
+                        </div>
+                        <Typography className="text-white" placeholder={undefined}>
+                          Contamos con todos los productos que necesitas para montar tu propia
+                          empresa WISP en Honduras
+                        </Typography>
+                      </div>
                     </div>
-                    <div className='flex justify-center items-center md:p-10 rounded-md bg-gray-50 hover:shadow-md transition-all hover:scale-110'>
-                        <Image className='h-16' src='/images/clients/acosa-logo.png' width={180} height={40} alt='ACOSA - Cliente Smart Business Honduras' />
+                  </Card>
+
+                  <Card className="overflow-hidden shadow-xl border-0">
+                    <div className="relative h-96">
+                      <video
+                        className='w-full h-full object-cover'
+                        autoPlay
+                        muted
+                        loop
+                        aria-label="Video demostrativo de redes corporativas empresariales"
+                      >
+                        <source src="/videos/networking.mp4" type="video/mp4" />
+                      </video>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                      <div className="absolute bottom-6 left-6 right-6">
+                        <div className="flex items-center gap-3 mb-3">
+                          <div className="w-12 h-12 bg-white/20 backdrop-blur-lg rounded-full
+                                          flex items-center justify-center">
+                            <GlobeAltIcon className="h-6 w-6 text-white" />
+                          </div>
+                          <Typography variant="h4" className="text-white font-bold"
+                                      placeholder={undefined}>
+                            Redes Corporativas
+                          </Typography>
+                        </div>
+                        <Typography className="text-white" placeholder={undefined}>
+                          Te brindamos todo lo necesario para escalar tu red corporativa al
+                          siguiente nivel con tecnología de punta
+                        </Typography>
+                      </div>
                     </div>
-                    <div className='flex justify-center md:p-10 rounded-md bg-gray-50 hover:shadow-md transition-all hover:scale-110'>
-                        <Image className='h-16' src='/images/clients/BAC_Credomatic_logo.svg.png' width={170} height={40} alt='BAC Credomatic - Cliente Smart Business Honduras' />
-                    </div>
-                    <div className='flex justify-center md:p-10 rounded-md bg-gray-50 hover:shadow-md transition-all hover:scale-110'>
-                        <Image src='/images/clients/Grupo-Karims-smart-business.png' width={80} height={50} alt='Grupo Karims - Cliente Smart Business Honduras' />
-                    </div>
-                    <div className='flex justify-center md:p-10 items-center rounded-md bg-gray-50 hover:shadow-md transition-all hover:scale-110'>
-                        <Image className='h-16' src='/images/clients/grupo-platino-smart-business.png' width={190} height={50} alt='Grupo Platino - Cliente Smart Business Honduras' />
-                    </div>
-                    <div className='flex justify-center p-5 rounded-md bg-gray-50 hover:shadow-md transition-all hover:scale-110'>
-                        <Image src='/images/clients/logo_la_quinta_la_ceiba.jpg' width={100} height={50} alt='Hotel La Quinta La Ceiba - Cliente Smart Business Honduras' />
-                    </div>
-                    <div className='flex justify-center p-5 rounded-md bg-gray-50 hover:shadow-md transition-all hover:scale-110'>
-                        <Image className='h-16' src='/images/clients/logo-banco-atlantida.png' width={190} height={40} alt='Banco Atlántida - Cliente Smart Business Honduras' />
-                    </div>
-                    <div className='flex justify-center items-center p-2 rounded-md bg-gray-50 hover:shadow-md transition-all hover:scale-110'>
-                        <Image className='h-16' src='/images/clients/logo-funda.png' width={200} height={50} alt='Grupo Comidas - Cliente Smart Business Honduras' />
-                    </div>
-                    <div className='flex justify-center p-2 rounded-md bg-gray-50 hover:shadow-md transition-all hover:scale-110'>
-                        <Image src='/images/clients/municipalidad-de-san-pedro-sula-logo.png' width={100} height={50} alt='Municipalidad de San Pedro Sula - Cliente Smart Business Honduras' />
-                    </div>
-                    <div className='flex justify-center p-2 rounded-md bg-gray-50 hover:shadow-md transition-all hover:scale-110'>
-                        <Image src='/images/clients/net-laptech.jpeg' width={100} height={50} alt='Net Laptech - Cliente Smart Business Honduras' />
-                    </div>
-                    <div className='flex justify-center p-5 rounded-md bg-gray-50 hover:shadow-md transition-all hover:scale-110'>
-                        <Image src='/images/clients/unnamed.png' width={200} height={50} alt='UNITEC - Cliente Smart Business Honduras' />
-                    </div>
-                    <div className='flex justify-center p-5 rounded-md bg-gray-50 hover:shadow-md transition-all hover:scale-110'>
-                        <Image src='/images/clients/inversiones_aliadas_smart_business.png' width={200} height={50} alt='Inversiones Aliadas - Cliente Smart Business Honduras' />
-                    </div>
-                    <div className='flex justify-center p-10 rounded-md bg-gray-50 hover:shadow-md transition-all hover:scale-110'>
-                        <Image src='/images/clients/logo_de_claro.png' width={200} height={50} alt='Claro Honduras - Cliente Smart Business' />
-                    </div>
-                    <div className='flex justify-center p-10 rounded-md bg-gray-50 hover:shadow-md transition-all hover:scale-110'>
-                        <Image src='/images/clients/grupo_ferraro_logo.jpg' width={200} height={50} alt='Grupo Ferraro - Cliente Smart Business Honduras' />
-                    </div>
-                    <div className='flex justify-center p-10 rounded-md bg-gray-50 hover:shadow-md transition-all hover:scale-110'>
-                        <Image src='/images/clients/cortitelas-logo.png' width={200} height={50} alt='Cortitelas - Cliente Smart Business Honduras' />
-                    </div>
-                    <div className='flex justify-center p-10 rounded-md bg-gray-50 hover:shadow-md transition-all hover:scale-110'>
-                        <Image src='/images/clients/ikigai-logo.png' width={200} height={50} alt='Ikigai - Cliente Smart Business Honduras' />
-                    </div>
-                    <div className='flex justify-center p-10 rounded-md bg-gray-50 hover:shadow-md transition-all hover:scale-110'>
-                        <Image src='/images/clients/logo-yude.png' width={200} height={50} alt='YUDE - Cliente Smart Business Honduras' />
-                    </div>
-                    <div className='md:col-span-2 flex justify-center items-center rounded-md bg-gray-50 hover:shadow-md transition-all hover:scale-110'>
-                        <h5 className='text-center font-bold text-2xl'>¡Muchos Más Clientes Satisfechos!</h5>
-                    </div>
-                    <div className='col-span-2 md:col-span-5 flex justify-center items-center p-5 rounded-md bg-gray-50 hover:shadow-md transition-all hover:scale-110 animate-bounce'>
-                        <h5 className='text-center font-bold text-2xl'>¡Próximamente Tu Empresa!</h5>
-                    </div>
+                  </Card>
                 </div>
-            </section>
-        </section>
+              </TabPanel>
+
+              {/* Tab Cableado */}
+              <TabPanel value="cableado" className="px-0">
+                <Card className="overflow-hidden shadow-2xl border-0">
+                  <div className="grid md:grid-cols-2 gap-0">
+                    <div className="relative h-96 md:h-auto">
+                      <Image
+                        src='/images/backgrounds/cableado-estructurado-smart-business.jpg'
+                        fill
+                        className="object-cover"
+                        alt='Proyectos de cableado estructurado profesional en Honduras - Smart Business'
+                      />
+                    </div>
+                    <div className="bg-gradient-to-br from-blue-600 to-blue-800 p-12
+                                    flex flex-col justify-center text-white">
+                      <div className="w-16 h-16 bg-white/20 backdrop-blur-lg rounded-full
+                                      flex items-center justify-center mb-6">
+                        <SignalIcon className="h-8 w-8 text-white" />
+                      </div>
+                      <Typography variant="h3" className="text-white text-3xl font-bold mb-6"
+                                  placeholder={undefined}>
+                        Cableado Estructurado Profesional
+                      </Typography>
+                      <Typography className="text-blue-100 mb-6 text-lg leading-relaxed"
+                                  placeholder={undefined}>
+                        Te brindamos todo lo que necesitas para ejecutar tu proyecto de cableado
+                        estructurado a precios altamente competitivos en Honduras.
+                      </Typography>
+                      <Typography className="text-blue-100 mb-8 leading-relaxed"
+                                  placeholder={undefined}>
+                        Y en caso de que no tengas quien lo desarrolle, podemos brindarte descuentos
+                        importantes al ejecutar el proyecto por ti con garantía de calidad.
+                      </Typography>
+                      <div>
+                        <Button
+                          size="lg"
+                          className="bg-white text-blue-600 hover:bg-blue-50
+                                     shadow-xl hover:shadow-2xl transition-all"
+                          placeholder={undefined}
+                        >
+                          <Link href="/contacto">
+                            Solicitar Cotización
+                          </Link>
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </Card>
+              </TabPanel>
+            </TabsBody>
+          </Tabs>
+        </div>
+      </div>
+    </div>
+
+    {/* Por Qué Elegirnos */}
+    <div className="container mx-auto px-5 py-16">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-12">
+          <Typography variant="h2" className="text-4xl font-bold text-gray-800 mb-4"
+                      placeholder={undefined}>
+            ¿Por Qué Elegir SMART Business?
+          </Typography>
+          <div className="w-24 h-1 bg-blue-600 mx-auto mb-6"></div>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-8">
+          <Card className="p-8 text-center shadow-lg border-0 hover:shadow-xl
+                           transition-all duration-300">
+            <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-700 mx-auto
+                            rounded-2xl flex items-center justify-center mb-6
+                            transform hover:rotate-6 transition-transform">
+              <Typography variant="h2" className="text-white text-3xl font-bold"
+                          placeholder={undefined}>
+                15+
+              </Typography>
+            </div>
+            <Typography variant="h5" className="font-bold text-gray-800 mb-3"
+                        placeholder={undefined}>
+              Años de Experiencia
+            </Typography>
+            <Typography className="text-gray-600" placeholder={undefined}>
+              Más de una década ofreciendo soluciones tecnológicas confiables
+            </Typography>
+          </Card>
+
+          <Card className="p-8 text-center shadow-lg border-0 hover:shadow-xl
+                           transition-all duration-300">
+            <div className="w-20 h-20 bg-gradient-to-br from-green-500 to-green-700 mx-auto
+                            rounded-2xl flex items-center justify-center mb-6
+                            transform hover:rotate-6 transition-transform">
+              <CheckBadgeIcon className="h-12 w-12 text-white" />
+            </div>
+            <Typography variant="h5" className="font-bold text-gray-800 mb-3"
+                        placeholder={undefined}>
+              Garantía de Calidad
+            </Typography>
+            <Typography className="text-gray-600" placeholder={undefined}>
+              Productos certificados y soporte técnico profesional
+            </Typography>
+          </Card>
+
+          <Card className="p-8 text-center shadow-lg border-0 hover:shadow-xl
+                           transition-all duration-300">
+            <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-purple-700 mx-auto
+                            rounded-2xl flex items-center justify-center mb-6
+                            transform hover:rotate-6 transition-transform">
+              <UserGroupIcon className="h-12 w-12 text-white" />
+            </div>
+            <Typography variant="h5" className="font-bold text-gray-800 mb-3"
+                        placeholder={undefined}>
+              Clientes Satisfechos
+            </Typography>
+            <Typography className="text-gray-600" placeholder={undefined}>
+              Cientos de empresas confían en nosotros para sus necesidades
+            </Typography>
+          </Card>
+        </div>
+      </div>
+    </div>
+
+    {/* Clientes Mejorado */}
+    <div className="bg-gradient-to-br from-gray-50 to-blue-50 py-16">
+      <div className="container mx-auto px-5">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <Typography variant="h2" className="text-4xl font-bold text-gray-800 mb-4"
+                        placeholder={undefined}>
+              Clientes que Confían en Nosotros
+            </Typography>
+            <div className="w-24 h-1 bg-blue-600 mx-auto mb-6"></div>
+            <Typography className="text-gray-600 max-w-2xl mx-auto" placeholder={undefined}>
+              Más de 15 años sirviendo a empresas líderes en Honduras con soluciones tecnológicas de calidad
+            </Typography>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            {[
+              { src: '/images/clients/911.png', width: 100, height: 50, alt: 'Sistema de Emergencias 911 Honduras' },
+              { src: '/images/clients/acosa-logo.png', width: 180, height: 40, alt: 'ACOSA' },
+              { src: '/images/clients/BAC_Credomatic_logo.svg.png', width: 170, height: 40, alt: 'BAC Credomatic' },
+              { src: '/images/clients/Grupo-Karims-smart-business.png', width: 80, height: 50, alt: 'Grupo Karims' },
+              { src: '/images/clients/grupo-platino-smart-business.png', width: 190, height: 50, alt: 'Grupo Platino' },
+              { src: '/images/clients/logo_la_quinta_la_ceiba.jpg', width: 100, height: 50, alt: 'Hotel La Quinta La Ceiba' },
+              { src: '/images/clients/logo-banco-atlantida.png', width: 190, height: 40, alt: 'Banco Atlántida' },
+              { src: '/images/clients/logo-funda.png', width: 200, height: 50, alt: 'Grupo Comidas' },
+              { src: '/images/clients/municipalidad-de-san-pedro-sula-logo.png', width: 100, height: 50, alt: 'Municipalidad de San Pedro Sula' },
+              { src: '/images/clients/net-laptech.jpeg', width: 100, height: 50, alt: 'Net Laptech' },
+              { src: '/images/clients/unnamed.png', width: 200, height: 50, alt: 'UNITEC' },
+              { src: '/images/clients/inversiones_aliadas_smart_business.png', width: 200, height: 50, alt: 'Inversiones Aliadas' },
+              { src: '/images/clients/logo_de_claro.png', width: 200, height: 50, alt: 'Claro Honduras' },
+              { src: '/images/clients/grupo_ferraro_logo.jpg', width: 200, height: 50, alt: 'Grupo Ferraro' },
+              { src: '/images/clients/cortitelas-logo.png', width: 200, height: 50, alt: 'Cortitelas' },
+              { src: '/images/clients/ikigai-logo.png', width: 200, height: 50, alt: 'Ikigai' },
+              { src: '/images/clients/logo-yude.png', width: 200, height: 50, alt: 'YUDE' }
+            ].map((client, index) => (
+              <Card key={index} className="flex items-center justify-center p-6 bg-white
+                                           hover:shadow-xl hover:scale-105 transition-all
+                                           duration-300 border-0 cursor-pointer">
+                <Image
+                  src={client.src}
+                  width={client.width}
+                  height={client.height}
+                  alt={client.alt}
+                  className="object-contain max-h-16"
+                />
+              </Card>
+            ))}
+          </div>
+
+          <div className="mt-12 text-center">
+            <Card className="inline-block p-8 bg-gradient-to-r from-blue-600 to-blue-800
+                             border-0 shadow-2xl animate-bounce">
+              <Typography variant="h4" className="text-white font-bold"
+                          placeholder={undefined}>
+                ¡Próximamente Tu Empresa!
+              </Typography>
+            </Card>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* CTA Final */}
+    <div className="bg-gradient-to-r from-blue-600 via-blue-700 to-blue-900 py-20">
+      <div className="container mx-auto px-5 text-center">
+        <Typography variant="h2" className="text-white text-4xl md:text-5xl font-bold mb-6"
+                    placeholder={undefined}>
+          ¿Listo para Impulsar tu Negocio?
+        </Typography>
+        <Typography className="text-blue-100 text-xl mb-8 max-w-2xl mx-auto"
+                    placeholder={undefined}>
+          Únete a más de 500 empresas que confían en SMART Business para sus
+          soluciones tecnológicas
+        </Typography>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <Button
+            size="lg"
+            className="bg-white text-blue-600 hover:bg-blue-50
+                       shadow-2xl hover:shadow-3xl px-8 py-4 text-lg"
+            placeholder={undefined}
+          >
+            <Link href="/contacto">
+              Solicitar Cotización
+            </Link>
+          </Button>
+          <Button
+            size="lg"
+            variant="outlined"
+            className="border-2 border-white text-white hover:bg-white/10
+                       px-8 py-4 text-lg"
+            placeholder={undefined}
+          >
+            <Link href="/catalogo">
+              Ver Catálogo
+            </Link>
+          </Button>
+        </div>
+      </div>
     </div>
     </>
     );

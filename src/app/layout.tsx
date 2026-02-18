@@ -7,6 +7,7 @@ import Footer from "@/components/shared/footer.component";
 import SideCartDrawerComponent from "@/components/shared/cart-drawer.component";
 import { Analytics } from '@vercel/analytics/next';
 import AuthProvider from "@/components/providers/session-provider";
+import ChatWidget from "@/components/shared/chat-widget.component";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -151,6 +152,7 @@ export default function RootLayout({
           {children}
           <Analytics />
           <Footer />
+          <ChatWidget />
         </AuthProvider>
       </body>
     </html>
