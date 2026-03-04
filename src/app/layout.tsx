@@ -4,9 +4,9 @@ import "./globals.css";
 import Script from "next/script";
 import NavBarComponent from "@/components/shared/nav-bar.component";
 import Footer from "@/components/shared/footer.component";
-import SideCartDrawerComponent from "@/components/shared/cart-drawer.component";
 import { Analytics } from '@vercel/analytics/next';
 import AuthProvider from "@/components/providers/session-provider";
+import CartCountProvider from "@/components/providers/cart-count-provider";
 import ChatWidget from "@/components/shared/chat-widget.component";
 
 const geistSans = Geist({
@@ -146,13 +146,13 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased w-full`}
       >
         <AuthProvider>
-          <NavBarComponent cartItemsCount={0} onCartClick={undefined} />
-          {/* <SideCartDrawerComponent open={false} onClose={() => {}} />
-           */}
-          {children}
-          <Analytics />
-          <Footer />
-          <ChatWidget />
+          <CartCountProvider>
+            <NavBarComponent />
+            {children}
+            <Analytics />
+            <Footer />
+            <ChatWidget />
+          </CartCountProvider>
         </AuthProvider>
       </body>
     </html>

@@ -1,8 +1,9 @@
 // @ts-nocheck
 'use client';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Card, Typography, Button, Alert, Input, IconButton } from '@/utils/MTailwind';
-import { CartDto, CartItemDto } from '@/interfaces/cart/cart.interface';
+import { CartDto, CartItemDto, CartStatus, CartStatusLabels } from '@/interfaces/cart/cart.interface';
 import { formatNumber } from '@/utils/number-format';
 import {
   ShoppingCartIcon,
@@ -21,6 +22,7 @@ interface CartPageClientProps {
 }
 
 export default function CartPageClient({ cart }: CartPageClientProps) {
+  const router = useRouter();
   const [cartItems, setCartItems] = useState<CartItemDto[]>(cart.cartItems || []);
   const [isUpdating, setIsUpdating] = useState(false);
   const [error, setError] = useState<string>('');
@@ -82,8 +84,7 @@ export default function CartPageClient({ cart }: CartPageClientProps) {
   };
 
   const handleCheckout = () => {
-    // Aquí iría la lógica para proceder al checkout
-    console.log('Procediendo al checkout...');
+    router.push(`/checkout/${cart.id}`);
   };
 
   return (
@@ -103,9 +104,21 @@ export default function CartPageClient({ cart }: CartPageClientProps) {
 
           <div className="flex md:flex-row flex-col items-center justify-between">
             <div>
-              <Typography variant="h1" color="blue-gray" className="text-2xl md:text-3xl">
-                Mi Carrito
-              </Typography>
+              <div className="flex items-center gap-3">
+                <Typography variant="h1" color="blue-gray" className="text-2xl md:text-3xl">
+                  Mi Carrito
+                </Typography>
+                <span className={`text-xs px-2 py-1 rounded-full font-medium ${
+                  cart.status === CartStatus.Active ? 'bg-green-100 text-green-700' :
+                  cart.status === CartStatus.ReceiptSubmitted || cart.status === CartStatus.PaymentLinkRequested ? 'bg-yellow-100 text-yellow-700' :
+                  cart.status === CartStatus.PaymentLinkSent ? 'bg-blue-100 text-blue-700' :
+                  cart.status === CartStatus.Verified ? 'bg-emerald-100 text-emerald-700' :
+                  cart.status === CartStatus.Rejected ? 'bg-red-100 text-red-700' :
+                  'bg-gray-100 text-gray-700'
+                }`}>
+                  {CartStatusLabels[cart.status] || 'Desconocido'}
+                </span>
+              </div>
               <Typography color="gray" className="mt-2">
                 Carrito #{cart.id.slice(-8)} • <br className="md:hidden"/> Creado el {formatDate(cart.creationDate)}
               </Typography>
@@ -304,17 +317,42 @@ export default function CartPageClient({ cart }: CartPageClientProps) {
               </div>
 
               <div className="mt-6 space-y-3">
-                <Button
-                  color="blue"
-                  size="lg"
-                  className="w-full"
-                  onClick={handleCheckout}
-                  disabled={cartItems.length === 0 || isUpdating}
-                  className="flex items-center justify-center w-full"
-                >
-                  <CreditCardIcon className="h-5 w-5 mr-2" />
-                  Proceder al Pago
-                </Button>
+                {cart.status === CartStatus.Active && (
+                  <Button
+                    color="blue"
+                    size="lg"
+                    onClick={handleCheckout}
+                    disabled={cartItems.length === 0 || isUpdating}
+                    className="flex items-center justify-center w-full"
+                  >
+                    <CreditCardIcon className="h-5 w-5 mr-2" />
+                    Proceder al Pago
+                  </Button>
+                )}
+
+                {cart.status === CartStatus.PaymentLinkSent && cart.paymentLinkUrl && (
+                  <a href={cart.paymentLinkUrl} target="_blank" rel="noopener noreferrer" className="block">
+                    <Button
+                      color="blue"
+                      size="lg"
+                      className="flex items-center justify-center w-full"
+                    >
+                      <CreditCardIcon className="h-5 w-5 mr-2" />
+                      Ir a Pagar
+                    </Button>
+                  </a>
+                )}
+
+                {cart.status !== CartStatus.Active && cart.status !== CartStatus.PaymentLinkSent && (
+                  <Button
+                    color="blue"
+                    size="lg"
+                    disabled
+                    className="flex items-center justify-center w-full"
+                  >
+                    {CartStatusLabels[cart.status] || 'En proceso'}
+                  </Button>
+                )}
 
                 <Button
                   variant="outlined"

@@ -90,10 +90,11 @@ export interface AddProductToCartResponse extends Response {
 }
 
 export async function addProductToCart(
-  productId: number, 
-  quantity: number, 
-  customerId: string, 
-  cartId?: string
+  productId: number,
+  quantity: number,
+  customerId: string,
+  cartId?: string,
+  forceNewCart?: boolean
 ): Promise<AddProductToCartResponse> {
   try {
     const url = isServer ? getApiUrl(`/api/cart/AddProduct/${productId}`) : `/api/cart/AddProduct/${productId}`;
@@ -109,7 +110,11 @@ export async function addProductToCart(
     if (cartId) {
       queryParams.append('cartId', cartId);
     }
-    
+
+    if (forceNewCart) {
+      queryParams.append('forceNewCart', 'true');
+    }
+
     const fullUrl = `${url}?${queryParams.toString()}`;
     
     const response = await fetch(fullUrl, {
