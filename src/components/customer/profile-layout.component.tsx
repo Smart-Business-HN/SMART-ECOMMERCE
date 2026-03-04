@@ -6,7 +6,7 @@ import { EcommerceUserDto } from '@/interfaces/auth/auth.interface';
 import { updateUserProfileImage, updateSessionProfileImage } from '@/services/auth.service';
 import { updateUser } from '@/services/user.service';
 import { getCartsByCustomerId } from '@/services/cart.service';
-import { CartDto } from '@/interfaces/cart/cart.interface';
+import { CartDto, CartStatus, CartStatusLabels } from '@/interfaces/cart/cart.interface';
 import { AssociatedCompanyDto, CreateAssociatedCompanyCommand, UpdateAssociatedCompanyCommand } from '@/interfaces/associated-company/associated-company.interface';
 import { getAllAssociatedCompanies, createAssociatedCompany, updateAssociatedCompany, deleteAssociatedCompany } from '@/services/associated-company.service';
 import { PaymentMethodDto, CreatePaymentMethodCommand, UpdatePaymentMethodCommand } from '@/interfaces/payment-method/payment-method.interface';
@@ -329,6 +329,16 @@ function CartSectionComponent({ user }: {
                   <Typography variant="small" color="gray" placeholder="">
                     Creado el {formatDate(cart.creationDate)}
                   </Typography>
+                  <span className={`inline-block mt-1 text-xs px-2 py-0.5 rounded-full font-medium ${
+                    cart.status === CartStatus.Active ? 'bg-green-100 text-green-700' :
+                    cart.status === CartStatus.ReceiptSubmitted || cart.status === CartStatus.PaymentLinkRequested ? 'bg-yellow-100 text-yellow-700' :
+                    cart.status === CartStatus.PaymentLinkSent ? 'bg-blue-100 text-blue-700' :
+                    cart.status === CartStatus.Verified ? 'bg-emerald-100 text-emerald-700' :
+                    cart.status === CartStatus.Rejected ? 'bg-red-100 text-red-700' :
+                    'bg-gray-100 text-gray-700'
+                  }`}>
+                    {CartStatusLabels[cart.status] || 'Desconocido'}
+                  </span>
                 </div>
                 <div className="text-right">
                   <Typography variant="h6" color="green" placeholder="">
@@ -372,13 +382,27 @@ function CartSectionComponent({ user }: {
                 >
                   Ver Detalles
                 </Button>
-                <Button
-                  size="sm"
-                  color="blue"
-                  placeholder=""
-                >
-                  Continuar Compra
-                </Button>
+                {cart.status === CartStatus.Active && (
+                  <Button
+                    size="sm"
+                    color="blue"
+                    placeholder=""
+                    onClick={() => router.push(`/checkout/${cart.id}`)}
+                  >
+                    Continuar Compra
+                  </Button>
+                )}
+                {cart.status === CartStatus.PaymentLinkSent && cart.paymentLinkUrl && (
+                  <a href={cart.paymentLinkUrl} target="_blank" rel="noopener noreferrer">
+                    <Button
+                      size="sm"
+                      color="blue"
+                      placeholder=""
+                    >
+                      Ir a Pagar
+                    </Button>
+                  </a>
+                )}
               </div>
             </Card>
           ))}

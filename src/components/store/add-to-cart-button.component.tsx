@@ -2,9 +2,11 @@
 'use client';
 import { useState } from 'react';
 import { Button, Alert } from '@/utils/MTailwind';
-import { addProductToCart } from '@/services/cart.service';
 import { useSession } from 'next-auth/react';
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
+import { useCartSelection } from '@/hooks/useCartSelection';
+import CartSelectorModal from '@/components/store/cart-selector-modal.component';
+import { AddProductToCartResponse } from '@/services/cart.service';
 
 interface AddToCartButtonProps {
   productId: number;
@@ -30,9 +32,21 @@ export default function AddToCartButton({
   onError
 }: AddToCartButtonProps) {
   const { data: session } = useSession();
-  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string>('');
   const [success, setSuccess] = useState<string>('');
+  const cartSelection = useCartSelection(session?.user?.id);
+
+  const handleResult = (response: AddProductToCartResponse) => {
+    if (response.succeeded && response.data) {
+      setSuccess(`${productName} agregado al carrito exitosamente`);
+      onSuccess?.(response.data.id);
+      setTimeout(() => setSuccess(''), 3000);
+    } else {
+      const errorMessage = response.message || 'Error al agregar el producto al carrito';
+      setError(errorMessage);
+      onError?.(errorMessage);
+    }
+  };
 
   const handleAddToCart = async () => {
     if (!session?.user?.id) {
@@ -40,38 +54,44 @@ export default function AddToCartButton({
       return;
     }
 
-    setIsLoading(true);
     setError('');
     setSuccess('');
 
     try {
-      const response = await addProductToCart(
-        productId,
-        1, // Cantidad por defecto
-        session.user.id,
-        undefined
-      );
-
-      if (response.succeeded && response.data) {
-        setSuccess(`${productName} agregado al carrito exitosamente`);
-        onSuccess?.(response.data.id);
-        
-        // Limpiar mensaje de éxito después de 3 segundos
-        setTimeout(() => setSuccess(''), 3000);
-      } else {
-        const errorMessage = response.message || 'Error al agregar el producto al carrito';
-        setError(errorMessage);
-        onError?.(errorMessage);
+      const result = await cartSelection.initiateAddToCart(productId, 1, productName);
+      if (result) {
+        handleResult(result);
       }
+      // If null, modal is shown - wait for user selection
     } catch (error) {
       console.error('Error adding product to cart:', error);
       const errorMessage = 'Error de conexión. Por favor, intenta de nuevo.';
       setError(errorMessage);
       onError?.(errorMessage);
-    } finally {
-      setIsLoading(false);
     }
   };
+
+  const handleCartSelected = async (cartId: string) => {
+    try {
+      const result = await cartSelection.confirmCartSelection(cartId);
+      if (result) handleResult(result);
+    } catch (error) {
+      console.error('Error adding product to cart:', error);
+      setError('Error de conexión. Por favor, intenta de nuevo.');
+    }
+  };
+
+  const handleCreateNewCart = async () => {
+    try {
+      const result = await cartSelection.confirmNewCart();
+      if (result) handleResult(result);
+    } catch (error) {
+      console.error('Error creating new cart:', error);
+      setError('Error de conexión. Por favor, intenta de nuevo.');
+    }
+  };
+
+  const isLoading = cartSelection.isLoadingCarts;
 
   return (
     <div className="space-y-2">
@@ -107,6 +127,16 @@ export default function AddToCartButton({
           {success}
         </Alert>
       )}
+
+      <CartSelectorModal
+        open={cartSelection.showModal}
+        carts={cartSelection.carts}
+        productName={cartSelection.pendingProduct?.name || productName}
+        isAdding={cartSelection.isAdding}
+        onSelect={handleCartSelected}
+        onCreateNew={handleCreateNewCart}
+        onClose={cartSelection.closeModal}
+      />
     </div>
   );
 }

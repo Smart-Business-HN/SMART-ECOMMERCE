@@ -3,12 +3,33 @@ export interface CartDto {
   ecomerceUserId: string;
   ecommerceUser?: EcommerceUserDto;
   isActive: boolean;
+  status: number;
+  statusName?: string;
+  paymentLinkUrl?: string;
   creationDate: string;
   destinationQuotationId?: number;
   destinationQuotation?: QuotationDto;
   convertionDate?: string;
   cartItems?: CartItemDto[];
 }
+
+export enum CartStatus {
+  Active = 0,
+  ReceiptSubmitted = 1,
+  PaymentLinkRequested = 2,
+  PaymentLinkSent = 3,
+  Verified = 4,
+  Rejected = 5,
+}
+
+export const CartStatusLabels: Record<number, string> = {
+  0: 'Activo',
+  1: 'Comprobante Enviado',
+  2: 'Link Solicitado',
+  3: 'Link Enviado',
+  4: 'Verificado',
+  5: 'Rechazado',
+};
 
 export interface CartItemDto {
   id: number;

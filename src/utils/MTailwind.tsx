@@ -4,4 +4,4 @@ export {Button,Navbar,Avatar,Select,Option,Breadcrumbs,Card,Typography,List,List
     Spinner,
     TabsBody,
     Tab,
-    TabPanel,Alert,Input} from "@material-tailwind/react";
+    TabPanel,Alert,Input,Dialog,DialogHeader,DialogBody,DialogFooter} from "@material-tailwind/react";

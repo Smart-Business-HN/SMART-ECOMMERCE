@@ -7,6 +7,7 @@ import Footer from "@/components/shared/footer.component";
 import SideCartDrawerComponent from "@/components/shared/cart-drawer.component";
 import { Analytics } from '@vercel/analytics/next';
 import AuthProvider from "@/components/providers/session-provider";
+import CartCountProvider from "@/components/providers/cart-count-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -145,12 +146,12 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased w-full`}
       >
         <AuthProvider>
-          <NavBarComponent cartItemsCount={0} onCartClick={undefined} />
-          {/* <SideCartDrawerComponent open={false} onClose={() => {}} />
-           */}
-          {children}
-          <Analytics />
-          <Footer />
+          <CartCountProvider>
+            <NavBarComponent />
+            {children}
+            <Analytics />
+            <Footer />
+          </CartCountProvider>
         </AuthProvider>
       </body>
     </html>
