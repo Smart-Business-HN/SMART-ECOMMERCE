@@ -37,8 +37,9 @@ export default function CartSelectorModal({
   onClose
 }: CartSelectorModalProps) {
   return (
-    {/* @ts-expect-error Material Tailwind Dialog type definitions are overly strict; props are correct per docs */}
-    <Dialog open={open} handler={onClose} size="md">
+    <>
+      {/* @ts-expect-error Material Tailwind Dialog type definitions are overly strict; props are correct per docs */}
+      <Dialog open={open} handler={onClose} size="md">
       <DialogHeader className="flex flex-col items-start gap-1">
         <Typography variant="h5" color="blue-gray">
           Seleccionar Carrito
@@ -109,6 +110,7 @@ export default function CartSelectorModal({
           Cancelar
         </Button>
       </DialogFooter>
-    </Dialog>
+      </Dialog>
+    </>
   );
 }
