@@ -1,7 +1,22 @@
-import { PhoneArrowUpRightIcon } from "@heroicons/react/24/outline";
+//@ts-nocheck
+import { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { Metadata } from "next";
+import { Card, Typography, Button } from '@/utils/MTailwind';
+import {
+  PhoneArrowUpRightIcon,
+  CodeBracketIcon,
+  PaintBrushIcon,
+  WifiIcon,
+  PhoneIcon,
+  ShoppingCartIcon,
+  ShieldCheckIcon,
+  SignalIcon,
+  BoltIcon,
+  CheckCircleIcon,
+  ClockIcon,
+  UserGroupIcon
+} from "@heroicons/react/24/outline";
 
 export const metadata: Metadata = {
   title: "Servicios de Soluciones Informáticas | SMART Business - Desarrollo Web, Cableado, VoIP, POS",
@@ -120,7 +135,7 @@ export default function Services() {
       },
       "serviceType": [
         "Desarrollo de Sitios Web",
-        "UI/UX Design", 
+        "UI/UX Design",
         "Cableado Estructurado",
         "Telefonía IP",
         "Sistemas POS",
@@ -141,7 +156,7 @@ export default function Services() {
             }
           },
           {
-            "@type": "Offer", 
+            "@type": "Offer",
             "itemOffered": {
               "@type": "Service",
               "name": "UI/UX Design",
@@ -151,7 +166,7 @@ export default function Services() {
           {
             "@type": "Offer",
             "itemOffered": {
-              "@type": "Service", 
+              "@type": "Service",
               "name": "Cableado Estructurado",
               "description": "Instalación y certificación de cableado estructurado empresarial"
             }
@@ -160,7 +175,7 @@ export default function Services() {
             "@type": "Offer",
             "itemOffered": {
               "@type": "Service",
-              "name": "Telefonía IP", 
+              "name": "Telefonía IP",
               "description": "Implementación de sistemas de telefonía IP empresarial"
             }
           },
@@ -182,13 +197,64 @@ export default function Services() {
       }
     };
 
+    const services = [
+      {
+        icon: CodeBracketIcon,
+        title: "Desarrollo de Sitios Web",
+        description: "Traemos a la realidad tus sueños. Hoy en día, un negocio sin sitio web es inconcebible. Sitios modernos, responsivos y optimizados.",
+        gradient: "from-blue-500 to-blue-700"
+      },
+      {
+        icon: PaintBrushIcon,
+        title: "UI/UX Design",
+        description: "Diseñamos experiencias digitales intuitivas y atractivas. Interfaces que conectan con tus usuarios y potencian tu marca.",
+        gradient: "from-purple-500 to-purple-700"
+      },
+      {
+        icon: WifiIcon,
+        title: "Cableado Estructurado",
+        description: "Instalación profesional de infraestructura de red. Certificación de cableado Cat6/Cat6a para redes de alto rendimiento.",
+        gradient: "from-green-500 to-green-700"
+      },
+      {
+        icon: PhoneIcon,
+        title: "Telefonía IP",
+        description: "Sistemas de comunicación empresarial modernos. VoIP de última generación para optimizar tus comunicaciones.",
+        gradient: "from-orange-500 to-orange-700"
+      },
+      {
+        icon: ShoppingCartIcon,
+        title: "Sistemas POS",
+        description: "Soluciones de punto de venta integradas. Control total de tu comercio con tecnología confiable y fácil de usar.",
+        gradient: "from-pink-500 to-pink-700"
+      }
+    ];
+
+    const whyChooseUs = [
+      {
+        icon: UserGroupIcon,
+        title: "Expertos Certificados",
+        description: "Personal altamente calificado con años de experiencia"
+      },
+      {
+        icon: CheckCircleIcon,
+        title: "Calidad Garantizada",
+        description: "Productos y servicios de las mejores marcas del mercado"
+      },
+      {
+        icon: ClockIcon,
+        title: "Soporte 24/7",
+        description: "Asistencia técnica cuando la necesites"
+      }
+    ];
+
     return(
         <>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        
+
         {/* Breadcrumb para SEO */}
         <nav aria-label="Breadcrumb" className="container mx-auto px-5 py-2">
           <ol className="flex items-center space-x-2 text-sm text-gray-600">
@@ -205,210 +271,399 @@ export default function Services() {
             </li>
           </ol>
         </nav>
-        
-      <div className='container mx-auto'>
-        <div className='grid md:grid-cols-2 gap-10 my-5'>
-                      <div 
-              className='bg-cover bg-center p-24 rounded-md mx-5' 
-              style={{ backgroundImage: `url('/images/backgrounds/building-background.jpg')`, }}
-              role="img"
-              aria-label="Edificio corporativo moderno representando soluciones empresariales"
-            >
-          </div>
-          <div className='flex flex-col justify-center md:py-24 px-5 md:px-0'>
-            <h1 className='font-bold text-2xl md:text-4xl'>
-              Escoge a la <strong className='text-blue-500'>MEJOR</strong> <br /> 
-              empresa de Soluciones Informáticas<strong className='text-blue-500'>.</strong>
-            </h1>
-            <div className='border-l-2 border-blue-500 p-2 my-5 md:text-xl'>
-              <p>No queremos venderte productos, no queremos venderte una instalacion.</p>
-              <p>Queremos ser quien le de <strong className='font-bold text-blue-500'>solucion</strong> a tus problemas</p>
-            </div>
-            <div className='flex border-t'></div>
-            <div className='grid md:grid-cols-2 lg:px-10 py-5'>
-              <div className='flex gap-4 items-center mb-5 md:mb-0'>
-                <div className='p-10 bg-gray-300 rounded'></div>
-                <h3>Expertos Realizando</h3>
-              </div>
-              <div className='flex gap-4 items-center'>
-                <div className='p-10 bg-gray-300 rounded'></div>
-                <h3>Expertos Proveyendo</h3>
-              </div>
-            </div>
-            <div className='flex border-t'></div>
-            <div className='flex flex-col sm:flex-row mt-5 gap-5'>
-              <div className='grow justify-center items-center'>
-              <Link 
-                href='/contacto' 
-                className='bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md'
-                aria-label="Contactar con SMART Business para servicios informáticos"
-              >
-                Contactar
-              </Link>
-              </div>
-              <Link 
-                href="tel:+50488187765" 
-                className='flex group hover:shadow-sm justify-center items-center gap-4 border-2 p-2 rounded-md'
-                aria-label="Llamar al +504 8818-7765 para consultas sobre proyectos"
-              >
-                <div className=' rounded-full bg-gray-400 group-hover:bg-blue-500 p-3'>
-                  <PhoneArrowUpRightIcon className='text-white' height={30} width={30} />
+
+        {/* Hero Section Moderno */}
+        <div className="relative bg-gradient-to-br from-blue-600 via-blue-700 to-blue-900 py-20 overflow-hidden">
+          <div className="absolute inset-0 bg-[url('/images/backgrounds/building-background.jpg')]
+                          bg-center bg-cover opacity-15"></div>
+
+          <div className="container mx-auto px-5 relative z-10">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div className="text-white animate-fade-right">
+                <Typography variant="h1" className="text-5xl md:text-6xl font-bold mb-6"
+                            placeholder={undefined}>
+                  Escoge a la <span className="text-blue-200">MEJOR</span><br />
+                  Empresa de Soluciones Informáticas
+                </Typography>
+
+                <div className="bg-white/10 backdrop-blur-lg border-l-4 border-blue-300 p-6 rounded-lg mb-8">
+                  <Typography className="text-blue-50 text-lg mb-3" placeholder={undefined}>
+                    No queremos venderte productos, no queremos venderte una instalación.
+                  </Typography>
+                  <Typography className="text-white text-xl font-semibold" placeholder={undefined}>
+                    Queremos ser quien le dé <span className="text-blue-200">solución</span> a tus problemas
+                  </Typography>
                 </div>
-                <div>
-                  <h6 className='text-gray-900 font-semibold'>Consulta por proyectos</h6>
-                  <p>+504 8818-7765</p>
+
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <Button
+                    size="lg"
+                    className="bg-white text-blue-600 hover:bg-blue-50
+                               shadow-xl hover:shadow-2xl transition-all"
+                    placeholder={undefined}
+                  >
+                    <Link href="/contacto">
+                      Contactar Ahora
+                    </Link>
+                  </Button>
+
+                  <Link
+                    href="tel:+50488187765"
+                    className="flex items-center gap-3 bg-white/10 backdrop-blur-lg
+                               border-2 border-white/30 hover:bg-white/20 px-6 py-3 rounded-lg
+                               transition-all group"
+                  >
+                    <div className="bg-blue-500 group-hover:bg-blue-400 p-2 rounded-full transition-colors">
+                      <PhoneArrowUpRightIcon className="h-6 w-6 text-white" />
+                    </div>
+                    <div className="text-left">
+                      <Typography className="text-white text-sm font-semibold" placeholder={undefined}>
+                        Consulta por proyectos
+                      </Typography>
+                      <Typography className="text-blue-100 text-sm" placeholder={undefined}>
+                        +504 8818-7765
+                      </Typography>
+                    </div>
+                  </Link>
                 </div>
-              </Link>
+              </div>
+
+              {/* Stats Cards */}
+              <div className="grid grid-cols-1 gap-4 animate-fade-left">
+                {whyChooseUs.map((item, index) => (
+                  <Card key={index} className="bg-white/10 backdrop-blur-lg border border-white/20 p-6
+                                                hover:bg-white/20 transition-all">
+                    <div className="flex items-center gap-4">
+                      <div className="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center
+                                      flex-shrink-0">
+                        <item.icon className="h-7 w-7 text-white" />
+                      </div>
+                      <div>
+                        <Typography variant="h6" className="text-white font-bold mb-1"
+                                    placeholder={undefined}>
+                          {item.title}
+                        </Typography>
+                        <Typography className="text-blue-100 text-sm" placeholder={undefined}>
+                          {item.description}
+                        </Typography>
+                      </div>
+                    </div>
+                  </Card>
+                ))}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className='mt-10 px-5 md:px-0 bg-gray-50 bg-opacity-60 py-10 object-fit' style={{ backgroundImage: `url('/images/backgrounds/pattern-9.png')`, }}>
-        <h2 className='font-bold text-center text-3xl' id="nuestros-servicios">Nuestros Servicios</h2>
-        <div className='pt-1 flex border-t-2 border-blue-400 w-[5%] ml-[50%] -translate-x-[50%]'></div>
-        <p className='text-center text-2xl'>Tenemos una variedad de servicios a tu disposición</p>
-        <section className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-16 lg:gap-5 mt-28 container mx-auto' aria-labelledby="nuestros-servicios">
-          <div className='shadow-xl p-4 rounded-tl-[100px] rounded-b-md rounded-tr-md relative bg-white'>
-            <div className='bg-gradient-to-bl from-light-blue-400 via-blue-500 to-blue-700 rounded-xl absolute left-[50%] -translate-x-[50%] -top-10 rotate-45 shadow-md shadow-gray-400'>
-              <Image alt='Icono de desarrollo de sitios web' className='-rotate-45 brightness-0 invert' src="/images/icons/web-pages.png" width={100} height={100} />
+
+        {/* Nuestros Servicios */}
+        <div className="bg-gray-50 py-16">
+          <div className="container mx-auto px-5">
+            <div className="text-center mb-12">
+              <Typography variant="h2" className="text-4xl font-bold text-gray-800 mb-4"
+                          placeholder={undefined} id="nuestros-servicios">
+                Nuestros Servicios
+              </Typography>
+              <div className="w-24 h-1 bg-blue-600 mx-auto mb-6"></div>
+              <Typography className="text-gray-600 text-xl max-w-2xl mx-auto" placeholder={undefined}>
+                Tenemos una variedad de servicios profesionales a tu disposición
+              </Typography>
             </div>
-            <h5 className='mt-20 text-center text-xl font-bold'>Desarrollo de Sitios Web</h5>
-            <p className='mt-2  text-center text-gray-500 text-lg'>
-              Traemos a la realidad tus sue;os, hoy en dia un negocio sin sitio web es incenvible.
-            </p>
-          </div>
-          <div className='shadow-xl p-4 rounded-tl-[100px] rounded-b-md rounded-tr-md relative bg-white'>
-            <div className='bg-gradient-to-bl from-light-blue-400 via-blue-500 to-blue-700 rounded-xl absolute left-[50%] -translate-x-[50%] -top-10 rotate-45 shadow-md shadow-gray-400'>
-              <Image alt='Icono de diseño UI/UX' className='-rotate-45 brightness-0 invert' src="/images/icons/project-management.png" width={100} height={100} />
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8 max-w-7xl mx-auto">
+              {services.map((service, index) => (
+                <Card key={index} className={`overflow-hidden border-0 shadow-xl hover:shadow-2xl
+                                               hover:-translate-y-2 transition-all duration-300
+                                               animate-fade-up animate-delay-${(index + 1) * 100}`}>
+                  <div className={`bg-gradient-to-br ${service.gradient} p-8`}>
+                    <div className="w-20 h-20 bg-white/20 backdrop-blur-lg rounded-xl
+                                    flex items-center justify-center mx-auto mb-4">
+                      <service.icon className="h-10 w-10 text-white" />
+                    </div>
+                  </div>
+                  <div className="p-6 bg-white">
+                    <Typography variant="h5" className="font-bold text-gray-800 mb-3 text-center"
+                                placeholder={undefined}>
+                      {service.title}
+                    </Typography>
+                    <Typography className="text-gray-600 text-sm leading-relaxed text-center"
+                                placeholder={undefined}>
+                      {service.description}
+                    </Typography>
+                  </div>
+                </Card>
+              ))}
             </div>
-            <h5 className='mt-20 text-center text-xl font-bold'>UI/UX Design</h5>
-            <p className='mt-2  text-center text-gray-500 text-lg'>
-              Traemos a la realidad tus sue;os, hoy en dia un negocio sin sitio web es incenvible.
-            </p>
           </div>
-          <div className='shadow-xl p-4 rounded-tl-[100px] rounded-b-md rounded-tr-md relative bg-white'>
-            <div className='bg-gradient-to-bl from-light-blue-400 via-blue-500 to-blue-700 rounded-xl absolute left-[50%] -translate-x-[50%] -top-10 rotate-45 shadow-md shadow-gray-400'>
-              <Image alt='Icono de cableado estructurado' className='-rotate-45 brightness-0 invert' src="/images/icons/cabling.png" width={100} height={100} />
-            </div>
-            <h5 className='mt-20 text-center text-xl font-bold'>Cableado Estructurado</h5>
-            <p className='mt-2  text-center text-gray-500 text-lg'>
-              Traemos a la realidad tus sue;os, hoy en dia un negocio sin sitio web es incenvible.
-            </p>
-          </div>
-          <div className='shadow-xl p-4 rounded-tl-[100px] rounded-b-md rounded-tr-md relative bg-white'>
-            <div className='bg-gradient-to-bl from-light-blue-400 via-blue-500 to-blue-700 rounded-xl absolute left-[50%] -translate-x-[50%] -top-10 rotate-45 shadow-md shadow-gray-400'>
-              <Image alt='Icono de telefonía IP' className='-rotate-45 brightness-0 invert' src="/images/icons/voip.png" width={100} height={100} />
-            </div>
-            <h5 className='mt-20 text-center text-xl font-bold'>Telefonía IP</h5>
-            <p className='mt-2  text-center text-gray-500 text-lg'>
-              Traemos a la realidad tus sueños, hoy en dia un negocio sin sitio web es inconcebible.
-            </p>
-          </div>
-          <div className='shadow-xl p-4 rounded-tl-[100px] rounded-b-md rounded-tr-md relative bg-white'>
-            <div className='bg-gradient-to-bl from-light-blue-400 via-blue-500 to-blue-700 rounded-xl absolute left-[50%] -translate-x-[50%] -top-10 rotate-45 shadow-md shadow-gray-400'>
-              <Image alt='Icono de sistemas POS' className='-rotate-45 brightness-0 invert' src="/images/icons/certificate.png" width={100} height={100} />
-            </div>
-            <h5 className='mt-20 text-center text-xl font-bold'>Sistemas POS</h5>
-            <p className='mt-2  text-center text-gray-500 text-lg'>
-              Traemos a la realidad tus sue;os, hoy en dia un negocio sin sitio web es incenvible.
-            </p>
-          </div>
-        </section>
-      </div>
-      <div className='pt-48 relative pb-10 bg-opacity-10 bg-gray-50 bg-cover' >
-        <div className='absolute md:w-72 md:h-72 w-48 h-48 animate-blob rounded-full bg-blue-200 blur-xl top-[15%] left-24 mix-blend-multiply'></div>
-        <div className='absolute md:w-72 md:h-72 w-48 h-48 animate-blob rounded-full bg-blue-400 opacity-70 blur-xl top-[40%] md:-right-4 right-0 mix-blend-multiply'></div>
-        <h2 className='font-bold text-center text-5xl' id="smart-solutions">Si quieres triunfar tienes que ser<br /> <strong className='text-blue-500'>SMART</strong></h2>
-      <div className='pt-1 flex border-t-2 border-blue-400 w-[5%] ml-[50%] -translate-x-[50%]'></div>
-        <div className='container relative mx-auto'>
-          <div className='grid md:grid-cols-2 mt-10 items-start justify-start'>
-            <div className='px-4 md:px-0'>
-              <h4 className='flex text-3xl font-semibold text-gray-900'>Cuida a los tuyos</h4>
-              <div className='border-t-2 border-blue-500 w-[5%] mb-5'></div>
-              <p>Sabemos que eres responsable con los tuyos y que quieres lo mejor para ellos</p>
-              <p>Por eso te brindamos:</p>
-              <ul className=' text-gray-700'>
-                <li>-Instalación de sistemas de circuito cerrado CCTV.</li>
-                <li>-Instalación de sistemas de control de acceso biometrico.</li>
-                <li>-Planificación de sistemas de control térmico para plantas químicas.</li>
-              </ul>
-              <p className='font-bold mt-5 text-gray-700'>Con la mejor tecnología al mejor precio</p>
-              <div className='flex p-4'>
-                <div>
-                  <Image src='/images/corporate/Hikvision_logo_smart_business.png' width={200} height={100} alt='Logo de Hikvision - Sistemas de seguridad CCTV' />
+        </div>
+
+        {/* Seguridad CCTV */}
+        <div className="container mx-auto px-5 py-16">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div className="animate-fade-right">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-700 rounded-lg
+                                  flex items-center justify-center">
+                    <ShieldCheckIcon className="h-6 w-6 text-white" />
+                  </div>
+                  <Typography variant="h2" className="text-3xl font-bold text-gray-800"
+                              placeholder={undefined}>
+                    Cuida a los Tuyos
+                  </Typography>
                 </div>
-              </div>
-            </div>
-            <div className='flex items-center justify-center md:justify-end'>
-              <Image className='rounded-md shadow-sm' src='/images/corporate/cctv-room.jpg' width={600} height={400} alt='Sala de monitoreo CCTV con pantallas de seguridad' />
-            </div>
-          </div>
-          <div className='grid md:grid-cols-2 gap-10 mt-48 items-start justify-start'>
-            <video className='w-full rounded-xl mb-2 md:mb-0' autoPlay muted loop>
-                    <source src='/videos/fast-network.mp4' type="video/mp4" />
-            </video>
-            <div className='grid  container px-4 md:px-0'>
-              <div className=''>
-                <h4 className='flex text-3xl font-semibold text-gray-900'>Tu red debe ser la mejor</h4>
-                <div className='border-t-2 border-blue-500 w-[5%] mb-5'></div>
-                <p>No dejes que una mala red atrase a tus colaboradores y tu negocio</p>
-                <p>Lo que podemos hacer por ti:</p>
-                <ul className=' text-gray-700'>
-                  <li>-Certificación de red.</li>
-                  <li>-Instalación de puntos de red empresarial.</li>
-                  <li>-Reestructuración de redes.</li>
+                <div className="w-20 h-1 bg-blue-600 mb-6"></div>
+
+                <Typography className="text-gray-600 text-lg mb-4" placeholder={undefined}>
+                  Sabemos que eres responsable con los tuyos y que quieres lo mejor para ellos.
+                </Typography>
+
+                <Typography className="text-gray-700 font-semibold mb-4" placeholder={undefined}>
+                  Por eso te brindamos:
+                </Typography>
+
+                <ul className="space-y-3 mb-6">
+                  {[
+                    "Instalación de sistemas de circuito cerrado CCTV",
+                    "Instalación de sistemas de control de acceso biométrico",
+                    "Planificación de sistemas de control térmico para plantas químicas"
+                  ].map((item, index) => (
+                    <li key={index} className="flex items-start gap-3">
+                      <CheckCircleIcon className="h-6 w-6 text-blue-600 flex-shrink-0 mt-0.5" />
+                      <Typography className="text-gray-700" placeholder={undefined}>{item}</Typography>
+                    </li>
+                  ))}
                 </ul>
-                <p className='font-bold mt-5 text-gray-700'>Solamente con materiales de calidad</p>
-                <div className='flex gap-5 items-center pt-4'>
-                  <div>
-                    <Image src='/images/corporate/unifi-icon-smart-business.png' width={40} height={40} alt='Logo de Ubiquiti - Soluciones de red empresarial' />
+
+                <div className="bg-blue-50 border-l-4 border-blue-600 p-4 rounded mb-6">
+                  <Typography className="text-gray-700 font-semibold" placeholder={undefined}>
+                    Con la mejor tecnología al mejor precio
+                  </Typography>
+                </div>
+
+                <div className="flex items-center">
+                  <Image
+                    src='/images/corporate/Hikvision_logo_smart_business.png'
+                    width={200}
+                    height={100}
+                    alt='Logo de Hikvision - Sistemas de seguridad CCTV'
+                  />
+                </div>
+              </div>
+
+              <div className="animate-fade-left">
+                <Card className="overflow-hidden shadow-2xl border-0">
+                  <Image
+                    src='/images/corporate/cctv-room.jpg'
+                    width={600}
+                    height={400}
+                    alt='Sala de monitoreo CCTV con pantallas de seguridad'
+                    className="w-full h-auto"
+                  />
+                </Card>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Redes Empresariales */}
+        <div className="bg-gray-50 py-16">
+          <div className="container mx-auto px-5">
+            <div className="max-w-6xl mx-auto">
+              <div className="grid md:grid-cols-2 gap-12 items-center">
+                <div className="order-2 md:order-1 animate-fade-right">
+                  <Card className="overflow-hidden shadow-2xl border-0">
+                    <div className="relative">
+                      <video className='w-full h-auto' autoPlay muted loop>
+                        <source src='/videos/fast-network.mp4' type="video/mp4" />
+                      </video>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                    </div>
+                  </Card>
+                </div>
+
+                <div className="order-1 md:order-2 animate-fade-left">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-700 rounded-lg
+                                    flex items-center justify-center">
+                      <SignalIcon className="h-6 w-6 text-white" />
+                    </div>
+                    <Typography variant="h2" className="text-3xl font-bold text-gray-800"
+                                placeholder={undefined}>
+                      Tu Red Debe Ser la Mejor
+                    </Typography>
                   </div>
-                  <div>
-                    <Image src='/images/corporate/mikrotik-logo.png' width={200} height={100} alt='Logo de MikroTik - Equipos de red y enrutadores' />
+                  <div className="w-20 h-1 bg-green-600 mb-6"></div>
+
+                  <Typography className="text-gray-600 text-lg mb-4" placeholder={undefined}>
+                    No dejes que una mala red atrase a tus colaboradores y tu negocio.
+                  </Typography>
+
+                  <Typography className="text-gray-700 font-semibold mb-4" placeholder={undefined}>
+                    Lo que podemos hacer por ti:
+                  </Typography>
+
+                  <ul className="space-y-3 mb-6">
+                    {[
+                      "Certificación de red profesional",
+                      "Instalación de puntos de red empresarial",
+                      "Reestructuración y optimización de redes"
+                    ].map((item, index) => (
+                      <li key={index} className="flex items-start gap-3">
+                        <CheckCircleIcon className="h-6 w-6 text-green-600 flex-shrink-0 mt-0.5" />
+                        <Typography className="text-gray-700" placeholder={undefined}>{item}</Typography>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div className="bg-green-50 border-l-4 border-green-600 p-4 rounded mb-6">
+                    <Typography className="text-gray-700 font-semibold" placeholder={undefined}>
+                      Solamente con materiales de calidad
+                    </Typography>
                   </div>
-                  
-                  <div>
-                    <Image src='/images/corporate/belden_logo.png' width={120} height={40} alt='Logo de Belden - Cableado de alta calidad' />
-                  </div>
-                  <div>
-                    <Image src='/images/corporate/legrand-logo.png' width={150} height={40} alt='Logo de Legrand - Soluciones de infraestructura eléctrica' />
-                  </div>
-                  <div>
-                    <Image src='/images/corporate/tp-link.png' width={100} height={40} alt='Logo de TP-Link - Equipos de red y conectividad' />
+
+                  <div className="flex flex-wrap items-center gap-4">
+                    <Image src='/images/corporate/unifi-icon-smart-business.png' width={40} height={40}
+                           alt='Logo de Ubiquiti' />
+                    <Image src='/images/corporate/mikrotik-logo.png' width={120} height={60}
+                           alt='Logo de MikroTik' />
+                    <Image src='/images/corporate/belden_logo.png' width={100} height={40}
+                           alt='Logo de Belden' />
+                    <Image src='/images/corporate/legrand-logo.png' width={100} height={40}
+                           alt='Logo de Legrand' />
+                    <Image src='/images/corporate/tp-link.png' width={80} height={40}
+                           alt='Logo de TP-Link' />
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className='container mt-48 mx-auto py-5'>
-            <h3 className='font-semibold text-4xl text-gray-700 text-center'>Te brindamos lo mas practico para tu red</h3>
-            <h4 className='font-semibold text-2xl text-gray-500 text-center'>Switches FULL-POE</h4>
-            <video className='container mx-auto rounded-xl mt-24 md:mb-0' autoPlay muted loop>
-                    <source src='/videos/switch-poe.mp4' type="video/mp4" />
-            </video>
+        </div>
+
+        {/* Switches POE */}
+        <div className="container mx-auto px-5 py-16">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-12">
+              <Typography variant="h2" className="text-4xl font-bold text-gray-800 mb-4"
+                          placeholder={undefined}>
+                Te Brindamos lo Más Práctico para tu Red
+              </Typography>
+              <div className="w-24 h-1 bg-blue-600 mx-auto mb-6"></div>
+              <Typography className="text-gray-600 text-2xl" placeholder={undefined}>
+                Switches FULL-POE
+              </Typography>
+            </div>
+
+            <Card className="overflow-hidden shadow-2xl border-0">
+              <video className='w-full h-auto' autoPlay muted loop>
+                <source src='/videos/switch-poe.mp4' type="video/mp4" />
+              </video>
+            </Card>
           </div>
-          <div className='container mt-24 mx-auto p-5'>
-            <h3 className='font-semibold text-3xl text-gray-700 text-center'>Protege tu Equipo</h3>
-            <h4 className='font-semibold text-2xl text-gray-500 text-center'>Sistemas de Energía Ininterrumpida</h4>
-              <div className='grid md:grid-cols-2 mt-24 gap-10'>
-                <div>
-                  <h4 className='flex text-3xl font-semibold text-gray-900'>Sistemas de energía ininterrumpida</h4>
-                  <div className='border-t-2 border-blue-500 w-[5%] mb-5'></div>
-                  <p>Prevenir es mejor que lamentar cuida el equipo de tu hogar u empresa con marcas avaladas por años de experiencia.</p>
-                  <p>Te brindamos soporte para:</p>
-                  <ul className=' text-gray-700'>
-                    <li>-Equipo de oficina.</li>
-                    <li>-Data Centers de nivel corporativo.</li>
-                    <li>-Estudio de necesidades energéticas.</li>
+        </div>
+
+        {/* Sistemas UPS */}
+        <div className="bg-gradient-to-br from-orange-50 to-orange-100 py-16">
+          <div className="container mx-auto px-5">
+            <div className="max-w-6xl mx-auto">
+              <div className="text-center mb-12">
+                <Typography variant="h2" className="text-4xl font-bold text-gray-800 mb-4"
+                            placeholder={undefined}>
+                  Protege tu Equipo
+                </Typography>
+                <div className="w-24 h-1 bg-orange-600 mx-auto mb-6"></div>
+                <Typography className="text-gray-600 text-2xl" placeholder={undefined}>
+                  Sistemas de Energía Ininterrumpida
+                </Typography>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-12 items-center">
+                <div className="animate-fade-right">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-700 rounded-lg
+                                    flex items-center justify-center">
+                      <BoltIcon className="h-6 w-6 text-white" />
+                    </div>
+                    <Typography variant="h3" className="text-2xl font-bold text-gray-800"
+                                placeholder={undefined}>
+                      Sistemas UPS Profesionales
+                    </Typography>
+                  </div>
+
+                  <Typography className="text-gray-600 text-lg mb-4" placeholder={undefined}>
+                    Prevenir es mejor que lamentar. Cuida el equipo de tu hogar u empresa con
+                    marcas avaladas por años de experiencia.
+                  </Typography>
+
+                  <Typography className="text-gray-700 font-semibold mb-4" placeholder={undefined}>
+                    Te brindamos soporte para:
+                  </Typography>
+
+                  <ul className="space-y-3">
+                    {[
+                      "Equipo de oficina y estaciones de trabajo",
+                      "Data Centers de nivel corporativo",
+                      "Estudio de necesidades energéticas personalizado"
+                    ].map((item, index) => (
+                      <li key={index} className="flex items-start gap-3">
+                        <CheckCircleIcon className="h-6 w-6 text-orange-600 flex-shrink-0 mt-0.5" />
+                        <Typography className="text-gray-700" placeholder={undefined}>{item}</Typography>
+                      </li>
+                    ))}
                   </ul>
                 </div>
-              <div className='flex items-center justify-center md:justify-end'>
-                <Image className='rounded-md shadow-sm' src='/images/backgrounds/apc-background.jpg' width={600} height={400} alt='Sistemas UPS APC - Energía ininterrumpida para equipos críticos' />
+
+                <div className="animate-fade-left">
+                  <Card className="overflow-hidden shadow-2xl border-0">
+                    <Image
+                      src='/images/backgrounds/apc-background.jpg'
+                      width={600}
+                      height={400}
+                      alt='Sistemas UPS APC - Energía ininterrumpida para equipos críticos'
+                      className="w-full h-auto"
+                    />
+                  </Card>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+
+        {/* CTA Final */}
+        <div className="bg-gradient-to-r from-blue-600 via-blue-700 to-blue-900 py-20">
+          <div className="container mx-auto px-5 text-center">
+            <Typography variant="h2" className="text-white text-4xl md:text-5xl font-bold mb-6"
+                        placeholder={undefined}>
+              ¿Listo para Transformar tu Infraestructura Tecnológica?
+            </Typography>
+            <Typography className="text-blue-100 text-xl mb-8 max-w-2xl mx-auto"
+                        placeholder={undefined}>
+              Contáctanos hoy y descubre cómo nuestros servicios pueden impulsar tu negocio
+            </Typography>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button
+                size="lg"
+                className="bg-white text-blue-600 hover:bg-blue-50
+                           shadow-2xl hover:shadow-3xl px-8 py-4 text-lg"
+                placeholder={undefined}
+              >
+                <Link href="/contacto">
+                  Solicitar Cotización
+                </Link>
+              </Button>
+              <Button
+                size="lg"
+                variant="outlined"
+                className="border-2 border-white text-white hover:bg-white/10
+                           px-8 py-4 text-lg"
+                placeholder={undefined}
+              >
+                <Link href="tel:+50488187765">
+                  Llamar Ahora
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </div>
     </>
     );
 }

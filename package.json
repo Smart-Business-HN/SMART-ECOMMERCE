@@ -12,6 +12,7 @@
     "@heroicons/react": "^2.2.0",
     "@lottiefiles/dotlottie-react": "^0.14.2",
     "@material-tailwind/react": "^2.1.10",
+    "@microsoft/signalr": "^10.0.0",
     "@vercel/analytics": "^1.5.0",
     "next": "16.1.1",
     "next-auth": "^4.24.11",
