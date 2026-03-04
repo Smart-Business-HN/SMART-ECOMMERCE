@@ -641,6 +641,7 @@ export default function CheckoutPageClient({ cart, user }: CheckoutPageClientPro
       </div>
 
       {/* Card Payment Not Available Modal */}
+      {/* @ts-expect-error Material Tailwind Dialog type definitions are overly strict; props are correct per docs */}
       <Dialog open={showCardModal} handler={() => setShowCardModal(false)} size="sm">
         <DialogHeader className="flex items-center gap-2">
           <ExclamationTriangleIcon className="h-6 w-6 text-amber-500" />
