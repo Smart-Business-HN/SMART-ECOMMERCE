@@ -12,6 +12,7 @@ import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/auth.config';
 import Link from 'next/link';
 import WhatsAppContactButton from '@/components/store/whatsapp-contact-button.component';
+import AddToCartButton from '@/components/store/add-to-cart-button.component';
 
 interface ProductPageProps {
     params: Promise<{ category: string; subcategory: string; product: string }>;
@@ -335,15 +336,14 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
                             {/* Botones de Acción */}
                             <div className="flex gap-4 pt-4">
-                                <Button 
-                                    size="lg" 
-                                    color="blue" 
-                                    className="flex-1"
+                                <AddToCartButton
+                                    productId={productData.id}
+                                    productName={productData.name}
                                     disabled={productData.currentStock <= 0}
-                                    aria-label={productData.currentStock > 0 ? 'Agregar al carrito' : 'Producto sin stock'}
-                                >
-                                    {productData.currentStock > 0 ? 'Agregar al Carrito' : 'Sin Stock'}
-                                </Button>
+                                    size="lg"
+                                    color="blue"
+                                    className="flex-1"
+                                />
                                 <WhatsAppContactButton 
                                     productUrl={`https://smartbusiness.site/tienda/${productData.subCategory?.category?.slug || ''}/${productData.subCategory?.slug || ''}/${productData.slug}`}
                                     size="lg"

@@ -13,6 +13,7 @@ export async function PUT(
     const quantity = searchParams.get('quantity');
     const customerId = searchParams.get('customerId');
     const cartId = searchParams.get('cartId');
+    const forceNewCart = searchParams.get('forceNewCart');
     
     if (!quantity || !customerId) {
       return NextResponse.json(
@@ -37,6 +38,10 @@ export async function PUT(
     
     if (cartId) {
       backendQueryParams.append('cartId', cartId);
+    }
+
+    if (forceNewCart === 'true') {
+      backendQueryParams.append('forceNewCart', 'true');
     }
     
     const fullUrl = `${url}?${backendQueryParams.toString()}`;

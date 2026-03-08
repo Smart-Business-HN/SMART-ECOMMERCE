@@ -6,12 +6,10 @@ import { Bars3Icon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
-interface MainNavbarProps {
-    cartItemsCount?: number;
-    onCartClick?: () => void;
-  }
+import { useCartCount } from "@/components/providers/cart-count-provider";
 
-export default function NavBarComponent({ cartItemsCount = 0, onCartClick }: MainNavbarProps) {
+export default function NavBarComponent() {
+    const { cartItemsCount } = useCartCount();
     const { data: session, status } = useSession();
     const isLogued = status === 'authenticated';
     const handleSignOut = async () => {
@@ -61,14 +59,12 @@ export default function NavBarComponent({ cartItemsCount = 0, onCartClick }: Mai
               <>
                 {/* Cart Icon with Badge */}
                 <div className="relative mr-2 flex items-center justify-center">
-                  <button
-                    type="button"
-                    className="focus:outline-none flex items-center justify-center"
-                    onClick={onCartClick}
-                  >
+                  <Link href="/profile?tab=carts" className="focus:outline-none flex items-center justify-center">
                     <ShoppingCartIcon className="w-6 h-6 text-blue-gray-700" />
-                    <span className="absolute -top-1 md:-top-2 -right-4 bg-red-500 text-white text-xs font-bold rounded-full px-1.5 py-[2px] text-center" style={{lineHeight: '1.1'}}>{cartItemsCount}</span>
-                  </button>
+                    {cartItemsCount > 0 && (
+                      <span className="absolute -top-1 md:-top-2 -right-4 bg-red-500 text-white text-xs font-bold rounded-full px-1.5 py-[2px] text-center" style={{lineHeight: '1.1'}}>{cartItemsCount}</span>
+                    )}
+                  </Link>
                 </div>
                 {/* @ts-expect-error Material Tailwind Avatar type definitions are overly strict; props are correct per docs */}
                 
