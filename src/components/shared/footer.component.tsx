@@ -30,6 +30,7 @@ const Footer = () => {
                                 <h6 className='text-gray-500 font-bold text-md md:text-md'>Compañia</h6>
                                 <Link href='/quienes-somos'><p className='pt-1 text-md md:text-xs text-gray-400 hover:cursor-pointer hover:text-blue-500'>Historia</p></Link>
                                 <p className='pt-1 text-md md:text-xs text-gray-400 hover:cursor-pointer hover:text-blue-500'>Nuestras Marcas</p>
+                                <Link href='/ventix'><p className='pt-1 text-md md:text-xs text-gray-400 hover:cursor-pointer hover:text-blue-500'>Ventix - ERP &amp; POS</p></Link>
                                 <p className='pt-1 text-md md:text-xs text-gray-400 hover:cursor-pointer hover:text-blue-500'>Oportunidad de empleo</p>
                                 <Link href='/contacto'><p className='pt-1 text-md md:text-xs text-gray-400 hover:cursor-pointer hover:text-blue-500'>Contacto</p></Link>
                                 <Link href='/terminos-y-condiciones'><p className='pt-1 text-md md:text-xs text-gray-400 hover:cursor-pointer hover:text-blue-500'>Terminos y Condiciones</p></Link>

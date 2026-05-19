@@ -41,6 +41,8 @@ export default function NavBarComponent() {
               {/* @ts-expect-error Material Tailwind Button type definitions are overly strict; props are correct per docs */}
               <Link href='/tienda'><Button variant="text" size="sm" className="font-semibold" ripple={false} onClick={() => {}}>Tienda</Button></Link>
               {/* @ts-expect-error Material Tailwind Button type definitions are overly strict; props are correct per docs */}
+              <Link href='/ventix'><Button variant="text" size="sm" className="font-semibold" ripple={false} onClick={() => {}}>Ventix</Button></Link>
+              {/* @ts-expect-error Material Tailwind Button type definitions are overly strict; props are correct per docs */}
               <Link href='/servicios'><Button variant="text" size="sm" className="font-semibold" ripple={false} onClick={() => {}}>Servicios</Button></Link>
               {/* @ts-expect-error Material Tailwind Button type definitions are overly strict; props are correct per docs */}
               <Link href='/quienes-somos'><Button variant="text" size="sm" className="font-semibold" ripple={false} onClick={() => {}}>Quienes Somos</Button></Link>
@@ -100,6 +102,9 @@ export default function NavBarComponent() {
               </MenuItem>
               <MenuItem>
                 <Link href='/tienda'>Tienda</Link>
+              </MenuItem>
+              <MenuItem>
+                <Link href='/ventix'>Ventix</Link>
               </MenuItem>
               <MenuItem>
                 <Link href='/servicios'>Servicios</Link>

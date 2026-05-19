@@ -6,6 +6,7 @@ import UbiquitiWispSectionComponent from "@/components/home/ubiquiti-wisp-sectio
 import Hikvision from "@/components/home/hikvision.component";
 import CertificatesComponent from "@/components/home/certificates.components";
 import HappyHolidaysComponent from "@/components/home/happy-holidays.component";
+import VentixSectionComponent from "@/components/home/ventix-section.component";
 
 export default function Home() {
   return (
@@ -74,6 +75,15 @@ export default function Home() {
                     "name": "Equipos de Red",
                     "description": "Switches, routers y equipos de red empresarial"
                   }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Product",
+                    "name": "Ventix - ERP & POS en la nube",
+                    "description": "Sistema ERP y POS en la nube para PyMEs: facturación CAI/SAR, inventario, CRM y reportes",
+                    "url": "https://ventix.smartbusiness.site/"
+                  }
                 }
               ]
             },
@@ -113,7 +123,11 @@ export default function Home() {
               "Backups de Energía",
               "Productos de Biometría",
               "WISP",
-              "NAS Servers"
+              "NAS Servers",
+              "Ventix ERP",
+              "Ventix POS",
+              "ERP en la nube Honduras",
+              "Facturación CAI SAR"
             ],
             "makesOffer": [
               {
@@ -160,6 +174,12 @@ export default function Home() {
                 "@type": "Offer",
                 "name": "NAS Servers",
                 "description": "Servidores NAS para almacenamiento"
+              },
+              {
+                "@type": "Offer",
+                "name": "Ventix - ERP & POS",
+                "description": "Software ERP y punto de venta en la nube para PyMEs con facturación CAI/SAR, inventario y CRM",
+                "url": "https://ventix.smartbusiness.site/"
               }
             ]
           })
@@ -241,6 +261,7 @@ export default function Home() {
       <UbiquitiSectionComponent />
       <UbiquitiWispSectionComponent />
       <Hikvision />
+      <VentixSectionComponent />
     </>
   );
 }
