@@ -172,7 +172,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                     dangerouslySetInnerHTML={{
                         __html: JSON.stringify({
                             "@context": "https://schema.org",
-                            "@type": "offer",
+                            "@type": "Product",
                             "name": productData.name,
                             "description": productData.description || productData.ecommerceDescription?.replace(/<[^>]+>/g, '') || `Producto ${productData.name}`,
                             "sku": productData.code,
@@ -267,7 +267,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                             <h2 id="imagenes-producto-titulo" className="sr-only">Imágenes del producto</h2>
                             <div className="space-y-4">
                                 {productData.productImages && productData.productImages.length > 0 ? (
-                                    <Carousel loop={true} autoplay={true} className="rounded-xl h-96">
+                                    <Carousel loop={true} autoplay={false} className="rounded-xl h-96">
                                         {productData.productImages.map((image, index) => (
                                             <div key={index} className="relative h-full w-full">
                                                 <Image
@@ -383,13 +383,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                                     <Tab value="productDataSheets">Ficha Técnica</Tab>
                                    )}
                                 </TabsHeader>
-                                <TabsBody
-                                animate={{
-                                initial: { y: 250 },
-                                mount: { y: 0 },
-                                unmount: { y: 250 },
-                                }}
-                            >
+                                <TabsBody>
                                 {productData.ecommerceDescription && (
                                     <TabPanel key="ecommerceDescription" value="ecommerceDescription">
                                     <div

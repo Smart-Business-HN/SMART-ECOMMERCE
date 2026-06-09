@@ -78,7 +78,7 @@ export default function StoreClient({
     return (
         <main className='col-span-4 md:col-span-3' role="main" aria-labelledby="tienda-titulo">
             <header className='flex flex-col md:flex-row justify-between items-center mb-6'>
-                <h1 id="tienda-titulo" className='text-gray-400 font-semibold md:text-3xl text-4xl grow'>
+                <h1 id="tienda-titulo" className='text-gray-800 font-semibold md:text-3xl text-4xl grow'>
                     Tienda
                 </h1>
                 <div className='flex gap-2 items-center mt-2 md:mt-0' role="group" aria-label="Controles de visualización y paginación">

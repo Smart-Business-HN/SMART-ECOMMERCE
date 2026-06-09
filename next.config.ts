@@ -14,6 +14,7 @@ if (process.env.ALLOW_SELF_SIGNED_CERT === 'true' ||
 const nextConfig: NextConfig = {
   output: 'standalone',
   images: {
+    formats: ["image/avif", "image/webp"],
     remotePatterns: [
       {
         protocol: "https",
@@ -28,6 +29,9 @@ const nextConfig: NextConfig = {
           hostname: "smarterpstorage.blob.core.windows.net",
       },
     ],
+  },
+  experimental: {
+    optimizePackageImports: ["@material-tailwind/react", "@heroicons/react"],
   },
   env: {
     NEXT_PUBLIC_API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL || (process.env.NODE_ENV === 'development' ? 'https://localhost:7211/api/v2' : 'https://api.smartbusiness.site/api/v2'),

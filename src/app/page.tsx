@@ -7,6 +7,7 @@ import Hikvision from "@/components/home/hikvision.component";
 import CertificatesComponent from "@/components/home/certificates.components";
 import HappyHolidaysComponent from "@/components/home/happy-holidays.component";
 import VentixSectionComponent from "@/components/home/ventix-section.component";
+import FeaturedProductsComponent from "@/components/home/featured-products.component";
 
 export default function Home() {
   return (
@@ -253,15 +254,18 @@ export default function Home() {
         }}
       />
 
+      <main>
       <HeroComponent />
       {/* <HappyHolidaysComponent/> */}
       <BrandingComponent />
       <CertificatesComponent />
       <CorporateResumeComponent />
+      <FeaturedProductsComponent />
       <UbiquitiSectionComponent />
       <UbiquitiWispSectionComponent />
       <Hikvision />
       <VentixSectionComponent />
+      </main>
     </>
   );
 }

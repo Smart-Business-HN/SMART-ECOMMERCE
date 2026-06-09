@@ -1,6 +1,6 @@
 // @ts-nocheck
 "use client";
-import { Navbar,Button,Avatar, Menu, MenuItem, MenuList, MenuHandler } from "@/utils/MTailwind";
+import { Navbar, Avatar, Menu, MenuItem, MenuList, MenuHandler } from "@/utils/MTailwind";
 import { ShoppingCartIcon } from "@heroicons/react/20/solid";
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import Image from "next/image";
@@ -35,19 +35,13 @@ export default function NavBarComponent() {
             <div className="w-10 h-10 bg-gray-200 flex items-center justify-center">
               <Image src="/images/corporate/smart.webp" alt="Smart Business logo" width={32} height={32} priority className="object-contain" />
             </div>
-            <div className="flex gap-2">
-              {/* @ts-expect-error Material Tailwind Button type definitions are overly strict; props are correct per docs */}
-              <Link href='/'><Button variant="text" size="sm" className="font-semibold" ripple={false} onClick={() => {}}>Inicio</Button></Link>
-              {/* @ts-expect-error Material Tailwind Button type definitions are overly strict; props are correct per docs */}
-              <Link href='/tienda'><Button variant="text" size="sm" className="font-semibold" ripple={false} onClick={() => {}}>Tienda</Button></Link>
-              {/* @ts-expect-error Material Tailwind Button type definitions are overly strict; props are correct per docs */}
-              <Link href='/ventix'><Button variant="text" size="sm" className="font-semibold" ripple={false} onClick={() => {}}>Ventix</Button></Link>
-              {/* @ts-expect-error Material Tailwind Button type definitions are overly strict; props are correct per docs */}
-              <Link href='/servicios'><Button variant="text" size="sm" className="font-semibold" ripple={false} onClick={() => {}}>Servicios</Button></Link>
-              {/* @ts-expect-error Material Tailwind Button type definitions are overly strict; props are correct per docs */}
-              <Link href='/quienes-somos'><Button variant="text" size="sm" className="font-semibold" ripple={false} onClick={() => {}}>Quienes Somos</Button></Link>
-              {/* @ts-expect-error Material Tailwind Button type definitions are overly strict; props are correct per docs */}
-              <Link href='/contacto'><Button variant="text" size="sm" className="font-semibold" ripple={false} onClick={() => {}}>Contacto</Button></Link>
+            <div className="flex gap-1">
+              <Link href='/' className="inline-flex items-center min-h-[44px] px-3 rounded-lg text-sm font-semibold text-blue-gray-800 hover:bg-blue-gray-50 transition-colors">Inicio</Link>
+              <Link href='/tienda' className="inline-flex items-center min-h-[44px] px-3 rounded-lg text-sm font-semibold text-blue-gray-800 hover:bg-blue-gray-50 transition-colors">Tienda</Link>
+              <Link href='/ventix' className="inline-flex items-center min-h-[44px] px-3 rounded-lg text-sm font-semibold text-blue-gray-800 hover:bg-blue-gray-50 transition-colors">Ventix</Link>
+              <Link href='/servicios' className="inline-flex items-center min-h-[44px] px-3 rounded-lg text-sm font-semibold text-blue-gray-800 hover:bg-blue-gray-50 transition-colors">Servicios</Link>
+              <Link href='/quienes-somos' className="inline-flex items-center min-h-[44px] px-3 rounded-lg text-sm font-semibold text-blue-gray-800 hover:bg-blue-gray-50 transition-colors">Quienes Somos</Link>
+              <Link href='/contacto' className="inline-flex items-center min-h-[44px] px-3 rounded-lg text-sm font-semibold text-blue-gray-800 hover:bg-blue-gray-50 transition-colors">Contacto</Link>
             </div>
           </div>
           <div className="w-full flex md:hidden">
@@ -61,7 +55,7 @@ export default function NavBarComponent() {
               <>
                 {/* Cart Icon with Badge */}
                 <div className="relative mr-2 flex items-center justify-center">
-                  <Link href="/profile?tab=carts" className="focus:outline-none flex items-center justify-center">
+                  <Link href="/profile?tab=carts" aria-label="Ver carrito de compras" className="focus:outline-none flex items-center justify-center min-h-[44px] min-w-[44px]">
                     <ShoppingCartIcon className="w-6 h-6 text-blue-gray-700" />
                     {cartItemsCount > 0 && (
                       <span className="absolute -top-1 md:-top-2 -right-4 bg-red-500 text-white text-xs font-bold rounded-full px-1.5 py-[2px] text-center" style={{lineHeight: '1.1'}}>{cartItemsCount}</span>
@@ -72,7 +66,7 @@ export default function NavBarComponent() {
                 
                 <Menu>
                   <MenuHandler>
-                    <Avatar src={session?.user?.image || "/images/generic_avatar.jpg"} alt="avatar" size="sm" className="cursor-pointer object-cover border-2 border-blue-500" onClick={() => {}} />
+                    <Avatar src={session?.user?.image || "/images/generic_avatar.jpg"} alt="Abrir menú de usuario" size="sm" className="cursor-pointer object-cover border-2 border-blue-500" />
                   </MenuHandler>
                   <MenuList>
                     <MenuItem onClick={() => {window.location.href = '/profile'}}>Perfil</MenuItem>
@@ -83,10 +77,8 @@ export default function NavBarComponent() {
               </>
             ) : (
               <>
-                {/* @ts-expect-error Material Tailwind Button type definitions are overly strict; props are correct per docs */}
-                <Link href='/login'><Button variant="outlined" size="sm" color="blue-gray" ripple={false}>Login</Button></Link>
-                {/* @ts-expect-error Material Tailwind Button type definitions are overly strict; props are correct per docs */}
-                <Link href='/sign-up'><Button variant="filled" size="sm" color="blue" ripple={false}>Registrarme</Button></Link>
+                <Link href='/login' className="inline-flex items-center justify-center min-h-[44px] px-4 rounded-lg border border-blue-gray-300 text-sm font-semibold text-blue-gray-800 hover:bg-blue-gray-50 transition-colors">Login</Link>
+                <Link href='/sign-up' className="inline-flex items-center justify-center min-h-[44px] px-4 rounded-lg bg-blue-600 text-sm font-semibold text-white hover:bg-blue-700 transition-colors">Registrarme</Link>
               </>
             )}
           </div>
@@ -94,7 +86,9 @@ export default function NavBarComponent() {
             {/* Aqui va el burger menu */}
            <Menu>
             <MenuHandler>
-              <Bars3Icon className="w-7 h-7 text-blue-gray-700" />
+              <button type="button" aria-label="Abrir menú de navegación" className="flex items-center justify-center min-h-[44px] min-w-[44px] rounded-lg hover:bg-blue-gray-50">
+                <Bars3Icon className="w-7 h-7 text-blue-gray-700" />
+              </button>
             </MenuHandler>
             <MenuList>
               <MenuItem>

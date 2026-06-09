@@ -4,19 +4,20 @@ import "./globals.css";
 import Script from "next/script";
 import NavBarComponent from "@/components/shared/nav-bar.component";
 import Footer from "@/components/shared/footer.component";
-import { Analytics } from '@vercel/analytics/next';
 import AuthProvider from "@/components/providers/session-provider";
 import CartCountProvider from "@/components/providers/cart-count-provider";
-import ChatWidget from "@/components/shared/chat-widget.component";
+import ChatWidgetLoader from "@/components/shared/chat-widget-loader.component";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -112,7 +113,11 @@ export default function RootLayout({
   return (
     <html lang="es" suppressHydrationWarning={true} data-lt-installed={true}>
       <head>
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://www.clarity.ms" />
+        <link rel="dns-prefetch" href="https://scripts.clarity.ms" />
         <Script id='tag-manager'
+        strategy='afterInteractive'
         dangerouslySetInnerHTML={
           { __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
           new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -122,6 +127,7 @@ export default function RootLayout({
         } />
         <Script
           id='clarityScript'
+          strategy='lazyOnload'
           dangerouslySetInnerHTML={
             {
               __html: `(function(c,l,a,r,i,t,y){
@@ -132,6 +138,7 @@ export default function RootLayout({
             }}
         />
         <Script id='googleAnalitycs'
+          strategy='lazyOnload'
           dangerouslySetInnerHTML={
             {
               __html: `window.dataLayer = window.dataLayer || [];
@@ -149,9 +156,8 @@ export default function RootLayout({
           <CartCountProvider>
             <NavBarComponent />
             {children}
-            <Analytics />
             <Footer />
-            <ChatWidget />
+            <ChatWidgetLoader />
           </CartCountProvider>
         </AuthProvider>
       </body>

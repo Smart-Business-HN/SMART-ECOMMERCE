@@ -50,6 +50,7 @@ function SearchInputContent() {
         <Input
           type="text"
           label="Buscar productos..."
+          aria-label="Buscar productos"
           value={searchTerm}
           color='blue'
           onChange={(e) => setSearchTerm(e.target.value)}
@@ -59,7 +60,8 @@ function SearchInputContent() {
         />
         <Button
           type="submit"
-          className="absolute right-2 top-1/2 transform bg-blue-400 -translate-y-1/2 p-1 hover:bg-gray-400 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
+          aria-label="Buscar"
+          className="absolute right-2 top-1/2 transform bg-blue-600 -translate-y-1/2 p-1 hover:bg-blue-700 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
           disabled={isPending || !searchTerm.trim()}
         >
           <MagnifyingGlassIcon className="h-5 w-5 text-white" />
