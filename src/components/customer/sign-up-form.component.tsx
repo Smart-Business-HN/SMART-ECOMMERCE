@@ -7,6 +7,7 @@ import { Card, Input, Button, Typography, Alert, Select, Option } from '@/utils/
 import { createUser } from '@/services/auth.service';
 import { CreateEcommerceUserCommand, DepartmentDto } from '@/interfaces/auth/auth.interface';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
+import { trackFbEvent } from '@/lib/meta/fbpixel';
 
 interface SignUpFormProps {
   departments: { id: number; name: string }[];
@@ -130,6 +131,15 @@ export default function SignUpForm({ departments, genders }: SignUpFormProps) {
       const response = await createUser(formData);
       
       if (response.succeeded && response.data) {
+        // Meta Pixel: CompleteRegistration (navegador + Conversions API con dedup).
+        // El teléfono está disponible aquí, así que se incluye para Advanced Matching.
+        trackFbEvent('CompleteRegistration', { status: true }, {
+          email: formData.email,
+          phone: formData.phoneNumber,
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+        });
+
         // Login automático después del registro exitoso
         const loginResult = await signIn('credentials', {
           email: formData.email,

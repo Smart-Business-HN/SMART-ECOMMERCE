@@ -18,6 +18,8 @@ import {
 import Link from 'next/link';
 import Image from 'next/image';
 import { requestPaymentLink } from '@/services/checkout.service';
+import { trackFbEvent } from '@/lib/meta/fbpixel';
+import { buildProductCustomData } from '@/lib/meta/meta-custom-data';
 
 interface CheckoutUser {
   id: string;
@@ -74,6 +76,23 @@ export default function CheckoutPageClient({ cart, user }: CheckoutPageClientPro
   const calculateSubtotal = () => cartItems.reduce((total, item) => total + item.totalPrice, 0);
   const calculateTax = () => calculateSubtotal() * 0.15;
   const calculateTotal = () => calculateSubtotal() + calculateTax();
+
+  // Meta Pixel: AddPaymentInfo (navegador + Conversions API con dedup). Es el
+  // evento de optimización en intención de pago, NO Purchase (la compra real se
+  // confirma server-side cuando el carrito pasa a Verified). value = subtotal de
+  // mercancía, consistente con item_price.
+  const fireAddPaymentInfo = (includePhone: boolean) => {
+    const lines = cartItems.map((item) => ({
+      code: item.product?.code?.trim() || String(item.productId),
+      quantity: item.quantity,
+      unitPrice: item.unitPrice,
+    }));
+    if (lines.length === 0) return;
+    trackFbEvent('AddPaymentInfo', buildProductCustomData(lines), {
+      email: user.email,
+      ...(includePhone && phone.trim() ? { phone: phone.trim() } : {}),
+    });
+  };
 
   const handleOptionSelect = (option: PaymentOption) => {
     if (option === 'card') {
@@ -141,6 +160,7 @@ export default function CheckoutPageClient({ cart, user }: CheckoutPageClientPro
 
       if (result.succeeded) {
         setTransferSuccess(true);
+        fireAddPaymentInfo(false);
       } else {
         setTransferError(result.message || 'Error al enviar el comprobante');
       }
@@ -172,6 +192,7 @@ export default function CheckoutPageClient({ cart, user }: CheckoutPageClientPro
 
       if (result.succeeded) {
         setLinkSuccess(true);
+        fireAddPaymentInfo(true);
       } else {
         setLinkError(result.message || 'Error al solicitar el link de pago');
       }

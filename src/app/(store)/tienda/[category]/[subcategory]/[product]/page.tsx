@@ -13,6 +13,8 @@ import { authOptions } from '@/auth.config';
 import Link from 'next/link';
 import WhatsAppContactButton from '@/components/store/whatsapp-contact-button.component';
 import AddToCartButton from '@/components/store/add-to-cart-button.component';
+import ProductViewTracker from '@/components/store/product-view-tracker.component';
+import { buildProductCustomData } from '@/lib/meta/meta-custom-data';
 
 interface ProductPageProps {
     params: Promise<{ category: string; subcategory: string; product: string }>;
@@ -166,6 +168,13 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
         return (
             <>
+                {/* Meta Pixel: ViewContent (navegador + Conversions API con dedup por event_id) */}
+                <ProductViewTracker
+                    customData={buildProductCustomData(
+                        [{ code: productData.code, quantity: 1, unitPrice: productData.recomendedSalePrice }],
+                        { contentName: productData.name, contentCategory: categoryTitle },
+                    )}
+                />
                 {/* JSON-LD Structured Data */}
                 <script
                     type="application/ld+json"

@@ -16,6 +16,8 @@ import {
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import Image from 'next/image';
+import { trackFbEvent } from '@/lib/meta/fbpixel';
+import { buildProductCustomData } from '@/lib/meta/meta-custom-data';
 
 interface CartPageClientProps {
   cart: CartDto;
@@ -84,6 +86,16 @@ export default function CartPageClient({ cart }: CartPageClientProps) {
   };
 
   const handleCheckout = () => {
+    // Meta Pixel: InitiateCheckout (navegador + Conversions API con dedup).
+    // value = subtotal de la mercancía (sin impuesto), consistente con item_price.
+    const lines = cartItems.map((item) => ({
+      code: item.product?.code?.trim() || String(item.productId),
+      quantity: item.quantity,
+      unitPrice: item.unitPrice,
+    }));
+    if (lines.length > 0) {
+      trackFbEvent('InitiateCheckout', buildProductCustomData(lines));
+    }
     router.push(`/checkout/${cart.id}`);
   };
 
@@ -368,7 +380,6 @@ export default function CartPageClient({ cart }: CartPageClientProps) {
                   <Button
                     variant="outlined"
                     size="lg"
-                    className="w-full"
                     className="flex items-center justify-center w-full"
                   >
                     <TruckIcon className="h-5 w-5 mr-2" />

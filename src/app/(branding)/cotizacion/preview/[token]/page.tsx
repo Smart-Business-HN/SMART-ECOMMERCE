@@ -3,6 +3,8 @@ import { getQuotationByToken } from '@/services/quotation-preview.service';
 import CommentSection from '@/components/quotation-preview/comment-section.component';
 import ItemObservationDialog from '@/components/quotation-preview/item-observation-dialog.component';
 import PdfDownloadButton from '@/components/quotation-preview/pdf-download-button.component';
+import MetaEventTracker from '@/components/analytics/meta-event-tracker.component';
+import { META_CURRENCY } from '@/lib/meta/meta-custom-data';
 import { DocumentTextIcon, CalendarDaysIcon, UserIcon, BuildingOfficeIcon } from '@heroicons/react/24/outline';
 
 type PageProps = {
@@ -66,9 +68,21 @@ export default async function QuotationPreviewPage({ params }: PageProps) {
   });
   const isv15 = taxable15 * 0.15;
   const isv18 = taxable18 * 0.18;
+  const quotationTotal = taxable15 + taxable18 + isv15 + isv18 + excento;
 
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4">
+      {/* Meta Pixel: Lead al visualizar una cotización (navegador + Conversions
+          API con dedup). El teléfono del cliente se usa para Advanced Matching. */}
+      <MetaEventTracker
+        eventName="Lead"
+        customData={{
+          value: Math.round((quotationTotal + Number.EPSILON) * 100) / 100,
+          currency: META_CURRENCY,
+          content_name: quotation.quotationCode,
+        }}
+        userFields={quotation.customerPhone ? { phone: quotation.customerPhone } : undefined}
+      />
       <div className="max-w-5xl mx-auto">
         {/* Status Banner */}
         <div className={`rounded-t-lg px-6 py-3 flex items-center justify-between ${isExpired ? 'bg-red-50 border border-red-200' : 'bg-green-50 border border-green-200'}`}>

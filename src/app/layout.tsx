@@ -2,11 +2,16 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
+import { Suspense } from "react";
 import NavBarComponent from "@/components/shared/nav-bar.component";
 import Footer from "@/components/shared/footer.component";
 import AuthProvider from "@/components/providers/session-provider";
 import CartCountProvider from "@/components/providers/cart-count-provider";
 import ChatWidgetLoader from "@/components/shared/chat-widget-loader.component";
+import MetaPixel from "@/components/analytics/meta-pixel.component";
+import PixelTracker from "@/components/analytics/pixel-tracker.component";
+import PixelAdvancedMatching from "@/components/analytics/pixel-advanced-matching.component";
+import MetaConsentBanner from "@/components/analytics/meta-consent-banner.component";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -116,6 +121,8 @@ export default function RootLayout({
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://www.clarity.ms" />
         <link rel="dns-prefetch" href="https://scripts.clarity.ms" />
+        <link rel="preconnect" href="https://connect.facebook.net" />
+        <MetaPixel />
         <Script id='tag-manager'
         strategy='afterInteractive'
         dangerouslySetInnerHTML={
@@ -152,12 +159,17 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased w-full`}
       >
+        <Suspense fallback={null}>
+          <PixelTracker />
+        </Suspense>
         <AuthProvider>
+          <PixelAdvancedMatching />
           <CartCountProvider>
             <NavBarComponent />
             {children}
             <Footer />
             <ChatWidgetLoader />
+            <MetaConsentBanner />
           </CartCountProvider>
         </AuthProvider>
       </body>

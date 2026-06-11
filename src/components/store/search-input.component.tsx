@@ -6,6 +6,8 @@ import { useState, useTransition, Suspense } from 'react';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 // Removed Material Tailwind imports to avoid type conflicts
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import { trackFbEvent } from '@/lib/meta/fbpixel';
+import { buildSearchCustomData } from '@/lib/meta/meta-custom-data';
 
 function SearchInputContent() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -28,6 +30,9 @@ function SearchInputContent() {
     e.preventDefault();
     
     if (!searchTerm.trim()) return;
+
+    // Meta Pixel: Search (navegador + Conversions API con dedup por event_id)
+    trackFbEvent('Search', buildSearchCustomData(searchTerm.trim()));
 
     startTransition(() => {
       const params = new URLSearchParams(searchParams);

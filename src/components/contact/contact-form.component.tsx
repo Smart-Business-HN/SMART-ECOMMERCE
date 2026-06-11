@@ -13,6 +13,7 @@ import {
   ExclamationTriangleIcon,
   CheckCircleIcon
 } from '@heroicons/react/24/outline';
+import { trackFbEvent } from '@/lib/meta/fbpixel';
 
 const initialFormData: CreateContactMessageCommand = {
   firstName: '',
@@ -172,6 +173,15 @@ export default function ContactForm() {
 
       if (response.succeeded) {
         setSuccess('¡Mensaje enviado exitosamente! Te contactaremos pronto.');
+
+        // Meta Pixel: Contact (navegador + Conversions API con dedup). Email y
+        // teléfono del formulario para Advanced Matching.
+        trackFbEvent('Contact', {}, {
+          email: formData.email,
+          phone: formData.phoneNumber,
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+        });
 
         // Limpiar formulario después de 3 segundos
         setTimeout(() => {
