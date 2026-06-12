@@ -9,6 +9,10 @@ declare module 'next-auth' {
     firstName?: string;
     lastName?: string;
     userName?: string;
+    phoneNumber?: string;
+    birthDay?: string;
+    state?: string;
+    country?: string;
     user: {
       id: string;
       name?: string | null;
@@ -28,6 +32,10 @@ declare module 'next-auth' {
     firstName?: string;
     lastName?: string;
     userName?: string;
+    phoneNumber?: string;
+    birthDay?: string;
+    state?: string;
+    country?: string;
   }
 }
 
@@ -39,5 +47,9 @@ declare module 'next-auth/jwt' {
     firstName?: string;
     lastName?: string;
     userName?: string;
+    phoneNumber?: string;
+    birthDay?: string;
+    state?: string;
+    country?: string;
   }
 }

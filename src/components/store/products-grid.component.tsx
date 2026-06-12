@@ -224,7 +224,7 @@ export default function ProductsGrid({ products }: ProductsGridProps) {
                 L. {formatNumber(product.recomendedSalePrice)}
               </Typography>
               {/* <Typography variant="small" color="gray">
-                Stock: {product.currentStock}
+                Stock: {product.ecommerceStock}
               </Typography> */}
             </div>
             <Link href={`/tienda/${product.subCategory?.category?.slug}/${product.subCategory?.slug}/${product.slug}`} className="w-full block">

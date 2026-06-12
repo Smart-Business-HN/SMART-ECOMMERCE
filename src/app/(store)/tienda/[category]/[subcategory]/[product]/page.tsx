@@ -125,7 +125,7 @@ export async function generateMetadata({ params }: { params: Promise<{ category:
             'DC.coverage': 'Honduras',
             'product:price:amount': productData.recomendedSalePrice.toString(),
             'product:price:currency': 'HNL',
-            'product:availability': productData.currentStock > 0 ? 'in stock' : 'out of stock',
+            'product:availability': productData.ecommerceStock > 0 ? 'in stock' : 'out of stock',
             'product:brand': brand,
             'product:category': category,
         },
@@ -198,7 +198,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                                 "@type": "Offer",
                                 "price": productData.recomendedSalePrice,
                                 "priceCurrency": "HNL",
-                                "availability": productData.currentStock > 0 
+                                "availability": productData.ecommerceStock > 0 
                                     ? "https://schema.org/InStock" 
                                     : "https://schema.org/OutOfStock",
                                 "seller": {
@@ -247,7 +247,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                                 {
                                     "@type": "PropertyValue",
                                     "name": "Stock",
-                                    "value": productData.currentStock
+                                    "value": productData.ecommerceStock
                                 },
                                 {
                                     "@type": "PropertyValue",
@@ -337,8 +337,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
                             <div className="gap-4 mb-6">
                                 <div className="bg-gray-50 p-3 rounded">
                                     <p className="text-sm text-gray-600">Stock Actual</p>
-                                    <p className="text-lg font-semibold text-gray-900" aria-label={`Estado del stock: ${productData.currentStock > 0 ? 'Disponible' : 'Consultar Stock'}`}>
-                                        {productData.currentStock > 0 ? 'Disponible' : 'Consultar Stock'}
+                                    <p className="text-lg font-semibold text-gray-900" aria-label={`Estado del stock: ${productData.ecommerceStock > 0 ? 'Disponible' : 'Consultar Stock'}`}>
+                                        {productData.ecommerceStock > 0 ? 'Disponible' : 'Consultar Stock'}
                                     </p>
                                 </div>
                             </div>
@@ -348,7 +348,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                                 <AddToCartButton
                                     productId={productData.id}
                                     productName={productData.name}
-                                    disabled={productData.currentStock <= 0}
+                                    disabled={productData.ecommerceStock <= 0}
                                     size="lg"
                                     color="blue"
                                     className="flex-1"

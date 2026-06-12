@@ -25,12 +25,40 @@ export function normalizeName(name: string): string {
   return name.trim().toLowerCase();
 }
 
+// Ciudad / estado / región: minúsculas, sin acentos, solo alfanumérico
+// (Meta exige sin espacios, puntuación ni caracteres especiales).
+export function normalizeRegion(value: string): string {
+  return value
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '') // quita marcas diacríticas combinantes
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, '');
+}
+
+export function normalizeCountry(value: string): string {
+  return value.trim().toLowerCase();
+}
+
+export function normalizeZip(value: string): string {
+  return value.trim().toLowerCase().replace(/\s/g, '');
+}
+
+// Fecha de nacimiento → YYYYMMDD (a partir de una fecha ISO o similar).
+export function normalizeDob(value: string): string {
+  return value.replace(/[^0-9]/g, '').slice(0, 8);
+}
+
 export interface RawUserFields {
   email?: string | null;
   phone?: string | null;
   firstName?: string | null;
   lastName?: string | null;
   externalId?: string | null;
+  dob?: string | null;
+  city?: string | null;
+  state?: string | null;
+  zip?: string | null;
+  country?: string | null;
 }
 
 export interface RawTransportFields {
@@ -46,6 +74,11 @@ export interface HashedUserData {
   fn?: string[];
   ln?: string[];
   external_id?: string[];
+  db?: string[];
+  ct?: string[];
+  st?: string[];
+  zp?: string[];
+  country?: string[];
   fbp?: string;
   fbc?: string;
   client_ip_address?: string;
@@ -62,6 +95,11 @@ export function buildUserData(pii: RawUserFields, transport: RawTransportFields)
   if (pii.firstName) userData.fn = [sha256(normalizeName(pii.firstName))];
   if (pii.lastName) userData.ln = [sha256(normalizeName(pii.lastName))];
   if (pii.externalId) userData.external_id = [sha256(String(pii.externalId).trim().toLowerCase())];
+  if (pii.dob) userData.db = [sha256(normalizeDob(pii.dob))];
+  if (pii.city) userData.ct = [sha256(normalizeRegion(pii.city))];
+  if (pii.state) userData.st = [sha256(normalizeRegion(pii.state))];
+  if (pii.zip) userData.zp = [sha256(normalizeZip(pii.zip))];
+  if (pii.country) userData.country = [sha256(normalizeCountry(pii.country))];
 
   if (transport.fbp) userData.fbp = transport.fbp;
   if (transport.fbc) userData.fbc = transport.fbc;

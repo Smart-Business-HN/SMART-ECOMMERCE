@@ -57,12 +57,16 @@ export async function POST(request: NextRequest) {
       customData: body.customData,
       user: {
         // El valor del formulario tiene prioridad (presente en registro/contacto);
-        // si no, se usa la sesión autenticada.
+        // si no, se usa la sesión autenticada (enriquecida en el login con
+        // teléfono / fecha de nacimiento / departamento para mejorar el EMQ).
         email: body.userFields?.email ?? session?.user?.email ?? null,
-        phone: body.userFields?.phone ?? null,
+        phone: body.userFields?.phone ?? session?.phoneNumber ?? null,
         firstName: body.userFields?.firstName ?? session?.firstName ?? null,
         lastName: body.userFields?.lastName ?? session?.lastName ?? null,
         externalId: session?.user?.id ?? null,
+        dob: session?.birthDay ?? null,
+        state: session?.state ?? null,
+        country: session?.country ?? null,
       },
       transport: {
         fbp: readCookie(request, '_fbp') ?? null,

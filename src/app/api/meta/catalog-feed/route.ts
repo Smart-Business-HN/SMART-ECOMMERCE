@@ -62,6 +62,7 @@ export async function GET() {
   ].join(',');
 
   const rows: string[] = [header];
+  const seenIds = new Set<string>();
 
   for (const product of products) {
     // Solo productos visibles en el ecommerce y activos.
@@ -72,14 +73,24 @@ export async function GET() {
     // `link` es obligatorio en Meta; sin slugs no se puede construir → se omite.
     if (!categorySlug || !subCategorySlug || !product.slug) continue;
 
+    // Meta rechaza ids duplicados; si dos productos comparten `code` se emite
+    // solo el primero (el SKU duplicado es un dato a corregir en el ERP).
+    const id = feedId(product);
+    if (seenIds.has(id)) continue;
+    seenIds.add(id);
+
     const link = `${siteUrl}/tienda/${categorySlug}/${subCategorySlug}/${product.slug}`;
     const image = product.productImages?.[0]?.url || DEFAULT_IMAGE;
     const description = plain(product.description || product.ecommerceDescription) || product.name;
-    const availability = (product.currentStock ?? 0) > 0 ? 'in stock' : 'out of stock';
+    // Disponibilidad de tienda = físico + virtual (ecommerceStock). Fallback a currentStock por compatibilidad.
+    const availableStock = product.ecommerceStock ?? product.currentStock ?? 0;
+    const availability = availableStock > 0 ? 'in stock' : 'out of stock';
     const price = `${(product.recomendedSalePrice ?? 0).toFixed(2)} HNL`;
+    // inventory debe ser entero >= 0 (Meta lo mapea a quantity_to_sell_on_facebook).
+    const inventory = Math.max(0, Math.trunc(availableStock));
 
     rows.push([
-      csvField(feedId(product)),
+      csvField(id),
       csvField(plain(product.name, 200)),
       csvField(description),
       csvField(availability),
@@ -88,7 +99,7 @@ export async function GET() {
       csvField(link),
       csvField(image),
       csvField(product.brand?.name || 'SMART BUSINESS'),
-      csvField(product.currentStock ?? 0),
+      csvField(inventory),
     ].join(','));
   }
 

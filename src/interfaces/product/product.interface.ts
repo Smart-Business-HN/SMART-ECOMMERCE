@@ -130,7 +130,10 @@ export interface ProductDto {
   costPrice: number;
   recomendedSalePrice: number;
   minStock: number;
+  /** Inventario propio (solo-físico), para referencia interna. */
   currentStock: number;
+  /** Disponibilidad para tienda: físico + virtual (consignado/dropshipping). Usar este campo para "Disponible". */
+  ecommerceStock: number;
   brandId: number;
   brand?: BrandDto;
   unitOfMeasurementId: number;

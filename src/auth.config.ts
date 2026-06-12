@@ -1,6 +1,6 @@
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { NextAuthOptions } from 'next-auth';
-import { loginUser } from '@/services/auth.service';
+import { loginUser, getUserMatchData } from '@/services/auth.service';
 import { LoginEcommerceUserCommand } from '@/interfaces/auth/auth.interface';
 
 export const authOptions: NextAuthOptions = {
@@ -30,8 +30,11 @@ export const authOptions: NextAuthOptions = {
 
         try {
           const response = await loginUser(loginData);
-          
+
           if (response.succeeded && response.data) {
+            // Enriquecer con datos de Advanced Matching que el login no devuelve
+            // (teléfono, fecha de nacimiento, departamento). No bloquea el login.
+            const matchData = await getUserMatchData(response.data.id, response.data.token);
             return {
               id: response.data.id,
               name: response.data.fullName,
@@ -43,7 +46,11 @@ export const authOptions: NextAuthOptions = {
               firstName: response.data.firstName,
               lastName: response.data.lastName,
               userName: response.data.userName,
-              activeCartId: response.data.activeCartId
+              activeCartId: response.data.activeCartId,
+              phoneNumber: matchData?.phoneNumber,
+              birthDay: matchData?.birthDay,
+              state: matchData?.state,
+              country: matchData?.country
             };
           }
           
@@ -66,6 +73,10 @@ export const authOptions: NextAuthOptions = {
         token.firstName = user.firstName;
         token.lastName = user.lastName;
         token.userName = user.userName;
+        token.phoneNumber = user.phoneNumber;
+        token.birthDay = user.birthDay;
+        token.state = user.state;
+        token.country = user.country;
       }
       return token;
     },
@@ -81,6 +92,10 @@ export const authOptions: NextAuthOptions = {
         session.firstName = token.firstName as string;
         session.lastName = token.lastName as string;
         session.userName = token.userName as string;
+        session.phoneNumber = token.phoneNumber as string | undefined;
+        session.birthDay = token.birthDay as string | undefined;
+        session.state = token.state as string | undefined;
+        session.country = token.country as string | undefined;
       }
       return session;
     },

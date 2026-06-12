@@ -183,6 +183,45 @@ export async function updateUser(userId: string, userData: UpdateUserCommand): P
   }
 }
 
+export interface UserMatchData {
+  phoneNumber?: string;
+  birthDay?: string;
+  state?: string;
+  country?: string;
+}
+
+// Trae del perfil completo los campos de Advanced Matching que el login NO
+// devuelve (teléfono, fecha de nacimiento, departamento → estado). Se usa una
+// sola vez al iniciar sesión para enriquecer la sesión; nunca lanza.
+export async function getUserMatchData(userId: string, token: string): Promise<UserMatchData | null> {
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+    if (!baseUrl) return null;
+    const response = await fetch(`${baseUrl}/User/GetById/${userId}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!response.ok) return null;
+    const json = await response.json();
+    const user = json?.data;
+    if (!user) return null;
+    return {
+      phoneNumber: user.phoneNumber || undefined,
+      birthDay: user.birthDay || undefined,
+      state: user.department?.name || undefined,
+      // Si el perfil tiene departamento (catálogo de Honduras), el país es HN.
+      country: user.department ? 'hn' : undefined,
+    };
+  } catch (error) {
+    console.error('Error fetching user match data:', error);
+    return null;
+  }
+}
+
 export async function updateSessionProfileImage(userId: string, newPhotoUrl: string): Promise<void> {
   try {
     // Esta función se ejecuta en el cliente, por lo que necesitamos usar la API route
