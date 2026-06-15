@@ -140,6 +140,8 @@ export interface ProductDto {
   unitOfMeasurement?: UnitOfMeasurementDto;
   subCategoryId: number;
   subCategory?: SubcategoryDto;
+  // Todas las subcategorías a las que pertenece el producto (incluida la principal subCategory).
+  subCategories?: SubcategoryDto[];
   statusId: number;
   status?: StatusDto;
   providerId: number;

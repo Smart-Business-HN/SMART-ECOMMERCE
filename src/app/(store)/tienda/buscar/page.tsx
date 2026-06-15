@@ -49,8 +49,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
       searchTerm: query,
       pageNumber: page - 1, // API usa 0-based indexing
       pageSize,
-      order: 'asc',
-      column: 'name',
+      // Sin order/column: el backend ordena por relevancia (sortBy='relevance').
       all: false,
       isUserSignIn,
       customerTypeId,

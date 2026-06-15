@@ -15,11 +15,17 @@ export async function searchProducts(searchParams: ProductSearchParameter): Prom
     searchTerm: searchParams.searchTerm || '',
     pageNumber: searchParams.pageNumber.toString(),
     pageSize: searchParams.pageSize.toString(),
-    order: searchParams.order || 'asc',
-    column: searchParams.column || 'name',
     all: searchParams.all.toString(),
     isUserSignIn: isUserSignInFromSession.toString(),
   });
+
+  // Orden por columna SOLO si se pide explícitamente; de lo contrario el backend ordena por relevancia.
+  if (searchParams.order) {
+    params.append('order', searchParams.order);
+  }
+  if (searchParams.column) {
+    params.append('column', searchParams.column);
+  }
 
   // Agregar parámetros opcionales solo si están definidos
   if (customerTypeIdFromSession != undefined) {

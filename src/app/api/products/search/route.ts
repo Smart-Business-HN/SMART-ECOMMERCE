@@ -13,19 +13,21 @@ export async function GET(request: NextRequest) {
     const searchTerm = searchParams.get('searchTerm') || '';
     const pageNumber = searchParams.get('pageNumber') || '0';
     const pageSize = searchParams.get('pageSize') || '10';
-    const order = searchParams.get('order') || 'asc';
-    const column = searchParams.get('column') || 'name';
     const all = searchParams.get('all') || 'false';
     const isUserSignIn = searchParams.get('isUserSignIn') || 'false';
-    
+
     params.append('searchTerm', searchTerm);
     params.append('pageNumber', pageNumber);
     params.append('pageSize', pageSize);
-    params.append('order', order);
-    params.append('column', column);
     params.append('all', all);
     params.append('isUserSignIn', isUserSignIn);
-    
+
+    // Orden por columna SOLO si el request lo trae; si no, el backend ordena por relevancia.
+    const order = searchParams.get('order');
+    const column = searchParams.get('column');
+    if (order) params.append('order', order);
+    if (column) params.append('column', column);
+
     // Parámetros opcionales
     const customerTypeId = searchParams.get('customerTypeId');
     const minPrice = searchParams.get('minPrice');
