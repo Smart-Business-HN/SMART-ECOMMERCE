@@ -1,8 +1,7 @@
 //@ts-nocheck
 import { Metadata } from "next";
-import Link from "next/link";
 import Image from "next/image";
-import { Card, Typography, Button } from "@/utils/MTailwind";
+import Button from "@/components/ui/button.component";
 import {
     ShoppingCartIcon,
     DocumentTextIcon,
@@ -11,11 +10,12 @@ import {
     ChartBarIcon,
     BuildingOffice2Icon,
     CheckCircleIcon,
-    ArrowTopRightOnSquareIcon,
-    SparklesIcon,
     BoltIcon,
     ShieldCheckIcon,
     ClockIcon,
+    BuildingStorefrontIcon,
+    BeakerIcon,
+    BriefcaseIcon,
 } from "@heroicons/react/24/outline";
 
 export const metadata: Metadata = {
@@ -125,39 +125,33 @@ export default function VentixPage() {
     const features = [
         {
             icon: ShoppingCartIcon,
-            title: "Punto de Venta (POS)",
-            description: "Cobra rápido en mostrador o restaurante. Interfaz intuitiva, lista en minutos.",
-            gradient: "from-blue-500 to-blue-700",
+            title: "Punto de venta",
+            description: "Cobra rápido con una interfaz simple. Maneja varios cajeros y métodos de pago.",
         },
         {
             icon: DocumentTextIcon,
-            title: "Facturación CAI/SAR",
-            description: "Emite facturas que cumplen con la normativa hondureña, sin complicaciones.",
-            gradient: "from-indigo-500 to-indigo-700",
+            title: "Facturación CAI / SAR",
+            description: "Emite facturas conforme a la normativa hondureña, con control de correlativos.",
         },
         {
             icon: CubeIcon,
-            title: "Inventario Multi-Bodega",
-            description: "Controla stock en tiempo real, varias bodegas y sucursales bajo el mismo sistema.",
-            gradient: "from-cyan-500 to-cyan-700",
+            title: "Inventario multi-bodega",
+            description: "Controla stock en tiempo real entre múltiples bodegas y sucursales.",
         },
         {
             icon: UsersIcon,
-            title: "CRM Integrado",
-            description: "Conoce a tus clientes, su historial de compras y mejora su experiencia.",
-            gradient: "from-sky-500 to-sky-700",
+            title: "CRM de clientes",
+            description: "Historial de compras, cuentas por cobrar y seguimiento de tus clientes.",
         },
         {
             icon: ChartBarIcon,
-            title: "Reportes y Analítica",
-            description: "Decide con datos. Reportes claros de ventas, inventario y rentabilidad.",
-            gradient: "from-blue-600 to-blue-800",
+            title: "Reportes y analítica",
+            description: "Ventas, márgenes, impuestos y desempeño por cajero. Exporta a PDF.",
         },
         {
             icon: BuildingOffice2Icon,
-            title: "Multi-Sucursal",
-            description: "Administra varias sucursales desde un solo lugar. Crece sin fricción.",
-            gradient: "from-violet-500 to-violet-700",
+            title: "Multi-sucursal",
+            description: "Administra todas tus tiendas desde una sola cuenta, con permisos por usuario.",
         },
     ];
 
@@ -165,24 +159,43 @@ export default function VentixPage() {
         {
             icon: BoltIcon,
             title: "Listo en minutos",
-            description: "Sin instalaciones complejas. Crea tu cuenta y empieza a vender hoy.",
+            description: "Sin instalaciones ni servidores",
         },
         {
             icon: ShieldCheckIcon,
-            title: "Tus datos seguros",
-            description: "Información protegida en la nube con respaldos automáticos.",
+            title: "Datos seguros",
+            description: "Respaldo automático en la nube",
         },
         {
             icon: ClockIcon,
             title: "Soporte local",
-            description: "Equipo de Smart Business para acompañarte cuando lo necesites.",
+            description: "Equipo en Honduras que responde",
         },
     ];
 
+    const reports = [
+        "Ventas mensuales y por sucursal",
+        "Productos más vendidos",
+        "Ventas por cajero y ticket promedio",
+        "Resumen de impuestos y cuentas por cobrar",
+    ];
+
     const targetAudience = [
-        { title: "Tiendas y minoristas", desc: "Control de inventario, ventas y clientes en mostrador." },
-        { title: "Restaurantes y cafés", desc: "POS optimizado para servicio rápido y comandas." },
-        { title: "PyMEs y emprendedores", desc: "Todo lo que tu negocio necesita en una sola plataforma." },
+        {
+            icon: BuildingStorefrontIcon,
+            title: "Comercio minorista",
+            desc: "Tiendas, ferreterías y abarroterías que necesitan cobrar y controlar stock.",
+        },
+        {
+            icon: BeakerIcon,
+            title: "Restaurantes y cafés",
+            desc: "Pedidos rápidos, múltiples cajeros y reportes de cierre diario.",
+        },
+        {
+            icon: BriefcaseIcon,
+            title: "Servicios y PYMES",
+            desc: "Facturación conforme, CRM y cuentas por cobrar para negocios en crecimiento.",
+        },
     ];
 
     return (
@@ -192,388 +205,287 @@ export default function VentixPage() {
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
 
-            {/* Breadcrumb */}
-            <nav aria-label="Breadcrumb" className="container mx-auto px-5 py-2">
-                <ol className="flex items-center space-x-2 text-sm text-gray-600">
-                    <li>
-                        <Link href="/" className="hover:text-blue-500" aria-label="Ir al inicio">
-                            Inicio
-                        </Link>
-                    </li>
-                    <li>
-                        <span className="mx-2">/</span>
-                    </li>
-                    <li aria-current="page">
-                        <span className="text-blue-500 font-medium">Ventix</span>
-                    </li>
-                </ol>
-            </nav>
-
             {/* Hero */}
-            <div className="relative bg-gradient-to-br from-blue-600 via-blue-700 to-blue-900 py-16 md:py-24 overflow-hidden">
-                <div className="absolute -top-32 -right-32 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl"></div>
-                <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-blue-300/20 rounded-full blur-3xl"></div>
-
-                <div className="container mx-auto px-5 relative z-10">
-                    <div className="grid md:grid-cols-2 gap-12 items-center">
-                        <div className="text-white animate-fade-right">
-                            <Image
-                                src="/images/ventix/logo/logo-text-on-dark.png"
-                                width={220}
-                                height={60}
-                                alt="Logo de Ventix"
-                                className="h-14 w-auto mb-6"
-                                priority
-                            />
-                            <Typography
-                                variant="h1"
-                                className="text-4xl md:text-5xl font-bold mb-5 leading-tight"
-                                placeholder={undefined}
+            <section className="relative overflow-hidden bg-ink text-white">
+                {/* Cyan radial glow */}
+                <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute -top-48 left-1/2 h-[560px] w-[900px] -translate-x-1/2 rounded-full"
+                    style={{
+                        background:
+                            "radial-gradient(circle, rgba(30,155,232,.45), transparent 62%)",
+                    }}
+                />
+                <div className="relative mx-auto max-w-[1280px] px-4 pt-20 sm:px-6 lg:px-8">
+                    <div className="text-center animate-fade-down">
+                        <Image
+                            src="/images/ventix/logo/logo-text-on-dark.png"
+                            width={232}
+                            height={58}
+                            alt="Ventix by Smart Business"
+                            className="mx-auto mb-8 h-14 w-auto"
+                            priority
+                        />
+                        <h1 className="mx-auto mb-5 max-w-[820px] text-[32px] sm:text-[44px] font-bold leading-[1.05] tracking-[-0.03em] md:text-[56px]">
+                            Tu negocio organizado, simple y bajo control.
+                        </h1>
+                        <p className="mx-auto mb-8 max-w-[600px] text-[18px] leading-[1.55] text-ink2-300 md:text-[19px]">
+                            Punto de venta, facturación CAI/SAR, inventario multi-bodega y CRM en
+                            una sola plataforma en la nube. Empieza gratis, sin tarjeta.
+                        </p>
+                        <div className="mb-4 flex flex-wrap justify-center gap-3.5">
+                            <Button
+                                variant="ventix"
+                                size="lg"
+                                href={VENTIX_SIGNUP_URL}
                             >
-                                Tu negocio organizado,<br />
-                                <span className="text-blue-200">simple y en control</span>
-                            </Typography>
-                            <Typography
-                                className="text-blue-50 text-lg md:text-xl mb-8 leading-relaxed"
-                                placeholder={undefined}
+                                Crear cuenta gratis
+                            </Button>
+                            <Button
+                                variant="secondary"
+                                size="lg"
+                                href={VENTIX_URL}
+                                className="border-white/20 bg-white/[0.07] text-white hover:border-white/40 hover:bg-white/[0.12]"
                             >
-                                Ventix es el sistema ERP y POS en la nube de Smart Business.
-                                POS, facturación CAI/SAR, inventario y CRM en un solo lugar —
-                                pensado para PyMEs de Honduras.
-                            </Typography>
-
-                            <div className="flex flex-col sm:flex-row gap-4">
-                                {/* @ts-expect-error Material Tailwind Button type definitions are overly strict; props are correct per docs */}
-                                <Button
-                                    size="lg"
-                                    className="bg-white text-blue-700 hover:bg-blue-50 shadow-xl hover:shadow-2xl transition-all"
-                                    placeholder={undefined}
-                                >
-                                    <a
-                                        href={VENTIX_SIGNUP_URL}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="flex items-center gap-2"
-                                    >
-                                        <span>Probar gratis</span>
-                                        <ArrowTopRightOnSquareIcon className="h-5 w-5" />
-                                    </a>
-                                </Button>
-                                {/* @ts-expect-error Material Tailwind Button type definitions are overly strict; props are correct per docs */}
-                                <Button
-                                    size="lg"
-                                    variant="outlined"
-                                    className="border-2 border-white text-white hover:bg-white/10"
-                                    placeholder={undefined}
-                                >
-                                    <a
-                                        href={VENTIX_URL}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="flex items-center gap-2"
-                                    >
-                                        <span>Ver demo</span>
-                                    </a>
-                                </Button>
-                            </div>
-
-                            <div className="mt-6 flex items-center gap-2 text-blue-100 text-sm">
-                                <SparklesIcon className="h-5 w-5" />
-                                <span>Plan gratuito disponible — sin tarjeta de crédito.</span>
-                            </div>
+                                Ver demo
+                            </Button>
                         </div>
+                        <p className="mb-14 text-[13px] text-ink2-400">
+                            Plan gratuito disponible · Sin tarjeta de crédito
+                        </p>
+                    </div>
 
-                        <div className="relative animate-fade-left">
-                            <div className="absolute inset-0 bg-white/10 rounded-2xl blur-3xl"></div>
+                    {/* Dashboard screenshot anchored to the bottom of the hero */}
+                    <div className="relative mx-auto max-w-[1040px] animate-fade-up">
+                        <div
+                            className="overflow-hidden rounded-t-[18px] border border-b-0 border-white/[0.12]"
+                            style={{ boxShadow: "0 -10px 60px -20px rgba(30,155,232,.5)" }}
+                        >
                             <Image
                                 src="/images/ventix/screenshots/Dashboard.png"
-                                width={1000}
-                                height={620}
+                                width={1040}
+                                height={650}
                                 alt="Captura del dashboard de Ventix con reportes y métricas del negocio"
-                                className="relative rounded-2xl shadow-2xl ring-1 ring-white/20 w-full h-auto"
+                                className="block h-auto w-full"
                                 priority
                             />
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
 
-            {/* Beneficios rápidos */}
-            <div className="bg-white py-12">
-                <div className="container mx-auto px-5">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-                        {benefits.map((item, index) => (
-                            <Card
-                                key={index}
-                                className="border border-gray-100 shadow-md hover:shadow-lg transition-all p-6"
-                                placeholder={undefined}
-                            >
-                                <div className="flex items-start gap-4">
-                                    <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-700 rounded-lg flex items-center justify-center flex-shrink-0">
-                                        <item.icon className="h-6 w-6 text-white" />
-                                    </div>
-                                    <div>
-                                        <Typography
-                                            variant="h6"
-                                            className="text-gray-800 font-bold mb-1"
-                                            placeholder={undefined}
-                                        >
-                                            {item.title}
-                                        </Typography>
-                                        <Typography className="text-gray-600 text-sm" placeholder={undefined}>
-                                            {item.description}
-                                        </Typography>
-                                    </div>
-                                </div>
-                            </Card>
-                        ))}
-                    </div>
-                </div>
-            </div>
-
-            {/* Funcionalidades */}
-            <div className="bg-gray-50 py-16">
-                <div className="container mx-auto px-5">
-                    <div className="text-center mb-12">
-                        <Typography
-                            variant="h2"
-                            className="text-4xl font-bold text-gray-800 mb-4"
-                            placeholder={undefined}
-                        >
-                            Todo lo que tu negocio necesita
-                        </Typography>
-                        <div className="w-24 h-1 bg-blue-600 mx-auto mb-6"></div>
-                        <Typography
-                            className="text-gray-600 text-lg max-w-2xl mx-auto"
-                            placeholder={undefined}
-                        >
-                            Una plataforma integral que reemplaza varias herramientas. Sin complejidad técnica.
-                        </Typography>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-                        {features.map((feature, index) => (
-                            <Card
-                                key={index}
-                                className={`overflow-hidden border-0 shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 animate-fade-up animate-delay-${(index + 1) * 100}`}
-                                placeholder={undefined}
-                            >
-                                <div className={`bg-gradient-to-br ${feature.gradient} p-6`}>
-                                    <div className="w-14 h-14 bg-white/20 backdrop-blur-lg rounded-xl flex items-center justify-center">
-                                        <feature.icon className="h-7 w-7 text-white" />
-                                    </div>
-                                </div>
-                                <div className="p-6 bg-white">
-                                    <Typography
-                                        variant="h5"
-                                        className="font-bold text-gray-800 mb-2"
-                                        placeholder={undefined}
-                                    >
-                                        {feature.title}
-                                    </Typography>
-                                    <Typography className="text-gray-600 text-sm" placeholder={undefined}>
-                                        {feature.description}
-                                    </Typography>
-                                </div>
-                            </Card>
-                        ))}
-                    </div>
-                </div>
-            </div>
-
-            {/* Screenshot showcase: POS */}
-            <div className="container mx-auto px-5 py-16">
-                <div className="max-w-6xl mx-auto">
-                    <div className="grid md:grid-cols-2 gap-12 items-center">
-                        <div className="animate-fade-right">
-                            <div className="flex items-center gap-3 mb-6">
-                                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-700 rounded-lg flex items-center justify-center">
-                                    <ShoppingCartIcon className="h-6 w-6 text-white" />
-                                </div>
-                                <Typography
-                                    variant="h2"
-                                    className="text-3xl font-bold text-gray-800"
-                                    placeholder={undefined}
-                                >
-                                    POS rápido y simple
-                                </Typography>
-                            </div>
-                            <div className="w-20 h-1 bg-blue-600 mb-6"></div>
-                            <Typography className="text-gray-600 text-lg mb-4" placeholder={undefined}>
-                                Cobra rápido, sin curva de aprendizaje. Diseñado para tiendas,
-                                restaurantes y cafés que necesitan moverse rápido en mostrador.
-                            </Typography>
-                            <ul className="space-y-3 mb-6">
-                                {[
-                                    "Cobros con efectivo, tarjeta o transferencia",
-                                    "Catálogo de productos y combos configurables",
-                                    "Comandas y tickets impresos",
-                                    "Operación incluso con conexión intermitente",
-                                ].map((item, index) => (
-                                    <li key={index} className="flex items-start gap-3">
-                                        <CheckCircleIcon className="h-6 w-6 text-blue-600 flex-shrink-0 mt-0.5" />
-                                        <Typography className="text-gray-700" placeholder={undefined}>
-                                            {item}
-                                        </Typography>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-
-                        <div className="animate-fade-left">
-                            <Card className="overflow-hidden shadow-2xl border-0" placeholder={undefined}>
-                                <Image
-                                    src="/images/ventix/screenshots/POS.png"
-                                    width={1000}
-                                    height={620}
-                                    alt="Captura del punto de venta (POS) de Ventix"
-                                    className="w-full h-auto"
-                                />
-                            </Card>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {/* Screenshot showcase: Reportes */}
-            <div className="bg-gray-50 py-16">
-                <div className="container mx-auto px-5">
-                    <div className="max-w-6xl mx-auto">
-                        <div className="grid md:grid-cols-2 gap-12 items-center">
-                            <div className="order-2 md:order-1 animate-fade-right">
-                                <Card className="overflow-hidden shadow-2xl border-0" placeholder={undefined}>
-                                    <Image
-                                        src="/images/ventix/screenshots/Reports.png"
-                                        width={1000}
-                                        height={620}
-                                        alt="Captura de reportes y analítica de Ventix"
-                                        className="w-full h-auto"
-                                    />
-                                </Card>
-                            </div>
-                            <div className="order-1 md:order-2 animate-fade-left">
-                                <div className="flex items-center gap-3 mb-6">
-                                    <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-indigo-700 rounded-lg flex items-center justify-center">
-                                        <ChartBarIcon className="h-6 w-6 text-white" />
-                                    </div>
-                                    <Typography
-                                        variant="h2"
-                                        className="text-3xl font-bold text-gray-800"
-                                        placeholder={undefined}
-                                    >
-                                        Decide con datos
-                                    </Typography>
-                                </div>
-                                <div className="w-20 h-1 bg-indigo-600 mb-6"></div>
-                                <Typography className="text-gray-600 text-lg mb-4" placeholder={undefined}>
-                                    Reportes claros y al instante: ventas por día, productos más
-                                    vendidos, márgenes, rotación de inventario y más.
-                                </Typography>
-                                <ul className="space-y-3">
-                                    {[
-                                        "Ventas por sucursal, vendedor y categoría",
-                                        "Rotación e inventario valorizado",
-                                        "Estado de cuentas de clientes",
-                                        "Exportación a Excel y PDF",
-                                    ].map((item, index) => (
-                                        <li key={index} className="flex items-start gap-3">
-                                            <CheckCircleIcon className="h-6 w-6 text-indigo-600 flex-shrink-0 mt-0.5" />
-                                            <Typography className="text-gray-700" placeholder={undefined}>
-                                                {item}
-                                            </Typography>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {/* ¿Para quién es? */}
-            <div className="container mx-auto px-5 py-16">
-                <div className="text-center mb-12">
-                    <Typography
-                        variant="h2"
-                        className="text-4xl font-bold text-gray-800 mb-4"
-                        placeholder={undefined}
-                    >
-                        ¿Para quién es Ventix?
-                    </Typography>
-                    <div className="w-24 h-1 bg-blue-600 mx-auto mb-6"></div>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-                    {targetAudience.map((item, index) => (
-                        <Card
+            {/* Mini benefits */}
+            <section className="border-b border-line bg-white">
+                <div className="mx-auto grid max-w-[1280px] grid-cols-1 gap-6 px-4 py-11 sm:px-6 md:grid-cols-3 lg:px-8">
+                    {benefits.map((item, index) => (
+                        <div
                             key={index}
-                            className="border border-gray-100 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all p-8 text-center"
-                            placeholder={undefined}
+                            className="flex items-center justify-center gap-3.5 text-left"
                         >
-                            <Typography
-                                variant="h5"
-                                className="font-bold text-gray-800 mb-3"
-                                placeholder={undefined}
-                            >
-                                {item.title}
-                            </Typography>
-                            <Typography className="text-gray-600" placeholder={undefined}>
-                                {item.desc}
-                            </Typography>
-                        </Card>
+                            <span className="flex h-11 w-11 flex-none items-center justify-center rounded-[12px] bg-[#EAF5FE] text-ventix">
+                                <item.icon className="h-6 w-6" />
+                            </span>
+                            <div>
+                                <div className="text-[15px] font-bold text-text">
+                                    {item.title}
+                                </div>
+                                <div className="text-[13.5px] text-ink2-500">
+                                    {item.description}
+                                </div>
+                            </div>
+                        </div>
                     ))}
                 </div>
-            </div>
+            </section>
 
-            {/* CTA final */}
-            <div className="bg-gradient-to-r from-blue-600 via-blue-700 to-blue-900 py-20">
-                <div className="container mx-auto px-5 text-center">
-                    <Typography
-                        variant="h2"
-                        className="text-white text-4xl md:text-5xl font-bold mb-6"
-                        placeholder={undefined}
-                    >
-                        Empieza con Ventix hoy
-                    </Typography>
-                    <Typography
-                        className="text-blue-100 text-xl mb-8 max-w-2xl mx-auto"
-                        placeholder={undefined}
-                    >
-                        Crea tu cuenta gratis y empieza a vender en minutos. Sin compromisos.
-                    </Typography>
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        {/* @ts-expect-error Material Tailwind Button type definitions are overly strict; props are correct per docs */}
-                        <Button
-                            size="lg"
-                            className="bg-white text-blue-700 hover:bg-blue-50 shadow-2xl px-8 py-4 text-lg"
-                            placeholder={undefined}
-                        >
-                            <a
-                                href={VENTIX_SIGNUP_URL}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="flex items-center gap-2"
+            {/* Features grid */}
+            <section className="bg-surface">
+                <div className="mx-auto max-w-[1280px] px-4 py-14 md:py-20 sm:px-6 lg:px-8">
+                    <div className="mx-auto mb-12 max-w-[560px] text-center">
+                        <p className="mb-3 text-[12.5px] font-semibold uppercase tracking-[0.1em] text-ventix">
+                            Todo en un solo lugar
+                        </p>
+                        <h2 className="mb-3 text-[28px] font-bold tracking-[-0.03em] text-text md:text-[34px]">
+                            Funciones que tu negocio necesita
+                        </h2>
+                        <p className="text-[15.5px] leading-[1.6] text-ink2-600">
+                            Desde la venta hasta el reporte mensual, Ventix cubre toda tu operación.
+                        </p>
+                    </div>
+                    <div className="grid grid-cols-1 gap-[22px] sm:grid-cols-2 lg:grid-cols-3">
+                        {features.map((feature, index) => (
+                            <div
+                                key={index}
+                                className="rounded-card border border-line bg-white p-[30px] shadow-card transition-all hover:-translate-y-0.5 hover:border-[#CFE3F8] hover:shadow-card-hover animate-fade-up"
                             >
-                                <span>Probar gratis</span>
-                                <ArrowTopRightOnSquareIcon className="h-5 w-5" />
-                            </a>
-                        </Button>
-                        {/* @ts-expect-error Material Tailwind Button type definitions are overly strict; props are correct per docs */}
-                        <Button
-                            size="lg"
-                            variant="outlined"
-                            className="border-2 border-white text-white hover:bg-white/10 px-8 py-4 text-lg"
-                            placeholder={undefined}
-                        >
-                            <Link href="/contacto" className="flex items-center gap-2">
-                                <span>Solicitar demo</span>
-                            </Link>
+                                <span className="mb-[18px] flex h-[50px] w-[50px] items-center justify-center rounded-[14px] bg-[#EAF5FE] text-ventix">
+                                    <feature.icon className="h-6 w-6" />
+                                </span>
+                                <h3 className="mb-2.5 text-[19px] font-bold tracking-[-0.02em] text-text">
+                                    {feature.title}
+                                </h3>
+                                <p className="text-[14.5px] leading-[1.6] text-ink2-600">
+                                    {feature.description}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Reports split */}
+            <section className="bg-white">
+                <div className="mx-auto grid max-w-[1280px] grid-cols-1 items-center gap-14 px-4 py-14 md:py-20 sm:px-6 md:grid-cols-[1fr_1.1fr] lg:px-8">
+                    <div className="animate-fade-right">
+                        <p className="mb-3 text-[12.5px] font-semibold uppercase tracking-[0.1em] text-ventix">
+                            Reportes inteligentes
+                        </p>
+                        <h2 className="mb-[18px] text-[28px] font-bold tracking-[-0.03em] text-text md:text-[34px]">
+                            Decisiones con datos reales
+                        </h2>
+                        <p className="mb-6 text-[15.5px] leading-[1.7] text-ink2-600">
+                            Ventas mensuales, productos más vendidos, ventas por cajero, márgenes,
+                            impuestos y cuentas por cobrar. Filtra por fecha y exporta a PDF en un clic.
+                        </p>
+                        <ul className="flex flex-col gap-3">
+                            {reports.map((item, index) => (
+                                <li
+                                    key={index}
+                                    className="flex items-center gap-3 text-[15px] text-text"
+                                >
+                                    <CheckCircleIcon className="h-5 w-5 flex-none text-ventix" />
+                                    {item}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div className="overflow-hidden rounded-card border border-line shadow-card-hover animate-fade-left">
+                        <Image
+                            src="/images/ventix/screenshots/Reports.png"
+                            width={1000}
+                            height={620}
+                            alt="Captura de reportes y analítica de Ventix"
+                            className="block h-auto w-full"
+                        />
+                    </div>
+                </div>
+            </section>
+
+            {/* Mobile / anywhere */}
+            <section className="relative overflow-hidden bg-ink text-white">
+                <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute top-1/2 left-[-160px] h-[520px] w-[520px] -translate-y-1/2 rounded-full"
+                    style={{
+                        background:
+                            "radial-gradient(circle, rgba(30,155,232,.16), transparent 65%)",
+                    }}
+                />
+                <div className="relative mx-auto grid max-w-[1280px] grid-cols-1 items-center gap-12 px-4 py-14 md:py-20 sm:px-6 md:grid-cols-[1.2fr_1fr] lg:px-8">
+                    <div className="animate-fade-right">
+                        <p className="mb-3 text-[12.5px] font-semibold uppercase tracking-[0.1em] text-ventix">
+                            En la nube, en cualquier lugar
+                        </p>
+                        <h2 className="mb-4 text-[28px] font-bold tracking-[-0.03em] text-white md:text-[34px]">
+                            Tu negocio en el bolsillo
+                        </h2>
+                        <p className="mb-7 max-w-[480px] text-[15.5px] leading-[1.65] text-ink2-300">
+                            Accede a tus ventas e inventario desde cualquier dispositivo. Ventix
+                            funciona en computadora, tablet y celular, sin instalar nada.
+                        </p>
+                        <Button variant="ventix" size="lg" href={VENTIX_SIGNUP_URL}>
+                            Empezar ahora
                         </Button>
                     </div>
-                    <p className="text-blue-200 text-sm mt-8">
-                        Ventix es parte del grupo Smart Business.
-                    </p>
+                    <div className="flex justify-center animate-fade-left">
+                        <div className="max-w-[300px] overflow-hidden rounded-container border border-white/[0.14] shadow-[0_30px_70px_-30px_rgba(0,0,0,.6)]">
+                            <Image
+                                src="/images/ventix/screenshots/Dashboard-phone.png"
+                                width={300}
+                                height={620}
+                                alt="Ventix en un dispositivo móvil"
+                                className="block h-auto w-full"
+                            />
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </section>
+
+            {/* For whom */}
+            <section className="bg-white">
+                <div className="mx-auto max-w-[1280px] px-4 py-14 md:py-20 sm:px-6 lg:px-8">
+                    <div className="mx-auto mb-11 text-center">
+                        <p className="mb-3 text-[12.5px] font-semibold uppercase tracking-[0.1em] text-ventix">
+                            ¿Para quién es?
+                        </p>
+                        <h2 className="text-[28px] font-bold tracking-[-0.03em] text-text md:text-[34px]">
+                            Hecho para tu tipo de negocio
+                        </h2>
+                    </div>
+                    <div className="grid grid-cols-1 gap-[22px] md:grid-cols-3">
+                        {targetAudience.map((item, index) => (
+                            <div
+                                key={index}
+                                className="rounded-card border border-line bg-surface p-[30px]"
+                            >
+                                <span className="mb-[18px] flex h-12 w-12 items-center justify-center rounded-[13px] border border-line bg-white text-ventix">
+                                    <item.icon className="h-6 w-6" />
+                                </span>
+                                <h3 className="mb-2 text-[18px] font-bold tracking-[-0.02em] text-text">
+                                    {item.title}
+                                </h3>
+                                <p className="text-[14.5px] leading-[1.6] text-ink2-600">
+                                    {item.desc}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* CTA / planes */}
+            <section
+                id="planes"
+                className="relative overflow-hidden bg-ink text-white"
+            >
+                <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute -top-40 left-1/2 h-[480px] w-[760px] -translate-x-1/2 rounded-full"
+                    style={{
+                        background:
+                            "radial-gradient(circle, rgba(30,155,232,.24), transparent 62%)",
+                    }}
+                />
+                <div className="relative mx-auto max-w-[1280px] px-4 py-14 md:py-20 text-center sm:px-6 lg:px-8">
+                    <Image
+                        src="/images/ventix/logo/logo-text-on-dark.png"
+                        width={176}
+                        height={44}
+                        alt="Ventix"
+                        className="mx-auto mb-7 h-11 w-auto"
+                    />
+                    <h2 className="mb-3.5 text-[28px] font-bold tracking-[-0.03em] text-white md:text-[40px]">
+                        Empieza con Ventix hoy
+                    </h2>
+                    <p className="mx-auto mb-8 max-w-[520px] text-[17px] leading-[1.6] text-ink2-300 md:text-[18px]">
+                        Crea tu cuenta gratis y digitaliza tu negocio en minutos. Cuando crezcas,
+                        escalas.
+                    </p>
+                    <div className="flex flex-wrap justify-center gap-3.5">
+                        <Button variant="ventix" size="lg" href={VENTIX_SIGNUP_URL}>
+                            Crear cuenta gratis
+                        </Button>
+                        <Button
+                            variant="secondary"
+                            size="lg"
+                            href="/contacto"
+                            className="border-white/20 bg-white/[0.08] text-white hover:border-white/40 hover:bg-white/[0.14]"
+                        >
+                            Hablar con ventas
+                        </Button>
+                    </div>
+                </div>
+            </section>
         </>
     );
 }

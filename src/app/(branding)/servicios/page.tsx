@@ -2,7 +2,8 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { Card, Typography, Button } from '@/utils/MTailwind';
+import Button from "@/components/ui/button.component";
+import SectionHeading from "@/components/ui/section-heading.component";
 import {
   PhoneArrowUpRightIcon,
   CodeBracketIcon,
@@ -256,188 +257,168 @@ export default function Services() {
         />
 
         {/* Breadcrumb para SEO */}
-        <nav aria-label="Breadcrumb" className="container mx-auto px-5 py-2">
-          <ol className="flex items-center space-x-2 text-sm text-gray-600">
+        <nav aria-label="Breadcrumb" className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-3">
+          <ol className="flex items-center gap-2 text-[13px] text-ink2-500">
             <li>
-              <Link href="/" className="hover:text-blue-500" aria-label="Ir al inicio">
+              <Link href="/" className="sb-link" aria-label="Ir al inicio">
                 Inicio
               </Link>
             </li>
-            <li>
-              <span className="mx-2">/</span>
-            </li>
+            <li aria-hidden="true" className="text-ink2-400">/</li>
             <li aria-current="page">
-              <span className="text-blue-500 font-medium">Servicios</span>
+              <span className="font-medium text-accent">Servicios</span>
             </li>
           </ol>
         </nav>
 
-        {/* Hero Section Moderno */}
-        <div className="relative bg-gradient-to-br from-blue-600 via-blue-700 to-blue-900 py-20 overflow-hidden">
-          <div className="absolute inset-0 bg-[url('/images/backgrounds/building-background.jpg')]
-                          bg-center bg-cover opacity-15"></div>
-
-          <div className="container mx-auto px-5 relative z-10">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div className="text-white animate-fade-right">
-                <Typography variant="h1" className="text-5xl md:text-6xl font-bold mb-6"
-                            placeholder={undefined}>
-                  Escoge a la <span className="text-blue-200">MEJOR</span><br />
+        {/* Hero — dark con glow azul + badge */}
+        <section className="relative overflow-hidden bg-ink text-white">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -top-40 -right-32 h-[560px] w-[560px] rounded-full"
+            style={{ background: 'radial-gradient(circle, rgba(0,111,255,.45) 0%, rgba(0,111,255,0) 70%)' }}
+          />
+          <div className="relative mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-14 md:py-24">
+            <div className="grid items-center gap-12 lg:grid-cols-2">
+              <div>
+                <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.06] px-4 py-1.5 text-[13px] font-medium text-accent-light">
+                  Servicios profesionales
+                </span>
+                <h1 className="mb-6 text-[32px] sm:text-[44px] md:text-[54px] font-bold leading-[1.05] tracking-[-0.03em]">
+                  Escoge a la <span className="text-accent-light">MEJOR</span>
+                  <br />
                   Empresa de Soluciones Informáticas
-                </Typography>
+                </h1>
 
-                <div className="bg-white/10 backdrop-blur-lg border-l-4 border-blue-300 p-6 rounded-lg mb-8">
-                  <Typography className="text-blue-50 text-lg mb-3" placeholder={undefined}>
+                <div className="mb-8 rounded-card border border-white/10 bg-white/[0.06] p-6">
+                  <p className="mb-3 text-[15.5px] leading-[1.6] text-ink2-300">
                     No queremos venderte productos, no queremos venderte una instalación.
-                  </Typography>
-                  <Typography className="text-white text-xl font-semibold" placeholder={undefined}>
-                    Queremos ser quien le dé <span className="text-blue-200">solución</span> a tus problemas
-                  </Typography>
+                  </p>
+                  <p className="text-[19px] font-semibold text-white">
+                    Queremos ser quien le dé <span className="text-accent-light">solución</span> a tus problemas
+                  </p>
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Button
-                    size="lg"
-                    className="bg-white text-blue-600 hover:bg-blue-50
-                               shadow-xl hover:shadow-2xl transition-all"
-                    placeholder={undefined}
-                  >
-                    <Link href="/contacto">
-                      Contactar Ahora
-                    </Link>
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+                  <Button href="/contacto" variant="primary" size="lg">
+                    Contactar Ahora
                   </Button>
 
                   <Link
                     href="tel:+50488187765"
-                    className="flex items-center gap-3 bg-white/10 backdrop-blur-lg
-                               border-2 border-white/30 hover:bg-white/20 px-6 py-3 rounded-lg
-                               transition-all group"
+                    className="sb-btn group inline-flex min-h-[50px] items-center gap-3 rounded-btn border border-white/15 bg-white/[0.06] px-5 py-3 hover:bg-white/10"
                   >
-                    <div className="bg-blue-500 group-hover:bg-blue-400 p-2 rounded-full transition-colors">
-                      <PhoneArrowUpRightIcon className="h-6 w-6 text-white" />
-                    </div>
-                    <div className="text-left">
-                      <Typography className="text-white text-sm font-semibold" placeholder={undefined}>
+                    <span className="flex h-10 w-10 flex-none items-center justify-center rounded-full bg-accent transition-colors group-hover:brightness-110">
+                      <PhoneArrowUpRightIcon className="h-5 w-5 text-white" />
+                    </span>
+                    <span className="text-left">
+                      <span className="block text-[14px] font-semibold text-white">
                         Consulta por proyectos
-                      </Typography>
-                      <Typography className="text-blue-100 text-sm" placeholder={undefined}>
+                      </span>
+                      <span className="block text-[13.5px] text-ink2-300">
                         +504 8818-7765
-                      </Typography>
-                    </div>
+                      </span>
+                    </span>
                   </Link>
                 </div>
               </div>
 
-              {/* Stats Cards */}
-              <div className="grid grid-cols-1 gap-4 animate-fade-left">
+              {/* Tarjetas de valor */}
+              <div className="grid grid-cols-1 gap-4">
                 {whyChooseUs.map((item, index) => (
-                  <Card key={index} className="bg-white/10 backdrop-blur-lg border border-white/20 p-6
-                                                hover:bg-white/20 transition-all">
-                    <div className="flex items-center gap-4">
-                      <div className="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center
-                                      flex-shrink-0">
-                        <item.icon className="h-7 w-7 text-white" />
-                      </div>
-                      <div>
-                        <Typography variant="h6" className="text-white font-bold mb-1"
-                                    placeholder={undefined}>
-                          {item.title}
-                        </Typography>
-                        <Typography className="text-blue-100 text-sm" placeholder={undefined}>
-                          {item.description}
-                        </Typography>
-                      </div>
+                  <div
+                    key={index}
+                    className="flex items-center gap-4 rounded-card border border-white/10 bg-white/[0.06] p-5 transition-colors hover:bg-white/10"
+                  >
+                    <div className="flex h-12 w-12 flex-none items-center justify-center rounded-xl bg-accent-soft">
+                      <item.icon className="h-6 w-6 text-accent" />
                     </div>
-                  </Card>
+                    <div>
+                      <h2 className="mb-1 text-[16px] font-bold text-white">
+                        {item.title}
+                      </h2>
+                      <p className="text-[13.5px] leading-[1.5] text-ink2-300">
+                        {item.description}
+                      </p>
+                    </div>
+                  </div>
                 ))}
               </div>
             </div>
           </div>
-        </div>
+        </section>
 
-        {/* Nuestros Servicios */}
-        <div className="bg-gray-50 py-16">
-          <div className="container mx-auto px-5">
-            <div className="text-center mb-12">
-              <Typography variant="h2" className="text-4xl font-bold text-gray-800 mb-4"
-                          placeholder={undefined} id="nuestros-servicios">
-                Nuestros Servicios
-              </Typography>
-              <div className="w-24 h-1 bg-blue-600 mx-auto mb-6"></div>
-              <Typography className="text-gray-600 text-xl max-w-2xl mx-auto" placeholder={undefined}>
-                Tenemos una variedad de servicios profesionales a tu disposición
-              </Typography>
-            </div>
+        {/* Nuestros Servicios — grid 3-col con cuadros de ícono azul */}
+        <section className="bg-white">
+          <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-14 md:py-20">
+            <SectionHeading
+              align="center"
+              overline="Lo que hacemos"
+              title={<span id="nuestros-servicios">Nuestros Servicios</span>}
+              subtitle="Tenemos una variedad de servicios profesionales a tu disposición"
+              className="mb-12"
+            />
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8 max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {services.map((service, index) => (
-                <Card key={index} className={`overflow-hidden border-0 shadow-xl hover:shadow-2xl
-                                               hover:-translate-y-2 transition-all duration-300
-                                               animate-fade-up animate-delay-${(index + 1) * 100}`}>
-                  <div className={`bg-gradient-to-br ${service.gradient} p-8`}>
-                    <div className="w-20 h-20 bg-white/20 backdrop-blur-lg rounded-xl
-                                    flex items-center justify-center mx-auto mb-4">
-                      <service.icon className="h-10 w-10 text-white" />
-                    </div>
-                  </div>
-                  <div className="p-6 bg-white">
-                    <Typography variant="h5" className="font-bold text-gray-800 mb-3 text-center"
-                                placeholder={undefined}>
-                      {service.title}
-                    </Typography>
-                    <Typography className="text-gray-600 text-sm leading-relaxed text-center"
-                                placeholder={undefined}>
-                      {service.description}
-                    </Typography>
-                  </div>
-                </Card>
+                <div
+                  key={index}
+                  className="sb-card flex flex-col rounded-card border border-line bg-white p-8 shadow-card"
+                >
+                  <span className="mb-5 flex h-[52px] w-[52px] items-center justify-center rounded-[14px] bg-accent-soft text-accent">
+                    <service.icon className="h-6 w-6" />
+                  </span>
+                  <h3 className="mb-2.5 text-[20px] font-bold tracking-[-0.02em] text-text">
+                    {service.title}
+                  </h3>
+                  <p className="text-[15px] leading-[1.6] text-ink2-600">
+                    {service.description}
+                  </p>
+                </div>
               ))}
             </div>
           </div>
-        </div>
+        </section>
 
-        {/* Seguridad CCTV */}
-        <div className="container mx-auto px-5 py-16">
-          <div className="max-w-6xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div className="animate-fade-right">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-700 rounded-lg
-                                  flex items-center justify-center">
-                    <ShieldCheckIcon className="h-6 w-6 text-white" />
-                  </div>
-                  <Typography variant="h2" className="text-3xl font-bold text-gray-800"
-                              placeholder={undefined}>
+        {/* Seguridad CCTV — surface, ícono azul + checklist */}
+        <section className="bg-surface">
+          <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-14 md:py-20">
+            <div className="grid items-center gap-12 lg:grid-cols-2">
+              <div>
+                <div className="mb-5 flex items-center gap-3">
+                  <span className="flex h-12 w-12 flex-none items-center justify-center rounded-[14px] bg-accent-soft text-accent">
+                    <ShieldCheckIcon className="h-6 w-6" />
+                  </span>
+                  <h2 className="text-[28px] md:text-[34px] font-bold tracking-[-0.025em] text-text">
                     Cuida a los Tuyos
-                  </Typography>
+                  </h2>
                 </div>
-                <div className="w-20 h-1 bg-blue-600 mb-6"></div>
 
-                <Typography className="text-gray-600 text-lg mb-4" placeholder={undefined}>
+                <p className="mb-4 text-[15.5px] leading-[1.6] text-ink2-600">
                   Sabemos que eres responsable con los tuyos y que quieres lo mejor para ellos.
-                </Typography>
+                </p>
 
-                <Typography className="text-gray-700 font-semibold mb-4" placeholder={undefined}>
+                <p className="mb-4 font-semibold text-text">
                   Por eso te brindamos:
-                </Typography>
+                </p>
 
-                <ul className="space-y-3 mb-6">
+                <ul className="mb-6 space-y-3">
                   {[
                     "Instalación de sistemas de circuito cerrado CCTV",
                     "Instalación de sistemas de control de acceso biométrico",
                     "Planificación de sistemas de control térmico para plantas químicas"
                   ].map((item, index) => (
                     <li key={index} className="flex items-start gap-3">
-                      <CheckCircleIcon className="h-6 w-6 text-blue-600 flex-shrink-0 mt-0.5" />
-                      <Typography className="text-gray-700" placeholder={undefined}>{item}</Typography>
+                      <CheckCircleIcon className="mt-0.5 h-6 w-6 flex-none text-accent" />
+                      <span className="text-[15.5px] leading-[1.6] text-ink2-700">{item}</span>
                     </li>
                   ))}
                 </ul>
 
-                <div className="bg-blue-50 border-l-4 border-blue-600 p-4 rounded mb-6">
-                  <Typography className="text-gray-700 font-semibold" placeholder={undefined}>
+                <div className="mb-6 rounded-card border border-accent-border bg-accent-soft px-5 py-4">
+                  <p className="font-semibold text-text">
                     Con la mejor tecnología al mejor precio
-                  </Typography>
+                  </p>
                 </div>
 
                 <div className="flex items-center">
@@ -450,220 +431,264 @@ export default function Services() {
                 </div>
               </div>
 
-              <div className="animate-fade-left">
-                <Card className="overflow-hidden shadow-2xl border-0">
-                  <Image
-                    src='/images/corporate/cctv-room.jpg'
-                    width={600}
-                    height={400}
-                    alt='Sala de monitoreo CCTV con pantallas de seguridad'
-                    className="w-full h-auto"
-                  />
-                </Card>
+              <div className="overflow-hidden rounded-container shadow-card">
+                <Image
+                  src='/images/corporate/cctv-room.jpg'
+                  width={600}
+                  height={400}
+                  alt='Sala de monitoreo CCTV con pantallas de seguridad'
+                  className="h-auto w-full"
+                />
               </div>
             </div>
           </div>
-        </div>
+        </section>
 
-        {/* Redes Empresariales */}
-        <div className="bg-gray-50 py-16">
-          <div className="container mx-auto px-5">
-            <div className="max-w-6xl mx-auto">
-              <div className="grid md:grid-cols-2 gap-12 items-center">
-                <div className="order-2 md:order-1 animate-fade-right">
-                  <Card className="overflow-hidden shadow-2xl border-0">
-                    <div className="relative">
-                      <video className='w-full h-auto' autoPlay muted loop>
-                        <source src='/videos/fast-network.mp4' type="video/mp4" />
-                      </video>
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                    </div>
-                  </Card>
+        {/* Redes Empresariales — banner oscuro con glow + CTA */}
+        <section className="relative overflow-hidden bg-ink text-white">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute top-1/2 -right-36 h-[480px] w-[480px] -translate-y-1/2 rounded-full"
+            style={{ background: 'radial-gradient(circle, rgba(0,111,255,.45) 0%, rgba(0,111,255,0) 70%)' }}
+          />
+          <div className="relative mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-14 md:py-20">
+            <div className="grid items-center gap-12 lg:grid-cols-2">
+              <div className="order-2 overflow-hidden rounded-container shadow-card lg:order-1">
+                <div className="relative">
+                  <video className='h-auto w-full' autoPlay muted loop>
+                    <source src='/videos/fast-network.mp4' type="video/mp4" />
+                  </video>
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/60 to-transparent" />
+                </div>
+              </div>
+
+              <div className="order-1 lg:order-2">
+                <p className="mb-3 text-[12.5px] font-semibold uppercase tracking-[0.1em] text-accent-light">
+                  Redes empresariales
+                </p>
+                <div className="mb-5 flex items-center gap-3">
+                  <span className="flex h-12 w-12 flex-none items-center justify-center rounded-[14px] bg-white/10 text-accent-light">
+                    <SignalIcon className="h-6 w-6" />
+                  </span>
+                  <h2 className="text-[28px] md:text-[34px] font-bold tracking-[-0.025em] text-white">
+                    Tu Red Debe Ser la Mejor
+                  </h2>
                 </div>
 
-                <div className="order-1 md:order-2 animate-fade-left">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-700 rounded-lg
-                                    flex items-center justify-center">
-                      <SignalIcon className="h-6 w-6 text-white" />
-                    </div>
-                    <Typography variant="h2" className="text-3xl font-bold text-gray-800"
-                                placeholder={undefined}>
-                      Tu Red Debe Ser la Mejor
-                    </Typography>
-                  </div>
-                  <div className="w-20 h-1 bg-green-600 mb-6"></div>
+                <p className="mb-4 text-[15.5px] leading-[1.6] text-ink2-300">
+                  No dejes que una mala red atrase a tus colaboradores y tu negocio.
+                </p>
 
-                  <Typography className="text-gray-600 text-lg mb-4" placeholder={undefined}>
-                    No dejes que una mala red atrase a tus colaboradores y tu negocio.
-                  </Typography>
+                <p className="mb-4 font-semibold text-white">
+                  Lo que podemos hacer por ti:
+                </p>
 
-                  <Typography className="text-gray-700 font-semibold mb-4" placeholder={undefined}>
-                    Lo que podemos hacer por ti:
-                  </Typography>
+                <ul className="mb-6 space-y-3">
+                  {[
+                    "Certificación de red profesional",
+                    "Instalación de puntos de red empresarial",
+                    "Reestructuración y optimización de redes"
+                  ].map((item, index) => (
+                    <li key={index} className="flex items-start gap-3">
+                      <CheckCircleIcon className="mt-0.5 h-6 w-6 flex-none text-accent-light" />
+                      <span className="text-[15.5px] leading-[1.6] text-ink2-300">{item}</span>
+                    </li>
+                  ))}
+                </ul>
 
-                  <ul className="space-y-3 mb-6">
-                    {[
-                      "Certificación de red profesional",
-                      "Instalación de puntos de red empresarial",
-                      "Reestructuración y optimización de redes"
-                    ].map((item, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <CheckCircleIcon className="h-6 w-6 text-green-600 flex-shrink-0 mt-0.5" />
-                        <Typography className="text-gray-700" placeholder={undefined}>{item}</Typography>
-                      </li>
-                    ))}
-                  </ul>
+                <div className="mb-8 rounded-card border border-white/10 bg-white/[0.06] px-5 py-4">
+                  <p className="font-semibold text-white">
+                    Solamente con materiales de calidad
+                  </p>
+                </div>
 
-                  <div className="bg-green-50 border-l-4 border-green-600 p-4 rounded mb-6">
-                    <Typography className="text-gray-700 font-semibold" placeholder={undefined}>
-                      Solamente con materiales de calidad
-                    </Typography>
-                  </div>
-
-                  <div className="flex flex-wrap items-center gap-4">
-                    <Image src='/images/corporate/unifi-icon-smart-business.png' width={40} height={40}
-                           alt='Logo de Ubiquiti' />
-                    <Image src='/images/corporate/mikrotik-logo.png' width={120} height={60}
-                           alt='Logo de MikroTik' />
-                    <Image src='/images/corporate/belden_logo.png' width={100} height={40}
-                           alt='Logo de Belden' />
-                    <Image src='/images/corporate/legrand-logo.png' width={100} height={40}
-                           alt='Logo de Legrand' />
-                    <Image src='/images/corporate/tp-link.png' width={80} height={40}
-                           alt='Logo de TP-Link' />
-                  </div>
+                <div className="flex flex-wrap items-center gap-4">
+                  <Image src='/images/corporate/unifi-icon-smart-business.png' width={40} height={40}
+                         alt='Logo de Ubiquiti' />
+                  <Image src='/images/corporate/mikrotik-logo.png' width={120} height={60}
+                         alt='Logo de MikroTik' />
+                  <Image src='/images/corporate/belden_logo.png' width={100} height={40}
+                         alt='Logo de Belden' />
+                  <Image src='/images/corporate/legrand-logo.png' width={100} height={40}
+                         alt='Logo de Legrand' />
+                  <Image src='/images/corporate/tp-link.png' width={80} height={40}
+                         alt='Logo de TP-Link' />
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </section>
 
-        {/* Switches POE */}
-        <div className="container mx-auto px-5 py-16">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12">
-              <Typography variant="h2" className="text-4xl font-bold text-gray-800 mb-4"
-                          placeholder={undefined}>
-                Te Brindamos lo Más Práctico para tu Red
-              </Typography>
-              <div className="w-24 h-1 bg-blue-600 mx-auto mb-6"></div>
-              <Typography className="text-gray-600 text-2xl" placeholder={undefined}>
-                Switches FULL-POE
-              </Typography>
-            </div>
+        {/* Switches POE — white, heading centrado + media card */}
+        <section className="bg-white">
+          <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-14 md:py-20">
+            <SectionHeading
+              align="center"
+              overline="Equipamiento de red"
+              title="Te Brindamos lo Más Práctico para tu Red"
+              subtitle="Switches FULL-POE"
+              className="mb-12"
+            />
 
-            <Card className="overflow-hidden shadow-2xl border-0">
-              <video className='w-full h-auto' autoPlay muted loop>
+            <div className="overflow-hidden rounded-container shadow-card">
+              <video className='h-auto w-full' autoPlay muted loop>
                 <source src='/videos/switch-poe.mp4' type="video/mp4" />
               </video>
-            </Card>
+            </div>
           </div>
-        </div>
+        </section>
 
-        {/* Sistemas UPS */}
-        <div className="bg-gradient-to-br from-orange-50 to-orange-100 py-16">
-          <div className="container mx-auto px-5">
-            <div className="max-w-6xl mx-auto">
-              <div className="text-center mb-12">
-                <Typography variant="h2" className="text-4xl font-bold text-gray-800 mb-4"
-                            placeholder={undefined}>
-                  Protege tu Equipo
-                </Typography>
-                <div className="w-24 h-1 bg-orange-600 mx-auto mb-6"></div>
-                <Typography className="text-gray-600 text-2xl" placeholder={undefined}>
-                  Sistemas de Energía Ininterrumpida
-                </Typography>
+        {/* Sistemas UPS — surface, ícono azul + checklist */}
+        <section className="bg-surface">
+          <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-14 md:py-20">
+            <SectionHeading
+              align="center"
+              overline="Energía respaldada"
+              title="Protege tu Equipo"
+              subtitle="Sistemas de Energía Ininterrumpida"
+              className="mb-12"
+            />
+
+            <div className="grid items-center gap-12 lg:grid-cols-2">
+              <div>
+                <div className="mb-5 flex items-center gap-3">
+                  <span className="flex h-12 w-12 flex-none items-center justify-center rounded-[14px] bg-accent-soft text-accent">
+                    <BoltIcon className="h-6 w-6" />
+                  </span>
+                  <h3 className="text-[22px] md:text-[26px] font-bold tracking-[-0.02em] text-text">
+                    Sistemas UPS Profesionales
+                  </h3>
+                </div>
+
+                <p className="mb-4 text-[15.5px] leading-[1.6] text-ink2-600">
+                  Prevenir es mejor que lamentar. Cuida el equipo de tu hogar u empresa con
+                  marcas avaladas por años de experiencia.
+                </p>
+
+                <p className="mb-4 font-semibold text-text">
+                  Te brindamos soporte para:
+                </p>
+
+                <ul className="space-y-3">
+                  {[
+                    "Equipo de oficina y estaciones de trabajo",
+                    "Data Centers de nivel corporativo",
+                    "Estudio de necesidades energéticas personalizado"
+                  ].map((item, index) => (
+                    <li key={index} className="flex items-start gap-3">
+                      <CheckCircleIcon className="mt-0.5 h-6 w-6 flex-none text-accent" />
+                      <span className="text-[15.5px] leading-[1.6] text-ink2-700">{item}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-12 items-center">
-                <div className="animate-fade-right">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-700 rounded-lg
-                                    flex items-center justify-center">
-                      <BoltIcon className="h-6 w-6 text-white" />
-                    </div>
-                    <Typography variant="h3" className="text-2xl font-bold text-gray-800"
-                                placeholder={undefined}>
-                      Sistemas UPS Profesionales
-                    </Typography>
-                  </div>
-
-                  <Typography className="text-gray-600 text-lg mb-4" placeholder={undefined}>
-                    Prevenir es mejor que lamentar. Cuida el equipo de tu hogar u empresa con
-                    marcas avaladas por años de experiencia.
-                  </Typography>
-
-                  <Typography className="text-gray-700 font-semibold mb-4" placeholder={undefined}>
-                    Te brindamos soporte para:
-                  </Typography>
-
-                  <ul className="space-y-3">
-                    {[
-                      "Equipo de oficina y estaciones de trabajo",
-                      "Data Centers de nivel corporativo",
-                      "Estudio de necesidades energéticas personalizado"
-                    ].map((item, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <CheckCircleIcon className="h-6 w-6 text-orange-600 flex-shrink-0 mt-0.5" />
-                        <Typography className="text-gray-700" placeholder={undefined}>{item}</Typography>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="animate-fade-left">
-                  <Card className="overflow-hidden shadow-2xl border-0">
-                    <Image
-                      src='/images/backgrounds/apc-background.jpg'
-                      width={600}
-                      height={400}
-                      alt='Sistemas UPS APC - Energía ininterrumpida para equipos críticos'
-                      className="w-full h-auto"
-                    />
-                  </Card>
-                </div>
+              <div className="overflow-hidden rounded-container shadow-card">
+                <Image
+                  src='/images/backgrounds/apc-background.jpg'
+                  width={600}
+                  height={400}
+                  alt='Sistemas UPS APC - Energía ininterrumpida para equipos críticos'
+                  className="h-auto w-full"
+                />
               </div>
             </div>
           </div>
-        </div>
+        </section>
 
-        {/* CTA Final */}
-        <div className="bg-gradient-to-r from-blue-600 via-blue-700 to-blue-900 py-20">
-          <div className="container mx-auto px-5 text-center">
-            <Typography variant="h2" className="text-white text-4xl md:text-5xl font-bold mb-6"
-                        placeholder={undefined}>
-              ¿Listo para Transformar tu Infraestructura Tecnológica?
-            </Typography>
-            <Typography className="text-blue-100 text-xl mb-8 max-w-2xl mx-auto"
-                        placeholder={undefined}>
-              Contáctanos hoy y descubre cómo nuestros servicios pueden impulsar tu negocio
-            </Typography>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button
-                size="lg"
-                className="bg-white text-blue-600 hover:bg-blue-50
-                           shadow-2xl hover:shadow-3xl px-8 py-4 text-lg"
-                placeholder={undefined}
-              >
-                <Link href="/contacto">
-                  Solicitar Cotización
-                </Link>
+        {/* Cableado / Data Center — banner oscuro con imagen de racks + CTA */}
+        <section className="relative overflow-hidden bg-ink text-white">
+          <div className="absolute inset-0">
+            <Image
+              src="/images/backgrounds/cableado-estructurado-smart-business.jpg"
+              alt="Cableado estructurado y data center"
+              fill
+              sizes="100vw"
+              className="object-cover object-right"
+            />
+            <div
+              aria-hidden="true"
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(90deg, #0A0D14 0%, rgba(10,13,20,.92) 38%, rgba(10,13,20,.45) 70%, rgba(10,13,20,.2) 100%)",
+              }}
+            />
+          </div>
+          <div className="relative mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+            <div className="max-w-[540px]">
+              <p className="mb-3.5 text-[12.5px] font-bold uppercase tracking-[0.12em] text-accent-light">
+                Cableado estructurado &amp; data center
+              </p>
+              <h2 className="text-[30px] font-bold leading-[1.1] tracking-[-0.03em] md:text-[40px]">
+                Proyectos de cableado y data center llave en mano
+              </h2>
+              <p className="mt-4 text-[17px] leading-[1.6] text-ink2-300">
+                Diseño, certificación Cat6A/fibra, gabinetes y organización
+                impecable. Ejecutamos tu proyecto con garantía de calidad y
+                precios competitivos.
+              </p>
+              <div className="mt-8">
+                <Button href="/contacto" variant="primary" size="lg">
+                  Solicitar cotización
+                </Button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Software / Ventix — banda oscura con logo + CTA */}
+        <section className="bg-ink text-white">
+          <div className="mx-auto grid max-w-[1280px] grid-cols-1 items-center gap-12 px-4 sm:px-6 lg:px-8 py-14 md:py-20 lg:grid-cols-[1.3fr_1fr]">
+            <div>
+              <p className="mb-3 text-[12.5px] font-bold uppercase tracking-[0.12em] text-accent-light">
+                Desarrollo de software a la medida
+              </p>
+              <h2 className="text-[28px] font-bold tracking-[-0.03em] md:text-[34px]">
+                Software que se adapta a tu operación
+              </h2>
+              <p className="mt-4 max-w-[520px] text-[16px] leading-[1.65] text-ink2-300">
+                Creamos sistemas a la medida e integramos Ventix, nuestro POS/ERP
+                en la nube con facturación CAI/SAR, inventario multi-bodega y CRM.
+                Tecnología hecha para el mercado hondureño.
+              </p>
+              <div className="mt-7">
+                <Button href="/ventix" variant="secondary" size="lg">
+                  Conocer Ventix
+                </Button>
+              </div>
+            </div>
+            <div className="flex justify-center lg:justify-end">
+              <Image
+                src="/images/ventix/logo/logo-text-on-dark.png"
+                alt="Ventix"
+                width={280}
+                height={64}
+                className="h-16 w-auto"
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* CTA Final — white, centrado */}
+        <section className="bg-white">
+          <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-14 md:py-20 text-center">
+            <SectionHeading
+              align="center"
+              title="¿Listo para Transformar tu Infraestructura Tecnológica?"
+              subtitle="Contáctanos hoy y descubre cómo nuestros servicios pueden impulsar tu negocio"
+              className="mb-8"
+            />
+            <div className="flex flex-col justify-center gap-4 sm:flex-row">
+              <Button href="/contacto" variant="primary" size="lg">
+                Solicitar Cotización
               </Button>
-              <Button
-                size="lg"
-                variant="outlined"
-                className="border-2 border-white text-white hover:bg-white/10
-                           px-8 py-4 text-lg"
-                placeholder={undefined}
-              >
-                <Link href="tel:+50488187765">
-                  Llamar Ahora
-                </Link>
+              <Button href="tel:+50488187765" variant="secondary" size="lg">
+                Llamar Ahora
               </Button>
             </div>
           </div>
-        </div>
+        </section>
     </>
     );
 }

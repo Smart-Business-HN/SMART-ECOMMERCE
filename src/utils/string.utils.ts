@@ -14,6 +14,25 @@ export function slugToTitle(slug: string): string {
 }
 
 /**
+ * Quita etiquetas HTML y normaliza espacios de un texto.
+ * Útil para mostrar descripciones de producto (ecommerceDescription es HTML) como texto plano.
+ * Ejemplo: "<h2><strong>Equipo</strong></h2>" -> "Equipo"
+ * @param html - Texto (posiblemente con HTML)
+ * @returns Texto plano sin etiquetas
+ */
+export function stripHtml(html?: string): string {
+    if (!html) return '';
+    return html
+        .replace(/<[^>]+>/g, ' ') // quitar etiquetas
+        .replace(/&nbsp;/g, ' ')
+        .replace(/&amp;/g, '&')
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/\s+/g, ' ') // colapsar espacios
+        .trim();
+}
+
+/**
  * Convierte un título en un slug
  * Ejemplo: "Mi Título De Ejemplo" -> "mi-titulo-de-ejemplo"
  * @param title - El título a convertir

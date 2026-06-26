@@ -2,6 +2,8 @@ export const revalidate = 300; // ISR: revalidar cada 5 minutos
 
 import { Metadata } from "next";
 import { getProductsEcommerce } from "@/services/products.service";
+import { getAllNavCategory } from "@/services/categories.service";
+import { NavCategoryDto } from "@/interfaces/nav-category/nav-category.interface";
 import StoreClient from "@/components/store/store-client.component";
 
 export const metadata: Metadata = {
@@ -35,23 +37,30 @@ export default async function Store({ searchParams }: { searchParams: Promise<{ 
     let products: any[] = [];
     let totalPages = 0;
     let totalCount = 0;
+    let categories: NavCategoryDto[] = [];
 
     try {
-        const response = await getProductsEcommerce(
-            page,
-            pageSize,
-            "",
-            undefined,
-            undefined,
-            false,
-            false,
-            undefined
-        );
+        const [response, categoriesResponse] = await Promise.all([
+            getProductsEcommerce(
+                page,
+                pageSize,
+                "",
+                undefined,
+                undefined,
+                false,
+                false,
+                undefined
+            ),
+            getAllNavCategory(),
+        ]);
 
         if (response.succeeded) {
             products = response.data;
             totalPages = Math.ceil(response.totalItems / response.pageSize);
             totalCount = response.totalItems;
+        }
+        if (categoriesResponse.succeeded) {
+            categories = categoriesResponse.data;
         }
     } catch (error) {
         console.error('Error fetching products on server:', error);
@@ -150,6 +159,7 @@ export default async function Store({ searchParams }: { searchParams: Promise<{ 
                 initialTotalCount={totalCount}
                 initialPage={page}
                 initialPageSize={pageSize}
+                categories={categories}
             />
         </>
     );

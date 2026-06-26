@@ -1,13 +1,11 @@
 import HeroComponent from "@/components/home/hero.component";
-import BrandingComponent from "@/components/home/branding.component";
-import CorporateResumeComponent from "@/components/home/corporate-resume.component";
-import UbiquitiSectionComponent from "@/components/home/ubiquiti-section.component";
-import UbiquitiWispSectionComponent from "@/components/home/ubiquiti-wisp-section.component";
-import Hikvision from "@/components/home/hikvision.component";
-import CertificatesComponent from "@/components/home/certificates.components";
-import HappyHolidaysComponent from "@/components/home/happy-holidays.component";
-import VentixSectionComponent from "@/components/home/ventix-section.component";
+import BrandStripComponent from "@/components/home/brand-strip.component";
+import TrustBadgesComponent from "@/components/home/trust-badges.component";
 import FeaturedProductsComponent from "@/components/home/featured-products.component";
+import UnifiShowcaseComponent from "@/components/home/unifi-showcase.component";
+import CategoryThemesComponent from "@/components/home/category-themes.component";
+import VentixSectionComponent from "@/components/home/ventix-section.component";
+import CableadoBandComponent from "@/components/home/cableado-band.component";
 
 export default function Home() {
   return (
@@ -255,16 +253,14 @@ export default function Home() {
       />
 
       <main>
-      <HeroComponent />
-      {/* <HappyHolidaysComponent/> */}
-      <BrandingComponent />
-      <CertificatesComponent />
-      <CorporateResumeComponent />
-      <FeaturedProductsComponent />
-      <UbiquitiSectionComponent />
-      <UbiquitiWispSectionComponent />
-      <Hikvision />
-      <VentixSectionComponent />
+        <HeroComponent />
+        <BrandStripComponent />
+        <TrustBadgesComponent />
+        <FeaturedProductsComponent />
+        <UnifiShowcaseComponent />
+        <CategoryThemesComponent />
+        <VentixSectionComponent />
+        <CableadoBandComponent />
       </main>
     </>
   );

@@ -66,8 +66,6 @@ export interface ProductDto {
   subCategory?: SubcategoryDto;
   statusId: number;
   status?: StatusDto;
-  providerId: number;
-  provider?: ProviderDto;
   isActive: boolean;
   showInEcommerce: boolean;
   taxId: number;

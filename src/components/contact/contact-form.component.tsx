@@ -1,30 +1,36 @@
-//@ts-nocheck
 'use client';
 import React, { useState, useEffect } from 'react';
-import { Input, Button, Alert, Typography, Spinner, Select, Option } from '@/utils/MTailwind';
 import {
   CreateContactMessageCommand,
   CountryDto,
   DepartmentDto
 } from '@/interfaces/contact/contact.interface';
 import { sendContactMessage, getCountries, getDepartments } from '@/services/contact.service';
-import {
-  PaperAirplaneIcon,
-  ExclamationTriangleIcon,
-  CheckCircleIcon
-} from '@heroicons/react/24/outline';
 import { trackFbEvent } from '@/lib/meta/fbpixel';
+
+const SUBJECT_OPTIONS = [
+  'Solicitar cotización',
+  'Soporte técnico',
+  'Proyecto de cableado / redes',
+  'Información sobre Ventix',
+  'Otro',
+];
 
 const initialFormData: CreateContactMessageCommand = {
   firstName: '',
   lastName: '',
   email: '',
   phoneNumber: '',
-  subject: '',
+  subject: SUBJECT_OPTIONS[0],
   messageContent: '',
   countryId: 0,
   departmentId: 0
 };
+
+// Shared field styling (matches the "Smart Business Rediseño" Contacto design).
+const labelCls = 'block text-[13px] font-semibold text-ink2-700 mb-[7px]';
+const inputCls =
+  'sb-in w-full border border-line-input rounded-btn px-3.5 py-3 text-[14.5px] outline-none bg-white text-text placeholder:text-ink2-400';
 
 export default function ContactForm() {
   const [formData, setFormData] = useState<CreateContactMessageCommand>(initialFormData);
@@ -44,14 +50,8 @@ export default function ContactForm() {
           getCountries(),
           getDepartments()
         ]);
-
-        if (countriesRes.succeeded && countriesRes.data) {
-          setCountries(countriesRes.data);
-        }
-
-        if (departmentsRes.succeeded && departmentsRes.data) {
-          setDepartments(departmentsRes.data);
-        }
+        if (countriesRes.succeeded && countriesRes.data) setCountries(countriesRes.data);
+        if (departmentsRes.succeeded && departmentsRes.data) setDepartments(departmentsRes.data);
       } catch (err) {
         console.error('Error loading form data:', err);
         setError('Error al cargar los datos del formulario');
@@ -59,100 +59,69 @@ export default function ContactForm() {
         setIsLoadingData(false);
       }
     };
-
     loadData();
   }, []);
 
   const handleInputChange = (field: keyof CreateContactMessageCommand, value: string | number) => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: value
-    }));
-    if (error) setError(''); // Limpiar error al escribir
+    setFormData(prev => ({ ...prev, [field]: value }));
+    if (error) setError('');
   };
 
   const handlePhoneChange = (value: string) => {
-    // Formatear automáticamente el número de teléfono
-    let formattedValue = value.replace(/\D/g, ''); // Solo números
-
-    if (formattedValue.length > 4) {
-      formattedValue = formattedValue.substring(0, 4) + '-' + formattedValue.substring(4, 8);
+    let formatted = value.replace(/\D/g, '');
+    if (formatted.length > 4) {
+      formatted = formatted.substring(0, 4) + '-' + formatted.substring(4, 8);
     }
-
-    handleInputChange('phoneNumber', formattedValue);
+    handleInputChange('phoneNumber', formatted);
   };
 
   const validateForm = (): boolean => {
-    // Validación de FirstName: 1-30 caracteres
     if (!formData.firstName.trim() || formData.firstName.length > 30) {
       setError('El nombre debe tener entre 1 y 30 caracteres');
       return false;
     }
-
-    // Validación de LastName: 1-30 caracteres
     if (!formData.lastName.trim() || formData.lastName.length > 30) {
       setError('El apellido debe tener entre 1 y 30 caracteres');
       return false;
     }
-
-    // Validación de Email: formato válido, máx 30 caracteres
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
       setError('Por favor ingresa un email válido');
       return false;
     }
-
     if (formData.email.length > 30) {
       setError('El email no puede exceder 30 caracteres');
       return false;
     }
-
-    // Validación de PhoneNumber: formato XXXX-XXXX
     const phoneRegex = /^\d{4}-\d{4}$/;
     if (!phoneRegex.test(formData.phoneNumber)) {
       setError('El teléfono debe tener el formato 0000-0000');
       return false;
     }
-
-    // Validación de Subject: 1-50 caracteres
-    if (!formData.subject.trim()) {
-      setError('El asunto es requerido');
+    if (!formData.subject.trim() || formData.subject.length > 50) {
+      setError('Selecciona un asunto válido');
       return false;
     }
-
-    if (formData.subject.length > 50) {
-      setError('El asunto no puede exceder 50 caracteres');
-      return false;
-    }
-
-    // Validación de MessageContent: 1-300 caracteres
     if (!formData.messageContent.trim()) {
       setError('El mensaje es requerido');
       return false;
     }
-
     if (formData.messageContent.length < 20) {
       setError('El mensaje debe tener al menos 20 caracteres');
       return false;
     }
-
     if (formData.messageContent.length > 300) {
       setError('El mensaje no puede exceder 300 caracteres');
       return false;
     }
-
-    // Validación de CountryId requerido
-    if (!formData.countryId || formData.countryId === 0) {
+    if (!formData.countryId) {
       setError('Debes seleccionar un país');
       return false;
     }
-
-    // Validación de DepartmentId requerido
-    if (!formData.departmentId || formData.departmentId === 0) {
+    if (!formData.departmentId) {
       setError('Debes seleccionar un departamento');
       return false;
     }
-
     return true;
   };
 
@@ -162,7 +131,6 @@ export default function ContactForm() {
     setError('');
     setSuccess('');
 
-    // Validación client-side
     if (!validateForm()) {
       setIsLoading(false);
       return;
@@ -170,12 +138,11 @@ export default function ContactForm() {
 
     try {
       const response = await sendContactMessage(formData);
-
       if (response.succeeded) {
         setSuccess('¡Mensaje enviado exitosamente! Te contactaremos pronto.');
 
-        // Meta Pixel: Contact (navegador + Conversions API con dedup). Email y
-        // teléfono del formulario para Advanced Matching.
+        // Meta Pixel: Contact (navegador + Conversions API con dedup), con email
+        // y teléfono del formulario para Advanced Matching.
         trackFbEvent('Contact', {}, {
           email: formData.email,
           phone: formData.phoneNumber,
@@ -183,7 +150,6 @@ export default function ContactForm() {
           lastName: formData.lastName,
         });
 
-        // Limpiar formulario después de 3 segundos
         setTimeout(() => {
           setFormData(initialFormData);
           setSuccess('');
@@ -199,206 +165,159 @@ export default function ContactForm() {
     }
   };
 
-  if (isLoadingData) {
-    return (
-      <div className="flex justify-center items-center py-12">
-        <Spinner className="h-8 w-8" />
-        <Typography className="ml-3 text-gray-600">Cargando formulario...</Typography>
-      </div>
-    );
-  }
+  const btnLabel = isLoading ? 'Enviando…' : success ? '¡Mensaje enviado!' : 'Enviar mensaje';
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        {/* Nombre */}
+    <form onSubmit={handleSubmit} noValidate>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-[18px] mb-[18px]">
         <div>
-          <Input
+          <label htmlFor="cf-firstName" className={labelCls}>Nombre</label>
+          <input
+            id="cf-firstName"
             type="text"
-            label="Nombre *"
+            className={inputCls}
+            placeholder="Tu nombre"
             value={formData.firstName}
             onChange={(e) => handleInputChange('firstName', e.target.value)}
-            color="blue"
-            size="lg"
-            className="bg-white"
             disabled={isLoading}
+            maxLength={30}
             required
-            crossOrigin={undefined}
           />
         </div>
-
-        {/* Apellido */}
         <div>
-          <Input
+          <label htmlFor="cf-lastName" className={labelCls}>Apellido</label>
+          <input
+            id="cf-lastName"
             type="text"
-            label="Apellido *"
+            className={inputCls}
+            placeholder="Tu apellido"
             value={formData.lastName}
             onChange={(e) => handleInputChange('lastName', e.target.value)}
-            color="blue"
-            size="lg"
-            className="bg-white"
             disabled={isLoading}
+            maxLength={30}
             required
-            crossOrigin={undefined}
           />
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        {/* Email */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-[18px] mb-[18px]">
         <div>
-          <Input
+          <label htmlFor="cf-email" className={labelCls}>Correo</label>
+          <input
+            id="cf-email"
             type="email"
-            label="Correo Electrónico *"
+            className={inputCls}
+            placeholder="tucorreo@empresa.com"
             value={formData.email}
             onChange={(e) => handleInputChange('email', e.target.value)}
-            color="blue"
-            size="lg"
-            className="bg-white"
             disabled={isLoading}
+            maxLength={30}
             required
-            crossOrigin={undefined}
           />
         </div>
-
-        {/* Teléfono */}
         <div>
-          <Input
+          <label htmlFor="cf-phone" className={labelCls}>Teléfono</label>
+          <input
+            id="cf-phone"
             type="tel"
-            label="Teléfono *"
-            placeholder="0000-0000"
+            className={inputCls}
+            placeholder="(+504) 0000-0000"
             value={formData.phoneNumber}
             onChange={(e) => handlePhoneChange(e.target.value)}
-            color="blue"
-            size="lg"
-            className="bg-white"
             disabled={isLoading}
             required
-            crossOrigin={undefined}
           />
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        {/* País */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-[18px] mb-[18px]">
         <div>
-          <Select
-            label="País *"
+          <label htmlFor="cf-country" className={labelCls}>País</label>
+          <select
+            id="cf-country"
+            className={`${inputCls} cursor-pointer`}
             value={formData.countryId}
-            onChange={(value) => handleInputChange('countryId', parseInt(value))}
-            color="blue"
-            disabled={isLoading}
+            onChange={(e) => handleInputChange('countryId', parseInt(e.target.value, 10) || 0)}
+            disabled={isLoading || isLoadingData}
           >
+            <option value={0}>{isLoadingData ? 'Cargando…' : 'Selecciona país'}</option>
             {countries.map((country) => (
-              <Option key={country.id} value={country.id}>
-                {country.name}
-              </Option>
+              <option key={country.id} value={country.id}>{country.name}</option>
             ))}
-          </Select>
+          </select>
         </div>
-
-        {/* Departamento */}
         <div>
-          <Select
-            label="Departamento *"
+          <label htmlFor="cf-department" className={labelCls}>Departamento</label>
+          <select
+            id="cf-department"
+            className={`${inputCls} cursor-pointer`}
             value={formData.departmentId}
-            onChange={(value) => handleInputChange('departmentId', parseInt(value))}
-            color="blue"
-            disabled={isLoading}
+            onChange={(e) => handleInputChange('departmentId', parseInt(e.target.value, 10) || 0)}
+            disabled={isLoading || isLoadingData}
           >
+            <option value={0}>{isLoadingData ? 'Cargando…' : 'Selecciona departamento'}</option>
             {departments.map((dept) => (
-              <Option key={dept.id} value={dept.id}>
-                {dept.name}
-              </Option>
+              <option key={dept.id} value={dept.id}>{dept.name}</option>
             ))}
-          </Select>
+          </select>
         </div>
       </div>
 
-      {/* Asunto */}
-      <div>
-        <Input
-          type="text"
-          label="Asunto *"
+      <div className="mb-[18px]">
+        <label htmlFor="cf-subject" className={labelCls}>Asunto</label>
+        <select
+          id="cf-subject"
+          className={`${inputCls} cursor-pointer`}
           value={formData.subject}
           onChange={(e) => handleInputChange('subject', e.target.value)}
-          color="blue"
-          size="lg"
-          className="bg-white"
           disabled={isLoading}
-          required
-          crossOrigin={undefined}
-        />
+        >
+          {SUBJECT_OPTIONS.map((opt) => (
+            <option key={opt} value={opt}>{opt}</option>
+          ))}
+        </select>
       </div>
 
-      {/* Mensaje */}
-      <div className="relative">
-        <label className="block text-gray-700 text-sm font-bold mb-2">
-          Mensaje *
-        </label>
+      <div className="mb-2">
+        <label htmlFor="cf-message" className={labelCls}>Mensaje</label>
         <textarea
-          className="w-full resize-none h-36 border border-blue-gray-200
-                     focus:border-blue-500 focus:ring-2 focus:ring-blue-500
-                     bg-white p-3 rounded-lg transition-all"
+          id="cf-message"
+          rows={5}
+          className={`${inputCls} resize-y`}
+          placeholder="Cuéntanos qué necesitas… (mínimo 20 caracteres)"
           value={formData.messageContent}
           onChange={(e) => handleInputChange('messageContent', e.target.value)}
           disabled={isLoading}
-          required
           maxLength={300}
-          placeholder="Escribe tu mensaje aquí (mínimo 20 caracteres)..."
+          required
         />
-        <Typography variant="small" className="text-gray-600 text-right mt-1" placeholder={undefined}>
-          {formData.messageContent.length}/300 caracteres
-        </Typography>
+        <div className="text-right text-[12px] text-ink2-400 mt-1">
+          {formData.messageContent.length}/300
+        </div>
       </div>
 
-      {/* Alertas de error/éxito */}
       {error && (
-        <Alert
-          color="red"
-          className="animate-fade-down animate-duration-300"
-          icon={<ExclamationTriangleIcon className="h-6 w-6" />}
-        >
+        <div className="mb-4 rounded-btn bg-[#FEF2F2] border border-[#FECACA] text-[#B91C1C] text-[14px] px-4 py-3">
           {error}
-        </Alert>
+        </div>
       )}
-
       {success && (
-        <Alert
-          color="green"
-          className="animate-fade-down animate-duration-300"
-          icon={<CheckCircleIcon className="h-6 w-6" />}
-        >
+        <div className="mb-4 rounded-btn bg-[#ECFDF5] border border-[#A7F3D0] text-[#047857] text-[14px] px-4 py-3">
           {success}
-        </Alert>
+        </div>
       )}
 
-      {/* Botón de envío */}
-      <div className="flex justify-center">
-        <Button
-          type="submit"
-          size="lg"
-          color="blue"
-          className="w-full md:w-auto px-12 flex items-center justify-center gap-2
-                     hover:shadow-lg hover:shadow-blue-500/50
-                     transition-all duration-300
-                     disabled:opacity-50 disabled:cursor-not-allowed"
-          disabled={isLoading}
-          placeholder={undefined}
-        >
-          {isLoading ? (
-            <>
-              <Spinner className="h-5 w-5" />
-              Enviando...
-            </>
-          ) : (
-            <>
-              <PaperAirplaneIcon className="h-5 w-5" />
-              Enviar Mensaje
-            </>
-          )}
-        </Button>
-      </div>
+      <button
+        type="submit"
+        disabled={isLoading}
+        className="sb-btn w-full bg-accent text-white border-none cursor-pointer font-semibold text-[16px] h-[52px] rounded-[12px] disabled:opacity-60 disabled:cursor-not-allowed"
+        style={{ boxShadow: '0 8px 24px -8px rgba(0,111,255,.5)' }}
+      >
+        {btnLabel}
+      </button>
+      <p className="text-[12.5px] text-ink2-400 text-center mt-3.5">
+        También puedes escribirnos a ventas@smartbusiness.site
+      </p>
     </form>
   );
 }
