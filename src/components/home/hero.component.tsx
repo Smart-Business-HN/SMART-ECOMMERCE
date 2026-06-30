@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const STATS = [
   { value: "7", label: "marcas oficiales" },
-  { value: "+5 años", label: "en el mercado" },
+  { value: "+15 años", label: "en el mercado" },
   { value: "24/7", label: "soporte técnico" },
 ];
 

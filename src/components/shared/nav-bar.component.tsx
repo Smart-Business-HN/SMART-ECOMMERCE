@@ -7,6 +7,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
 import { useCartCount } from "@/components/providers/cart-count-provider";
+import NavSearch from "@/components/shared/nav-search.component";
 
 const NAV_LINKS = [
   { href: "/", label: "Inicio" },
@@ -74,16 +75,7 @@ export default function NavBarComponent() {
         {/* Right actions */}
         <div className="flex items-center gap-3 md:gap-[18px] flex-none ml-auto lg:ml-0">
           {/* Search */}
-          <Link
-            href="/tienda/buscar"
-            aria-label="Buscar productos"
-            className="flex h-11 w-11 -mx-1 items-center justify-center text-ink2-700 transition-colors hover:text-accent"
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <circle cx="11" cy="11" r="7" />
-              <path d="m21 21-4.3-4.3" />
-            </svg>
-          </Link>
+          <NavSearch />
 
           {/* Account: avatar menu when logged in, "Ingresar" otherwise */}
           {isLogued ? (

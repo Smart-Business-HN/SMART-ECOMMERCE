@@ -20,7 +20,7 @@ export default function AuthShell({ children }: { children: ReactNode }) {
         <div className="relative hidden flex-col justify-between overflow-hidden bg-ink p-10 lg:flex">
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 opacity-30"
+            className="pointer-events-none absolute inset-0 opacity-25"
           >
             <Image
               src="/images/corporate/landing_smart_business_background.webp"
@@ -30,6 +30,15 @@ export default function AuthShell({ children }: { children: ReactNode }) {
               className="object-cover"
             />
           </div>
+          {/* Scrim lineal: unifica imagen + fondo en un degradado diagonal limpio */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(155deg, rgba(10,13,20,.35) 0%, rgba(10,13,20,.78) 55%, rgba(10,13,20,.96) 100%)",
+            }}
+          />
           <div
             aria-hidden="true"
             className="pointer-events-none absolute -left-24 -top-24 h-[360px] w-[360px] rounded-full"
