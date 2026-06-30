@@ -3,7 +3,63 @@
 @tailwind utilities;
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-hanken), system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+}
+::selection {
+  background: #006fff;
+  color: #fff;
+}
+
+/* --- "Smart Business Rediseño" design-system helpers --- */
+.sb-card-img {
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.sb-card:hover .sb-card-img {
+  transform: scale(1.045);
+}
+.sb-card:hover {
+  box-shadow: 0 12px 40px -12px rgba(10, 14, 30, 0.16) !important;
+}
+.sb-link {
+  transition: color 0.18s ease;
+}
+.sb-btn {
+  transition: background 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+}
+.sb-btn:hover {
+  transform: translateY(-1px);
+}
+.sb-brand {
+  transition: opacity 0.2s ease, filter 0.2s ease;
+  opacity: 0.55;
+  filter: grayscale(1);
+}
+.sb-brand:hover {
+  opacity: 1;
+  filter: grayscale(0);
+}
+@keyframes sb-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+/* Form inputs + contact cards (Contacto page) */
+.sb-in {
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+.sb-in:focus {
+  border-color: #006fff;
+  box-shadow: 0 0 0 3px rgba(0, 111, 255, 0.12);
+}
+.sb-contact {
+  transition: border-color 0.18s ease;
+}
+.sb-contact:hover {
+  border-color: #006fff;
 }
 .description h1 {
   @apply text-2xl font-bold text-gray-900 mb-3;

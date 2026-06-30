@@ -1,118 +1,160 @@
 // @ts-nocheck
 "use client";
-import { Navbar, Avatar, Menu, MenuItem, MenuList, MenuHandler } from "@/utils/MTailwind";
-import { ShoppingCartIcon } from "@heroicons/react/20/solid";
+import { Avatar, Menu, MenuItem, MenuList, MenuHandler } from "@/utils/MTailwind";
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
 import { useCartCount } from "@/components/providers/cart-count-provider";
+import NavSearch from "@/components/shared/nav-search.component";
+
+const NAV_LINKS = [
+  { href: "/", label: "Inicio" },
+  { href: "/tienda", label: "Tienda" },
+  { href: "/ventix", label: "Ventix" },
+  { href: "/servicios", label: "Servicios" },
+  { href: "/quienes-somos", label: "Quiénes Somos" },
+  { href: "/contacto", label: "Contacto" },
+];
+
+const isActiveLink = (pathname: string, href: string) =>
+  href === "/" ? pathname === "/" : pathname.startsWith(href);
 
 export default function NavBarComponent() {
-    const { cartItemsCount } = useCartCount();
-    const { data: session, status } = useSession();
-    const isLogued = status === 'authenticated';
-    const handleSignOut = async () => {
-        try {
-            await signOut({ 
-                redirect: false,
-                callbackUrl: '/' 
-            });
-            // Limpiar localStorage si es necesario
-            localStorage.removeItem('user');
-            localStorage.removeItem('token');
-            // Recargar la página para actualizar el estado
-            window.location.href = '/';
-        } catch (error) {
-            console.error('Error al cerrar sesión:', error);
-        }
-    };
+  const { cartItemsCount } = useCartCount();
+  const { data: session, status } = useSession();
+  const pathname = usePathname() || "/";
+  const isLogued = status === "authenticated";
 
-    return (
-        <div className="w-full flex justify-center px-2 md:px-0 max-w-screen-7xl shadow-md sticky top-0 z-50 bg-white bg-opacity-50 backdrop-blur-sm">
-        <Navbar className="flex items-center justify-between px-4 py-2 w-full bg-white bg-opacity-50  rounded-none " placeholder="">
-          <div className="md:flex items-center gap-6 hidden">
-            <div className="w-10 h-10 bg-gray-200 flex items-center justify-center">
-              <Image src="/images/corporate/smart.webp" alt="Smart Business logo" width={32} height={32} priority className="object-contain" />
-            </div>
-            <div className="flex gap-1">
-              <Link href='/' className="inline-flex items-center min-h-[44px] px-3 rounded-lg text-sm font-semibold text-blue-gray-800 hover:bg-blue-gray-50 transition-colors">Inicio</Link>
-              <Link href='/tienda' className="inline-flex items-center min-h-[44px] px-3 rounded-lg text-sm font-semibold text-blue-gray-800 hover:bg-blue-gray-50 transition-colors">Tienda</Link>
-              <Link href='/ventix' className="inline-flex items-center min-h-[44px] px-3 rounded-lg text-sm font-semibold text-blue-gray-800 hover:bg-blue-gray-50 transition-colors">Ventix</Link>
-              <Link href='/servicios' className="inline-flex items-center min-h-[44px] px-3 rounded-lg text-sm font-semibold text-blue-gray-800 hover:bg-blue-gray-50 transition-colors">Servicios</Link>
-              <Link href='/quienes-somos' className="inline-flex items-center min-h-[44px] px-3 rounded-lg text-sm font-semibold text-blue-gray-800 hover:bg-blue-gray-50 transition-colors">Quienes Somos</Link>
-              <Link href='/contacto' className="inline-flex items-center min-h-[44px] px-3 rounded-lg text-sm font-semibold text-blue-gray-800 hover:bg-blue-gray-50 transition-colors">Contacto</Link>
-            </div>
-          </div>
-          <div className="w-full flex md:hidden">
-            <div className="w-10 h-10 flex items-center justify-center">
-              <Image src="/images/corporate/smart.webp" alt="Smart Business logo" width={32} height={32} priority className="object-contain" />
-            </div>
-          </div>
-          {/* Right: Auth Buttons or Avatar */}
-          <div className="flex justify-end md:items-center gap-2 w-full md:w-auto">
-            {isLogued ? (
-              <>
-                {/* Cart Icon with Badge */}
-                <div className="relative mr-2 flex items-center justify-center">
-                  <Link href="/profile?tab=carts" aria-label="Ver carrito de compras" className="focus:outline-none flex items-center justify-center min-h-[44px] min-w-[44px]">
-                    <ShoppingCartIcon className="w-6 h-6 text-blue-gray-700" />
-                    {cartItemsCount > 0 && (
-                      <span className="absolute -top-1 md:-top-2 -right-4 bg-red-500 text-white text-xs font-bold rounded-full px-1.5 py-[2px] text-center" style={{lineHeight: '1.1'}}>{cartItemsCount}</span>
-                    )}
-                  </Link>
-                </div>
+  const handleSignOut = async () => {
+    try {
+      await signOut({ redirect: false, callbackUrl: "/" });
+      localStorage.removeItem("user");
+      localStorage.removeItem("token");
+      window.location.href = "/";
+    } catch (error) {
+      console.error("Error al cerrar sesión:", error);
+    }
+  };
+
+  return (
+    <header className="sticky top-0 z-50 bg-white/[.82] backdrop-blur-[18px] border-b border-line">
+      <nav className="max-w-[1280px] mx-auto px-5 md:px-8 h-[68px] flex items-center gap-6 lg:gap-10">
+        {/* Logo */}
+        <Link href="/" className="flex items-center flex-none" aria-label="Smart Business - Inicio">
+          <Image
+            src="/images/corporate/logo-smart-business.png"
+            alt="Smart Business"
+            width={429}
+            height={113}
+            priority
+            style={{ width: "auto" }}
+            className="h-[34px] object-contain"
+          />
+        </Link>
+
+        {/* Desktop nav links */}
+        <div className="hidden lg:flex items-center gap-[30px] text-[14.5px] font-medium text-ink2-700 flex-1">
+          {NAV_LINKS.map((link) => {
+            const active = isActiveLink(pathname, link.href);
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`sb-link transition-colors hover:text-accent ${
+                  active ? "text-ink font-semibold" : "text-inherit"
+                }`}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
+        </div>
+
+        {/* Right actions */}
+        <div className="flex items-center gap-3 md:gap-[18px] flex-none ml-auto lg:ml-0">
+          {/* Search */}
+          <NavSearch />
+
+          {/* Account: avatar menu when logged in, "Ingresar" otherwise */}
+          {isLogued ? (
+            <Menu>
+              <MenuHandler>
                 {/* @ts-expect-error Material Tailwind Avatar type definitions are overly strict; props are correct per docs */}
-                
-                <Menu>
-                  <MenuHandler>
-                    <Avatar src={session?.user?.image || "/images/generic_avatar.jpg"} alt="Abrir menú de usuario" size="sm" className="cursor-pointer object-cover border-2 border-blue-500" />
-                  </MenuHandler>
-                  <MenuList>
-                    <MenuItem onClick={() => {window.location.href = '/profile'}}>Perfil</MenuItem>
-                    <MenuItem>Mis Compras</MenuItem>
-                    <MenuItem className="text-danger hover:bg-red-500 hover:text-white" onClick={handleSignOut}>Cerrar Sesión</MenuItem>
-                  </MenuList>
-                </Menu>
-              </>
-            ) : (
-              <>
-                <Link href='/login' className="inline-flex items-center justify-center min-h-[44px] px-4 rounded-lg border border-blue-gray-300 text-sm font-semibold text-blue-gray-800 hover:bg-blue-gray-50 transition-colors">Login</Link>
-                <Link href='/sign-up' className="inline-flex items-center justify-center min-h-[44px] px-4 rounded-lg bg-blue-600 text-sm font-semibold text-white hover:bg-blue-700 transition-colors">Registrarme</Link>
-              </>
+                <Avatar
+                  src={session?.user?.image || "/images/generic_avatar.jpg"}
+                  alt="Abrir menú de usuario"
+                  size="sm"
+                  className="cursor-pointer object-cover border-2 border-accent !w-9 !h-9"
+                />
+              </MenuHandler>
+              <MenuList>
+                <MenuItem onClick={() => { window.location.href = "/profile"; }}>Perfil</MenuItem>
+                <MenuItem onClick={() => { window.location.href = "/profile?tab=carts"; }}>Mis Compras</MenuItem>
+                <MenuItem className="text-danger hover:bg-red-500 hover:text-white" onClick={handleSignOut}>
+                  Cerrar Sesión
+                </MenuItem>
+              </MenuList>
+            </Menu>
+          ) : (
+            <Link
+              href="/login"
+              className="hidden sm:inline-flex items-center text-ink2-700 text-[14.5px] font-medium transition-colors hover:text-accent"
+            >
+              Ingresar
+            </Link>
+          )}
+
+          {/* Cart */}
+          <Link
+            href="/cart"
+            aria-label="Ver carrito de compras"
+            className="relative bg-ink text-white w-11 h-11 rounded-[10px] flex items-center justify-center transition-transform hover:-translate-y-px"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+              <path d="M3 6h18" />
+              <path d="M16 10a4 4 0 0 1-8 0" />
+            </svg>
+            {cartItemsCount > 0 && (
+              <span className="absolute -top-1.5 -right-1.5 bg-accent text-white text-[11px] font-bold min-w-[18px] h-[18px] rounded-[9px] flex items-center justify-center px-1 border-2 border-white">
+                {cartItemsCount}
+              </span>
             )}
+          </Link>
+
+          {/* Mobile burger */}
+          <div className="flex lg:hidden">
+            <Menu>
+              <MenuHandler>
+                <button
+                  type="button"
+                  aria-label="Abrir menú de navegación"
+                  className="flex items-center justify-center w-11 h-11 rounded-[10px] text-ink2-700 hover:bg-surface-muted"
+                >
+                  <Bars3Icon className="w-6 h-6" />
+                </button>
+              </MenuHandler>
+              <MenuList>
+                {NAV_LINKS.map((link) => (
+                  <MenuItem key={link.href}>
+                    <Link href={link.href} className="block w-full">{link.label}</Link>
+                  </MenuItem>
+                ))}
+                {isLogued ? (
+                  <MenuItem className="text-danger" onClick={handleSignOut}>Cerrar Sesión</MenuItem>
+                ) : (
+                  <>
+                    <MenuItem><Link href="/login" className="block w-full">Ingresar</Link></MenuItem>
+                    <MenuItem><Link href="/sign-up" className="block w-full">Registrarme</Link></MenuItem>
+                  </>
+                )}
+              </MenuList>
+            </Menu>
           </div>
-          <div className="ml-2 flex md:hidden">
-            {/* Aqui va el burger menu */}
-           <Menu>
-            <MenuHandler>
-              <button type="button" aria-label="Abrir menú de navegación" className="flex items-center justify-center min-h-[44px] min-w-[44px] rounded-lg hover:bg-blue-gray-50">
-                <Bars3Icon className="w-7 h-7 text-blue-gray-700" />
-              </button>
-            </MenuHandler>
-            <MenuList>
-              <MenuItem>
-                <Link href='/'>Inicio</Link>
-              </MenuItem>
-              <MenuItem>
-                <Link href='/tienda'>Tienda</Link>
-              </MenuItem>
-              <MenuItem>
-                <Link href='/ventix'>Ventix</Link>
-              </MenuItem>
-              <MenuItem>
-                <Link href='/servicios'>Servicios</Link>
-              </MenuItem>
-              <MenuItem>
-                <Link href='/quienes-somos'>Quienes Somos</Link>
-              </MenuItem>
-              <MenuItem>
-                <Link href='/contacto'>Contacto</Link>
-              </MenuItem>
-            </MenuList>
-           </Menu>
-          </div>
-        </Navbar>
-      </div>
-    );
+        </div>
+      </nav>
+    </header>
+  );
 }

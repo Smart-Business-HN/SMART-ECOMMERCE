@@ -1,6 +1,7 @@
 export const revalidate = 300; // ISR: revalidar cada 5 minutos
 
 import { getProductsBySubCategorySlug } from "@/services/products.service";
+import { getAllNavCategory } from "@/services/categories.service";
 import { slugToTitle } from "@/utils/string.utils";
 import SubcategoryClient from "@/components/store/subcategory-client.component";
 
@@ -20,23 +21,32 @@ export default async function SubCategoryPage({ params, searchParams }: SubCateg
     let products: any[] = [];
     let totalPages = 0;
     let totalCount = 0;
+    let subCategoryId: number | undefined = undefined;
 
     try {
-        const response = await getProductsBySubCategorySlug(
-            subcategory,
-            page,
-            pageSize,
-            "",
-            undefined,
-            undefined,
-            false,
-            undefined
-        );
+        const [response, categoriesResponse] = await Promise.all([
+            getProductsBySubCategorySlug(
+                subcategory,
+                page,
+                pageSize,
+                "",
+                undefined,
+                undefined,
+                false,
+                undefined
+            ),
+            getAllNavCategory(),
+        ]);
 
         if (response.succeeded) {
             products = response.data;
             totalPages = Math.ceil(response.totalItems / response.pageSize);
             totalCount = response.totalItems;
+        }
+        if (categoriesResponse.succeeded) {
+            const cat = categoriesResponse.data.find((c) => c.slug === category);
+            const sub = cat?.subCategories?.find((s) => s.slug === subcategory);
+            if (sub) subCategoryId = sub.id;
         }
     } catch (error) {
         console.error('Error fetching products by subcategory:', error);
@@ -133,8 +143,10 @@ export default async function SubCategoryPage({ params, searchParams }: SubCateg
 
             <SubcategoryClient
                 subcategorySlug={subcategory}
+                categorySlug={category}
                 categoryTitle={categoryTitle}
                 subcategoryTitle={subcategoryTitle}
+                subCategoryId={subCategoryId}
                 initialProducts={products}
                 initialTotalPages={totalPages}
                 initialTotalCount={totalCount}

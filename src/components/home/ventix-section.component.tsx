@@ -1,101 +1,87 @@
-// @ts-nocheck
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/utils/MTailwind";
-import {
-    ShoppingCartIcon,
-    DocumentTextIcon,
-    CubeIcon,
-    UsersIcon,
-    ArrowTopRightOnSquareIcon,
-    ArrowRightIcon,
-} from "@heroicons/react/24/outline";
+
+const VENTIX_FEATURES = [
+  "Punto de venta rápido e intuitivo",
+  "Facturación CAI / SAR conforme",
+  "Inventario multi-bodega en tiempo real",
+  "CRM y reportes de ventas",
+];
 
 export default function VentixSectionComponent() {
-    const features = [
-        { icon: ShoppingCartIcon, title: "Punto de Venta", desc: "POS rápido y simple, listo en minutos." },
-        { icon: DocumentTextIcon, title: "Facturación CAI/SAR", desc: "Cumple con la normativa hondureña sin complicaciones." },
-        { icon: CubeIcon, title: "Inventario", desc: "Control multi-bodega y multi-sucursal en tiempo real." },
-        { icon: UsersIcon, title: "CRM y Reportes", desc: "Conoce a tus clientes y mide tu negocio." },
-    ];
-
-    return (
-        <div className="container mx-auto px-4 md:px-0 mt-10 mb-5">
-            <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-600 via-blue-700 to-blue-900 shadow-xl">
-                {/* Decorative background */}
-                <div className="absolute -top-20 -right-20 w-72 h-72 bg-blue-400/20 rounded-full blur-3xl"></div>
-                <div className="absolute -bottom-20 -left-20 w-72 h-72 bg-blue-300/20 rounded-full blur-3xl"></div>
-
-                <div className="relative grid md:grid-cols-2 gap-8 items-center p-8 md:p-12">
-                    {/* Left: copy + CTAs */}
-                    <div className="text-white animate-fade-right animate-ease-in">
-                        <div className="mb-5">
-                            <Image
-                                src="/images/ventix/logo/logo-text-on-dark.png"
-                                width={180}
-                                height={50}
-                                alt="Logo de Ventix - ERP y POS en la nube"
-                                className="h-12 w-auto"
-                            />
-                        </div>
-                        <h2 className="text-3xl md:text-4xl font-bold mb-3 leading-tight">
-                            Lleva tu negocio al siguiente nivel con Ventix
-                        </h2>
-                        <p className="text-blue-100 text-base md:text-lg mb-6">
-                            Tu negocio organizado, simple y en control. POS, facturación CAI/SAR,
-                            inventario y CRM en un solo lugar — desde Smart Business.
-                        </p>
-
-                        <div className="grid grid-cols-2 gap-3 mb-6">
-                            {features.map((feature, index) => (
-                                <div key={index} className="flex items-start gap-2">
-                                    <div className="bg-white/15 backdrop-blur-sm rounded-md p-1.5 flex-shrink-0">
-                                        <feature.icon className="h-4 w-4 text-blue-100" />
-                                    </div>
-                                    <div>
-                                        <p className="text-sm font-semibold text-white leading-tight">{feature.title}</p>
-                                        <p className="text-xs text-blue-100 leading-tight">{feature.desc}</p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-
-                        <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
-                            {/* @ts-expect-error Material Tailwind Button type definitions are overly strict; props are correct per docs */}
-                            <Button size="md" className="bg-white text-blue-700 hover:bg-blue-50 shadow-lg">
-                                <Link href="/ventix" className="flex items-center gap-2">
-                                    <span>Conocer más</span>
-                                    <ArrowRightIcon className="h-4 w-4" />
-                                </Link>
-                            </Button>
-                            <a
-                                href="https://ventix.smartbusiness.site/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-white text-sm font-semibold flex items-center gap-1.5 hover:text-blue-200 transition-colors"
-                            >
-                                <span>Visitar sitio oficial</span>
-                                <ArrowTopRightOnSquareIcon className="h-4 w-4" />
-                            </a>
-                        </div>
-                    </div>
-
-                    {/* Right: dashboard screenshot */}
-                    <div className="relative animate-fade-left animate-ease-in flex justify-center md:justify-end">
-                        <div className="relative w-full max-w-lg">
-                            <div className="absolute inset-0 bg-white/10 rounded-xl blur-2xl"></div>
-                            <Image
-                                src="/images/ventix/screenshots/Dashboard.png"
-                                width={900}
-                                height={560}
-                                alt="Captura del dashboard de Ventix mostrando reportes y métricas del negocio"
-                                className="relative rounded-xl shadow-2xl ring-1 ring-white/20 w-full h-auto"
-                                priority={false}
-                            />
-                        </div>
-                    </div>
-                </div>
-            </div>
+  return (
+    <section id="ventix" className="bg-ink text-white relative overflow-hidden">
+      <div
+        className="absolute top-1/2 -left-[160px] -translate-y-1/2 w-[520px] h-[520px] rounded-full pointer-events-none"
+        style={{ background: "radial-gradient(circle,rgba(0,111,255,.16),transparent 65%)" }}
+      />
+      <div className="relative max-w-[1280px] mx-auto px-5 md:px-8 py-16 md:py-[88px] grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-14 items-center">
+        {/* Copy */}
+        <div>
+          <div className="mb-[26px]">
+            <Image
+              src="/images/ventix/logo/logo-text-on-dark.png"
+              alt="Ventix by Smart Business"
+              width={1746}
+              height={485}
+              style={{ width: "auto" }}
+              className="h-14 object-contain"
+            />
+          </div>
+          <h2 className="text-[32px] md:text-[40px] leading-[1.08] tracking-[-0.03em] font-bold mb-[18px]">
+            Tu negocio, en la nube.
+          </h2>
+          <p className="text-[16px] md:text-[17px] leading-[1.6] text-ink2-300 max-w-[460px] mb-7">
+            POS, facturación CAI/SAR, inventario multi-bodega y CRM en un solo
+            lugar. El ERP en la nube hecho para Honduras.
+          </p>
+          <div className="flex flex-col gap-3.5 mb-8">
+            {VENTIX_FEATURES.map((feature) => (
+              <div key={feature} className="flex items-center gap-3 text-[15px] text-[#D4DAE3]">
+                <span className="w-[22px] h-[22px] rounded-full bg-[rgba(0,194,168,0.16)] text-success-light flex items-center justify-center flex-none">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                    <path d="M20 6 9 17l-5-5" />
+                  </svg>
+                </span>
+                {feature}
+              </div>
+            ))}
+          </div>
+          <div className="flex flex-wrap items-center gap-5">
+            <Link
+              href="/ventix"
+              className="sb-btn inline-block bg-white text-ink font-semibold text-[15.5px] px-7 py-3.5 rounded-btn"
+            >
+              Conocer Ventix
+            </Link>
+            <a
+              href="https://ventix.smartbusiness.site/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="sb-link inline-flex items-center gap-1.5 text-ink2-300 text-[14.5px] font-medium hover:text-white"
+            >
+              Visitar sitio oficial
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M7 17 17 7M8 7h9v9" />
+              </svg>
+            </a>
+          </div>
         </div>
-    );
+
+        {/* Dashboard mockup */}
+        <div
+          className="rounded-[18px] border border-white/[0.08] p-3 md:p-4"
+          style={{ background: "linear-gradient(160deg,#141a26,#0d111a)" }}
+        >
+          <Image
+            src="/images/ventix/screenshots/Dashboard.png"
+            alt="Dashboard de Ventix con reportes y métricas del negocio"
+            width={900}
+            height={560}
+            className="rounded-[10px] w-full h-auto ring-1 ring-white/10"
+          />
+        </div>
+      </div>
+    </section>
+  );
 }

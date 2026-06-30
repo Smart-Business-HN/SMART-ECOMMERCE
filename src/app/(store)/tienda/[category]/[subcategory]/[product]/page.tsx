@@ -1,20 +1,22 @@
 // @ts-nocheck
 export const revalidate = 3600; // ISR: revalidar cada 1 hora
 
-import { getProductBySlug } from '@/services/products.service';
+import { getProductBySlug, getProductsBySubCategorySlug } from '@/services/products.service';
 import { ProductDto } from '@/interfaces/product/product.interface';
-import Image from 'next/image';
-import { Card, Typography, Button, Carousel, Tabs, TabsBody, TabPanel, TabsHeader, Tab } from '@/utils/MTailwind';
 import { notFound } from 'next/navigation';
 import { formatNumber } from '@/utils/number-format';
 import type { Metadata } from 'next';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/auth.config';
 import Link from 'next/link';
-import WhatsAppContactButton from '@/components/store/whatsapp-contact-button.component';
-import AddToCartButton from '@/components/store/add-to-cart-button.component';
+import { CheckIcon, TruckIcon, LockClosedIcon, ShieldCheckIcon, PhoneIcon } from '@heroicons/react/24/outline';
 import ProductViewTracker from '@/components/store/product-view-tracker.component';
 import { buildProductCustomData } from '@/lib/meta/meta-custom-data';
+import Breadcrumb from '@/components/ui/breadcrumb.component';
+import Badge from '@/components/ui/badge.component';
+import ProductGallery from '@/components/store/product-gallery.component';
+import ProductPurchasePanel from '@/components/store/product-purchase-panel.component';
+import ProductCard from '@/components/store/product-card.component';
 
 interface ProductPageProps {
     params: Promise<{ category: string; subcategory: string; product: string }>;
@@ -153,18 +155,25 @@ export default async function ProductPage({ params }: ProductPageProps) {
             hasMoreInformation = true;
         }
 
-        // Determinar la tab inicial según la jerarquía y disponibilidad
-        const initialTab = productData.ecommerceDescription
-          ? 'ecommerceDescription'
-          : productData.productFeatures && productData.productFeatures.length > 0
-          ? 'productFeatures'
-          : productData.productDataSheets && productData.productDataSheets.length > 0
-          ? 'productDataSheets'
-          : undefined;
-
         const categoryTitle = productData.subCategory?.category?.name || '';
         const subcategoryTitle = productData.subCategory?.name || '';
         const brandName = productData.brand?.name || '';
+        const categorySlug = productData.subCategory?.category?.slug || '';
+        const subcategorySlug = productData.subCategory?.slug || '';
+        const canonicalUrl = `https://smartbusiness.site/tienda/${categorySlug}/${subcategorySlug}/${productData.slug}`;
+
+        // Productos relacionados: misma subcategoría (no existe endpoint de relacionados).
+        let related: ProductDto[] = [];
+        try {
+            if (subcategorySlug) {
+                const rel = await getProductsBySubCategorySlug(subcategorySlug, 1, 5, '', undefined, undefined, false, undefined);
+                if (rel.succeeded) {
+                    related = rel.data.filter((p) => p.id !== productData.id).slice(0, 4);
+                }
+            }
+        } catch (e) {
+            console.error('Error fetching related products:', e);
+        }
 
         return (
             <>
@@ -269,163 +278,155 @@ export default async function ProductPage({ params }: ProductPageProps) {
                         })
                     }}
                 />
-                <main className="container mx-auto max-w-7xl px-4 py-8" role="main" aria-labelledby="producto-titulo">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        {/* Carrusel de Imágenes del Producto */}
-                        <section aria-labelledby="imagenes-producto-titulo">
+                <main className="mx-auto max-w-[1280px] px-4 py-8 sm:px-6 lg:px-8" role="main" aria-labelledby="producto-titulo">
+                    <Breadcrumb
+                        className="mb-6"
+                        items={[
+                            { label: 'Inicio', href: '/' },
+                            { label: 'Tienda', href: '/tienda' },
+                            { label: categoryTitle, href: `/tienda/${categorySlug}` },
+                            { label: subcategoryTitle, href: `/tienda/${categorySlug}/${subcategorySlug}` },
+                            { label: productData.name },
+                        ]}
+                    />
+
+                    <div className="grid grid-cols-1 gap-10 lg:grid-cols-2">
+                        {/* Galería */}
+                        <section aria-labelledby="imagenes-producto-titulo" className="lg:sticky lg:top-[92px] lg:self-start">
                             <h2 id="imagenes-producto-titulo" className="sr-only">Imágenes del producto</h2>
-                            <div className="space-y-4">
-                                {productData.productImages && productData.productImages.length > 0 ? (
-                                    <Carousel loop={true} autoplay={false} className="rounded-xl h-96">
-                                        {productData.productImages.map((image, index) => (
-                                            <div key={index} className="relative h-full w-full">
-                                                <Image
-                                                    src={image.url}
-                                                    alt={`${productData.name} - Imagen ${index + 1}`}
-                                                    fill
-                                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
-                                                    priority={index === 0}
-                                                    quality={85}
-                                                    className="object-cover object-center"
-                                                />
-                                            </div>
-                                        ))}
-                                    </Carousel>
-                                ) : (
-                                    <div className="relative h-96 bg-gray-100 rounded-lg overflow-hidden">
-                                        <Image
-                                            src="/images/products/no-image-available-icon-vector.webp"
-                                            alt={productData.name}
-                                            fill
-                                            className="object-contain"
-                                        />
-                                    </div>
-                                )}
-                            </div>
+                            <ProductGallery images={productData.productImages || []} name={productData.name} />
                         </section>
 
                         {/* Información del Producto */}
                         <section aria-labelledby="producto-titulo">
-                            <header>
-                                <h1 id="producto-titulo" className="text-3xl font-bold text-gray-900 mb-2">{productData.name}</h1>
-                                <p className="text-gray-600 text-lg" aria-label={`SKU: ${productData.code}`}>SKU: {productData.code}</p>
-                            </header>
-
-                            {/* Precio */}
-                            <div className="bg-blue-50 p-4 rounded-lg my-6">
-                                <p className="text-sm text-gray-600 mb-1">Precio</p>
-                                <div>
-
-                                <p className="text-3xl font-bold text-blue-600" aria-label={`Precio: Lempiras ${formatNumber(productData.recomendedSalePrice)}`}>
-                                    L. {formatNumber(productData.recomendedSalePrice)}
-                                </p>
-                                {!isUserSignIn && (
-                                    <div>Consigue hasta un <strong><span className="text-blue-600">10%</span> de descuento</strong> solo por <Link className="text-blue-600" href="/sign-up">registrarte.</Link></div>
-                                )}
-                                </div>
+                            <div className="flex flex-wrap items-center gap-3">
+                                {brandName && <span className="text-[13px] font-bold text-accent">{brandName}</span>}
+                                <span className="text-[12px] text-ink2-400">SKU: {productData.code}</span>
+                                <Badge variant="success">{productData.ecommerceStock > 0 ? 'En stock' : 'Consultar stock'}</Badge>
                             </div>
 
-                            {/* Descripción */}
+                            <h1 id="producto-titulo" className="mt-3 text-[28px] font-bold tracking-[-0.02em] text-text md:text-[34px]">
+                                {productData.name}
+                            </h1>
+
                             {productData.description && (
-                                <div className="mb-6">
-                                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Descripción</h3>
-                                    <p className="text-gray-600 leading-relaxed">{productData.description}</p>
+                                <p className="mt-4 text-[15.5px] leading-[1.6] text-ink2-600">{productData.description}</p>
+                            )}
+
+                            {/* Precio */}
+                            <div className="mt-6">
+                                <p className="text-[34px] font-extrabold tracking-[-0.03em] text-text" aria-label={`Precio: Lempiras ${formatNumber(productData.recomendedSalePrice)}`}>
+                                    L. {formatNumber(productData.recomendedSalePrice)}
+                                </p>
+                                <p className="mt-1 text-[13px] text-ink2-500">
+                                    Precio con impuestos incluidos · Envío gratis en compras mayores a L. 1,000
+                                </p>
+                                {!isUserSignIn && (
+                                    <p className="mt-2 text-[14px] text-ink2-600">
+                                        Consigue hasta un <strong className="text-accent">10% de descuento</strong> solo por{' '}
+                                        <Link className="sb-link font-semibold text-accent" href="/sign-up">registrarte</Link>.
+                                    </p>
+                                )}
+                            </div>
+
+                            {/* Specs destacadas */}
+                            {productData.productFeatures && productData.productFeatures.length > 0 && (
+                                <div className="mt-6 rounded-[14px] bg-surface p-5">
+                                    <ul className="space-y-2.5">
+                                        {productData.productFeatures.slice(0, 4).map((feature, index) => (
+                                            <li key={index} className="flex items-start gap-2.5">
+                                                <CheckIcon className="mt-0.5 h-4 w-4 flex-none text-accent" />
+                                                <span className="text-[14px] text-text">
+                                                    <strong className="font-semibold">{feature.title}</strong>
+                                                    {feature.description ? ` — ${feature.description}` : ''}
+                                                </span>
+                                            </li>
+                                        ))}
+                                    </ul>
                                 </div>
                             )}
 
-                            {/* Información del Stock */}
-                            <div className="gap-4 mb-6">
-                                <div className="bg-gray-50 p-3 rounded">
-                                    <p className="text-sm text-gray-600">Stock Actual</p>
-                                    <p className="text-lg font-semibold text-gray-900" aria-label={`Estado del stock: ${productData.ecommerceStock > 0 ? 'Disponible' : 'Consultar Stock'}`}>
-                                        {productData.ecommerceStock > 0 ? 'Disponible' : 'Consultar Stock'}
-                                    </p>
-                                </div>
-                            </div>
-
-                            {/* Botones de Acción */}
-                            <div className="flex gap-4 pt-4">
-                                <AddToCartButton
+                            {/* Cantidad + acciones (carrito real + cotización) */}
+                            <div className="mt-7">
+                                <ProductPurchasePanel
                                     productId={productData.id}
                                     productName={productData.name}
-                                    disabled={productData.ecommerceStock <= 0}
-                                    size="lg"
-                                    color="blue"
-                                    className="flex-1"
-                                />
-                                <WhatsAppContactButton 
-                                    productUrl={`https://smartbusiness.site/tienda/${productData.subCategory?.category?.slug || ''}/${productData.subCategory?.slug || ''}/${productData.slug}`}
-                                    size="lg"
-                                    variant="outlined"
-                                    color="blue"
-                                    aria-label="Contactar sobre este producto"
+                                    productUrl={canonicalUrl}
+                                    inStock={productData.ecommerceStock > 0}
                                 />
                             </div>
 
-                            {/* Información Adicional */}
-                            <div className="border-t pt-4 mt-6">
-                                <div className="grid grid-cols-2 gap-4 text-sm text-gray-600">
-                                    <div>
-                                        <p><strong>Marca:</strong> {productData.brand?.name || 'N/A'}</p>
+                            {/* Sellos de confianza */}
+                            <div className="mt-7 grid grid-cols-2 gap-4 border-t border-line pt-6">
+                                {[
+                                    { Icon: TruckIcon, t: 'Envío a todo Honduras', s: 'Gratis en +L.1,000' },
+                                    { Icon: LockClosedIcon, t: 'Pago seguro', s: 'Procesado por BAC' },
+                                    { Icon: ShieldCheckIcon, t: 'Garantía', s: 'Productos originales' },
+                                    { Icon: PhoneIcon, t: 'Soporte 24/7', s: 'Asesoría experta' },
+                                ].map(({ Icon, t, s }, i) => (
+                                    <div key={i} className="flex items-start gap-3">
+                                        <span className="flex h-9 w-9 flex-none items-center justify-center rounded-[10px] bg-accent-soft text-accent">
+                                            <Icon className="h-4 w-4" />
+                                        </span>
+                                        <div>
+                                            <p className="text-[13.5px] font-semibold text-text">{t}</p>
+                                            <p className="text-[12px] text-ink2-500">{s}</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <p><strong>Estado:</strong> {productData.status?.name || 'N/A'}</p>
-                                    </div>
-                                </div>
+                                ))}
                             </div>
                         </section>
                     </div>
 
-                    {/* Información Adicional con Tabs */}
+                    {/* Descripción extendida + ficha técnica */}
                     {hasMoreInformation && (
-                        <section className="mt-8" aria-labelledby="informacion-adicional-titulo">
+                        <section className="mt-10 md:mt-14 rounded-container bg-surface p-6 md:p-10" aria-labelledby="informacion-adicional-titulo">
                             <h2 id="informacion-adicional-titulo" className="sr-only">Información adicional del producto</h2>
-                            <Tabs id="custom-animation" value={initialTab}>
-                                <TabsHeader>
-                                   {productData.ecommerceDescription && (
-                                    <Tab value="ecommerceDescription">Descripción</Tab>
-                                   )}
-                                   {productData.productFeatures && productData.productFeatures.length > 0 && (
-                                    <Tab value="productFeatures">Características</Tab>
-                                   )}
-                                   {productData.productDataSheets && productData.productDataSheets.length > 0 && (
-                                    <Tab value="productDataSheets">Ficha Técnica</Tab>
-                                   )}
-                                </TabsHeader>
-                                <TabsBody>
-                                {productData.ecommerceDescription && (
-                                    <TabPanel key="ecommerceDescription" value="ecommerceDescription">
-                                    <div
-                                        className="prose description"
-                                        dangerouslySetInnerHTML={{ __html: productData.ecommerceDescription || '' }}
-                                    />
-                                </TabPanel>
-                                )}
-                                        {productData.productFeatures && productData.productFeatures.length > 0 && (
-                                             <TabPanel key="productFeatures" value="productFeatures">
-                                        <div>
-                                            <h3 className="text-lg font-semibold text-gray-900 mb-3">Características</h3>
-                                            <div className="space-y-2">
-                                                {productData.productFeatures.map((feature, index) => (
-                                                    <div key={index} className="flex items-start">
-                                                        <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                                                        <div>
-                                                            <p className="font-medium text-gray-900">{feature.title}</p>
-                                                            <p className="text-gray-600 text-sm">{feature.description}</p>
-                                                        </div>
-                                                    </div>
-                                                ))}
-                                            </div>
+                            <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1.4fr_1fr]">
+                                <div>
+                                    {productData.ecommerceDescription ? (
+                                        <>
+                                            <h3 className="mb-4 text-[24px] font-bold text-text">Descripción</h3>
+                                            <div
+                                                className="prose description max-w-none text-ink2-600"
+                                                dangerouslySetInnerHTML={{ __html: productData.ecommerceDescription || '' }}
+                                            />
+                                        </>
+                                    ) : productData.description ? (
+                                        <>
+                                            <h3 className="mb-4 text-[24px] font-bold text-text">Descripción</h3>
+                                            <p className="text-[15.5px] leading-[1.7] text-ink2-600">{productData.description}</p>
+                                        </>
+                                    ) : null}
+                                </div>
+                                {productData.productFeatures && productData.productFeatures.length > 0 && (
+                                    <div>
+                                        <h3 className="mb-4 text-[24px] font-bold text-text">Características</h3>
+                                        <div className="overflow-hidden rounded-card border border-line bg-white">
+                                            {productData.productFeatures.map((feature, index) => (
+                                                <div key={index} className="flex flex-col gap-0.5 border-b border-line-soft px-5 py-3 last:border-b-0">
+                                                    <span className="text-[14px] font-semibold text-text">{feature.title}</span>
+                                                    {feature.description && (
+                                                        <span className="text-[13.5px] text-ink2-500">{feature.description}</span>
+                                                    )}
+                                                </div>
+                                            ))}
                                         </div>
-                                    </TabPanel>
+                                    </div>
                                 )}
-                                {productData.productDataSheets && productData.productDataSheets.length > 0 && (
-                                    <TabPanel key="productDataSheets" value="productDataSheets">
-                                        
-                                    </TabPanel>
-                                )}
-                            </TabsBody>
-                            </Tabs>
+                            </div>
+                        </section>
+                    )}
+
+                    {/* Productos relacionados */}
+                    {related.length > 0 && (
+                        <section className="mt-10 md:mt-14" aria-label="Productos relacionados">
+                            <h2 className="mb-6 text-[24px] font-bold text-text">Productos relacionados</h2>
+                            <div className="grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4">
+                                {related.map((p) => (
+                                    <ProductCard key={p.id} product={p} />
+                                ))}
+                            </div>
                         </section>
                     )}
                 </main>

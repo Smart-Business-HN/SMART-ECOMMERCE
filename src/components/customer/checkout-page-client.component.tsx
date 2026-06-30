@@ -1,9 +1,8 @@
 // @ts-nocheck
-'use client';
-import { useState } from 'react';
-import { Card, Typography, Button, Alert, Input, Dialog, DialogHeader, DialogBody, DialogFooter } from '@/utils/MTailwind';
-import { CartDto, CartStatus, CartStatusLabels } from '@/interfaces/cart/cart.interface';
-import { formatNumber } from '@/utils/number-format';
+"use client";
+import { useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
 import {
   CreditCardIcon,
   BuildingLibraryIcon,
@@ -12,75 +11,61 @@ import {
   DocumentArrowUpIcon,
   CheckCircleIcon,
   ExclamationTriangleIcon,
-  XMarkIcon,
   ClockIcon,
-} from '@heroicons/react/24/outline';
-import Link from 'next/link';
-import Image from 'next/image';
-import { requestPaymentLink } from '@/services/checkout.service';
-import { trackFbEvent } from '@/lib/meta/fbpixel';
-import { buildProductCustomData } from '@/lib/meta/meta-custom-data';
+  LockClosedIcon,
+} from "@heroicons/react/24/outline";
+import { CartDto, CartStatus } from "@/interfaces/cart/cart.interface";
+import { formatNumber } from "@/utils/number-format";
+import { requestPaymentLink } from "@/services/checkout.service";
+import { trackFbEvent } from "@/lib/meta/fbpixel";
+import { buildProductCustomData } from "@/lib/meta/meta-custom-data";
+import Button from "@/components/ui/button.component";
 
-interface CheckoutUser {
-  id: string;
-  name: string;
-  email: string;
-}
-
-interface CheckoutPageClientProps {
-  cart: CartDto;
-  user: CheckoutUser;
-}
-
-type PaymentOption = 'card' | 'transfer' | 'payment-link' | null;
+interface CheckoutUser { id: string; name: string; email: string; }
+interface CheckoutPageClientProps { cart: CartDto; user: CheckoutUser; }
+type PaymentOption = "transfer" | "payment-link" | null;
 
 const BANK_ACCOUNTS = [
-  {
-    bank: 'BAC Credomatic',
-    accountType: 'Cuenta Corriente',
-    accountNumber: 'XXXX-XXXX-XXXX',
-    holder: 'SMART BUSINESS S. DE R.L.',
-    currency: 'Lempiras (HNL)',
-    logo: '/images/banks/bac.png',
-  },
-  {
-    bank: 'Banco Atlantida',
-    accountType: 'Cuenta Corriente',
-    accountNumber: 'XXXX-XXXX-XXXX',
-    holder: 'SMART BUSINESS S. DE R.L.',
-    currency: 'Lempiras (HNL)',
-    logo: '/images/banks/atlantida.png',
-  },
+  { bank: "BAC Credomatic", accountType: "Cuenta Corriente", accountNumber: "XXXX-XXXX-XXXX", holder: "SMART BUSINESS S. DE R.L.", currency: "Lempiras (HNL)" },
+  { bank: "Banco Atlántida", accountType: "Cuenta Corriente", accountNumber: "XXXX-XXXX-XXXX", holder: "SMART BUSINESS S. DE R.L.", currency: "Lempiras (HNL)" },
 ];
+
+const labelCls = "mb-1.5 block text-[12.5px] font-semibold text-ink2-700";
+const fieldCls = "sb-in w-full rounded-[10px] border border-line-input bg-white px-3 py-2.5 text-[14px] text-text outline-none placeholder:text-ink2-400 disabled:bg-surface disabled:opacity-70";
+
+function StatusScreen({ icon, title, text, children }: any) {
+  return (
+    <div className="flex flex-col items-center rounded-container border border-line bg-white px-6 py-16 text-center">
+      <div className="mb-4">{icon}</div>
+      <h2 className="text-[22px] font-bold text-text">{title}</h2>
+      <p className="mt-2 max-w-md text-[15px] leading-[1.55] text-ink2-500">{text}</p>
+      {children}
+    </div>
+  );
+}
 
 export default function CheckoutPageClient({ cart, user }: CheckoutPageClientProps) {
   const cartItems = cart.cartItems || [];
-  const [selectedOption, setSelectedOption] = useState<PaymentOption>(null);
-  const [showCardModal, setShowCardModal] = useState(false);
+  const [selectedOption, setSelectedOption] = useState<PaymentOption>("payment-link");
 
-  // Transfer state
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [filePreview, setFilePreview] = useState<string | null>(null);
-  const [selectedBank, setSelectedBank] = useState('');
+  const [selectedBank, setSelectedBank] = useState("");
   const [isSubmittingTransfer, setIsSubmittingTransfer] = useState(false);
   const [transferSuccess, setTransferSuccess] = useState(false);
-  const [transferError, setTransferError] = useState('');
+  const [transferError, setTransferError] = useState("");
 
-  // Payment link state
-  const [phone, setPhone] = useState('');
-  const [message, setMessage] = useState('');
+  const [phone, setPhone] = useState("");
+  const [message, setMessage] = useState("");
   const [isSubmittingLink, setIsSubmittingLink] = useState(false);
   const [linkSuccess, setLinkSuccess] = useState(false);
-  const [linkError, setLinkError] = useState('');
+  const [linkError, setLinkError] = useState("");
 
-  const calculateSubtotal = () => cartItems.reduce((total, item) => total + item.totalPrice, 0);
-  const calculateTax = () => calculateSubtotal() * 0.15;
-  const calculateTotal = () => calculateSubtotal() + calculateTax();
+  const subtotal = cartItems.reduce((t, it) => t + it.totalPrice, 0);
+  const tax = subtotal * 0.15;
+  const total = subtotal + tax;
+  const count = cartItems.length;
 
-  // Meta Pixel: AddPaymentInfo (navegador + Conversions API con dedup). Es el
-  // evento de optimización en intención de pago, NO Purchase (la compra real se
-  // confirma server-side cuando el carrito pasa a Verified). value = subtotal de
-  // mercancía, consistente con item_price.
   const fireAddPaymentInfo = (includePhone: boolean) => {
     const lines = cartItems.map((item) => ({
       code: item.product?.code?.trim() || String(item.productId),
@@ -88,601 +73,259 @@ export default function CheckoutPageClient({ cart, user }: CheckoutPageClientPro
       unitPrice: item.unitPrice,
     }));
     if (lines.length === 0) return;
-    trackFbEvent('AddPaymentInfo', buildProductCustomData(lines), {
+    trackFbEvent("AddPaymentInfo", buildProductCustomData(lines), {
       email: user.email,
       ...(includePhone && phone.trim() ? { phone: phone.trim() } : {}),
     });
   };
 
-  const handleOptionSelect = (option: PaymentOption) => {
-    if (option === 'card') {
-      setShowCardModal(true);
-      return;
-    }
-    setSelectedOption(option === selectedOption ? null : option);
-  };
-
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-
-    const validTypes = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf'];
-    if (!validTypes.includes(file.type)) {
-      setTransferError('Solo se aceptan archivos PDF, JPG, PNG o WebP');
-      return;
-    }
-
-    if (file.size > 10 * 1024 * 1024) {
-      setTransferError('El archivo no puede exceder 10MB');
-      return;
-    }
-
+    const validTypes = ["image/jpeg", "image/png", "image/webp", "application/pdf"];
+    if (!validTypes.includes(file.type)) { setTransferError("Solo se aceptan archivos PDF, JPG, PNG o WebP"); return; }
+    if (file.size > 10 * 1024 * 1024) { setTransferError("El archivo no puede exceder 10MB"); return; }
     setSelectedFile(file);
-    setTransferError('');
-
-    if (file.type.startsWith('image/')) {
+    setTransferError("");
+    if (file.type.startsWith("image/")) {
       const reader = new FileReader();
       reader.onloadend = () => setFilePreview(reader.result as string);
       reader.readAsDataURL(file);
-    } else {
-      setFilePreview(null);
-    }
+    } else setFilePreview(null);
   };
 
   const handleSubmitTransfer = async () => {
-    if (!selectedFile) {
-      setTransferError('Debes adjuntar el comprobante de pago');
-      return;
-    }
-    if (!selectedBank) {
-      setTransferError('Selecciona a que banco realizaste la transferencia');
-      return;
-    }
-
+    if (!selectedFile) { setTransferError("Debes adjuntar el comprobante de pago"); return; }
+    if (!selectedBank) { setTransferError("Selecciona a qué banco realizaste la transferencia"); return; }
     setIsSubmittingTransfer(true);
-    setTransferError('');
-
+    setTransferError("");
     try {
       const formData = new FormData();
-      formData.append('cartId', cart.id);
-      formData.append('customerId', user.id);
-      formData.append('customerName', user.name);
-      formData.append('customerEmail', user.email);
-      formData.append('bankName', selectedBank);
-      formData.append('receipt', selectedFile);
-
-      const response = await fetch('/api/checkout/submit-transfer-receipt', {
-        method: 'POST',
-        body: formData,
-      });
-
+      formData.append("cartId", cart.id);
+      formData.append("customerId", user.id);
+      formData.append("customerName", user.name);
+      formData.append("customerEmail", user.email);
+      formData.append("bankName", selectedBank);
+      formData.append("receipt", selectedFile);
+      const response = await fetch("/api/checkout/submit-transfer-receipt", { method: "POST", body: formData });
       const result = await response.json();
-
-      if (result.succeeded) {
-        setTransferSuccess(true);
-        fireAddPaymentInfo(false);
-      } else {
-        setTransferError(result.message || 'Error al enviar el comprobante');
-      }
+      if (result.succeeded) { setTransferSuccess(true); fireAddPaymentInfo(false); }
+      else setTransferError(result.message || "Error al enviar el comprobante");
     } catch {
-      setTransferError('Error de conexión. Por favor, intenta de nuevo.');
+      setTransferError("Error de conexión. Por favor, intenta de nuevo.");
     } finally {
       setIsSubmittingTransfer(false);
     }
   };
 
   const handleRequestPaymentLink = async () => {
-    if (!phone.trim()) {
-      setLinkError('El teléfono es requerido');
-      return;
-    }
-
+    if (!phone.trim()) { setLinkError("El teléfono es requerido"); return; }
     setIsSubmittingLink(true);
-    setLinkError('');
-
+    setLinkError("");
     try {
       const result = await requestPaymentLink({
-        cartId: cart.id,
-        customerId: user.id,
-        customerName: user.name,
-        customerEmail: user.email,
-        customerPhone: phone,
-        message: message || undefined,
+        cartId: cart.id, customerId: user.id, customerName: user.name,
+        customerEmail: user.email, customerPhone: phone, message: message || undefined,
       });
-
-      if (result.succeeded) {
-        setLinkSuccess(true);
-        fireAddPaymentInfo(true);
-      } else {
-        setLinkError(result.message || 'Error al solicitar el link de pago');
-      }
+      if (result.succeeded) { setLinkSuccess(true); fireAddPaymentInfo(true); }
+      else setLinkError(result.message || "Error al solicitar el link de pago");
     } catch {
-      setLinkError('Error de conexión. Por favor, intenta de nuevo.');
+      setLinkError("Error de conexión. Por favor, intenta de nuevo.");
     } finally {
       setIsSubmittingLink(false);
     }
   };
 
-  return (
-    <div className="bg-gray-50 md:py-8">
-      <div className="max-w-7xl mx-auto px-4">
-        {/* Header */}
-        <div className="mb-8">
-          <Link
-            href={`/cart/${cart.id}`}
-            className="flex items-center text-blue-600 hover:text-blue-800 mb-4"
-          >
-            <ArrowLeftIcon className="h-5 w-5 mr-2" />
-            Volver al Carrito
-          </Link>
-          <Typography variant="h1" color="blue-gray" className="text-2xl md:text-3xl">
-            Checkout
-          </Typography>
-          <Typography color="gray" className="mt-2">
-            Selecciona tu metodo de pago preferido
-          </Typography>
-        </div>
+  const isActive = cart.status === CartStatus.Active;
+  const submitting = isSubmittingTransfer || isSubmittingLink;
+  const canConfirm =
+    (selectedOption === "transfer" && !!selectedFile && !!selectedBank) ||
+    (selectedOption === "payment-link" && !!phone.trim());
+  const handleConfirm = () => {
+    if (selectedOption === "transfer") handleSubmitTransfer();
+    else if (selectedOption === "payment-link") handleRequestPaymentLink();
+  };
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Payment Options or Status Screen */}
-          <div className="lg:col-span-2 space-y-4">
-            {cart.status !== CartStatus.Active ? (
-              /* Status-based display when cart is not active */
-              <Card className="p-8">
-                {cart.status === CartStatus.ReceiptSubmitted && (
-                  <div className="text-center space-y-4">
-                    <ClockIcon className="h-16 w-16 text-yellow-500 mx-auto" />
-                    <Typography variant="h4" color="blue-gray">
-                      Comprobante en Revision
-                    </Typography>
-                    <Typography color="gray" className="max-w-md mx-auto">
-                      Tu comprobante de pago esta siendo revisado por nuestro equipo.
-                      Te notificaremos por correo electronico una vez que sea verificado.
-                    </Typography>
+  const methodCard = (key: PaymentOption | "card", Icon, title: string, desc: string, soon = false) => {
+    const on = selectedOption === key;
+    return (
+      <button
+        type="button"
+        disabled={soon}
+        onClick={() => !soon && setSelectedOption(on ? null : (key as PaymentOption))}
+        className={`flex w-full items-center gap-[18px] rounded-[16px] border-[1.5px] bg-white px-6 py-5 text-left transition-all ${
+          soon ? "cursor-not-allowed border-line opacity-60" : on ? "border-accent shadow-[0_0_0_3px_rgba(0,111,255,.12)]" : "border-line hover:border-accent-border"
+        }`}
+      >
+        <span className={`flex h-12 w-12 flex-none items-center justify-center rounded-[12px] ${on && !soon ? "bg-accent-soft text-accent" : "bg-surface-muted text-ink2-400"}`}>
+          <Icon className="h-[22px] w-[22px]" />
+        </span>
+        <span className="flex-1">
+          <span className="block text-[16px] font-semibold text-text">{title}</span>
+          <span className="block text-[13.5px] leading-[1.4] text-ink2-400">{desc}</span>
+        </span>
+        {soon ? (
+          <span className="flex-none rounded-full bg-surface-muted px-2.5 py-1 text-[12px] font-semibold text-ink2-400">Próximamente</span>
+        ) : (
+          <span className={`flex h-[22px] w-[22px] flex-none items-center justify-center rounded-full border-2 ${on ? "border-accent bg-accent" : "border-line-input bg-white"}`}>
+            {on && <span className="h-[9px] w-[9px] rounded-full bg-white" />}
+          </span>
+        )}
+      </button>
+    );
+  };
+
+  return (
+    <div className="bg-surface">
+      <div className="mx-auto max-w-[1280px] px-4 pt-8 sm:px-6 lg:px-8">
+        <Link href={`/cart/${cart.id}`} className="sb-link mb-4 inline-flex items-center gap-1.5 text-[14px] font-semibold text-accent">
+          <ArrowLeftIcon className="h-4 w-4" />
+          Volver al carrito
+        </Link>
+        <h1 className="text-[30px] font-bold tracking-[-0.03em] text-text md:text-[36px]">Checkout</h1>
+        <p className="mt-1 text-[16px] text-ink2-500">Selecciona tu método de pago preferido</p>
+      </div>
+
+      <div className="mx-auto grid max-w-[1280px] grid-cols-1 gap-7 px-4 py-7 sm:px-6 lg:grid-cols-[1fr_380px] lg:px-8 lg:pb-24">
+        {/* Left: methods or status */}
+        <div className="flex flex-col gap-4">
+          {!isActive ? (
+            <>
+              {cart.status === CartStatus.ReceiptSubmitted && (
+                <StatusScreen icon={<ClockIcon className="h-16 w-16 text-[#B7791F]" />} title="Comprobante en revisión" text="Tu comprobante de pago está siendo revisado por nuestro equipo. Te notificaremos por correo una vez verificado." />
+              )}
+              {cart.status === CartStatus.PaymentLinkRequested && (
+                <StatusScreen icon={<ClockIcon className="h-16 w-16 text-[#B7791F]" />} title="Link de pago solicitado" text="Tu solicitud de link de pago está siendo procesada. Recibirás el link en tu correo a la brevedad." />
+              )}
+              {cart.status === CartStatus.PaymentLinkSent && (
+                <StatusScreen icon={<LinkIcon className="h-16 w-16 text-accent" />} title="Link de pago disponible" text="Tu link de pago está listo. Haz click en el botón para proceder con el pago.">
+                  {cart.paymentLinkUrl && (
+                    <div className="mt-5"><Button href={cart.paymentLinkUrl} external variant="primary" size="lg">Ir a pagar</Button></div>
+                  )}
+                </StatusScreen>
+              )}
+              {cart.status === CartStatus.Verified && (
+                <StatusScreen icon={<CheckCircleIcon className="h-16 w-16 text-success" />} title="Pago verificado" text="Tu pago fue verificado exitosamente. ¡Gracias por tu compra!" />
+              )}
+              {cart.status === CartStatus.Rejected && (
+                <StatusScreen icon={<ExclamationTriangleIcon className="h-16 w-16 text-[#E5484D]" />} title="Pago rechazado" text="Tu pago fue rechazado. Por favor, contáctanos para más información o intenta con otro método de pago." />
+              )}
+            </>
+          ) : (
+            <>
+              {methodCard("card", CreditCardIcon, "Pagar ahora con TC/TD", "Tarjeta de crédito o débito", true)}
+
+              {methodCard("transfer", BuildingLibraryIcon, "Transferencia o depósito", "Realiza una transferencia bancaria y sube tu comprobante")}
+              {selectedOption === "transfer" && !transferSuccess && (
+                <div className="rounded-[16px] border border-accent-border bg-accent-soft/40 p-6">
+                  <div className="mb-4 text-[15px] font-bold text-text">Cuentas bancarias</div>
+                  <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    {BANK_ACCOUNTS.map((account) => (
+                      <button type="button" key={account.bank} onClick={() => setSelectedBank(account.bank)}
+                        className={`rounded-[12px] border-2 bg-white p-4 text-left transition-all ${selectedBank === account.bank ? "border-accent" : "border-line hover:border-accent-border"}`}>
+                        <div className="mb-2 text-[14px] font-bold text-text">{account.bank}</div>
+                        <div className="space-y-0.5 text-[13px] text-ink2-600">
+                          <p><span className="text-ink2-400">Tipo:</span> {account.accountType}</p>
+                          <p><span className="text-ink2-400">Cuenta:</span> <strong className="text-text">{account.accountNumber}</strong></p>
+                          <p><span className="text-ink2-400">Titular:</span> {account.holder}</p>
+                          <p><span className="text-ink2-400">Moneda:</span> {account.currency}</p>
+                        </div>
+                      </button>
+                    ))}
                   </div>
-                )}
-                {cart.status === CartStatus.PaymentLinkRequested && (
-                  <div className="text-center space-y-4">
-                    <ClockIcon className="h-16 w-16 text-yellow-500 mx-auto" />
-                    <Typography variant="h4" color="blue-gray">
-                      Link de Pago Solicitado
-                    </Typography>
-                    <Typography color="gray" className="max-w-md mx-auto">
-                      Tu solicitud de link de pago esta siendo procesada.
-                      Recibiras el link en tu correo electronico a la brevedad.
-                    </Typography>
-                  </div>
-                )}
-                {cart.status === CartStatus.PaymentLinkSent && (
-                  <div className="text-center space-y-4">
-                    <LinkIcon className="h-16 w-16 text-blue-500 mx-auto" />
-                    <Typography variant="h4" color="blue-gray">
-                      Link de Pago Disponible
-                    </Typography>
-                    <Typography color="gray" className="max-w-md mx-auto">
-                      Tu link de pago esta listo. Haz click en el boton para proceder con el pago.
-                    </Typography>
-                    {cart.paymentLinkUrl && (
-                      <a href={cart.paymentLinkUrl} target="_blank" rel="noopener noreferrer">
-                        <Button color="blue" size="lg" className="mt-4">
-                          Ir a Pagar
-                        </Button>
-                      </a>
+                  <div className="mb-3 text-[15px] font-bold text-text">Subir comprobante</div>
+                  <div onClick={() => document.getElementById("receipt-upload")?.click()}
+                    className="mb-4 cursor-pointer rounded-[12px] border-2 border-dashed border-line-input bg-white p-6 text-center transition-colors hover:border-accent">
+                    <input id="receipt-upload" type="file" accept="image/jpeg,image/png,image/webp,application/pdf" className="hidden" onChange={handleFileChange} />
+                    {selectedFile ? (
+                      <div className="space-y-2">
+                        {filePreview && <Image src={filePreview} alt="Comprobante" width={200} height={200} className="mx-auto max-h-48 rounded-lg object-contain" />}
+                        <div className="flex items-center justify-center gap-2 text-success"><DocumentArrowUpIcon className="h-5 w-5" /><span className="text-[14px] font-medium">{selectedFile.name} ({(selectedFile.size / 1024 / 1024).toFixed(2)} MB)</span></div>
+                        <p className="text-[13px] text-ink2-400">Haz click para cambiar el archivo</p>
+                      </div>
+                    ) : (
+                      <div>
+                        <DocumentArrowUpIcon className="mx-auto mb-2 h-10 w-10 text-ink2-400" />
+                        <p className="text-[14px] text-ink2-600">Haz click para subir tu comprobante</p>
+                        <p className="text-[13px] text-ink2-400">PDF, JPG, PNG o WebP (máx. 10MB)</p>
+                      </div>
                     )}
                   </div>
-                )}
-                {cart.status === CartStatus.Verified && (
-                  <div className="text-center space-y-4">
-                    <CheckCircleIcon className="h-16 w-16 text-green-500 mx-auto" />
-                    <Typography variant="h4" color="blue-gray">
-                      Pago Verificado
-                    </Typography>
-                    <Typography color="gray" className="max-w-md mx-auto">
-                      Tu pago fue verificado exitosamente. Gracias por tu compra.
-                    </Typography>
-                  </div>
-                )}
-                {cart.status === CartStatus.Rejected && (
-                  <div className="text-center space-y-4">
-                    <ExclamationTriangleIcon className="h-16 w-16 text-red-500 mx-auto" />
-                    <Typography variant="h4" color="blue-gray">
-                      Pago Rechazado
-                    </Typography>
-                    <Typography color="gray" className="max-w-md mx-auto">
-                      Tu pago fue rechazado. Por favor, contactanos para mas informacion
-                      o intenta con otro metodo de pago.
-                    </Typography>
-                  </div>
-                )}
-              </Card>
-            ) : (
-            /* Active cart: show payment options */
-            <>
-            {/* Option 1: Card Payment */}
-            <Card
-              className="p-6 cursor-pointer border-2 border-gray-200 opacity-75 hover:border-gray-400 transition-all"
-              onClick={() => handleOptionSelect('card')}
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center">
-                    <CreditCardIcon className="h-6 w-6 text-gray-400" />
-                  </div>
+                  {transferError && <p className="rounded-[10px] bg-[#FEF2F2] px-4 py-2.5 text-[14px] text-[#B91C1C]">{transferError}</p>}
+                </div>
+              )}
+              {transferSuccess && (
+                <div className="flex items-center gap-3 rounded-[16px] border border-success/30 bg-success-soft p-5">
+                  <CheckCircleIcon className="h-8 w-8 flex-none text-success" />
                   <div>
-                    <Typography variant="h6" color="blue-gray">
-                      Pagar ahora con TC/TD
-                    </Typography>
-                    <Typography variant="small" color="gray">
-                      Tarjeta de credito o debito
-                    </Typography>
+                    <div className="text-[15px] font-semibold text-success">Comprobante enviado exitosamente</div>
+                    <div className="text-[13.5px] text-ink2-500">Nuestro equipo verificará tu pago y te contactará para confirmar tu pedido.</div>
                   </div>
                 </div>
-                <span className="text-xs bg-gray-200 text-gray-600 px-3 py-1 rounded-full font-medium">
-                  Proximamente
-                </span>
-              </div>
-            </Card>
+              )}
 
-            {/* Option 2: Transfer */}
-            <Card
-              className={`p-6 cursor-pointer border-2 transition-all ${
-                selectedOption === 'transfer' ? 'border-blue-500 shadow-md' : 'border-gray-200 hover:border-blue-300'
-              }`}
-              onClick={() => !transferSuccess && handleOptionSelect('transfer')}
-            >
-              <div className="flex items-center gap-4">
-                <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
-                  selectedOption === 'transfer' ? 'bg-blue-100' : 'bg-gray-100'
-                }`}>
-                  <BuildingLibraryIcon className={`h-6 w-6 ${
-                    selectedOption === 'transfer' ? 'text-blue-600' : 'text-gray-500'
-                  }`} />
+              {methodCard("payment-link", LinkIcon, "Solicitar link de pago", "Te enviaremos un link seguro de BAC para realizar el pago")}
+              {selectedOption === "payment-link" && !linkSuccess && (
+                <div className="rounded-[16px] border border-accent-border bg-accent-soft/40 p-6">
+                  <div className="mb-4 text-[15px] font-bold text-text">Datos de contacto</div>
+                  <div className="space-y-4">
+                    <div><label className={labelCls}>Nombre</label><input value={user.name} disabled className={fieldCls} /></div>
+                    <div><label className={labelCls}>Email</label><input value={user.email} disabled className={fieldCls} /></div>
+                    <div><label className={labelCls}>Teléfono *</label><input value={phone} onChange={(e) => { setPhone(e.target.value); setLinkError(""); }} placeholder="(+504) 0000-0000" className={fieldCls} /></div>
+                    <div><label className={labelCls}>Mensaje (opcional)</label><textarea value={message} onChange={(e) => setMessage(e.target.value)} rows={3} placeholder="Alguna nota o instrucción especial…" className={`${fieldCls} resize-none`} /></div>
+                    {linkError && <p className="rounded-[10px] bg-[#FEF2F2] px-4 py-2.5 text-[14px] text-[#B91C1C]">{linkError}</p>}
+                  </div>
                 </div>
-                <div>
-                  <Typography variant="h6" color="blue-gray">
-                    Transferencia o deposito
-                  </Typography>
-                  <Typography variant="small" color="gray">
-                    Realiza una transferencia bancaria y sube tu comprobante
-                  </Typography>
+              )}
+              {linkSuccess && (
+                <div className="flex items-center gap-3 rounded-[16px] border border-success/30 bg-success-soft p-5">
+                  <CheckCircleIcon className="h-8 w-8 flex-none text-success" />
+                  <div>
+                    <div className="text-[15px] font-semibold text-success">Solicitud enviada exitosamente</div>
+                    <div className="text-[13.5px] text-ink2-500">Recibirás un link de pago en tu correo electrónico a la brevedad.</div>
+                  </div>
+                </div>
+              )}
+
+              <div className="mt-1 flex items-center gap-3 rounded-[14px] border border-accent-border bg-accent-soft px-5 py-4">
+                <LockClosedIcon className="h-5 w-5 flex-none text-accent" />
+                <div className="text-[13.5px] leading-[1.45] text-[#1F4E8C]">
+                  Tus pagos están protegidos. Procesamos los cobros mediante el <strong>link de pago seguro de BAC Credomatic</strong>.
                 </div>
               </div>
-            </Card>
-
-            {/* Transfer expanded section */}
-            {selectedOption === 'transfer' && !transferSuccess && (
-              <Card className="p-6 border border-blue-200 bg-blue-50/30">
-                <Typography variant="h6" color="blue-gray" className="mb-4">
-                  Cuentas Bancarias
-                </Typography>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                  {BANK_ACCOUNTS.map((account, i) => (
-                    <Card
-                      key={i}
-                      className={`p-4 cursor-pointer border-2 transition-all ${
-                        selectedBank === account.bank
-                          ? 'border-blue-500 bg-blue-50'
-                          : 'border-gray-200 hover:border-blue-300'
-                      }`}
-                      onClick={(e: React.MouseEvent) => {
-                        e.stopPropagation();
-                        setSelectedBank(account.bank);
-                      }}
-                    >
-                      <Typography variant="h6" color="blue-gray" className="text-sm mb-2">
-                        {account.bank}
-                      </Typography>
-                      <div className="space-y-1 text-sm">
-                        <p><span className="text-gray-500">Tipo:</span> {account.accountType}</p>
-                        <p><span className="text-gray-500">Cuenta:</span> <strong>{account.accountNumber}</strong></p>
-                        <p><span className="text-gray-500">Titular:</span> {account.holder}</p>
-                        <p><span className="text-gray-500">Moneda:</span> {account.currency}</p>
-                      </div>
-                    </Card>
-                  ))}
-                </div>
-
-                <Typography variant="h6" color="blue-gray" className="mb-3">
-                  Subir Comprobante
-                </Typography>
-
-                <div
-                  className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors cursor-pointer mb-4"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    document.getElementById('receipt-upload')?.click();
-                  }}
-                >
-                  <input
-                    id="receipt-upload"
-                    type="file"
-                    accept="image/jpeg,image/png,image/webp,application/pdf"
-                    className="hidden"
-                    onChange={handleFileChange}
-                    onClick={(e) => e.stopPropagation()}
-                  />
-                  {selectedFile ? (
-                    <div className="space-y-2">
-                      {filePreview && (
-                        <Image
-                          src={filePreview}
-                          alt="Preview"
-                          width={200}
-                          height={200}
-                          className="mx-auto rounded-lg object-contain max-h-48"
-                        />
-                      )}
-                      <div className="flex items-center justify-center gap-2">
-                        <DocumentArrowUpIcon className="h-5 w-5 text-green-600" />
-                        <Typography variant="small" color="green">
-                          {selectedFile.name} ({(selectedFile.size / 1024 / 1024).toFixed(2)} MB)
-                        </Typography>
-                      </div>
-                      <Typography variant="small" color="gray">
-                        Haz click para cambiar el archivo
-                      </Typography>
-                    </div>
-                  ) : (
-                    <div>
-                      <DocumentArrowUpIcon className="h-10 w-10 text-gray-400 mx-auto mb-2" />
-                      <Typography color="gray">
-                        Haz click para subir tu comprobante
-                      </Typography>
-                      <Typography variant="small" color="gray">
-                        PDF, JPG, PNG o WebP (max. 10MB)
-                      </Typography>
-                    </div>
-                  )}
-                </div>
-
-                {transferError && (
-                  <Alert color="red" className="mb-4 text-sm">
-                    {transferError}
-                  </Alert>
-                )}
-
-                <Button
-                  color="blue"
-                  className="w-full"
-                  onClick={(e: React.MouseEvent) => {
-                    e.stopPropagation();
-                    handleSubmitTransfer();
-                  }}
-                  disabled={isSubmittingTransfer || !selectedFile || !selectedBank}
-                >
-                  {isSubmittingTransfer ? 'Enviando...' : 'Enviar Comprobante'}
-                </Button>
-              </Card>
-            )}
-
-            {/* Transfer success */}
-            {transferSuccess && (
-              <Card className="p-6 border border-green-200 bg-green-50">
-                <div className="flex items-center gap-3">
-                  <CheckCircleIcon className="h-8 w-8 text-green-600" />
-                  <div>
-                    <Typography variant="h6" color="green">
-                      Comprobante enviado exitosamente
-                    </Typography>
-                    <Typography variant="small" color="gray">
-                      Nuestro equipo verificara tu pago y te contactara para confirmar tu pedido.
-                    </Typography>
-                  </div>
-                </div>
-              </Card>
-            )}
-
-            {/* Option 3: Payment Link */}
-            <Card
-              className={`p-6 cursor-pointer border-2 transition-all ${
-                selectedOption === 'payment-link' ? 'border-blue-500 shadow-md' : 'border-gray-200 hover:border-blue-300'
-              }`}
-              onClick={() => !linkSuccess && handleOptionSelect('payment-link')}
-            >
-              <div className="flex items-center gap-4">
-                <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
-                  selectedOption === 'payment-link' ? 'bg-blue-100' : 'bg-gray-100'
-                }`}>
-                  <LinkIcon className={`h-6 w-6 ${
-                    selectedOption === 'payment-link' ? 'text-blue-600' : 'text-gray-500'
-                  }`} />
-                </div>
-                <div>
-                  <Typography variant="h6" color="blue-gray">
-                    Solicitar Link de Pago
-                  </Typography>
-                  <Typography variant="small" color="gray">
-                    Te enviaremos un link seguro para realizar el pago
-                  </Typography>
-                </div>
-              </div>
-            </Card>
-
-            {/* Payment link expanded section */}
-            {selectedOption === 'payment-link' && !linkSuccess && (
-              <Card className="p-6 border border-blue-200 bg-blue-50/30">
-                <Typography variant="h6" color="blue-gray" className="mb-4">
-                  Datos de Contacto
-                </Typography>
-
-                <div className="space-y-4" onClick={(e: React.MouseEvent) => e.stopPropagation()}>
-                  <div>
-                    <Typography variant="small" color="gray" className="mb-1">
-                      Nombre
-                    </Typography>
-                    <Input
-                      value={user.name}
-                      disabled
-                      className="!border-gray-300"
-                      labelProps={{ className: "before:content-none after:content-none" }}
-                    />
-                  </div>
-
-                  <div>
-                    <Typography variant="small" color="gray" className="mb-1">
-                      Email
-                    </Typography>
-                    <Input
-                      value={user.email}
-                      disabled
-                      className="!border-gray-300"
-                      labelProps={{ className: "before:content-none after:content-none" }}
-                    />
-                  </div>
-
-                  <div>
-                    <Typography variant="small" color="gray" className="mb-1">
-                      Telefono *
-                    </Typography>
-                    <Input
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                      placeholder="Ej: +504 9999-9999"
-                      className="!border-gray-300"
-                      labelProps={{ className: "before:content-none after:content-none" }}
-                    />
-                  </div>
-
-                  <div>
-                    <Typography variant="small" color="gray" className="mb-1">
-                      Mensaje (opcional)
-                    </Typography>
-                    <textarea
-                      value={message}
-                      onChange={(e) => setMessage(e.target.value)}
-                      placeholder="Alguna nota o instruccion especial..."
-                      rows={3}
-                      className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:border-blue-500 focus:outline-none resize-none"
-                    />
-                  </div>
-
-                  {linkError && (
-                    <Alert color="red" className="text-sm">
-                      {linkError}
-                    </Alert>
-                  )}
-
-                  <Button
-                    color="blue"
-                    className="w-full"
-                    onClick={handleRequestPaymentLink}
-                    disabled={isSubmittingLink || !phone.trim()}
-                  >
-                    {isSubmittingLink ? 'Enviando solicitud...' : 'Solicitar Link de Pago'}
-                  </Button>
-                </div>
-              </Card>
-            )}
-
-            {/* Payment link success */}
-            {linkSuccess && (
-              <Card className="p-6 border border-green-200 bg-green-50">
-                <div className="flex items-center gap-3">
-                  <CheckCircleIcon className="h-8 w-8 text-green-600" />
-                  <div>
-                    <Typography variant="h6" color="green">
-                      Solicitud enviada exitosamente
-                    </Typography>
-                    <Typography variant="small" color="gray">
-                      Recibiras un link de pago en tu correo electronico a la brevedad.
-                    </Typography>
-                  </div>
-                </div>
-              </Card>
-            )}
             </>
+          )}
+        </div>
+
+        {/* Summary */}
+        <div className="lg:sticky lg:top-[92px] lg:self-start">
+          <div className="rounded-container border border-line bg-white p-7">
+            <div className="mb-5 text-[18px] font-bold tracking-[-0.01em] text-text">Resumen del pedido</div>
+            <div className="mb-4 space-y-3.5">
+              {cartItems.map((item) => (
+                <div key={item.id} className="flex justify-between gap-3 text-[14px]">
+                  <span className="text-ink2-600">{item.product?.name || "Producto"} <span className="text-ink2-400">×{item.quantity}</span></span>
+                  <span className="whitespace-nowrap font-medium text-text">L. {formatNumber(item.totalPrice)}</span>
+                </div>
+              ))}
+            </div>
+            <div className="my-3 h-px bg-line-soft" />
+            <div className="mb-3 flex justify-between text-[14.5px] text-ink2-600"><span>Subtotal ({count} producto{count !== 1 ? "s" : ""})</span><span className="font-medium text-text">L. {formatNumber(subtotal)}</span></div>
+            <div className="mb-4 flex justify-between text-[14.5px] text-ink2-600"><span>Impuestos (15%)</span><span className="font-medium text-text">L. {formatNumber(tax)}</span></div>
+            <div className="my-4 h-px bg-line-soft" />
+            <div className="mb-6 flex items-baseline justify-between"><span className="text-[16px] font-bold text-text">Total</span><span className="text-[24px] font-extrabold tracking-[-0.02em] text-accent">L. {formatNumber(total)}</span></div>
+
+            {isActive ? (
+              <Button variant="primary" size="lg" fullWidth onClick={handleConfirm} disabled={!canConfirm || submitting || transferSuccess || linkSuccess}>
+                {submitting ? "Enviando..." : "Confirmar pedido"}
+              </Button>
+            ) : (
+              <Button href="/profile?tab=carts" variant="secondary" size="md" fullWidth>Volver a Mis Carritos</Button>
             )}
-          </div>
-
-          {/* Order Summary */}
-          <div className="lg:col-span-1">
-            <Card className="p-6 sticky top-20">
-              <Typography variant="h6" color="blue-gray" className="mb-4">
-                Resumen del Pedido
-              </Typography>
-
-              <div className="space-y-3 mb-4">
-                {cartItems.map((item) => (
-                  <div key={item.id} className="flex justify-between items-start">
-                    <div className="flex-1 min-w-0 mr-2">
-                      <Typography variant="small" color="blue-gray" className="line-clamp-2">
-                        {item.product?.name || 'Producto'}
-                      </Typography>
-                      <Typography variant="small" color="gray">
-                        x{item.quantity}
-                      </Typography>
-                    </div>
-                    <Typography variant="small" color="blue-gray" className="font-medium whitespace-nowrap">
-                      L. {formatNumber(item.totalPrice)}
-                    </Typography>
-                  </div>
-                ))}
-              </div>
-
-              <div className="border-t pt-4 space-y-2">
-                <div className="flex justify-between">
-                  <Typography variant="small" color="gray">
-                    Subtotal ({cartItems.length} productos)
-                  </Typography>
-                  <Typography variant="small" color="blue-gray">
-                    L. {formatNumber(calculateSubtotal())}
-                  </Typography>
-                </div>
-
-                <div className="flex justify-between">
-                  <Typography variant="small" color="gray">
-                    Impuestos (15%)
-                  </Typography>
-                  <Typography variant="small" color="blue-gray">
-                    L. {formatNumber(calculateTax())}
-                  </Typography>
-                </div>
-
-                <div className="border-t pt-3">
-                  <div className="flex justify-between">
-                    <Typography variant="h6" color="blue-gray">
-                      Total
-                    </Typography>
-                    <Typography variant="h6" color="blue">
-                      L. {formatNumber(calculateTotal())}
-                    </Typography>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-4 pt-4 border-t">
-                <Typography variant="small" color="gray" className="text-center">
-                  Envio gratuito en compras superiores a L. 5,000
-                </Typography>
-              </div>
-            </Card>
+            <p className="mt-4 text-center text-[12.5px] leading-[1.5] text-ink2-400">Al confirmar aceptas nuestros términos y políticas de venta.</p>
           </div>
         </div>
       </div>
-
-      {/* Card Payment Not Available Modal */}
-      {/* @ts-expect-error Material Tailwind Dialog type definitions are overly strict; props are correct per docs */}
-      <Dialog open={showCardModal} handler={() => setShowCardModal(false)} size="sm">
-        <DialogHeader className="flex items-center gap-2">
-          <ExclamationTriangleIcon className="h-6 w-6 text-amber-500" />
-          <Typography variant="h5" color="blue-gray">
-            Opcion no disponible
-          </Typography>
-        </DialogHeader>
-        <DialogBody>
-          <Typography color="gray">
-            El pago con tarjeta de credito o debito aun no esta disponible.
-            Proximamente habilitaremos esta opcion. Por favor, utiliza una de
-            las otras opciones de pago disponibles.
-          </Typography>
-        </DialogBody>
-        <DialogFooter>
-          <Button color="blue" onClick={() => setShowCardModal(false)}>
-            Entendido
-          </Button>
-        </DialogFooter>
-      </Dialog>
     </div>
   );
 }

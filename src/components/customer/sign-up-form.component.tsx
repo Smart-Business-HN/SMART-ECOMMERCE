@@ -3,16 +3,21 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
-import { Card, Input, Button, Typography, Alert, Select, Option } from '@/utils/MTailwind';
 import { createUser } from '@/services/auth.service';
-import { CreateEcommerceUserCommand, DepartmentDto } from '@/interfaces/auth/auth.interface';
+import { CreateEcommerceUserCommand } from '@/interfaces/auth/auth.interface';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import { trackFbEvent } from '@/lib/meta/fbpixel';
+import Link from 'next/link';
+import Button from '@/components/ui/button.component';
 
 interface SignUpFormProps {
   departments: { id: number; name: string }[];
   genders: { id: number; name: string }[];
 }
+
+const labelCls = 'block text-[13px] font-semibold text-ink2-700 mb-[7px]';
+const inputCls =
+  'sb-in w-full rounded-[11px] border border-line-input bg-white px-3.5 py-3 text-[14.5px] text-text outline-none placeholder:text-ink2-400';
 
 export default function SignUpForm({ departments, genders }: SignUpFormProps) {
   const router = useRouter();
@@ -23,7 +28,7 @@ export default function SignUpForm({ departments, genders }: SignUpFormProps) {
     phoneNumber: '',
     password: '',
     genderId: 1,
-    departmentId: 0
+    departmentId: 0,
   });
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -32,87 +37,62 @@ export default function SignUpForm({ departments, genders }: SignUpFormProps) {
   const [error, setError] = useState<string>('');
 
   const handleInputChange = (field: keyof CreateEcommerceUserCommand, value: string | number) => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: value
-    }));
-    setError(''); // Limpiar error al escribir
+    setFormData((prev) => ({ ...prev, [field]: value }));
+    setError('');
   };
 
   const handlePhoneChange = (value: string) => {
-    // Formatear automáticamente el número de teléfono
-    let formattedValue = value.replace(/\D/g, ''); // Solo números
-    
+    let formattedValue = value.replace(/\D/g, '');
     if (formattedValue.length > 4) {
       formattedValue = formattedValue.substring(0, 4) + '-' + formattedValue.substring(4, 8);
     }
-    
     handleInputChange('phoneNumber', formattedValue);
   };
 
   const validateForm = () => {
-    // Validación de Email
     if (!formData.email.trim()) {
       setError('El Email es requerido.');
       return false;
     }
-
-    // Validación de formato de email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
       setError('El Email no es valido.');
       return false;
     }
-
-    // Validación de Password
     if (!formData.password) {
       setError('La Contraseña es requerida.');
       return false;
     }
-
-    // Validación de contraseña: al menos 8 caracteres, una mayúscula y un número
     const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
     if (!passwordRegex.test(formData.password)) {
       setError('La contraseña debe tener al menos 8 caracteres, una mayúscula y un número.');
       return false;
     }
-
-    // Validación de confirmación de contraseña
     if (formData.password !== confirmPassword) {
       setError('Las contraseñas no coinciden');
       return false;
     }
-
-    // Validación de FirstName
     if (!formData.firstName.trim()) {
       setError('Primer Nombre es requerido.');
       return false;
     }
-
-    // Validación de LastName
     if (!formData.lastName.trim()) {
       setError('El apellido es requerido');
       return false;
     }
-
-    // Validación de PhoneNumber (requerido según backend)
     if (!formData.phoneNumber || !formData.phoneNumber.trim()) {
       setError('El número telefónico es requerido.');
       return false;
     }
-
     const phoneRegex = /^\d{4}-\d{4}$/;
     if (!phoneRegex.test(formData.phoneNumber)) {
       setError('El número telefónico debe tener el formato 0000-0000.');
       return false;
     }
-
-    // Validación de género
     if (!formData.genderId) {
       setError('El género es requerido');
       return false;
     }
-
     return true;
   };
 
@@ -121,7 +101,6 @@ export default function SignUpForm({ departments, genders }: SignUpFormProps) {
     setIsLoading(true);
     setError('');
 
-    // Aplicar validaciones del backend
     if (!validateForm()) {
       setIsLoading(false);
       return;
@@ -129,10 +108,9 @@ export default function SignUpForm({ departments, genders }: SignUpFormProps) {
 
     try {
       const response = await createUser(formData);
-      
+
       if (response.succeeded && response.data) {
         // Meta Pixel: CompleteRegistration (navegador + Conversions API con dedup).
-        // El teléfono está disponible aquí, así que se incluye para Advanced Matching.
         trackFbEvent('CompleteRegistration', { status: true }, {
           email: formData.email,
           phone: formData.phoneNumber,
@@ -140,18 +118,16 @@ export default function SignUpForm({ departments, genders }: SignUpFormProps) {
           lastName: formData.lastName,
         });
 
-        // Login automático después del registro exitoso
         const loginResult = await signIn('credentials', {
           email: formData.email,
           password: formData.password,
           loginMethod: 'email',
-          redirect: false
+          redirect: false,
         });
 
         if (loginResult?.ok) {
           router.push('/tienda');
         } else {
-          // Si el login automático falla, redirigir al login
           router.push('/login?message=Registro exitoso. Por favor, inicia sesión.');
         }
       } else {
@@ -159,179 +135,179 @@ export default function SignUpForm({ departments, genders }: SignUpFormProps) {
       }
     } catch (error) {
       console.error('Error during registration:', error);
-      setError(error.errors[0]);
+      setError(error?.errors?.[0] || 'Error en el registro. Intenta de nuevo.');
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <Card className="p-6" placeholder="">
-      <div className="text-center pt-4">
-        <Typography variant="h2" color="blue-gray" className="" placeholder="">
-          Crear Cuenta
-        </Typography>
-        <Typography color="gray" className="font-normal" placeholder="">
-          Completa tus datos para registrarte
-        </Typography>
-      </div>
+    <div>
+      <h1 className="text-[30px] font-bold tracking-[-0.02em] text-text">Crear cuenta</h1>
+      <p className="mt-1.5 text-[15px] text-ink2-500">
+        Únete y compra más rápido con precios para empresas.
+      </p>
 
-      <form onSubmit={handleSubmit} className="space-y-6 mt-10">
-        {/* Nombre y Apellido */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <Input
-            type="text"
-            label="Nombre"
-            value={formData.firstName}
-            onChange={(e) => handleInputChange('firstName', e.target.value)}
+      <form onSubmit={handleSubmit} className="mt-7 space-y-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div>
+            <label htmlFor="su-first" className={labelCls}>Nombre</label>
+            <input
+              id="su-first"
+              type="text"
+              value={formData.firstName}
+              onChange={(e) => handleInputChange('firstName', e.target.value)}
+              placeholder="Tu nombre"
+              required
+              disabled={isLoading}
+              className={inputCls}
+            />
+          </div>
+          <div>
+            <label htmlFor="su-last" className={labelCls}>Apellido</label>
+            <input
+              id="su-last"
+              type="text"
+              value={formData.lastName}
+              onChange={(e) => handleInputChange('lastName', e.target.value)}
+              placeholder="Tu apellido"
+              required
+              disabled={isLoading}
+              className={inputCls}
+            />
+          </div>
+        </div>
+
+        <div>
+          <label htmlFor="su-email" className={labelCls}>Correo</label>
+          <input
+            id="su-email"
+            type="email"
+            value={formData.email}
+            onChange={(e) => handleInputChange('email', e.target.value)}
+            placeholder="tucorreo@empresa.com"
             required
             disabled={isLoading}
-          />
-          <Input
-            type="text"
-            label="Apellido"
-            value={formData.lastName}
-            onChange={(e) => handleInputChange('lastName', e.target.value)}
-            required
-            disabled={isLoading}
+            className={inputCls}
           />
         </div>
 
-        {/* Email */}
-        <Input
-          type="email"
-          label="Correo Electrónico"
-          value={formData.email}
-          onChange={(e) => handleInputChange('email', e.target.value)}
-          required
-          disabled={isLoading}
-        />
-
-        {/* Teléfono */}
-        <Input
-          type="tel"
-          label="Número de Teléfono"
-          placeholder="0000-0000"
-          value={formData.phoneNumber || ''}
-          onChange={(e) => handlePhoneChange(e.target.value)}
-          required
-          disabled={isLoading}
-        />
-
-        {/* Género */}
-        <Select
-          label="Género"
-          value={formData.genderId}
-          onChange={(value) => handleInputChange('genderId', parseInt(value))}
-          disabled={isLoading}
-        >
-          {genders.map((gender) => {
-            return (
-              <Option key={gender.id} value={gender.id}>
-                {gender.name}
-              </Option>
-            );
-          })}
-        </Select>
-
-        {/* Departamento */}
-        <Select
-          label="Departamento (Opcional)"
-          value={formData.departmentId}
-          onChange={(value) => handleInputChange('departmentId', parseInt(value))}
-          disabled={isLoading}
-        >
-          {departments.map((dept) => {
-            return (
-              <Option key={dept.id} value={dept.id}>
-                {dept.name}
-              </Option>
-            );
-          })}
-        </Select>
-
-        {/* Contraseña */}
-        <div className="relative">
-          <Input
-            type={showPassword ? 'text' : 'password'}
-            label="Contraseña"
-            value={formData.password}
-            onChange={(e) => handleInputChange('password', e.target.value)}
+        <div>
+          <label htmlFor="su-phone" className={labelCls}>Teléfono</label>
+          <input
+            id="su-phone"
+            type="tel"
+            value={formData.phoneNumber || ''}
+            onChange={(e) => handlePhoneChange(e.target.value)}
+            placeholder="0000-0000"
             required
             disabled={isLoading}
-            icon={
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2"
-              >
-                {showPassword ? (
-                  <EyeSlashIcon className="h-5 w-5 text-gray-400" />
-                ) : (
-                  <EyeIcon className="h-5 w-5 text-gray-400" />
-                )}
-              </button>
-            }
-          />
-          <Typography variant="small" color="gray" className="mt-1" placeholder="">
-            Debe tener mínimo 8 caracteres, mayúsculas y un digito.
-          </Typography>
-        </div>
-
-        {/* Confirmar Contraseña */}
-        <div className="relative">
-          <Input
-            type={showConfirmPassword ? 'text' : 'password'}
-            label="Confirmar Contraseña"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-            disabled={isLoading}
-            icon={
-              <button
-                type="button"
-                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2"
-              >
-                {showConfirmPassword ? (
-                  <EyeSlashIcon className="h-5 w-5 text-gray-400" />
-                ) : (
-                  <EyeIcon className="h-5 w-5 text-gray-400" />
-                )}
-              </button>
-            }
+            className={inputCls}
           />
         </div>
 
-        {/* Mensaje de error */}
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div>
+            <label htmlFor="su-gender" className={labelCls}>Género</label>
+            <select
+              id="su-gender"
+              value={formData.genderId}
+              onChange={(e) => handleInputChange('genderId', parseInt(e.target.value))}
+              disabled={isLoading}
+              className={inputCls}
+            >
+              {genders.map((gender) => (
+                <option key={gender.id} value={gender.id}>
+                  {gender.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label htmlFor="su-dept" className={labelCls}>Departamento (opcional)</label>
+            <select
+              id="su-dept"
+              value={formData.departmentId}
+              onChange={(e) => handleInputChange('departmentId', parseInt(e.target.value))}
+              disabled={isLoading}
+              className={inputCls}
+            >
+              <option value={0}>Selecciona…</option>
+              {departments.map((dept) => (
+                <option key={dept.id} value={dept.id}>
+                  {dept.name}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label htmlFor="su-pass" className={labelCls}>Contraseña</label>
+          <div className="relative">
+            <input
+              id="su-pass"
+              type={showPassword ? 'text' : 'password'}
+              value={formData.password}
+              onChange={(e) => handleInputChange('password', e.target.value)}
+              placeholder="••••••••"
+              required
+              disabled={isLoading}
+              className={inputCls + ' pr-11'}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-ink2-400 hover:text-ink2-600"
+            >
+              {showPassword ? <EyeSlashIcon className="h-5 w-5" /> : <EyeIcon className="h-5 w-5" />}
+            </button>
+          </div>
+          <p className="mt-1.5 text-[12.5px] text-ink2-400">
+            Mínimo 8 caracteres, una mayúscula y un dígito.
+          </p>
+        </div>
+
+        <div>
+          <label htmlFor="su-confirm" className={labelCls}>Confirmar contraseña</label>
+          <div className="relative">
+            <input
+              id="su-confirm"
+              type={showConfirmPassword ? 'text' : 'password'}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder="••••••••"
+              required
+              disabled={isLoading}
+              className={inputCls + ' pr-11'}
+            />
+            <button
+              type="button"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              aria-label={showConfirmPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-ink2-400 hover:text-ink2-600"
+            >
+              {showConfirmPassword ? <EyeSlashIcon className="h-5 w-5" /> : <EyeIcon className="h-5 w-5" />}
+            </button>
+          </div>
+        </div>
+
         {error && (
-          <Alert color="red" className="text-sm">
-            {error}
-          </Alert>
+          <p className="rounded-[10px] bg-[#FEF2F2] px-4 py-2.5 text-[14px] text-[#B91C1C]">{error}</p>
         )}
 
-        {/* Botón de envío */}
-        <Button
-          type="submit"
-          className="w-full"
-          color="blue"
-          size="lg"
-          disabled={isLoading}
-          placeholder=""
-        >
-          {isLoading ? 'Creando cuenta...' : 'Crear Cuenta'}
+        <Button type="submit" variant="primary" size="lg" fullWidth disabled={isLoading}>
+          {isLoading ? 'Creando cuenta...' : 'Crear mi cuenta'}
         </Button>
       </form>
 
-      {/* Enlaces adicionales */}
-      <div className="mt-6 text-center">
-        <Typography variant="small" color="gray" className="font-normal" placeholder="">
-          ¿Ya tienes una cuenta?{' '}
-          <a href="/login" className="font-medium text-blue-600 hover:text-blue-500">
-            Inicia sesión aquí
-          </a>
-        </Typography>
-      </div>
-    </Card>
+      <p className="mt-6 text-center text-[14px] text-ink2-500">
+        ¿Ya tienes cuenta?{' '}
+        <Link href="/login" className="sb-link font-semibold text-accent">
+          Inicia sesión
+        </Link>
+      </p>
+    </div>
   );
 }

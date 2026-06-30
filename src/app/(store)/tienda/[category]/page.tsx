@@ -1,6 +1,8 @@
 export const revalidate = 300; // ISR: revalidar cada 5 minutos
 
 import { getProductsByCategorySlug } from "@/services/products.service";
+import { getAllNavCategory } from "@/services/categories.service";
+import { ResumeSubcategoryDto } from "@/interfaces/nav-category/nav-category.interface";
 import { slugToTitle } from "@/utils/string.utils";
 import CategoryClient from "@/components/store/category-client.component";
 
@@ -19,23 +21,35 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
     let products: any[] = [];
     let totalPages = 0;
     let totalCount = 0;
+    let subcategories: ResumeSubcategoryDto[] = [];
+    let categoryId: number | undefined = undefined;
 
     try {
-        const response = await getProductsByCategorySlug(
-            category,
-            page,
-            pageSize,
-            "",
-            undefined,
-            undefined,
-            false,
-            undefined
-        );
+        const [response, categoriesResponse] = await Promise.all([
+            getProductsByCategorySlug(
+                category,
+                page,
+                pageSize,
+                "",
+                undefined,
+                undefined,
+                false,
+                undefined
+            ),
+            getAllNavCategory(),
+        ]);
 
         if (response.succeeded) {
             products = response.data;
             totalPages = Math.ceil(response.totalItems / response.pageSize);
             totalCount = response.totalItems;
+        }
+        if (categoriesResponse.succeeded) {
+            const match = categoriesResponse.data.find((c) => c.slug === category);
+            if (match) {
+                categoryId = match.id;
+                subcategories = match.subCategories ?? [];
+            }
         }
     } catch (error) {
         console.error('Error fetching products by category:', error);
@@ -122,6 +136,8 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
             <CategoryClient
                 categorySlug={category}
                 categoryTitle={categoryTitle}
+                categoryId={categoryId}
+                subcategories={subcategories}
                 initialProducts={products}
                 initialTotalPages={totalPages}
                 initialTotalCount={totalCount}

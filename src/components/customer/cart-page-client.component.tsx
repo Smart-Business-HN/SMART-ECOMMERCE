@@ -1,23 +1,32 @@
 // @ts-nocheck
-'use client';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Card, Typography, Button, Alert, Input, IconButton } from '@/utils/MTailwind';
-import { CartDto, CartItemDto, CartStatus, CartStatusLabels } from '@/interfaces/cart/cart.interface';
-import { formatNumber } from '@/utils/number-format';
-import {
-  ShoppingCartIcon,
-  TrashIcon,
-  PlusIcon,
-  MinusIcon,
-  ArrowLeftIcon,
-  CreditCardIcon,
-  TruckIcon
-} from '@heroicons/react/24/outline';
-import Link from 'next/link';
-import Image from 'next/image';
-import { trackFbEvent } from '@/lib/meta/fbpixel';
-import { buildProductCustomData } from '@/lib/meta/meta-custom-data';
+"use client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import Image from "next/image";
+import { ArrowLeftIcon, ShoppingCartIcon, TrashIcon, CreditCardIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
+import { CartDto, CartItemDto, CartStatus, CartStatusLabels } from "@/interfaces/cart/cart.interface";
+import { formatNumber } from "@/utils/number-format";
+import { trackFbEvent } from "@/lib/meta/fbpixel";
+import { buildProductCustomData } from "@/lib/meta/meta-custom-data";
+import Button from "@/components/ui/button.component";
+import QuantityStepper from "@/components/store/quantity-stepper.component";
+
+const NO_IMAGE = "/images/products/no-image-available-icon-vector.webp";
+
+function statusBadge(status: number): string {
+  switch (status) {
+    case CartStatus.Active:
+    case CartStatus.Verified:
+      return "bg-success-soft text-success";
+    case CartStatus.PaymentLinkSent:
+      return "bg-accent-soft text-accent";
+    case CartStatus.Rejected:
+      return "bg-[#FEECEC] text-[#E5484D]";
+    default:
+      return "bg-[#FFF4E5] text-[#B7791F]";
+  }
+}
 
 interface CartPageClientProps {
   cart: CartDto;
@@ -27,373 +36,177 @@ export default function CartPageClient({ cart }: CartPageClientProps) {
   const router = useRouter();
   const [cartItems, setCartItems] = useState<CartItemDto[]>(cart.cartItems || []);
   const [isUpdating, setIsUpdating] = useState(false);
-  const [error, setError] = useState<string>('');
+  const [error, setError] = useState("");
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('es-ES', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    });
-  };
+  const formatDate = (s: string) =>
+    new Date(s).toLocaleDateString("es-ES", { year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit" });
 
-  const calculateSubtotal = () => {
-    return cartItems.reduce((total, item) => total + item.totalPrice, 0);
-  };
+  const subtotal = cartItems.reduce((t, it) => t + it.totalPrice, 0);
+  const tax = subtotal * 0.15;
+  const total = subtotal + tax;
+  const count = cartItems.length;
 
-  const calculateTax = () => {
-    // Asumiendo un 15% de impuesto
-    return calculateSubtotal() * 0.15;
-  };
-
-  const calculateTotal = () => {
-    return calculateSubtotal() + calculateTax();
-  };
-
+  // Edición client-only (no hay endpoint de update/remove de items; comportamiento existente).
   const handleQuantityChange = (itemId: number, newQuantity: number) => {
     if (newQuantity < 1) return;
-
-    setCartItems(prev =>
-      prev.map(item =>
-        item.id === itemId
-          ? { ...item, quantity: newQuantity, totalPrice: item.unitPrice * newQuantity }
-          : item
-      )
+    setCartItems((prev) =>
+      prev.map((item) => (item.id === itemId ? { ...item, quantity: newQuantity, totalPrice: item.unitPrice * newQuantity } : item)),
     );
   };
-
-  const handleRemoveItem = (itemId: number) => {
-    setCartItems(prev => prev.filter(item => item.id !== itemId));
-  };
+  const handleRemoveItem = (itemId: number) => setCartItems((prev) => prev.filter((item) => item.id !== itemId));
 
   const handleUpdateCart = async () => {
     setIsUpdating(true);
-    setError('');
-
+    setError("");
     try {
-      // Aquí iría la lógica para actualizar el carrito en el backend
-      console.log('Actualizando carrito...', cartItems);
-      // Simular actualización
-      await new Promise(resolve => setTimeout(resolve, 1000));
-    } catch (error) {
-      console.error('Error updating cart:', error);
-      setError('Error al actualizar el carrito');
+      // Lógica de actualización del carrito en backend (pendiente de endpoint).
+      console.log("Actualizando carrito...", cartItems);
+      await new Promise((r) => setTimeout(r, 800));
+    } catch (e) {
+      console.error("Error updating cart:", e);
+      setError("Error al actualizar el carrito");
     } finally {
       setIsUpdating(false);
     }
   };
 
   const handleCheckout = () => {
-    // Meta Pixel: InitiateCheckout (navegador + Conversions API con dedup).
-    // value = subtotal de la mercancía (sin impuesto), consistente con item_price.
     const lines = cartItems.map((item) => ({
       code: item.product?.code?.trim() || String(item.productId),
       quantity: item.quantity,
       unitPrice: item.unitPrice,
     }));
-    if (lines.length > 0) {
-      trackFbEvent('InitiateCheckout', buildProductCustomData(lines));
-    }
+    if (lines.length > 0) trackFbEvent("InitiateCheckout", buildProductCustomData(lines));
     router.push(`/checkout/${cart.id}`);
   };
 
   return (
-    <div className="bg-gray-50 md:py-8">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-8 p-4 md:p-0">
-          <div className="flex items-center mb-4">
-            <Link
-              href="/profile?tab=carts"
-              className="flex items-center text-blue-600 hover:text-blue-800 mr-4"
-            >
-              <ArrowLeftIcon className="h-5 w-5 mr-2" />
-              Volver a Mis Carritos
-            </Link>
-          </div>
-
-          <div className="flex md:flex-row flex-col items-center justify-between">
-            <div>
-              <div className="flex items-center gap-3">
-                <Typography variant="h1" color="blue-gray" className="text-2xl md:text-3xl">
-                  Mi Carrito
-                </Typography>
-                <span className={`text-xs px-2 py-1 rounded-full font-medium ${
-                  cart.status === CartStatus.Active ? 'bg-green-100 text-green-700' :
-                  cart.status === CartStatus.ReceiptSubmitted || cart.status === CartStatus.PaymentLinkRequested ? 'bg-yellow-100 text-yellow-700' :
-                  cart.status === CartStatus.PaymentLinkSent ? 'bg-blue-100 text-blue-700' :
-                  cart.status === CartStatus.Verified ? 'bg-emerald-100 text-emerald-700' :
-                  cart.status === CartStatus.Rejected ? 'bg-red-100 text-red-700' :
-                  'bg-gray-100 text-gray-700'
-                }`}>
-                  {CartStatusLabels[cart.status] || 'Desconocido'}
-                </span>
-              </div>
-              <Typography color="gray" className="mt-2">
-                Carrito #{cart.id.slice(-8)} • <br className="md:hidden"/> Creado el {formatDate(cart.creationDate)}
-              </Typography>
-            </div>
-
-            <div className="flex items-center space-x-2">
-              <ShoppingCartIcon className="h-8 w-8 text-blue-600" />
-              <span className="text-sm text-gray-500">
-                {cartItems.length} producto{cartItems.length !== 1 ? 's' : ''}
+    <div className="bg-surface">
+      <div className="mx-auto max-w-[1280px] px-4 pt-8 sm:px-6 lg:px-8">
+        <Link href="/profile?tab=carts" className="sb-link mb-4 inline-flex items-center gap-1.5 text-[14px] font-semibold text-accent">
+          <ArrowLeftIcon className="h-4 w-4" />
+          Volver a Mis Carritos
+        </Link>
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <div className="mb-1.5 flex items-center gap-3">
+              <h1 className="text-[30px] font-bold tracking-[-0.03em] text-text md:text-[36px]">Mi carrito</h1>
+              <span className={`rounded-full px-3 py-1 text-[12.5px] font-semibold ${statusBadge(cart.status)}`}>
+                {CartStatusLabels[cart.status] || "Desconocido"}
               </span>
             </div>
+            <div className="text-[14px] text-ink2-400">
+              Carrito #{cart.id.slice(-8)} · Creado el {formatDate(cart.creationDate)}
+            </div>
+          </div>
+          <div className="flex items-center gap-2.5 text-accent">
+            <ShoppingCartIcon className="h-6 w-6" />
+            <span className="text-[14px] font-semibold text-text">{count} producto{count !== 1 ? "s" : ""}</span>
           </div>
         </div>
+      </div>
 
-        {error && (
-          <Alert color="red" className="mb-6">
-            {error}
-          </Alert>
-        )}
+      {error && (
+        <div className="mx-auto max-w-[1280px] px-4 pt-4 sm:px-6 lg:px-8">
+          <p className="rounded-[10px] bg-[#FEF2F2] px-4 py-3 text-[14px] text-[#B91C1C]">{error}</p>
+        </div>
+      )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Lista de productos */}
-          <div className="lg:col-span-2">
-            {cartItems.length === 0 ? (
-              <Card className="p-8 text-center" >
-                <ShoppingCartIcon className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-                <Typography variant="h6" color="gray" className="mb-2">
-                  Tu carrito está vacío
-                </Typography>
-                <Typography color="gray" className="mb-6">
-                  Agrega productos para continuar con tu compra
-                </Typography>
-                <Link href="/tienda">
-                  <Button color="blue" >
-                    Ir a la Tienda
-                  </Button>
-                </Link>
-              </Card>
-            ) : (
-              <div className="space-y-4">
-                {cartItems.map((item) => (
-                  <Card key={item.id} className="p-6" >
-                    <div className="flex items-start space-x-4">
-                      {/* Imagen del producto */}
-                      <div className="flex-shrink-0">
-                        <div className="w-20 h-20 bg-gray-100 rounded-lg overflow-hidden">
-                          {item.product?.productImages && item.product.productImages.length > 0 ? (
-                            <Image
-                              src={item.product.productImages[0].url}
-                              alt={item.product.name}
-                              width={80}
-                              height={80}
-                              className="w-full h-full object-cover"
-                            />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center">
-                              <span className="text-gray-400 text-xs">Sin imagen</span>
-                            </div>
-                          )}
-                        
-                        </div>
-                      </div>
-                      {/* Información del producto */}
-                      <div className="flex-1 min-w-0">
-                        <Typography variant="h6" color="blue-gray" className="mb-2" >
-                          {item.product?.name || 'Producto no disponible'}
-                        </Typography>
-                        <Typography variant="small" color="gray" className="mb-2" >
-                          SKU: {item.product?.code || 'N/A'}
-                        </Typography>
-                        <Typography variant="small" color="gray" className="mb-2" >
-                          {item.product?.brand?.name || 'Marca no especificada'}
-                        </Typography>
-                        <div className="flex items-center space-x-4">
-                          <Typography variant="h6" color="blue" >
-                            L. {formatNumber(item.unitPrice)}
-                          </Typography>
-                          {/* {item.discount && item.discount > 0 && (
-                            <Typography variant="small" color="green" >
-                              Descuento: L. {formatNumber(item.discount)}
-                            </Typography>
-                          )} */}
-                        </div>
-                      </div>
-
-                      {/* Controles de cantidad */}
-                      <div className="md:flex flex-col items-end space-y-4 hidden">
-                        <div className="flex items-center space-x-2">
-                          <div className="relative w-full">
-                            <Input
-                              type="number"
-                              value={item.quantity}
-                              onChange={(e) => handleQuantityChange(item.id, Number(e.target.value))}
-                              className="!border-t-blue-gray-200 placeholder:text-blue-gray-300 placeholder:opacity-100  focus:!border-t-gray-900 appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                              labelProps={{
-                                className: "before:content-none after:content-none",
-                              }}
-                              containerProps={{
-                                className: "min-w-0",
-                              }}
-                            />
-                            <div className="absolute right-1 top-1 flex gap-0.5">
-                              <IconButton
-                                size="sm"
-                                variant="text"
-                                className="rounded"
-                                onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
-                              >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  viewBox="0 0 16 16"
-                                  fill="currentColor"
-                                  className="h-4 w-4"
-                                >
-                                  <path d="M3.75 7.25a.75.75 0 0 0 0 1.5h8.5a.75.75 0 0 0 0-1.5h-8.5Z" />
-                                </svg>
-                              </IconButton>
-                              <IconButton
-                                size="sm"
-                                variant="text"
-                                className="rounded"
-                                onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
-                              >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  viewBox="0 0 16 16"
-                                  fill="currentColor"
-                                  className="h-4 w-4"
-                                >
-                                  <path d="M8.75 3.75a.75.75 0 0 0-1.5 0v3.5h-3.5a.75.75 0 0 0 0 1.5h3.5v3.5a.75.75 0 0 0 1.5 0v-3.5h3.5a.75.75 0 0 0 0-1.5h-3.5v-3.5Z" />
-                                </svg>
-                              </IconButton>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="text-right">
-                          <Typography variant="h6" color="blue-gray" >
-                            L. {formatNumber(item.totalPrice)}
-                          </Typography>
-                        </div>
-
-                        <Button
-                          size="sm"
-                          color="red"
-                          variant="outlined"
-                          onClick={() => handleRemoveItem(item.id)}
-                          disabled={isUpdating}
-                        >
-                          <TrashIcon className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    </div>
-                  </Card>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Resumen del pedido */}
-          <div className="lg:col-span-1">
-            <Card className="p-6 sticky top-4" >
-              <Typography variant="h6" color="blue-gray" className="mb-6" >
-                Resumen del Pedido
-              </Typography>
-
-              <div className="space-y-4">
-                <div className="flex justify-between">
-                  <Typography color="gray" >
-                    Subtotal ({cartItems.length} productos)
-                  </Typography>
-                  <Typography color="blue-gray" >
-                    L. {formatNumber(calculateSubtotal())}
-                  </Typography>
+      <div className="mx-auto grid max-w-[1280px] grid-cols-1 gap-7 px-4 py-7 sm:px-6 lg:grid-cols-[1fr_380px] lg:px-8 lg:pb-24">
+        {/* Items */}
+        <div className="flex flex-col gap-4">
+          {count === 0 ? (
+            <div className="flex flex-col items-center rounded-container border border-line bg-white px-6 py-16 text-center">
+              <ShoppingCartIcon className="mb-4 h-12 w-12 text-ink2-400" />
+              <div className="mb-1.5 text-[17px] font-semibold text-text">Tu carrito está vacío</div>
+              <p className="mb-6 text-[14px] text-ink2-500">Agrega productos para continuar con tu compra.</p>
+              <Button href="/tienda" variant="primary" size="md">Ir a la tienda</Button>
+            </div>
+          ) : (
+            cartItems.map((item) => (
+              <div key={item.id} className="flex items-center gap-5 rounded-container border border-line bg-white p-5">
+                <div className="relative h-24 w-24 flex-none overflow-hidden rounded-[14px] bg-surface">
+                  <Image
+                    src={item.product?.productImages?.[0]?.url || NO_IMAGE}
+                    alt={item.product?.name || "Producto"}
+                    fill
+                    sizes="96px"
+                    className="object-contain p-3"
+                  />
                 </div>
-
-                <div className="flex justify-between">
-                  <Typography color="gray" >
-                    Impuestos (15%)
-                  </Typography>
-                  <Typography color="blue-gray" >
-                    L. {formatNumber(calculateTax())}
-                  </Typography>
-                </div>
-
-                <div className="border-t pt-4">
-                  <div className="flex justify-between">
-                    <Typography variant="h6" color="blue-gray" >
-                      Total
-                    </Typography>
-                    <Typography variant="h6" color="blue" >
-                      L. {formatNumber(calculateTotal())}
-                    </Typography>
+                <div className="min-w-0 flex-1">
+                  <div className="mb-1 text-[16px] font-semibold leading-[1.3] text-text">
+                    {item.product?.name || "Producto no disponible"}
                   </div>
+                  <div className="text-[12.5px] text-ink2-400">SKU: {item.product?.code || "N/A"}</div>
+                  <div className="mb-2 text-[12.5px] text-ink2-400">{item.product?.brand?.name || "Marca no especificada"}</div>
+                  <div className="text-[15px] font-bold text-accent">L. {formatNumber(item.unitPrice)}</div>
+                </div>
+                <div className="flex flex-none flex-col items-end gap-3.5">
+                  <QuantityStepper value={item.quantity} onChange={(q) => handleQuantityChange(item.id, q)} />
+                  <div className="text-[17px] font-bold tracking-[-0.01em] text-text">L. {formatNumber(item.totalPrice)}</div>
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveItem(item.id)}
+                    disabled={isUpdating}
+                    aria-label="Eliminar del carrito"
+                    className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-line-input text-ink2-400 transition-colors hover:border-[#F7C9CB] hover:bg-[#FEECEC] hover:text-[#E5484D]"
+                  >
+                    <TrashIcon className="h-4 w-4" />
+                  </button>
                 </div>
               </div>
+            ))
+          )}
+        </div>
 
-              <div className="mt-6 space-y-3">
-                {cart.status === CartStatus.Active && (
-                  <Button
-                    color="blue"
-                    size="lg"
-                    onClick={handleCheckout}
-                    disabled={cartItems.length === 0 || isUpdating}
-                    className="flex items-center justify-center w-full"
-                  >
-                    <CreditCardIcon className="h-5 w-5 mr-2" />
-                    Proceder al Pago
-                  </Button>
-                )}
+        {/* Resumen */}
+        <div className="lg:sticky lg:top-[92px] lg:self-start">
+          <div className="rounded-container border border-line bg-white p-7">
+            <div className="mb-5 text-[18px] font-bold tracking-[-0.01em] text-text">Resumen del pedido</div>
+            <div className="mb-3 flex justify-between text-[14.5px] text-ink2-600">
+              <span>Subtotal ({count} producto{count !== 1 ? "s" : ""})</span>
+              <span className="font-medium text-text">L. {formatNumber(subtotal)}</span>
+            </div>
+            <div className="mb-4 flex justify-between text-[14.5px] text-ink2-600">
+              <span>Impuestos (15%)</span>
+              <span className="font-medium text-text">L. {formatNumber(tax)}</span>
+            </div>
+            <div className="my-4 h-px bg-line-soft" />
+            <div className="mb-6 flex items-baseline justify-between">
+              <span className="text-[16px] font-bold text-text">Total</span>
+              <span className="text-[24px] font-extrabold tracking-[-0.02em] text-accent">L. {formatNumber(total)}</span>
+            </div>
 
-                {cart.status === CartStatus.PaymentLinkSent && cart.paymentLinkUrl && (
-                  <a href={cart.paymentLinkUrl} target="_blank" rel="noopener noreferrer" className="block">
-                    <Button
-                      color="blue"
-                      size="lg"
-                      className="flex items-center justify-center w-full"
-                    >
-                      <CreditCardIcon className="h-5 w-5 mr-2" />
-                      Ir a Pagar
-                    </Button>
-                  </a>
-                )}
-
-                {cart.status !== CartStatus.Active && cart.status !== CartStatus.PaymentLinkSent && (
-                  <Button
-                    color="blue"
-                    size="lg"
-                    disabled
-                    className="flex items-center justify-center w-full"
-                  >
-                    {CartStatusLabels[cart.status] || 'En proceso'}
-                  </Button>
-                )}
-
-                <Button
-                  variant="outlined"
-                  size="lg"
-                  className="w-full"
-                  onClick={handleUpdateCart}
-                  disabled={isUpdating}
-                >
-                  {isUpdating ? 'Actualizando...' : 'Actualizar Carrito'}
+            <div className="flex flex-col gap-3">
+              {cart.status === CartStatus.Active && (
+                <Button variant="primary" size="lg" fullWidth onClick={handleCheckout} disabled={count === 0 || isUpdating}>
+                  <CreditCardIcon className="h-5 w-5" />
+                  Proceder al pago
                 </Button>
-
-                <Link href="/tienda" className="block">
-                  <Button
-                    variant="outlined"
-                    size="lg"
-                    className="flex items-center justify-center w-full"
-                  >
-                    <TruckIcon className="h-5 w-5 mr-2" />
-                    Seguir Comprando
-                  </Button>
-                </Link>
-              </div>
-              {/* Información adicional */}
-              <div className="mt-6 pt-6 border-t">
-                <Typography variant="small" color="gray" className="text-center" >
-                  Envío gratuito en compras superiores a L. 5,000
-                </Typography>
-              </div>
-            </Card>
+              )}
+              {cart.status === CartStatus.PaymentLinkSent && cart.paymentLinkUrl && (
+                <Button href={cart.paymentLinkUrl} external variant="primary" size="lg" fullWidth>
+                  <CreditCardIcon className="h-5 w-5" />
+                  Ir a pagar
+                </Button>
+              )}
+              {cart.status !== CartStatus.Active && cart.status !== CartStatus.PaymentLinkSent && (
+                <Button variant="primary" size="lg" fullWidth disabled>
+                  {CartStatusLabels[cart.status] || "En proceso"}
+                </Button>
+              )}
+              <Button variant="secondary" size="md" fullWidth onClick={handleUpdateCart} disabled={isUpdating}>
+                {isUpdating ? "Actualizando..." : "Actualizar carrito"}
+              </Button>
+              <Button href="/tienda" variant="secondary" size="md" fullWidth>
+                <ArrowRightIcon className="h-4 w-4" />
+                Seguir comprando
+              </Button>
+            </div>
+            <p className="mt-4 text-center text-[12.5px] leading-[1.5] text-ink2-400">
+              Envío gratuito en compras superiores a L. 1,000
+            </p>
           </div>
         </div>
       </div>

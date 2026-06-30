@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
 import { Suspense } from "react";
+import AnnouncementBar from "@/components/shared/announcement-bar.component";
 import NavBarComponent from "@/components/shared/nav-bar.component";
 import Footer from "@/components/shared/footer.component";
 import AuthProvider from "@/components/providers/session-provider";
 import CartCountProvider from "@/components/providers/cart-count-provider";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 import ChatWidgetLoader from "@/components/shared/chat-widget-loader.component";
 import MetaPixel from "@/components/analytics/meta-pixel.component";
 import PixelTracker from "@/components/analytics/pixel-tracker.component";
@@ -23,6 +25,14 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
   display: "swap",
+});
+
+// Primary brand typeface for the redesigned storefront ("Smart Business Rediseño").
+const hankenGrotesk = Hanken_Grotesk({
+  variable: "--font-hanken",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["300", "400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
@@ -157,21 +167,24 @@ export default function RootLayout({
         <link rel="shortcut icon" href="/images/corporate/smart.webp" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased w-full`}
+        className={`${geistSans.variable} ${geistMono.variable} ${hankenGrotesk.variable} antialiased w-full`}
       >
         <Suspense fallback={null}>
           <PixelTracker />
         </Suspense>
-        <AuthProvider>
-          <PixelAdvancedMatching />
-          <CartCountProvider>
-            <NavBarComponent />
-            {children}
-            <Footer />
-            <ChatWidgetLoader />
-            <MetaConsentBanner />
-          </CartCountProvider>
-        </AuthProvider>
+        <NuqsAdapter>
+          <AuthProvider>
+            <PixelAdvancedMatching />
+            <CartCountProvider>
+              <AnnouncementBar />
+              <NavBarComponent />
+              {children}
+              <Footer />
+              <ChatWidgetLoader />
+              <MetaConsentBanner />
+            </CartCountProvider>
+          </AuthProvider>
+        </NuqsAdapter>
       </body>
     </html>
   );
