@@ -155,6 +155,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
             hasMoreInformation = true;
         }
 
+        // El editor enriquecido a veces pega el texto con espacios duros (&nbsp; / U+00A0)
+        // en lugar de espacios normales, lo que impide el salto de línea y desborda el
+        // contenedor. Los normalizamos a espacios normales para que el texto fluya.
+        const ecommerceDescriptionHtml = (productData.ecommerceDescription || '').replace(/&nbsp;|\u00A0/g, ' ');
+
         const categoryTitle = productData.subCategory?.category?.name || '';
         const subcategoryTitle = productData.subCategory?.name || '';
         const brandName = productData.brand?.name || '';
@@ -383,13 +388,13 @@ export default async function ProductPage({ params }: ProductPageProps) {
                         <section className="mt-10 md:mt-14 rounded-container bg-surface p-6 md:p-10" aria-labelledby="informacion-adicional-titulo">
                             <h2 id="informacion-adicional-titulo" className="sr-only">Información adicional del producto</h2>
                             <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1.4fr_1fr]">
-                                <div>
+                                <div className="min-w-0">
                                     {productData.ecommerceDescription ? (
                                         <>
                                             <h3 className="mb-4 text-[24px] font-bold text-text">Descripción</h3>
                                             <div
-                                                className="prose description max-w-none text-ink2-600"
-                                                dangerouslySetInnerHTML={{ __html: productData.ecommerceDescription || '' }}
+                                                className="prose description max-w-none break-words text-ink2-600"
+                                                dangerouslySetInnerHTML={{ __html: ecommerceDescriptionHtml }}
                                             />
                                         </>
                                     ) : productData.description ? (
@@ -400,7 +405,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                                     ) : null}
                                 </div>
                                 {productData.productFeatures && productData.productFeatures.length > 0 && (
-                                    <div>
+                                    <div className="min-w-0">
                                         <h3 className="mb-4 text-[24px] font-bold text-text">Características</h3>
                                         <div className="overflow-hidden rounded-card border border-line bg-white">
                                             {productData.productFeatures.map((feature, index) => (
