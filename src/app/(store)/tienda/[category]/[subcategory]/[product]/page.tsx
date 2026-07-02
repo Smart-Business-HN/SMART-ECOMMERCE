@@ -159,6 +159,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
         // en lugar de espacios normales, lo que impide el salto de línea y desborda el
         // contenedor. Los normalizamos a espacios normales para que el texto fluya.
         const ecommerceDescriptionHtml = (productData.ecommerceDescription || '').replace(/&nbsp;|\u00A0/g, ' ');
+        const hasFeatures = !!(productData.productFeatures && productData.productFeatures.length > 0);
 
         const categoryTitle = productData.subCategory?.category?.name || '';
         const subcategoryTitle = productData.subCategory?.name || '';
@@ -387,7 +388,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                     {hasMoreInformation && (
                         <section className="mt-10 md:mt-14 rounded-container bg-surface p-6 md:p-10" aria-labelledby="informacion-adicional-titulo">
                             <h2 id="informacion-adicional-titulo" className="sr-only">Información adicional del producto</h2>
-                            <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1.4fr_1fr]">
+                            <div className={`grid grid-cols-1 gap-10 ${hasFeatures ? 'lg:grid-cols-[1.4fr_1fr]' : ''}`}>
                                 <div className="min-w-0">
                                     {productData.ecommerceDescription ? (
                                         <>
@@ -404,7 +405,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                                         </>
                                     ) : null}
                                 </div>
-                                {productData.productFeatures && productData.productFeatures.length > 0 && (
+                                {hasFeatures && (
                                     <div className="min-w-0">
                                         <h3 className="mb-4 text-[24px] font-bold text-text">Características</h3>
                                         <div className="overflow-hidden rounded-card border border-line bg-white">
